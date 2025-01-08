@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/01/07 19:55:57 by mfontser         ###   ########.fr        #
+#    Updated: 2025/01/08 20:27:41 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,11 @@ SRCS = 	$(addprefix $(SRCDIR), $(FILES))
 OBJDIR = obj/
 OBJS = $(patsubst $(SRCDIR)%.c, $(OBJDIR)%.o, $(SRCS))
 
-INCLUDES = -I ./libs/Libft -I ./inc
+INCLUDES = -I ./libs/Libft -I ./inc -I ./src/get_next_line/
 
 NAME = cub3D
 
-HEADER = inc/cub3D.h
+HEADER = inc/cub3D.h inc/sprites.h src/get_next_line/get_next_line.h
 CC = cc 
 RM = rm -rf 
 CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
