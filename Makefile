@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 17:24:49 by yanaranj          #+#    #+#              #
-#    Updated: 2025/01/10 19:38:02 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/01/10 19:43:29 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ INCLUDES = -I ./libs/Libft -I ./inc -I ./src/get_next_line/
 
 NAME = cub3D
 
-HEADER = inc/tcub3D.h src/get_next_line/get_next_line.h
+HEADER = inc/cub3D.h src/get_next_line/get_next_line.h
 CC = cc -g #-fsanitize=address
 CFLAGS = -Wall -Werror -Wextra
 RM = rm -rf
