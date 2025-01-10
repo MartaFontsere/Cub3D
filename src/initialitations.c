@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/10 01:42:52 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:15:01 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,18 @@ int	init_mlx(t_game *gdata, t_mlx *mlx)
 		write_error("It's not possible to initialize the mlx");
 		free_raw_and_map(gdata);
 		return (0);
+	}
+	game->img = mlx_new_image(game->mlx, WIN_WITH + 1, WIN_LEN + 1);
+	while (y < game->map.max_y)
+	{
+		x = 0;
+		while (x < game->map.max_x)
+		{
+			if (game->map.map[y][x] == '1')
+				mlx_put_pixel(game->img, x, y, 0x00000000);
+			x++;
+		}
+		y++;
 	}
 	return (1);
 }
