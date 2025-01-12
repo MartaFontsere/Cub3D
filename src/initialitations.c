@@ -14,10 +14,10 @@
 
 void	init_gdata_values(t_game *gdata)
 {
-	gdata->map_info->rawmap = NULL;
-	gdata->map_info->map = NULL;
-	gdata->map_info->map_width = 0;
-	gdata->map_info->map_height = 0;
+	gdata->map_info.rawmap = NULL;
+	gdata->map_info.map = NULL;
+	gdata->map_info.map_width = 0;
+	gdata->map_info.map_height = 0;
 	gdata->window_height = 0;
 	gdata->window_width = 0;
 	gdata->player.x = 0;
@@ -42,56 +42,59 @@ void	init_gdata_values(t_game *gdata)
 	// gdata->finish_game = 0;
 }
 
-void	init_player_position(t_game *gdata)
+void	init_player_position(t_map *map_info, t_player *player)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (gdata->map[i])
+	while (map_info->map[i])
 	{
 		j = 0;
-		while (gdata->map[i][j])
+		while (map_info->map[i][j])
 		{
-			if (gdata->map[i][j] == 'N' || gdata->map[i][j] == 'S' || gdata->map[i][j] == 'E' || gdata->map[i][j] == 'W')
+			if (map_info->map[i][j] == 'N' || map_info->map[i][j] == 'S' || map_info->map[i][j] == 'E' || map_info->map[i][j] == 'W')
 			{
-				gdata->player.x = j;
-				gdata->player.y = i;
+				player->x = j;
+				player->y = i;
 			}
 			j++;
 		}
 		i++;
 	}
+	player->cell_x = (double)player->x + 0.5;
+	player->cell_y = (double)player->y + 0.5;
 }
-void	init_player_orientation(t_game *gdata)
+
+void	init_player_orientation(t_map *map_info, t_player *player)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (gdata->map[i])
+	while (map_info->map[i])
 	{
 		j = 0;
-		while (gdata->map[i][j])
+		while (map_info->map[i][j])
 		{
-			if (gdata->map[i][j] == 'N')
+			if (map_info->map[i][j] == 'N')
 			{
-				gdata->player.orientation = NORTH;
+				player->orientation = NORTH;
 				break;
 			}
-			if (gdata->map[i][j] == 'S')
+			if (map_info->map[i][j] == 'S')
 			{
-				gdata->player.orientation = SOUTH;
+				player->orientation = SOUTH;
 				break;
 			}
-			if (gdata->map[i][j] == 'E')
+			if (map_info->map[i][j] == 'E')
 			{
-				gdata->player.orientation = EAST;
+				player->orientation = EAST;
 				break;
 			}
-			if (gdata->map[i][j] == 'W')
+			if (map_info->map[i][j] == 'W')
 			{
-				gdata->player.orientation = WEST;
+				player->orientation = WEST;
 				break;
 			}
 			j++;
@@ -114,7 +117,7 @@ int	init_mlx(t_game *gdata, t_mlx *mlx)
 	if (!mlx->init)
 	{
 		write_error("It's not possible to initialize the mlx");
-		free_raw_and_map(gdata);
+		//free_raw_and_map(gdata); REVISAR 
 		return (0);
 	}
 	game->img = mlx_new_image(game->mlx, WIN_WITH + 1, WIN_LEN + 1);

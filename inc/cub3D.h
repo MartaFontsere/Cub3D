@@ -38,13 +38,13 @@
 // # define SOFT_GREY "0x00DADAFF"
 
 /*ORIENTATION*/
-# define NORTH 0
-# define SOUTH 1
-# define EAST 2
-# define WEST 3
+# define NORTH 90
+# define SOUTH 270
+# define EAST 0
+# define WEST 180
 
 /*MINIMAP*/
-# define PLAYER_RADIUS 15
+# define PLAYER_RADIUS 15 // lo que ocupara el player en el minimapa
 # define WALL_SIZE 100
 
 typedef struct s_images
@@ -56,15 +56,28 @@ typedef struct s_images
 typedef struct s_mlx
 {
 	mlx_t		*init;
-	t_images	*images;
+	//int				window_height;
+	//int				window_width;
+	//t_images	*images;
 }				t_mlx;
 
 typedef struct s_player
 {
 	int			x; // Posición Inicial del Personaje en X
-	int			y; // Posición Inicial del Personaje en Y 
+	int			y; // Posición Inicial del Personaje en Y
+	double		cell_x; //Posición en x dentro de la casilla
+	double 		cell_y; //Posición en y dentro de la casilla
+		//Consideramos que cada casilla es una unidad, como lo queremos centrado necesitamos que esté en el 0,5 tanto de x como de y, por eso necesito que sea double 
 	int			orientation; // Orientacion Inicial que apunta el Persoanje
 }				t_player;
+
+typedef struct s_minimap
+{
+	mlx_image_t		base;
+	int				width; // Valor máximo X del minimapa
+	int				height; // Valor máximo Y del minimapa
+
+}
 
 typedef struct s_map
 {
@@ -77,23 +90,37 @@ typedef struct s_map
 	// uint32_t		floor;
 	// uint32_t		ceiling;
 	char			*rawmap; // Mapa sin procesar
-	char			**map; // Mapa en matriz
-	int				map_width; // Valor máximo X del mapa
-	int				map_height; // Valor máximo Y del mapa
+	char			**matrix; // Mapa en matriz
+	int				width; // Valor máximo X del mapa
+	int				height; // Valor máximo Y del mapa
 }					t_map;
 
 
 typedef struct s_game
 {
-	t_map			map_info;
+	t_map			map;
 	t_player		player;
-	int				window_height;
-	int				window_width;
+	t_minimap 		minimap;
+
 	t_mlx			mlx; // ???en funcion de que hacerlo puntero o no?
-	mlx_image_t		*txt_image; //??? idem. y esto para que era???
 }					t_game;
 
-
 //??? En base a que decidir si las variables las creas como puntero o la variable en si
+
+//INITIALITATIONS
+void	init_gdata_values(t_game *gdata);
+void	init_player_position(t_map *map_info, t_player *player);
+void	init_player_orientation(t_map *map_info, t_player *player);
+int	init_mlx(t_game *gdata, t_mlx *mlx);
+
+//PSEUDOPARSING
+char **parsing_pre_yahaira(t_game *gdata);
+
+//PRINT MINIMAP
+int	print_minimap(t_game *gdata, t_mlx *mlx);
+
+
+//ERROR
+void	write_error(const char *str);
 
 #endif

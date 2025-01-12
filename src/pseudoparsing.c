@@ -13,13 +13,13 @@
 #include "cub3D.h"
 
 //TODO ESTO ESTA HARDCODEADO
-char **parsing_pre_yajaira(t_game *gdata)
+char **parsing_pre_yahaira(t_game *gdata)
 {
       // Dimensions of the matrix
     int rows = 20;
     int cols = 20;
-    int gdata->map_info->map_width = 20;
-    int gdata->map_info->map_height = 20;
+    gdata->map_info.map_width = 20;
+    gdata->map_info.map_height = 20;
 
     // Allocate memory for row pointers
     char **matrix = (char **)malloc(rows * sizeof(char *));
@@ -60,9 +60,6 @@ char **parsing_pre_yajaira(t_game *gdata)
         {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', ' ', ' '},
         {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
 
-
-        {0, 0, 0, 1},
-        {1, 0, 0, 0}
     };
 
     for (int i = 0; i < rows; i++) {
