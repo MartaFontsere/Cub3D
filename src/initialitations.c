@@ -14,12 +14,12 @@
 
 void	init_gdata_values(t_game *gdata)
 {
-	gdata->map_info.rawmap = NULL;
-	gdata->map_info.map = NULL;
-	gdata->map_info.map_width = 0;
-	gdata->map_info.map_height = 0;
-	gdata->window_height = 0;
-	gdata->window_width = 0;
+	gdata->map.rawmap = NULL;
+	gdata->map.matrix = NULL;
+	gdata->map.width = 0;
+	gdata->map.height = 0;
+	gdata->mlx.window_height = 0;
+	gdata->mlx.window_width = 0;
 	gdata->player.x = 0;
 	gdata->player.y = 0;
 	gdata->player.orientation = NORTH;
@@ -42,18 +42,18 @@ void	init_gdata_values(t_game *gdata)
 	// gdata->finish_game = 0;
 }
 
-void	init_player_position(t_map *map_info, t_player *player)
+void	init_player_position(t_map *map, t_player *player)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map_info->map[i])
+	while (map->matrix[i])
 	{
 		j = 0;
-		while (map_info->map[i][j])
+		while (map->matrix[i][j])
 		{
-			if (map_info->map[i][j] == 'N' || map_info->map[i][j] == 'S' || map_info->map[i][j] == 'E' || map_info->map[i][j] == 'W')
+			if (map->matrix[i][j] == 'N' || map->matrix[i][j] == 'S' || map->matrix[i][j] == 'E' || map->matrix[i][j] == 'W')
 			{
 				player->x = j;
 				player->y = i;
@@ -64,35 +64,36 @@ void	init_player_position(t_map *map_info, t_player *player)
 	}
 	player->cell_x = (double)player->x + 0.5;
 	player->cell_y = (double)player->y + 0.5;
+
 }
 
-void	init_player_orientation(t_map *map_info, t_player *player)
+void	init_player_orientation(t_map *map, t_player *player)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map_info->map[i])
+	while (map->matrix[i])
 	{
 		j = 0;
-		while (map_info->map[i][j])
+		while (map->matrix[i][j])
 		{
-			if (map_info->map[i][j] == 'N')
+			if (map->matrix[i][j] == 'N')
 			{
 				player->orientation = NORTH;
 				break;
 			}
-			if (map_info->map[i][j] == 'S')
+			if (map->matrix[i][j] == 'S')
 			{
 				player->orientation = SOUTH;
 				break;
 			}
-			if (map_info->map[i][j] == 'E')
+			if (map->matrix[i][j] == 'E')
 			{
 				player->orientation = EAST;
 				break;
 			}
-			if (map_info->map[i][j] == 'W')
+			if (map->matrix[i][j] == 'W')
 			{
 				player->orientation = WEST;
 				break;
@@ -101,6 +102,7 @@ void	init_player_orientation(t_map *map_info, t_player *player)
 		}
 		i++;
 	}
+	player->vision_angle = (double)player->orientation;
 }
 
 
@@ -109,10 +111,10 @@ int	init_mlx(t_game *gdata, t_mlx *mlx)
 	// gdata->window_width = SPRITES_WIDTH * gdata->map_width;
 	// gdata->window_height = SPRITES_HEIGHT * gdata->map_height;
 
-	gdata->window_width = 1701; // CAMBIAR, ESTA HARDCODEADO
-	gdata->window_height = 701; // CAMBIAR, ESTA HARDCODEADO
+	gdata->minimap.width = 2000; // CAMBIAR, ESTA HARDCODEADO
+	gdata->minimap.height = 2000; // CAMBIAR, ESTA HARDCODEADO
 
-	mlx->init = mlx_init((gdata->window_width), (gdata->window_height),
+	mlx->init = mlx_init((gdata->minimap.width), (gdata->minimap.height),
 			"The Game", true);
 	if (!mlx->init)
 	{
@@ -120,17 +122,12 @@ int	init_mlx(t_game *gdata, t_mlx *mlx)
 		//free_raw_and_map(gdata); REVISAR 
 		return (0);
 	}
-	game->img = mlx_new_image(game->mlx, WIN_WITH + 1, WIN_LEN + 1);
-	while (y < game->map.max_y)
+	gdata->minimap.background_img = mlx_new_image(mlx->init, gdata->minimap.width, gdata->minimap.height); //PORQUE +1?????
+	if (!gdata->minimap.background_img)
 	{
-		x = 0;
-		while (x < game->map.max_x)
-		{
-			if (game->map.map[y][x] == '1')
-				mlx_put_pixel(game->img, x, y, 0x00000000);
-			x++;
-		}
-		y++;
+		write_error("It's not possible to generate new image");
+		//free_raw_and_map(gdata); REVISAR 
+		return (0);
 	}
 	return (1);
 }

@@ -31,7 +31,7 @@ ORANGE = \e[1;38;2;255;128;0m
 	#Makefile con dependencias
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
 
-FILES =  cub3D.c initialitations.c pseudoparsing.c print_minimap.c error.c
+FILES =  cub3D.c initialitations.c pseudoparsing.c print_minimap.c render.c error.c
 
 
 SRCDIR = src/

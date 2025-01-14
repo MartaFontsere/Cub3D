@@ -21,18 +21,21 @@ int main(int argc, char **argv)
 	(void)argv;
 	init_gdata_values(&gdata);
 	//Primero necesito tener el mapa convertido a matriz
-	gdata.map_info.map = parsing_pre_yahaira(&gdata);
-	if(!gdata.map_info.map){
+	gdata.map.matrix = parsing_pre_yahaira(&gdata);
+	if(!gdata.map.matrix)
+	{
 		write(2, "error generating the map matrix\n", 32);
 		return 1;
 	}
 	// A partir de aqui:
-	init_player_position(&gdata.map_info, &gdata.player);
-	init_player_orientation(&gdata.map_info, &gdata.player);
+	init_player_position(&gdata.map, &gdata.player);
+	init_player_orientation(&gdata.map, &gdata.player);
 	// instalar la mlx, y lanzar una pantalla del tamaño, x y, para ver que funciona
-	// if (init_mlx(&gdata, &gdata.mlx) == 0)
-	// 	return (0);
-	// if (print_minimap(&gdata, &gdata.mlx) == 0)
+	if (init_mlx(&gdata, &gdata.mlx) == 0)
 		return (0);
+	print_minimap(&gdata);
+	mlx_loop_hook(gdata.mlx.init, render_game, &gdata);
+	mlx_loop(gdata.mlx.init);
+	
 
 }
