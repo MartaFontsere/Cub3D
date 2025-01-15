@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
+#    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/01/15 14:09:16 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/01/15 16:11:43 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ ORANGE = \e[1;38;2;255;128;0m
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
 
 #FILES =  cub3D.c initialitations.c pseudoparsing.c print_minimap.c render.c error.c
-FILES = cub3D.c parsing.c
+FILES = cub3D.c parsing.c 
 
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))
