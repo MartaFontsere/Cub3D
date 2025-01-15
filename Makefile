@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/01/15 11:11:51 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/01/15 14:09:16 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ ORANGE = \e[1;38;2;255;128;0m
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
 
 #FILES =  cub3D.c initialitations.c pseudoparsing.c print_minimap.c render.c error.c
-FILES = cub3D.c
+FILES = cub3D.c parsing.c
 
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))
@@ -109,14 +109,14 @@ ${NAME}: ${OBJS}
 
 clean:
 	@${RM} ${OBJDIR}
-	@make -C libs/Libft clean
+	@make -C libs/Libft clean --no-print-directory
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)$(NC)$(END)"
 
 fclean:
 	@${RM} ${OBJDIR}
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)"
 	@${RM} ${NAME}
-	@make -C libs/Libft fclean
+	@make -C libs/Libft fclean --no-print-directory
 	@echo "$(RED)CUB3D EXEC DELETED$(END)$(END)"
 	@echo "$(ORANGE)"
 	@echo "	⠀⠀⠀⠀⠀⠀⢱⣆⠀⠀"
