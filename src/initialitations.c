@@ -20,9 +20,18 @@ void	init_gdata_values(t_game *gdata)
 	gdata->map.height = 0;
 	gdata->mlx.window_height = 0;
 	gdata->mlx.window_width = 0;
+	gdata->player.raw_x = 0;
+	gdata->player.raw_y = 0;
 	gdata->player.x = 0;
 	gdata->player.y = 0;
 	gdata->player.orientation = NORTH;
+	gdata->player.mov_right = 0;
+	gdata->player.mov_left = 0;
+	gdata->player.mov_up = 0;
+	gdata->player.mov_down = 0;
+
+
+	gdata->finish_game = 0;
 
 
 
@@ -55,15 +64,15 @@ void	init_player_position(t_map *map, t_player *player)
 		{
 			if (map->matrix[i][j] == 'N' || map->matrix[i][j] == 'S' || map->matrix[i][j] == 'E' || map->matrix[i][j] == 'W')
 			{
-				player->x = j;
-				player->y = i;
+				player->raw_x = j;
+				player->raw_y = i;
 			}
 			j++;
 		}
 		i++;
 	}
-	player->cell_x = (double)player->x + 0.5;
-	player->cell_y = (double)player->y + 0.5;
+	// player->cell_x = (double)player->x + 0.5;
+	// player->cell_y = (double)player->y + 0.5;
 
 }
 
@@ -105,14 +114,21 @@ void	init_player_orientation(t_map *map, t_player *player)
 	player->vision_angle = (double)player->orientation;
 }
 
+void	init_minimap(t_game *gdata, t_map *map, t_player *player)
+{
+	gdata->minimap.width = 2000; // CAMBIAR, ESTA HARDCODEADO
+	gdata->minimap.height = 2000; // CAMBIAR, ESTA HARDCODEADO
+	gdata->minimap.cell_width = gdata->minimap.width / map->width;
+	gdata->minimap.cell_height = gdata->minimap.height / map->height;
+	gdata->minimap.player_x = (player->raw_x * gdata->minimap.cell_width) + (gdata->minimap.cell_width / 2);
+	gdata->minimap.player_y = (player->raw_y * gdata->minimap.cell_height) + (gdata->minimap.cell_height / 2);
+	gdata->minimap.player_radius = gdata->minimap.cell_width / 5;
+}
 
 int	init_mlx(t_game *gdata, t_mlx *mlx)
 {
 	// gdata->window_width = SPRITES_WIDTH * gdata->map_width;
 	// gdata->window_height = SPRITES_HEIGHT * gdata->map_height;
-
-	gdata->minimap.width = 2000; // CAMBIAR, ESTA HARDCODEADO
-	gdata->minimap.height = 2000; // CAMBIAR, ESTA HARDCODEADO
 
 	mlx->init = mlx_init((gdata->minimap.width), (gdata->minimap.height),
 			"The Game", true);

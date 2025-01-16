@@ -35,16 +35,29 @@
 # define LIME_GREEN "\e[1;38;5;118m"
 # define ORANGE "\e[1;38;2;255;128;0m"
 
+
 /*MLXCOLORS*/
+# define BLACK 0x000000FF
 # define DARK_GREY 0x000000
+# define MEDIUM_GREY 0X696969FF
+//# define MEDIUM_GREY 0X575757FF
 # define SOFT_GREY 0x959595FF
 # define RED1 0xFF0000FF
+
 
 /*PLAYER ORIENTATION*/
 # define NORTH 90
 # define SOUTH 270
 # define EAST 0
 # define WEST 180
+
+
+/*MOVE*/
+# define MOVE_RIGHT 0
+# define MOVE_LEFT 1
+# define MOVE_UP 2
+# define MOVE_DOWN 3
+
 
 /*MINIMAP*/
 # define PLAYER_RADIUS 15 // lo que ocupara el player en el minimapa
@@ -66,13 +79,18 @@ typedef struct s_mlx
 
 typedef struct s_player
 {
-	int			x; // Posición Inicial del Personaje en X (en casillas)
-	int			y; // Posición Inicial del Personaje en Y (en casillas)
-	double		cell_x; //Posición en x dentro de la casilla (en casillas)
-	double 		cell_y; //Posición en y dentro de la casilla (en casillas)
-		//Consideramos que cada casilla es una unidad, como lo queremos centrado necesitamos que esté en el 0,5 tanto de x como de y, por eso necesito que sea double 
+	int			raw_x; // Posición Inicial del Personaje en X (en casillas)
+	int			raw_y; // Posición Inicial del Personaje en Y (en casillas)
+	int			x; // Posición Inicial del Personaje en X (en pixels)
+	int			y; // Posición Inicial del Personaje en Y (en pixels)
 	int			orientation; // Orientacion Inicial que apunta el Persoanje
 	double		vision_angle; // Orientacion en grados de la vision del personaje. ira girando en tramos mas pequeños que enteros, es decir, con decimales, por eso es double
+	int  		speed;
+	int 		mov_right;
+	int 		mov_left;
+	int 		mov_up;
+	int 		mov_down;
+
 }				t_player;
 
 typedef struct s_minimap
@@ -80,7 +98,11 @@ typedef struct s_minimap
 	mlx_image_t		*background_img;
 	int				width; // Valor máximo X del minimapa (en pixels)
 	int				height; // Valor máximo Y del minimapa (en pixels)
-
+	int 			cell_width; // Cantidad de pixels en el eje X
+	int 			cell_height; //Cantidad de pixels en el eje Y
+	int  			player_x; // Posición Inicial del Personaje centrado en la casilla en X (en pixeles para minimapa)
+	int  			player_y; // Posición Inicial del Personaje centrado en la casilla en Y (en pixeles para minimapa)
+	int  			player_radius; // radio del circulo que representara el personaje
 }					t_minimap;
 
 typedef struct s_map
@@ -107,6 +129,7 @@ typedef struct s_game
 	t_minimap 		minimap;
 
 	t_mlx			mlx; // ???en funcion de que hacerlo puntero o no?
+	int 			finish_game;
 }					t_game;
 
 //??? En base a que decidir si las variables las creas como puntero o la variable en si
@@ -115,7 +138,8 @@ typedef struct s_game
 void	init_gdata_values(t_game *gdata);
 void	init_player_position(t_map *map_info, t_player *player);
 void	init_player_orientation(t_map *map_info, t_player *player);
-int	init_mlx(t_game *gdata, t_mlx *mlx);
+void	init_minimap(t_game *gdata, t_map *map, t_player *player);
+int		init_mlx(t_game *gdata, t_mlx *mlx);
 
 //PSEUDOPARSING
 char **parsing_pre_yahaira(t_game *gdata);

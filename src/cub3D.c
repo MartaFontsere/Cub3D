@@ -30,10 +30,12 @@ int main(int argc, char **argv)
 	// A partir de aqui:
 	init_player_position(&gdata.map, &gdata.player);
 	init_player_orientation(&gdata.map, &gdata.player);
+	init_minimap(&gdata, &gdata.map, &gdata.player);
 	// instalar la mlx, y lanzar una pantalla del tamaño, x y, para ver que funciona
 	if (init_mlx(&gdata, &gdata.mlx) == 0)
 		return (0);
 	print_minimap(&gdata);
+	mlx_key_hook(gdata.mlx.init, press_key, (void *)&gdata);
 	mlx_loop_hook(gdata.mlx.init, render_game, &gdata);
 	mlx_loop(gdata.mlx.init);
 	
