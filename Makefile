@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/01/15 16:11:43 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/01/16 18:05:12 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ ORANGE = \e[1;38;2;255;128;0m
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
 
 #FILES =  cub3D.c initialitations.c pseudoparsing.c print_minimap.c render.c error.c
-FILES = cub3D.c parsing.c 
+FILES = cub3D.c getting_map.c parsing_map.c errors.c
+FILES += get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))
@@ -66,8 +67,8 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile libs/Libft/libft.a $(MLXDIR)/build
 all: make_libs ${NAME}
 
 make_libs:
-	@make -C libs/Libft all
-	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4
+	@make -C libs/Libft all --no-print-directory
+	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4 --no-print-directory
 
 ${NAME}: ${OBJS}
 	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)

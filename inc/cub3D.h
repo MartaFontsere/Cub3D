@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/15 16:16:53 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/16 19:20:50 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <string.h>
 #include "../libs/Libft/libft.h"
+#include "../src/get_next_line/get_next_line.h"
 
 /*COLORS*/
 # define END "\x1b[0m"
@@ -38,8 +39,8 @@ typedef struct s_map
 {
     void    *mlx;//se inicia al iniciar game(para evitar segv)
     void    *window;
-    char    **map;
 	char	*raw_map;
+    char    **my_map;//una vez hecho el parseo, volvemos a splitear el  raw_map
     int		heigth;
 	int		width;
     int     nexit;
@@ -54,9 +55,20 @@ typedef struct s_map
 	int		j;
 }			t_img; */
 
-/*			--parsing--			*/
-char	**get_final_map(int ac, char **av, t_map *map);
+/*			--parsing_map--			*/
+int		num_strchr(char *str, char c);
+int		min_chars(char *raw_map, t_map *map);
+int     final_map(char **my_map, t_map *map, char *raw_map);
+
+
+/*			--getting_map--			*/
+
 int     check_name(char *name);
+char	*fill_void(char *raw_map);
+char	*get_raw_map(char *map_path);
+char	**get_final_map(int ac, char **av, t_map *map);
+
+/*			--errors--			*/
 void	exit_error(char *msg, int status);
 
 /*			--inits--			*/

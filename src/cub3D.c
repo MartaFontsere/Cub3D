@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/15 16:02:54 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:46:12 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void    init_map_values(t_map *map)
 {
-    map->map = NULL;
+    map->my_map = NULL;
 	map->raw_map = NULL;
     map->heigth = 0;
     map->width = 0;
@@ -33,6 +33,7 @@ int main (int ac, char **av)
     init_map_values(&map);
     if (get_final_map(ac, av, &map) == NULL)
         return (0);
+    //si hay errores, liberar las structs???
     //init_game (MARTA);
     return (0);
 }

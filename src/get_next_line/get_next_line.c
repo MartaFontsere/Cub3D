@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42barcel>       +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 23:31:32 by mfontser          #+#    #+#             */
-/*   Updated: 2024/03/08 02:11:38 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:57:33 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,27 +120,3 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/*int	main(void)
-{
-	int		fd;
-	char	*line;
-	int		i;
-
-	i = 0;
-	fd = open("test.txt", O_RDWR);
-	if (fd < 0)
-		return (0);
-	line = get_next_line(fd);
-	while (line)
-	{
-		//printf("\nEntro en la vuelta %d\n", i);
-		printf("\nLinea: %s\n", line);
-		free(line);
-		line = get_next_line(fd);
-		//printf("\033[1;91m");
-		//printf("\033[0m");
-		i++;
-	}
-	close (fd);
-	return (0);
-}*/
