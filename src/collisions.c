@@ -13,6 +13,74 @@
 #include "cub3D.h"
 
 //PENDIENTE
+int	check_right_move(t_game *gdata, int target_y, int target_x)
+{
+	int	tsize_minus_one;
+	int	collision_size;
+
+	tsize_minus_one = SPRITES_WIDTH - 1;
+	collision_size = 2;
+	if (gdata->map[(target_y + collision_size) / SPRITES_HEIGHT][(target_x
+			+ tsize_minus_one - collision_size) / SPRITES_WIDTH] == '1')
+		return (0);
+	if (gdata->map[(target_y + tsize_minus_one - collision_size)
+			/ SPRITES_HEIGHT][(target_x + tsize_minus_one - collision_size)
+		/ SPRITES_WIDTH] == '1')
+		return (0);
+	return (1);
+}
+
+int	check_left_move(t_game *gdata, int target_y, int target_x)
+{
+	int	tsize_minus_one;
+	int	collision_size;
+
+	tsize_minus_one = SPRITES_WIDTH - 1;
+	collision_size = 2;
+	if (gdata->map[(target_y + collision_size) / SPRITES_HEIGHT][(target_x
+			+ collision_size) / SPRITES_WIDTH] == '1')
+		return (0);
+	if (gdata->map[(target_y + tsize_minus_one - collision_size)
+			/ SPRITES_HEIGHT][(target_x + collision_size)
+		/ SPRITES_WIDTH] == '1')
+		return (0);
+	return (1);
+}
+
+int	check_up_move(t_game *gdata, int target_y, int target_x)
+{
+	int	tsize_minus_one;
+	int	collision_size;
+
+	tsize_minus_one = SPRITES_WIDTH - 1;
+	collision_size = 2;
+	if (gdata->map[(target_y + collision_size) / SPRITES_HEIGHT][(target_x
+			+ collision_size) / SPRITES_WIDTH] == '1')
+		return (0);
+	if (gdata->map[(target_y + collision_size) / SPRITES_HEIGHT][(target_x
+			+ tsize_minus_one - collision_size) / SPRITES_WIDTH] == '1')
+		return (0);
+	return (1);
+}
+
+int	check_down_move(t_game *gdata, int target_y, int target_x)
+{
+	int	tsize_minus_one;
+	int	collision_size;
+
+	tsize_minus_one = SPRITES_WIDTH - 1;
+	collision_size = 2;
+	if (gdata->map[(target_y + tsize_minus_one - collision_size)
+			/ SPRITES_HEIGHT][(target_x + collision_size)
+		/ SPRITES_WIDTH] == '1')
+		return (0);
+	if (gdata->map[(target_y + tsize_minus_one - collision_size)
+			/ SPRITES_HEIGHT][(target_x + tsize_minus_one - collision_size)
+		/ SPRITES_WIDTH] == '1')
+		return (0);
+	return (1);
+}
+
 int	can_i_move_to(t_game *gdata, int target_x, int target_y)
 {
 	if (gdata->player.mov_right == 1)

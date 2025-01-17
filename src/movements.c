@@ -12,22 +12,4 @@
 
 #include "cub3D.h"
 
-void	prepare_right_target(t_game *gdata, int *target_x, int *count)
-{
-	*target_x = (*target_x + gdata->player.speed);
-}
 
-void	prepare_left_target(t_game *gdata, int *target_x, int *count)
-{
-	*target_x = (*target_x - gdata->player.speed);
-}
-
-void	prepare_up_target(t_game *gdata, int *target_y, int *count)
-{
-	*target_y = (*target_y - gdata->player.speed);
-}
-
-void	prepare_down_target(t_game *gdata, int *target_y, int *count)
-{
-	*target_y = (*target_y + gdata->player.speed);
-}
