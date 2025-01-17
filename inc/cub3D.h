@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/16 19:20:50 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:44:24 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_map
     int		heigth;
 	int		width;
     int     nexit;
+    int		pos_h;//para floodfill
+	int		pos_w;
     //t_img   img;
 }           t_map;
 
@@ -57,7 +59,7 @@ typedef struct s_map
 
 /*			--parsing_map--			*/
 int		num_strchr(char *str, char c);
-int		min_chars(char *raw_map, t_map *map);
+int		min_chars(char *raw_map);
 int     final_map(char **my_map, t_map *map, char *raw_map);
 
 

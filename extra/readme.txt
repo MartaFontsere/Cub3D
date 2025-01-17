@@ -13,3 +13,13 @@
 16/01 -	Empezando el parsing, estamos comprobando los chars que tenemos en el
 		raw_map sean los pedidos por el subject. Y saliendo en caso de error.
 		(falg1)
+17/01 -	Debo hacer una lectura de cada linea del mapa spliteado en el que guarde
+		la longitud de j y hacer una comparacion de i con i - 1, para ver si la
+		linea actual es > o <, y asi decir que esta es la mayor y que el mapa en
+		[j] tendra esa anchura y lo mismo con el mapa el [i], para saber su
+		altura real. Y que los sitios donde no encuentre ningun char, lo rellene
+		con espacio hasta convertir todo el mapa en rectangular.
+
+		Hemos acordado cambiar los espacios vacios por una R, para indicar que el
+		mapa contiene un obstaculo, y por lo tanto el player se ha de chocar
+		(segun subject: UPTOYOU)

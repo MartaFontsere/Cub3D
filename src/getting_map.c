@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:28:37 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/16 19:24:31 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/17 16:12:05 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ int	check_name(char *map_path)
 	char	*ext;
 
 	ext = ft_strchr(map_path, '.');
-//	if (ft_strlen(map_path) < 5) No cal porque solo debo comprobar la extension
-//		return (0);
-	if (strcmp(ext, ".cub") != 0)
+
+	if (ft_strncmp(ext, ".cub", 4) != 0)
 	{
 		printf("Invalid name map\n");
 		return (1);
@@ -34,14 +33,14 @@ char	*fill_void(char *raw_map)
 	while (raw_map[i])
 	{
 		if (raw_map[i] == ' ' || raw_map[i] == '\t')
-			raw_map[i] = '0';
+			raw_map[i] = '5';
 		i++;
 	}
 	return (raw_map);
 }
 
 /*	Debemos sustituir el los esp o tabs por '0', de esta manera tenemos un mapa 
-	rectangular y evitamos tener segf
+	rectangular y evitamos tener segf. Lo necesitamos para el floodfill
 	Esta funcion seria como el main del gnl
 */
 char	*get_raw_map(char *map_path)
@@ -83,11 +82,15 @@ char    **get_final_map(int ac, char **av, t_map *map)
 	map->raw_map = fill_void(raw_line);
 	printf("RAW\n%s\n", map->raw_map);
 	map->my_map = ft_split(map->raw_map, '\n');
+
+	/*parseo de los chars del mapa*/
 	if (!final_map(map->my_map, map, map->raw_map))
 	{
-		exit_error("Invalid map2\n", 1);
+		exit_error(RED"Invalid map2\n"END, 1);
 		free(map->raw_map);
 	}
+	else
+		printf(GREEN"This map es OK\n"END);
 	free(map->raw_map);
     return (map->my_map);
 }
