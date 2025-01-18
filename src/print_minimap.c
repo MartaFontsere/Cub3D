@@ -6,13 +6,13 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/10 01:42:50 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/18 00:01:46 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void print_player (t_minimap minimap)
+void print_player (t_minimap minimap, t_player player)
 {
 	int x_limit;
 	int y_limit;
@@ -29,7 +29,7 @@ void print_player (t_minimap minimap)
 		while (draw_x <= x_limit)
 		{
             if (draw_x * draw_x + draw_y * draw_y <= minimap.player_radius * minimap.player_radius) // mplementación directa de la definición de un círculo en coordenadas cartesianas
-                mlx_put_pixel(minimap.background_img, minimap.player_x + draw_x, minimap.player_y + draw_y, RED1); // al dibujar en la posicion draw relativa al centro del circulo, aseguramos que siempre se dibujara dentro del circulo.
+                mlx_put_pixel(minimap.background_img, player.x + draw_x, player.y + draw_y, RED1); // al dibujar en la posicion draw relativa al centro del circulo, aseguramos que siempre se dibujara dentro del circulo.
             draw_x++;
 		}
 		draw_y++;
@@ -218,6 +218,6 @@ void	print_minimap(t_game *gdata)
 	print_walls (gdata->minimap, gdata->map);
 	print_empty_space (gdata->minimap, gdata->map);
 		//Estas dos se pueden fusionar, REVISAR
-	print_player (gdata->minimap);
+	print_player (gdata->minimap, gdata->player);
 	mlx_image_to_window(gdata->mlx.init, gdata->minimap.background_img, 0, 0);
 }

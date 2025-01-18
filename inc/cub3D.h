@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/10 01:17:11 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:33:52 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,11 @@ typedef struct s_player
 {
 	int			raw_x; // Posición Inicial del Personaje en X (en casillas)
 	int			raw_y; // Posición Inicial del Personaje en Y (en casillas)
-	int			x; // Posición Inicial del Personaje en X (en pixels)
-	int			y; // Posición Inicial del Personaje en Y (en pixels)
+	double		x; // Posición Inicial del Personaje centrado en la casilla en X (en pixeles para minimapa)
+	double		y; // Posición Inicial del Personaje centrado en la casilla en Y (en pixeles para minimapa)
+	double  	radius; // radio del circulo que representara el personaje
+	double  	collision_size;
+	
 	int			orientation; // Orientacion Inicial que apunta el Persoanje
 	double		vision_angle; // Orientacion en grados de la vision del personaje. ira girando en tramos mas pequeños que enteros, es decir, con decimales, por eso es double
 	int  		speed;
@@ -100,9 +103,6 @@ typedef struct s_minimap
 	int				height; // Valor máximo Y del minimapa (en pixels)
 	int 			cell_width; // Cantidad de pixels en el eje X
 	int 			cell_height; //Cantidad de pixels en el eje Y
-	int  			player_x; // Posición Inicial del Personaje centrado en la casilla en X (en pixeles para minimapa)
-	int  			player_y; // Posición Inicial del Personaje centrado en la casilla en Y (en pixeles para minimapa)
-	int  			player_radius; // radio del circulo que representara el personaje
 }					t_minimap;
 
 typedef struct s_map
@@ -137,8 +137,8 @@ typedef struct s_game
 //INITIALITATIONS
 void	init_gdata_values(t_game *gdata);
 void	init_player_position(t_map *map_info, t_player *player);
-void	init_player_orientation(t_map *map_info, t_player *player);
-void	init_minimap(t_game *gdata, t_map *map, t_player *player);
+void	init_player_orientation(t_game *gdata, t_map *map_info, t_player *player);
+void	init_minimap(t_game *gdata, t_map *map);
 int		init_mlx(t_game *gdata, t_mlx *mlx);
 
 //PSEUDOPARSING
@@ -146,10 +146,20 @@ char **parsing_pre_yahaira(t_game *gdata);
 
 //PRINT MINIMAP
 void	print_minimap(t_game *gdata);
+void print_player (t_minimap minimap, t_player player);
+void print_empty_space (t_minimap minimap, t_map map);
+void print_walls (t_minimap minimap, t_map map);
+void print_background (t_minimap minimap);
 
 //RENDER
 void render_game (void *param);
 
+//PRESS KEY
+int	there_is_a_key_pressed(t_game *gdata);
+void	press_key(mlx_key_data_t keydata, void *param);
+void	set_mov_params(t_game *gdata, int *move_direction);
+void	reset_mov_params(t_game *gdata);
+void	release_key(mlx_key_data_t keydata, t_game *gdata);
 
 //ERROR
 void	write_error(const char *str);

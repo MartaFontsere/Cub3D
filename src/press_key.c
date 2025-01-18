@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_minimap.c                                    :+:      :+:    :+:   */
+/*   press_key.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/10 01:42:50 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/17 23:59:19 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,20 @@ void	press_key(mlx_key_data_t keydata, void *param)
 	}
 	if (gdata->finish_game == 0 && keydata.action == MLX_PRESS)
 	{
-		if (keydata.key == MLX_KEY_RIGHT)
+		if (keydata.key == MLX_KEY_D)
 			set_mov_params(gdata, &gdata->player.mov_right);
-		else if (keydata.key == MLX_KEY_LEFT)
+		else if (keydata.key == MLX_KEY_A)
 			set_mov_params(gdata, &gdata->player.mov_left);
-		else if (keydata.key == MLX_KEY_UP)
+		else if (keydata.key == MLX_KEY_W)
 			set_mov_params(gdata, &gdata->player.mov_up);
-		else if (keydata.key == MLX_KEY_DOWN)
+		else if (keydata.key == MLX_KEY_S)
 			set_mov_params(gdata, &gdata->player.mov_down);
 	}
 	if (gdata->finish_game == 0 && keydata.action == MLX_RELEASE)
 		release_key(keydata, gdata);
 }
+
+//MLX_KEY_RIGHT
 
 int	there_is_a_key_pressed(t_game *gdata)
 {

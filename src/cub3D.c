@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/10 00:45:54 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:30:27 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	// A partir de aqui:
-	init_player_position(&gdata.map, &gdata.player);
-	init_player_orientation(&gdata.map, &gdata.player);
-	init_minimap(&gdata, &gdata.map, &gdata.player);
+	init_minimap(&gdata, &gdata.map);
+	init_player_parameters(&gdata, &gdata.player);
 	// instalar la mlx, y lanzar una pantalla del tamaño, x y, para ver que funciona
 	if (init_mlx(&gdata, &gdata.mlx) == 0)
 		return (0);

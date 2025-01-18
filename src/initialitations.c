@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/10 14:15:01 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:31:39 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ void	init_gdata_values(t_game *gdata)
 	// gdata->finish_game = 0;
 }
 
+init player_parameters (t_game *gdata, t_player *player)
+{
+
+	init_player_position(&gdata.map, &gdata.player);
+	init_player_orientation(gdata, &gdata.map, &gdata.player);
+}
+
 void	init_player_position(t_map *map, t_player *player)
 {
 	int	i;
@@ -71,12 +78,11 @@ void	init_player_position(t_map *map, t_player *player)
 		}
 		i++;
 	}
-	// player->cell_x = (double)player->x + 0.5;
-	// player->cell_y = (double)player->y + 0.5;
-
+	player->x = (player->raw_x * gdata->minimap.cell_width) + (gdata->minimap.cell_width / 2);
+	player->y = (player->raw_y * gdata->minimap.cell_height) + (gdata->minimap.cell_height / 2);
 }
 
-void	init_player_orientation(t_map *map, t_player *player)
+void	init_player_orientation(t_game *gdata, t_map *map, t_player *player)
 {
 	int	i;
 	int	j;
@@ -114,15 +120,14 @@ void	init_player_orientation(t_map *map, t_player *player)
 	player->vision_angle = (double)player->orientation;
 }
 
-void	init_minimap(t_game *gdata, t_map *map, t_player *player)
+void	init_minimap(t_game *gdata, t_map *map)
 {
 	gdata->minimap.width = 2000; // CAMBIAR, ESTA HARDCODEADO
 	gdata->minimap.height = 2000; // CAMBIAR, ESTA HARDCODEADO
 	gdata->minimap.cell_width = gdata->minimap.width / map->width;
 	gdata->minimap.cell_height = gdata->minimap.height / map->height;
-	gdata->minimap.player_x = (player->raw_x * gdata->minimap.cell_width) + (gdata->minimap.cell_width / 2);
-	gdata->minimap.player_y = (player->raw_y * gdata->minimap.cell_height) + (gdata->minimap.cell_height / 2);
-	gdata->minimap.player_radius = gdata->minimap.cell_width / 5;
+	gdata->minimap.player_radius = gdata->minimap.cell_width / 4;
+	
 }
 
 int	init_mlx(t_game *gdata, t_mlx *mlx)
