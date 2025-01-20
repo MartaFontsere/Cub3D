@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/18 16:31:39 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/20 15:33:20 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,17 @@ void	init_gdata_values(t_game *gdata)
 	// gdata->finish_game = 0;
 }
 
-init player_parameters (t_game *gdata, t_player *player)
+void init_player_parameters (t_game *gdata, t_player *player)
 {
 
-	init_player_position(&gdata.map, &gdata.player);
-	init_player_orientation(gdata, &gdata.map, &gdata.player);
+	init_player_position(gdata, &gdata->map, &gdata->player);
+	init_player_orientation(&gdata->map, &gdata->player);
+	player->radius = gdata->minimap.cell_width / 4;
+	player->collision_size = gdata->minimap.cell_width - player->radius;
+	
 }
 
-void	init_player_position(t_map *map, t_player *player)
+void	init_player_position(t_game *gdata, t_map *map, t_player *player)
 {
 	int	i;
 	int	j;
@@ -82,7 +85,7 @@ void	init_player_position(t_map *map, t_player *player)
 	player->y = (player->raw_y * gdata->minimap.cell_height) + (gdata->minimap.cell_height / 2);
 }
 
-void	init_player_orientation(t_game *gdata, t_map *map, t_player *player)
+void	init_player_orientation(t_map *map, t_player *player)
 {
 	int	i;
 	int	j;
@@ -122,11 +125,10 @@ void	init_player_orientation(t_game *gdata, t_map *map, t_player *player)
 
 void	init_minimap(t_game *gdata, t_map *map)
 {
-	gdata->minimap.width = 2000; // CAMBIAR, ESTA HARDCODEADO
-	gdata->minimap.height = 2000; // CAMBIAR, ESTA HARDCODEADO
+	gdata->minimap.width = 1500; // CAMBIAR, ESTA HARDCODEADO
+	gdata->minimap.height = 1500; // CAMBIAR, ESTA HARDCODEADO
 	gdata->minimap.cell_width = gdata->minimap.width / map->width;
 	gdata->minimap.cell_height = gdata->minimap.height / map->height;
-	gdata->minimap.player_radius = gdata->minimap.cell_width / 4;
 	
 }
 

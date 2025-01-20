@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_minimap.c                                    :+:      :+:    :+:   */
+/*   collisions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/10 01:42:50 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/20 19:39:03 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@
 int	check_right_move(t_game *gdata, int target_y, int target_x)
 {
 	int	tsize_minus_one;
-	int	collision_size;
 
-	tsize_minus_one = SPRITES_WIDTH - 1;
-	collision_size = 2;
-	if (gdata->map[(target_y + collision_size) / SPRITES_HEIGHT][(target_x
-			+ tsize_minus_one - collision_size) / SPRITES_WIDTH] == '1')
+	tsize_minus_one = gdata->minimap.width - 1;
+	
+	if (gdata->map.matrix[(target_y + gdata->player.collision_size) / gdata->minimap.height][(target_x
+			+ tsize_minus_one - gdata->player.collision_size) / gdata->minimap.width] == '1')
 		return (0);
-	if (gdata->map[(target_y + tsize_minus_one - collision_size)
-			/ SPRITES_HEIGHT][(target_x + tsize_minus_one - collision_size)
-		/ SPRITES_WIDTH] == '1')
+	if (gdata->map.matrix[(target_y + tsize_minus_one - gdata->player.collision_size)
+			/ gdata->minimap.height][(target_x + tsize_minus_one - gdata->player.collision_size)
+		/ gdata->minimap.width] == '1')
 		return (0);
 	return (1);
 }
@@ -33,16 +32,14 @@ int	check_right_move(t_game *gdata, int target_y, int target_x)
 int	check_left_move(t_game *gdata, int target_y, int target_x)
 {
 	int	tsize_minus_one;
-	int	collision_size;
 
-	tsize_minus_one = SPRITES_WIDTH - 1;
-	collision_size = 2;
-	if (gdata->map[(target_y + collision_size) / SPRITES_HEIGHT][(target_x
-			+ collision_size) / SPRITES_WIDTH] == '1')
+	tsize_minus_one = gdata->minimap.width - 1;
+	if (gdata->map.matrix[(target_y + gdata->player.collision_size) / gdata->minimap.height][(target_x
+			+ gdata->player.collision_size) / gdata->minimap.width] == '1')
 		return (0);
-	if (gdata->map[(target_y + tsize_minus_one - collision_size)
-			/ SPRITES_HEIGHT][(target_x + collision_size)
-		/ SPRITES_WIDTH] == '1')
+	if (gdata->map.matrix[(target_y + tsize_minus_one - gdata->player.collision_size)
+			/ gdata->minimap.height][(target_x + gdata->player.collision_size)
+		/ gdata->minimap.width] == '1')
 		return (0);
 	return (1);
 }
@@ -50,15 +47,13 @@ int	check_left_move(t_game *gdata, int target_y, int target_x)
 int	check_up_move(t_game *gdata, int target_y, int target_x)
 {
 	int	tsize_minus_one;
-	int	collision_size;
 
-	tsize_minus_one = SPRITES_WIDTH - 1;
-	collision_size = 2;
-	if (gdata->map[(target_y + collision_size) / SPRITES_HEIGHT][(target_x
-			+ collision_size) / SPRITES_WIDTH] == '1')
+	tsize_minus_one = gdata->minimap.width - 1;
+	if (gdata->map.matrix[(target_y + gdata->player.collision_size) / gdata->minimap.height][(target_x
+			+ gdata->player.collision_size) / gdata->minimap.width] == '1')
 		return (0);
-	if (gdata->map[(target_y + collision_size) / SPRITES_HEIGHT][(target_x
-			+ tsize_minus_one - collision_size) / SPRITES_WIDTH] == '1')
+	if (gdata->map.matrix[(target_y + gdata->player.collision_size) / gdata->minimap.height][(target_x
+			+ tsize_minus_one - gdata->player.collision_size) / gdata->minimap.width] == '1')
 		return (0);
 	return (1);
 }
@@ -66,17 +61,15 @@ int	check_up_move(t_game *gdata, int target_y, int target_x)
 int	check_down_move(t_game *gdata, int target_y, int target_x)
 {
 	int	tsize_minus_one;
-	int	collision_size;
 
-	tsize_minus_one = SPRITES_WIDTH - 1;
-	collision_size = 2;
-	if (gdata->map[(target_y + tsize_minus_one - collision_size)
-			/ SPRITES_HEIGHT][(target_x + collision_size)
-		/ SPRITES_WIDTH] == '1')
+	tsize_minus_one = gdata->minimap.width - 1;
+	if (gdata->map.matrix[(target_y + tsize_minus_one - gdata->player.collision_size)
+			/ gdata->minimap.height][(target_x + gdata->player.collision_size)
+		/ gdata->minimap.width] == '1')
 		return (0);
-	if (gdata->map[(target_y + tsize_minus_one - collision_size)
-			/ SPRITES_HEIGHT][(target_x + tsize_minus_one - collision_size)
-		/ SPRITES_WIDTH] == '1')
+	if (gdata->map.matrix[(target_y + tsize_minus_one - gdata->player.collision_size)
+			/ gdata->minimap.height][(target_x + tsize_minus_one - gdata->player.collision_size)
+		/ gdata->minimap.width] == '1')
 		return (0);
 	return (1);
 }

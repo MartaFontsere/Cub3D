@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/18 00:01:46 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:48:26 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void print_player (t_minimap minimap, t_player player)
 	int draw_x;
 	int draw_y;
 
-	draw_y = -minimap.player_radius; // asi tengo el inicio del circulo en y
-	y_limit = minimap.player_radius; // asi tengo el limite final del circulo en y
+	draw_y = -player.radius; // asi tengo el inicio del circulo en y
+	y_limit = player.radius; // asi tengo el limite final del circulo en y
 	
 	while (draw_y <= y_limit)
 	{
-		draw_x = -minimap.player_radius;
-		x_limit = minimap.player_radius;
+		draw_x = -player.radius;
+		x_limit = player.radius;
 		while (draw_x <= x_limit)
 		{
-            if (draw_x * draw_x + draw_y * draw_y <= minimap.player_radius * minimap.player_radius) // mplementación directa de la definición de un círculo en coordenadas cartesianas
+            if (draw_x * draw_x + draw_y * draw_y <= player.radius * player.radius) // mplementación directa de la definición de un círculo en coordenadas cartesianas
                 mlx_put_pixel(minimap.background_img, player.x + draw_x, player.y + draw_y, RED1); // al dibujar en la posicion draw relativa al centro del circulo, aseguramos que siempre se dibujara dentro del circulo.
             draw_x++;
 		}

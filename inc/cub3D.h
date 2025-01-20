@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/18 16:33:52 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/20 19:38:13 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ typedef struct s_player
 	double		x; // Posición Inicial del Personaje centrado en la casilla en X (en pixeles para minimapa)
 	double		y; // Posición Inicial del Personaje centrado en la casilla en Y (en pixeles para minimapa)
 	double  	radius; // radio del circulo que representara el personaje
-	double  	collision_size;
+	int  	collision_size;
 	
 	int			orientation; // Orientacion Inicial que apunta el Persoanje
-	double		vision_angle; // Orientacion en grados de la vision del personaje. ira girando en tramos mas pequeños que enteros, es decir, con decimales, por eso es double
+	double		vision_angle; // Orientacion en grados de la vision del personaje. ira girando en tramos mas pequeños que enteros (en radianes), es decir, con decimales, por eso es double
 	int  		speed;
 	int 		mov_right;
 	int 		mov_left;
@@ -134,11 +134,15 @@ typedef struct s_game
 
 //??? En base a que decidir si las variables las creas como puntero o la variable en si
 
+//MAIN
+void	close_window(t_game	*gdata);
+
 //INITIALITATIONS
 void	init_gdata_values(t_game *gdata);
-void	init_player_position(t_map *map_info, t_player *player);
-void	init_player_orientation(t_game *gdata, t_map *map_info, t_player *player);
 void	init_minimap(t_game *gdata, t_map *map);
+void 	init_player_parameters (t_game *gdata, t_player *player);
+void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
+void	init_player_orientation(t_map *map_info, t_player *player);
 int		init_mlx(t_game *gdata, t_mlx *mlx);
 
 //PSEUDOPARSING
@@ -160,6 +164,13 @@ void	press_key(mlx_key_data_t keydata, void *param);
 void	set_mov_params(t_game *gdata, int *move_direction);
 void	reset_mov_params(t_game *gdata);
 void	release_key(mlx_key_data_t keydata, t_game *gdata);
+
+//COLLISIONS
+int	can_i_move_to(t_game *gdata, int target_x, int target_y);
+int	check_down_move(t_game *gdata, int target_y, int target_x);
+int	check_up_move(t_game *gdata, int target_y, int target_x);
+int	check_left_move(t_game *gdata, int target_y, int target_x);
+int	check_right_move(t_game *gdata, int target_y, int target_x);
 
 //ERROR
 void	write_error(const char *str);

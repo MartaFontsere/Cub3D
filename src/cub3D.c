@@ -6,11 +6,19 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/18 16:30:27 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/20 15:21:50 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	close_window(t_game	*gdata)
+{
+	// if (gdata->finish_game == 0)
+	// 	ft_write(1, "\nOoops... You left the game before finishing 😩\n", 50);
+	mlx_close_window(gdata->mlx.init);
+}
+
 
 int main(int argc, char **argv)
 {
@@ -34,7 +42,7 @@ int main(int argc, char **argv)
 	if (init_mlx(&gdata, &gdata.mlx) == 0)
 		return (0);
 	print_minimap(&gdata);
-	mlx_key_hook(gdata.mlx.init, press_key, (void *)&gdata);
+	mlx_key_hook(gdata.mlx.init, press_key, &gdata);
 	mlx_loop_hook(gdata.mlx.init, render_game, &gdata);
 	mlx_loop(gdata.mlx.init);
 	
