@@ -1,41 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/20 19:56:17 by yanaranj         ###   ########.fr       */
+/*   Created: 2025/01/20 13:47:14 by yanaranj          #+#    #+#             */
+/*   Updated: 2025/01/20 14:20:34 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	exit_error(char *msg, int status)
+char	*fill_void(char *raw_map)
 {
-	while (*msg)
-		write(2, msg++, 1);
-	exit(status);
-}
-
-void	free_matrix(t_map *map)
-{
-	int	i;
+	int i;
 
 	i = 0;
-	if (map->my_map == NULL)
-		return ;
-	while (map->my_map[i])
+	while (raw_map[i])
 	{
-		free(map->my_map[i]);
+		if (raw_map[i] == ' ' || raw_map[i] == '\t')
+			raw_map[i] = 'R';
 		i++;
 	}
-	free(map->my_map);
-	map->my_map = NULL;
+	return (raw_map);
 }
 
-/* void	free_before_end(t_map *map)
+int	ft_max_size(char *line, int max)
 {
-	
-} */
+	int	size;
+
+	size = ft_strlen(line) - 1;
+	if (max < size)
+		max = size;
+	return (max);
+}
+

@@ -23,3 +23,5 @@
 		Hemos acordado cambiar los espacios vacios por una R, para indicar que el
 		mapa contiene un obstaculo, y por lo tanto el player se ha de chocar
 		(segun subject: UPTOYOU)
+20/01 -	Hay que reducir las lineas en complete map. Ahora procedemos a agregar
+		tantos chars como larga sea la linea y luego hacemos el rawline

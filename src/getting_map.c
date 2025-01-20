@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:28:37 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/17 16:12:05 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/20 20:41:16 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,65 +25,92 @@ int	check_name(char *map_path)
 	}
 	return (0);
 }
-char	*fill_void(char *raw_map)
-{
-	int i;
 
-	i = 0;
-	while (raw_map[i])
-	{
-		if (raw_map[i] == ' ' || raw_map[i] == '\t')
-			raw_map[i] = '5';
-		i++;
-	}
-	return (raw_map);
-}
-
-/*	Debemos sustituir el los esp o tabs por '0', de esta manera tenemos un mapa 
-	rectangular y evitamos tener segf. Lo necesitamos para el floodfill
-	Esta funcion seria como el main del gnl
-*/
-char	*get_raw_map(char *map_path)
+int	count_fd_line(char *map_path, t_map *map)
 {
-	int	fd;
+	int		fd;
 	char	*line;
-	char *raw_map;
-	
+	int		count;
+
+	count = 0;
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0)
 		exit_error("error opening file\n", 42);
 	line = get_next_line(fd);
 	if (!line)
-		return (NULL);
-	raw_map = malloc(sizeof(char *) * 1);
-	if (!raw_map)
-		return (NULL);
-	raw_map[0] = '\0';
+		return (0);
 	while (line)
 	{
-		raw_map = gnl_strjoin(raw_map, line);
+		map->line_size = ft_max_size(line, map->line_size);
+		count++;
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
 	free(line);
-	return (raw_map);
+	return (count);
+}
+/*HAY QUE REDUCIR LINES*/
+char	**complete_map(char *map_path, t_map *map)
+{
+	int		fd;
+	int		pos;
+	char	*line;
+	char	**matrix_map;
+	int		i;
+	
+	pos = count_fd_line(map_path, map);
+	matrix_map = malloc(sizeof(char *) * (pos + 1));
+	if (!matrix_map)
+		return (NULL);
+	fd = open(map_path, O_RDONLY);
+	if (fd < 0)
+	{
+		free(matrix_map);
+		exit_error("error opening file\n", 42);
+	}
+	line = get_next_line(fd);
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (line)
+	{
+		matrix_map[i] = ft_strdup(line);
+		free(line);
+		if (!matrix_map[i])
+		{
+			free_matrix(map);
+			close(fd);
+			return (NULL);
+		}
+		line = get_next_line(fd);
+		i++;
+	}
+	matrix_map[i] = NULL;
+	close(fd);
+	free(line);
+	return (matrix_map);
 }
 
 char    **get_final_map(int ac, char **av, t_map *map)
 {
-	char	*raw_line;
+	//char	*raw_line = NULL;
 	
     if (ac != 2 || check_name(av[1]) != 0)
 		exit_error("Invalid arguments\n", 1);
-	raw_line = get_raw_map(av[1]);//le pasamos el path del fd del map
-	if (!raw_line)
-		exit_error("error getting map\n", 1);
-	map->raw_map = fill_void(raw_line);
-	printf("RAW\n%s\n", map->raw_map);
+		
+	//raw_line = get_raw_map(av[1]);//aqui hace la lectura del fd
+	map->my_map = complete_map(av[1], map);
+	printf("%s", map->my_map[0]);
+	printf("%s", map->my_map[1]);
+	printf("%s", map->my_map[2]);
+	
+	/* if (!raw_line)
+		exit_error("error getting raw map\n", 1);
+	//map->raw_map = fill_void(raw_line);
+	//printf("RAW\n%s\n", map->raw_map);
 	map->my_map = ft_split(map->raw_map, '\n');
 
-	/*parseo de los chars del mapa*/
 	if (!final_map(map->my_map, map, map->raw_map))
 	{
 		exit_error(RED"Invalid map2\n"END, 1);
@@ -91,8 +118,9 @@ char    **get_final_map(int ac, char **av, t_map *map)
 	}
 	else
 		printf(GREEN"This map es OK\n"END);
-	free(map->raw_map);
+	free(map->raw_map); */
     return (map->my_map);
+    //return (map->my_map);
 }
 
 /*	Para considerar un mapa cerrado, las paredes deben estar en la primera linea

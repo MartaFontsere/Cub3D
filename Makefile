@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/01/16 18:05:12 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/01/20 20:33:02 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ ORANGE = \e[1;38;2;255;128;0m
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
 
 #FILES =  cub3D.c initialitations.c pseudoparsing.c print_minimap.c render.c error.c
-FILES = cub3D.c getting_map.c parsing_map.c errors.c
+FILES = cub3D.c getting_map.c parsing_map.c errors.c fill_map.c
 FILES += get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
 SRCDIR = src/
@@ -48,7 +48,7 @@ NAME = cub3D
 HEADER = inc/cub3D.h src/get_next_line/get_next_line.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 MLXDIR = libs/MLX42
 LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
