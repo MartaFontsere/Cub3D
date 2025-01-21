@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/20 19:56:17 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:26:52 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,18 @@ void	exit_error(char *msg, int status)
 	exit(status);
 }
 
-void	free_matrix(t_map *map)
+void	free_matrix(char **matrix)
 {
 	int	i;
 
 	i = 0;
-	if (map->my_map == NULL)
+	if (matrix == NULL)
 		return ;
-	while (map->my_map[i])
+	while (matrix[i])
 	{
-		free(map->my_map[i]);
+		free(matrix[i]);
 		i++;
 	}
-	free(map->my_map);
-	map->my_map = NULL;
+	free(matrix);
+	matrix = NULL;
 }
-
-/* void	free_before_end(t_map *map)
-{
-	
-} */

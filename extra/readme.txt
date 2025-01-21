@@ -25,3 +25,5 @@
 		(segun subject: UPTOYOU)
 20/01 -	Hay que reducir las lineas en complete map. Ahora procedemos a agregar
 		tantos chars como larga sea la linea y luego hacemos el rawline
+21/01 -	He quitado un par de lineas de CMake que se mostraban al hacer make
+		fd(Findglfw3.cmake y CMakeLists.txt)

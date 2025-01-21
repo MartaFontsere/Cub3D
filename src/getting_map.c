@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:28:37 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/20 20:41:16 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/21 20:18:06 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,17 @@ int	count_fd_line(char *map_path, t_map *map)
 	free(line);
 	return (count);
 }
+
 /*HAY QUE REDUCIR LINES*/
 char	**complete_map(char *map_path, t_map *map)
 {
 	int		fd;
-	int		pos;
 	char	*line;
-	char	**matrix_map;
+	char	**matrix_map;//usamos la var de la struct??
 	int		i;
 	
-	pos = count_fd_line(map_path, map);
-	matrix_map = malloc(sizeof(char *) * (pos + 1));
+	map->fd_lines = count_fd_line(map_path, map);//podemos hacer un save malloc
+	matrix_map = malloc(sizeof(char *) * (map->fd_lines + 1));
 	if (!matrix_map)
 		return (NULL);
 	fd = open(map_path, O_RDONLY);
@@ -79,7 +79,7 @@ char	**complete_map(char *map_path, t_map *map)
 		free(line);
 		if (!matrix_map[i])
 		{
-			free_matrix(map);
+			free_matrix(matrix_map);
 			close(fd);
 			return (NULL);
 		}
@@ -92,37 +92,32 @@ char	**complete_map(char *map_path, t_map *map)
 	return (matrix_map);
 }
 
+/*tenemos que retornar el my_map que ya debe tener todos los espacios llenos*/
 char    **get_final_map(int ac, char **av, t_map *map)
 {
-	//char	*raw_line = NULL;
-	
+	int	i;
+	int	j;
+	char	**cp_matrix;
+
+	i = 0;
+	j = 0;
     if (ac != 2 || check_name(av[1]) != 0)
-		exit_error("Invalid arguments\n", 1);
-		
-	//raw_line = get_raw_map(av[1]);//aqui hace la lectura del fd
+		exit_error("Invalid arguments\n", 1);	
+	/*check la raw line*/
 	map->my_map = complete_map(av[1], map);
-	printf("%s", map->my_map[0]);
-	printf("%s", map->my_map[1]);
-	printf("%s", map->my_map[2]);
-	
-	/* if (!raw_line)
-		exit_error("error getting raw map\n", 1);
-	//map->raw_map = fill_void(raw_line);
-	//printf("RAW\n%s\n", map->raw_map);
-	map->my_map = ft_split(map->raw_map, '\n');
-
-	if (!final_map(map->my_map, map, map->raw_map))
+	cp_matrix = malloc(sizeof(char *) * (map->fd_lines + 1));
+	if (!cp_matrix)
+		return (NULL);
+	while (map->my_map[i])
+		cp_matrix[j++] = fill_void(map->my_map[i++], map);
+	cp_matrix[j] = NULL;
+	//ahora tenemos que rellenar el mapa con los chars del mapa original
+	//lo podemos borrar
+	j = 0;
+	while (cp_matrix[j])
 	{
-		exit_error(RED"Invalid map2\n"END, 1);
-		free(map->raw_map);
+		printf("%s\n", cp_matrix[j]);
+		j++;
 	}
-	else
-		printf(GREEN"This map es OK\n"END);
-	free(map->raw_map); */
-    return (map->my_map);
-    //return (map->my_map);
+    return (cp_matrix);
 }
-
-/*	Para considerar un mapa cerrado, las paredes deben estar en la primera linea
-	del fd, o rodeados de 0 en todas las direcciones.
-*/

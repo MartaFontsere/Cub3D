@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/20 19:57:28 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/21 20:16:06 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ typedef struct s_map
     int     nexit;
     int		pos_h;//para floodfill
 	int		pos_w;
-	int		line_size;
+	size_t	line_size;//line max
+	int		fd_lines;
     //t_img   img;
 }           t_map;
 
@@ -66,8 +67,10 @@ int     final_map(char **my_map, t_map *map, char *raw_map);
 
 
 /*			--fill_map--			*/
-char	*fill_void(char *raw_map);
-int		ft_max_size(char *line, int max);
+char	*fill_void(char *line, t_map *map);
+size_t	ft_max_size(char *line, size_t max);
+//char	**copy_map(char **my_map, size_t height, t_map *map);
+
 
 /*			--getting_map--			*/
 int     check_name(char *name);
@@ -78,7 +81,7 @@ int		count_fd_line(char *map_path, t_map *map);
 
 /*			--errors--			*/
 void	exit_error(char *msg, int status);
-void	free_matrix(t_map *map);
+void	free_matrix(char **matrix);
 
 /*			--inits--			*/
 void    init_map_values(t_map *map);
