@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/22 17:08:39 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/22 19:59:54 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 //# define MEDIUM_GREY 0X575757FF
 # define SOFT_GREY 0x959595FF
 # define RED1 0xFF0000FF
+# define YELLOW 0xFFFF00
 
 
 /*PLAYER ORIENTATION*/

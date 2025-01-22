@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/22 03:26:53 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/22 19:51:30 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,4 +192,5 @@ void	print_minimap(t_game *gdata)
 	print_empty_space (gdata->mlx, gdata->minimap, gdata->map);
 		//Estas dos se pueden fusionar, REVISAR
 	print_player (gdata, gdata->player, gdata->player.x, gdata->player.y, RED1);
+	print_point_of_view (gdata, gdata->player);
 }

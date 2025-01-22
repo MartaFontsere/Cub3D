@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 03:02:49 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/22 17:08:42 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/22 21:50:09 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,56 @@ void print_player (t_game *gdata, t_player player, int x, int y, int color)
 }
 
 
-print_point_of_view
+void print_point_of_view (t_game *gdata, t_player player) //TOTALMENTE HARDCODEADO
+{
+	int i;
+	int init_x;
+	int init_y;
+	int thickness;
+
+	i = 0;
+	thickness = 0;
+	if (player->ray.print_point_of_view == NORTH)
+	{
+		init_x = player.midle_x;
+		init_y = player.midle_y - player.radius;
+		while (i < player.radius *2)
+		{
+			while (thickness < 3)
+			{
+				mlx_put_pixel(gdata->mlx.image, init_x, init_y, color);
+			}
+			i++;
+		}
+	}
+
+	else if (player->ray.print_point_of_view == SOUT)
+	{
+		init_x = player.midle_x;
+		init_y = player.midle_y + player.radius;
+		while (i < player.radius *2)
+		{
+
+		}
+	}
+
+	else if (player->ray.print_point_of_view == EAST)
+	{
+		init_x = player.midle_x + player.radius;
+		init_y = player.midle_y;
+		while (i < player.radius *2)
+		{
+
+		}
+	}
+
+	else if (player->ray.print_point_of_view == WEST)
+	{
+		init_x = player.midle_x - player.radius;
+		init_y = player.midle_y;
+		while (i < player.radius *2)
+		{
+
+		}
+	}
+}
