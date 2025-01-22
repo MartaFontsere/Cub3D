@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42barcel>       +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 17:20:19 by mfontser          #+#    #+#             */
-/*   Updated: 2024/01/31 18:02:17 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/21 20:04:44 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	*ft_memset(void *str, int c, size_t len)
 			i++;
 		}
 	}
+	str2[i] = '\0';
 	return (str);
 }
 /*

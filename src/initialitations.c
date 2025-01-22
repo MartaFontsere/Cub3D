@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/20 15:33:20 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/22 03:27:17 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void init_player_parameters (t_game *gdata, t_player *player)
 	init_player_position(gdata, &gdata->map, &gdata->player);
 	init_player_orientation(&gdata->map, &gdata->player);
 	player->radius = gdata->minimap.cell_width / 4;
-	player->collision_size = gdata->minimap.cell_width - player->radius;
+
 	
 }
 
@@ -81,8 +81,10 @@ void	init_player_position(t_game *gdata, t_map *map, t_player *player)
 		}
 		i++;
 	}
-	player->x = (player->raw_x * gdata->minimap.cell_width) + (gdata->minimap.cell_width / 2);
-	player->y = (player->raw_y * gdata->minimap.cell_height) + (gdata->minimap.cell_height / 2);
+	player->x = (player->raw_x * gdata->minimap.cell_width);
+	player->y = (player->raw_y * gdata->minimap.cell_height);
+	player->midle_x = (player->raw_x * gdata->minimap.cell_width) + (gdata->minimap.cell_width / 2);
+	player->midle_y = (player->raw_y * gdata->minimap.cell_height) + (gdata->minimap.cell_height / 2);
 }
 
 void	init_player_orientation(t_map *map, t_player *player)
@@ -132,23 +134,24 @@ void	init_minimap(t_game *gdata, t_map *map)
 	
 }
 
-int	init_mlx(t_game *gdata, t_mlx *mlx)
+int	init_mlx_and_create_new_image(t_game *gdata, t_mlx *mlx)
 {
 	// gdata->window_width = SPRITES_WIDTH * gdata->map_width;
 	// gdata->window_height = SPRITES_HEIGHT * gdata->map_height;
 
 	mlx->init = mlx_init((gdata->minimap.width), (gdata->minimap.height),
-			"The Game", true);
+			"The Game", true); // ESTO CAMBIARA, LAS MEDIDAS DE LA VENTANA
 	if (!mlx->init)
 	{
 		write_error("It's not possible to initialize the mlx");
 		//free_raw_and_map(gdata); REVISAR 
 		return (0);
 	}
-	gdata->minimap.background_img = mlx_new_image(mlx->init, gdata->minimap.width, gdata->minimap.height); //PORQUE +1?????
-	if (!gdata->minimap.background_img)
+	mlx->image = mlx_new_image(mlx->init, gdata->minimap.width, gdata->minimap.height);
+	if (!mlx->image)
 	{
 		write_error("It's not possible to generate new image");
+		close_window(gdata);
 		//free_raw_and_map(gdata); REVISAR 
 		return (0);
 	}

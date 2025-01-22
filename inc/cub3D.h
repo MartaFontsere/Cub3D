@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/20 19:38:13 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/22 03:26:04 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,18 @@ typedef struct s_mlx
 	mlx_t		*init;
 	int			window_height;
 	int			window_width;
-	//t_images	*images;
+	mlx_image_t	*image;
 }				t_mlx;
 
 typedef struct s_player
 {
 	int			raw_x; // Posición Inicial del Personaje en X (en casillas)
 	int			raw_y; // Posición Inicial del Personaje en Y (en casillas)
-	double		x; // Posición Inicial del Personaje centrado en la casilla en X (en pixeles para minimapa)
-	double		y; // Posición Inicial del Personaje centrado en la casilla en Y (en pixeles para minimapa)
-	double  	radius; // radio del circulo que representara el personaje
-	int  	collision_size;
+	int		x; // Posición Inicial del Personaje en X (en pixeles para minimapa)
+	int		y; // Posición Inicial del Personaje en Y (en pixeles para minimapa)
+	int 	midle_x; // Posición Inicial del Personaje centrado en la casilla en X (en pixeles para minimapa)
+	int 	midle_y; // Posición Inicial del Personaje centrado en la casilla en Y (en pixeles para minimapa)
+	int  	radius; // radio del circulo que representara el personaje
 	
 	int			orientation; // Orientacion Inicial que apunta el Persoanje
 	double		vision_angle; // Orientacion en grados de la vision del personaje. ira girando en tramos mas pequeños que enteros (en radianes), es decir, con decimales, por eso es double
@@ -98,7 +99,7 @@ typedef struct s_player
 
 typedef struct s_minimap
 {
-	mlx_image_t		*background_img;
+	//mlx_image_t		*background_img;
 	int				width; // Valor máximo X del minimapa (en pixels)
 	int				height; // Valor máximo Y del minimapa (en pixels)
 	int 			cell_width; // Cantidad de pixels en el eje X
@@ -143,20 +144,23 @@ void	init_minimap(t_game *gdata, t_map *map);
 void 	init_player_parameters (t_game *gdata, t_player *player);
 void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
 void	init_player_orientation(t_map *map_info, t_player *player);
-int		init_mlx(t_game *gdata, t_mlx *mlx);
+int		init_mlx_and_create_new_image(t_game *gdata, t_mlx *mlx);
 
 //PSEUDOPARSING
 char **parsing_pre_yahaira(t_game *gdata);
 
 //PRINT MINIMAP
 void	print_minimap(t_game *gdata);
-void print_player (t_minimap minimap, t_player player);
-void print_empty_space (t_minimap minimap, t_map map);
-void print_walls (t_minimap minimap, t_map map);
-void print_background (t_minimap minimap);
+void print_player (t_game *gdata, t_player player, int x, int y, int color);
+void print_empty_space (t_mlx mlx, t_minimap minimap, t_map map);
+void print_walls (t_mlx mlx, t_minimap minimap, t_map map);
+void print_background (t_mlx mlx, t_minimap minimap);
 
 //RENDER
 void render_game (void *param);
+
+//MOVE
+void	print_player_move(t_game *gdata, t_player player, int target_x, int target_y);
 
 //PRESS KEY
 int	there_is_a_key_pressed(t_game *gdata);

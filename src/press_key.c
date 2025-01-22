@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/20 13:50:30 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/21 21:31:30 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,27 @@
 
 void	release_key(mlx_key_data_t keydata, t_game *gdata)
 {
-	if (keydata.key == MLX_KEY_RIGHT)
+
+	if (keydata.key == MLX_KEY_D)
+	{
+		printf("suelto D\n");
 		gdata->player.mov_right = 0;
-	else if (keydata.key == MLX_KEY_LEFT)
+	}
+	else if (keydata.key == MLX_KEY_A)
+	{
+		printf("suelto A\n");
 		gdata->player.mov_left = 0;
-	else if (keydata.key == MLX_KEY_UP)
+	}
+	else if (keydata.key == MLX_KEY_W)
+	{
+		printf("suelto W\n");
 		gdata->player.mov_up = 0;
-	else if (keydata.key == MLX_KEY_DOWN)
+	}
+	else if (keydata.key == MLX_KEY_S)
+	{
+		printf("suelto S\n");
 		gdata->player.mov_down = 0;
+	}
 }
 
 
@@ -54,15 +67,28 @@ void	press_key(mlx_key_data_t keydata, void *param)
 	if (gdata->finish_game == 0 && keydata.action == MLX_PRESS)
 	{
 		if (keydata.key == MLX_KEY_D)
+		{
 			set_mov_params(gdata, &gdata->player.mov_right);
+			printf("D\n");
+		}
 		else if (keydata.key == MLX_KEY_A)
+		{
 			set_mov_params(gdata, &gdata->player.mov_left);
+			printf("A\n");
+		}
+
 		else if (keydata.key == MLX_KEY_W)
+		{
 			set_mov_params(gdata, &gdata->player.mov_up);
+			printf("W\n");
+		}
 		else if (keydata.key == MLX_KEY_S)
+		{
 			set_mov_params(gdata, &gdata->player.mov_down);
+			printf("S\n");
+		}
 	}
-	if (gdata->finish_game == 0 && keydata.action == MLX_RELEASE)
+	if (keydata.action == MLX_RELEASE)
 		release_key(keydata, gdata);
 }
 
