@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/22 03:27:17 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:03:27 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,29 +100,28 @@ void	init_player_orientation(t_map *map, t_player *player)
 		{
 			if (map->matrix[i][j] == 'N')
 			{
-				player->orientation = NORTH;
+				player->ray.vision_angle = NORTH;
 				break;
 			}
 			if (map->matrix[i][j] == 'S')
 			{
-				player->orientation = SOUTH;
+				player->ray.vision_angle = SOUTH;
 				break;
 			}
 			if (map->matrix[i][j] == 'E')
 			{
-				player->orientation = EAST;
+				player->ray.vision_angle = EAST;
 				break;
 			}
 			if (map->matrix[i][j] == 'W')
 			{
-				player->orientation = WEST;
+				player->ray.vision_angle = WEST;
 				break;
 			}
 			j++;
 		}
 		i++;
 	}
-	player->vision_angle = (double)player->orientation;
 }
 
 void	init_minimap(t_game *gdata, t_map *map)

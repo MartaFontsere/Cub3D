@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/22 11:26:34 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:18:55 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ void render_game (void *param) // todo lo que se tenga que checkear a cada vuelt
 	{
 		printf ("hay una tecla apretada\n");
 		printf ("la posicion del player es: |%d||%d|\n",gdata->player.x, gdata->player.y);
-		prepare_movement(gdata, &target_x, &target_y);
+		if (gdata->player.rotate_right == 1 || gdata->player.rotate_left == 1)
+			rotate (gdata);
+		if (gdata->player.move_right == 1 || gdata->player.move_left == 1 || gdata->player.move_up == 1 || gdata->player.move_down == 1)
+			prepare_movement(gdata, &target_x, &target_y);
 		printf ("el target a donde se va a mover es: |%d||%d|\n",target_x, target_y);
 		print_player_move(gdata, gdata->player, target_x, target_y);
 		gdata->player.x = target_x;

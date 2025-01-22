@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/21 21:31:30 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:43:06 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ void	release_key(mlx_key_data_t keydata, t_game *gdata)
 		printf("suelto S\n");
 		gdata->player.mov_down = 0;
 	}
+	else if (keydata.key == MLX_KEY_RIGHT)
+	{
+		gdata->player.rotate_right = 0;
+		printf("suelto ->\n");
+	}
+	else if (keydata.key == MLX_KEY_LEFT)
+	{
+		gdata->player.rotate_left = 0;
+		printf("suelto <-\n");
+	}
 }
 
 
@@ -44,11 +54,14 @@ void	reset_mov_params(t_game *gdata)
 	gdata->player.mov_left = 0;
 	gdata->player.mov_up = 0;
 	gdata->player.mov_down = 0;
+	gdata->player.rotate_right = 0;
+	gdata->player.rotate_left = 0;
 }
 
 void	set_mov_params(t_game *gdata, int *move_direction)
 {
-	reset_mov_params(gdata);
+	//reset_mov_params(gdata);
+	(void)gdata; //BORRAR
 	*move_direction = 1;
 	//gdata->player.orientation = orient;
 }
@@ -76,7 +89,6 @@ void	press_key(mlx_key_data_t keydata, void *param)
 			set_mov_params(gdata, &gdata->player.mov_left);
 			printf("A\n");
 		}
-
 		else if (keydata.key == MLX_KEY_W)
 		{
 			set_mov_params(gdata, &gdata->player.mov_up);
@@ -86,6 +98,16 @@ void	press_key(mlx_key_data_t keydata, void *param)
 		{
 			set_mov_params(gdata, &gdata->player.mov_down);
 			printf("S\n");
+		}
+		else if (keydata.key == MLX_KEY_RIGHT)
+		{
+			set_mov_params(gdata, &gdata->player.rotate_right);
+			printf("->\n");
+		}
+		else if (keydata.key == MLX_KEY_LEFT)
+		{
+			set_mov_params(gdata, &gdata->player.rotate_left);
+			printf("<-\n");
 		}
 	}
 	if (keydata.action == MLX_RELEASE)
@@ -104,6 +126,11 @@ int	there_is_a_key_pressed(t_game *gdata)
 		return (1);
 	if (gdata->player.mov_down == 1)
 		return (1);
+	if (gdata->player.rotate_right == 1)
+		return (1);
+	if (gdata->player.rotate_left == 1)
+		return (1);
+
 	return (0);
 }
 

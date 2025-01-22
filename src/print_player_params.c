@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 03:02:49 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/22 03:27:48 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:08:42 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,6 @@ void print_player (t_game *gdata, t_player player, int x, int y, int color)
 		draw_y++;
 	}	
 }
+
+
+print_point_of_view

@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/22 03:26:04 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:08:39 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,18 @@
 
 
 /*MINIMAP*/
-# define PLAYER_RADIUS 15 // lo que ocupara el player en el minimapa
-//# define WALL_SIZE 100
+
+
+
+
+//DEFINIR TAMAÑO DE VENTANA DE LAS CASILLAS CORRESPONDIENTES * 64 PIXELES (encontrar el mapa maximo)
+//ALTURA DEL PLAYER DE 32 PIXELES
+//PROJECTION PLANE DE 320 DE ANCHO Y 200 DE ALTO
+/*
+Dimension of the Projection Plane = 320 x 200 units
+Center of the Projection Plane = (160,100)
+Distance to the Projection Plane = 277 units
+Angle between subsequent rays = 60/320 degrees*/
 
 typedef struct s_images
 {
@@ -77,23 +87,32 @@ typedef struct s_mlx
 	mlx_image_t	*image;
 }				t_mlx;
 
+typedef struct s_ray
+{
+	int			point_of_view; // Orientacion Inicial en grados de la vision del personaje
+	int 		FOV; //Field Of View
+
+} 	t_ray;
+
 typedef struct s_player
 {
 	int			raw_x; // Posición Inicial del Personaje en X (en casillas)
 	int			raw_y; // Posición Inicial del Personaje en Y (en casillas)
 	int		x; // Posición Inicial del Personaje en X (en pixeles para minimapa)
 	int		y; // Posición Inicial del Personaje en Y (en pixeles para minimapa)
-	int 	midle_x; // Posición Inicial del Personaje centrado en la casilla en X (en pixeles para minimapa)
-	int 	midle_y; // Posición Inicial del Personaje centrado en la casilla en Y (en pixeles para minimapa)
+	int 	midle_x; // Posición del Personaje centrado en la casilla en X (en pixeles para minimapa)
+	int 	midle_y; // Posición del Personaje centrado en la casilla en Y (en pixeles para minimapa)
 	int  	radius; // radio del circulo que representara el personaje
 	
-	int			orientation; // Orientacion Inicial que apunta el Persoanje
-	double		vision_angle; // Orientacion en grados de la vision del personaje. ira girando en tramos mas pequeños que enteros (en radianes), es decir, con decimales, por eso es double
-	int  		speed;
+	
+	t_ray 		ray;
+	int  		speed; // Cuantos pixeles se desplaza cada vez que tocamos una tecla
 	int 		mov_right;
 	int 		mov_left;
 	int 		mov_up;
 	int 		mov_down;
+	int 		rotate_right;
+	int 		rotate_left;
 
 }				t_player;
 

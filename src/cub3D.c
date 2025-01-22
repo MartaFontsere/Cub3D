@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/21 20:28:30 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:29:58 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	close_window(t_game	*gdata)
 }
 
 
-int main(int argc, char **argv)
+int main(int ac, char **av)
 {
 	t_game	gdata;
 
 
-	(void)argc;
-	(void)argv;
+	(void)ac;
+	(void)av;
 	init_gdata_values(&gdata);
 	//Primero necesito tener el mapa convertido a matriz
 	gdata.map.matrix = parsing_pre_yahaira(&gdata);
