@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/22 17:03:27 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:49:50 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_gdata_values(t_game *gdata)
 	gdata->player.raw_y = 0;
 	gdata->player.x = 0;
 	gdata->player.y = 0;
-	gdata->player.orientation = NORTH;
+	gdata->player.ray.vision_angle = NORTH;
 	gdata->player.mov_right = 0;
 	gdata->player.mov_left = 0;
 	gdata->player.mov_up = 0;
@@ -83,8 +83,16 @@ void	init_player_position(t_game *gdata, t_map *map, t_player *player)
 	}
 	player->x = (player->raw_x * gdata->minimap.cell_width);
 	player->y = (player->raw_y * gdata->minimap.cell_height);
-	player->midle_x = (player->raw_x * gdata->minimap.cell_width) + (gdata->minimap.cell_width / 2);
-	player->midle_y = (player->raw_y * gdata->minimap.cell_height) + (gdata->minimap.cell_height / 2);
+	printf ("posicion en x |%f|\n", player->x);
+	printf ("posicion en y |%f|\n", player->y);
+	player->x = (player->raw_x * gdata->minimap.cell_width) * cos(gdata->player.ray.vision_angle);
+	player->y = (player->raw_y * gdata->minimap.cell_height) * sin(gdata->player.ray.vision_angle);
+	printf ("cos del angulo |%f|\n", cos(gdata->player.ray.vision_angle));
+	printf ("sen del angulo |%f|\n", sin(gdata->player.ray.vision_angle));
+	printf ("posicion 2 en x |%f|\n", player->x);
+	printf ("posicion 2 en y |%f|\n", player->y);
+	player->midle_x = player->x + (gdata->minimap.cell_width / 2);
+	player->midle_y = player->y + (gdata->minimap.cell_height / 2);
 }
 
 void	init_player_orientation(t_map *map, t_player *player)

@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/22 19:59:54 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/24 04:10:36 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@
 //# define MEDIUM_GREY 0X575757FF
 # define SOFT_GREY 0x959595FF
 # define RED1 0xFF0000FF
-# define YELLOW 0xFFFF00
+# define YELLOW1 0xFFFF00FF // el FF final es maxima opacidad
 
 
 /*PLAYER ORIENTATION*/
-# define NORTH 90
-# define SOUTH 270
-# define EAST 0
-# define WEST 180
+# define NORTH M_PI / 2 //90 grados
+# define SOUTH 3 * M_PI / 2 // 270 grados
+# define EAST 2 * M_PI //0 grados
+# define WEST M_PI //180 grados
 
 
 /*MOVE*/
@@ -59,6 +59,9 @@
 # define MOVE_UP 2
 # define MOVE_DOWN 3
 
+/*PLAYER SPEED*/
+# define MOVE_SPEED 4 // cuantos pixeles se mueve cada vez
+# define ROTATION_SPEED 0.4
 
 /*MINIMAP*/
 
@@ -90,8 +93,8 @@ typedef struct s_mlx
 
 typedef struct s_ray
 {
-	int			point_of_view; // Orientacion Inicial en grados de la vision del personaje
-	int 		FOV; //Field Of View
+	double		vision_angle; // Orientacion Inicial en grados de la vision del personaje
+	double 		FOV; //Field Of View
 
 } 	t_ray;
 
@@ -99,20 +102,20 @@ typedef struct s_player
 {
 	int			raw_x; // Posición Inicial del Personaje en X (en casillas)
 	int			raw_y; // Posición Inicial del Personaje en Y (en casillas)
-	int		x; // Posición Inicial del Personaje en X (en pixeles para minimapa)
-	int		y; // Posición Inicial del Personaje en Y (en pixeles para minimapa)
-	int 	midle_x; // Posición del Personaje centrado en la casilla en X (en pixeles para minimapa)
-	int 	midle_y; // Posición del Personaje centrado en la casilla en Y (en pixeles para minimapa)
-	int  	radius; // radio del circulo que representara el personaje
+	double		x; // Posición Inicial del Personaje en X (en pixeles para minimapa)
+	double		y; // Posición Inicial del Personaje en Y (en pixeles para minimapa)
+	double 	midle_x; // Posición del Personaje centrado en la casilla en X (en pixeles para minimapa)
+	double 	midle_y; // Posición del Personaje centrado en la casilla en Y (en pixeles para minimapa)
+	double  	radius; // radio del circulo que representara el personaje
 	
 	
 	t_ray 		ray;
 	int  		speed; // Cuantos pixeles se desplaza cada vez que tocamos una tecla
-	int 		mov_right;
-	int 		mov_left;
-	int 		mov_up;
+	int  		mov_right;
+	int  		mov_left;
+	int  		mov_up;
 	int 		mov_down;
-	int 		rotate_right;
+	int  		rotate_right;
 	int 		rotate_left;
 
 }				t_player;
@@ -122,8 +125,8 @@ typedef struct s_minimap
 	//mlx_image_t		*background_img;
 	int				width; // Valor máximo X del minimapa (en pixels)
 	int				height; // Valor máximo Y del minimapa (en pixels)
-	int 			cell_width; // Cantidad de pixels en el eje X
-	int 			cell_height; //Cantidad de pixels en el eje Y
+	double 			cell_width; // Cantidad de pixels en el eje X
+	double 			cell_height; //Cantidad de pixels en el eje Y
 }					t_minimap;
 
 typedef struct s_map
@@ -171,16 +174,23 @@ char **parsing_pre_yahaira(t_game *gdata);
 
 //PRINT MINIMAP
 void	print_minimap(t_game *gdata);
-void print_player (t_game *gdata, t_player player, int x, int y, int color);
+
 void print_empty_space (t_mlx mlx, t_minimap minimap, t_map map);
 void print_walls (t_mlx mlx, t_minimap minimap, t_map map);
 void print_background (t_mlx mlx, t_minimap minimap);
+
+//PRINT PLAYER PARAMS
+void print_player (t_game *gdata, t_player player, double x, double y, int color);
+void print_vision_angle (t_game *gdata, t_player player, double x, double y, int color);
 
 //RENDER
 void render_game (void *param);
 
 //MOVE
-void	print_player_move(t_game *gdata, t_player player, int target_x, int target_y);
+void	prepare_movement(t_game *gdata, double *target_x, double *target_y);
+void rotate_player(t_player *player);
+void	print_player_move(t_game *gdata, t_player player, double target_x, double target_y);
+void print_player_view (t_game *gdata, t_player player, double target_x, double target_y);
 
 //PRESS KEY
 int	there_is_a_key_pressed(t_game *gdata);
@@ -190,11 +200,11 @@ void	reset_mov_params(t_game *gdata);
 void	release_key(mlx_key_data_t keydata, t_game *gdata);
 
 //COLLISIONS
-int	can_i_move_to(t_game *gdata, int target_x, int target_y);
-int	check_down_move(t_game *gdata, int target_y, int target_x);
-int	check_up_move(t_game *gdata, int target_y, int target_x);
-int	check_left_move(t_game *gdata, int target_y, int target_x);
-int	check_right_move(t_game *gdata, int target_y, int target_x);
+int	can_i_move_to(t_game *gdata, double target_x, double target_y);
+int	check_down_move(t_game *gdata, double target_y, double target_x);
+int	check_up_move(t_game *gdata, double target_y, double target_x);
+int	check_left_move(t_game *gdata, double target_y, double target_x);
+int	check_right_move(t_game *gdata, double target_y, double target_x);
 
 //ERROR
 void	write_error(const char *str);
