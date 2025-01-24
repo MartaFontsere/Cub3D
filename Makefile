@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/01/21 20:00:08 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/01/24 18:20:38 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ ORANGE = \e[1;38;2;255;128;0m
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
 
 #FILES =  cub3D.c initialitations.c pseudoparsing.c print_minimap.c render.c error.c
-FILES = cub3D.c getting_map.c parsing_map.c errors.c fill_map.c
+FILES = cub3D.c get_matrix.c get_matrix_utils.c free_errors.c fill_matrix.c
 FILES += get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
 SRCDIR = src/
@@ -48,16 +48,16 @@ NAME = cub3D
 HEADER = inc/cub3D.h src/get_next_line/get_next_line.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 
 MLXDIR = libs/MLX42
-LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
+LIBS = libs/Libft/libft.a #$(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
 
 #--------------------------------------------------NORMAS----------------------------------------------------#
 
 #Metodo implicito
 
-$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a 
+$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile libs/Libft/libft.a #$(MLXDIR)/build/libmlx42.a 
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
@@ -68,7 +68,7 @@ all: make_libs ${NAME}
 
 make_libs:
 	@make -C libs/Libft all --no-print-directory
-	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4 --no-print-directory
+#	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4 --no-print-directory
 
 ${NAME}: ${OBJS}
 	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)

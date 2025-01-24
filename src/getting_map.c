@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:28:37 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/21 20:18:06 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:02:49 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,73 +51,58 @@ int	count_fd_line(char *map_path, t_map *map)
 	return (count);
 }
 
-/*HAY QUE REDUCIR LINES*/
-char	**complete_map(char *map_path, t_map *map)
+char	**extract_matrix(char *fd_path, t_map *map)
 {
 	int		fd;
 	char	*line;
-	char	**matrix_map;//usamos la var de la struct??
 	int		i;
-	
-	map->fd_lines = count_fd_line(map_path, map);//podemos hacer un save malloc
-	matrix_map = malloc(sizeof(char *) * (map->fd_lines + 1));
-	if (!matrix_map)
-		return (NULL);
-	fd = open(map_path, O_RDONLY);
+	char	**cp_matrix;
+
+	fd =  open(fd_path, O_RDONLY);
 	if (fd < 0)
-	{
-		free(matrix_map);
 		exit_error("error opening file\n", 42);
-	}
+	map->fd_lines = count_fd_line(fd_path, map);
+	cp_matrix = malloc(sizeof(char *) * (map->fd_lines + 1));
+	if (!cp_matrix)
+		return (NULL);
 	line = get_next_line(fd);
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (line)
+	while (line) 
 	{
-		matrix_map[i] = ft_strdup(line);
+		cp_matrix[i] = ft_strdup(line);
 		free(line);
-		if (!matrix_map[i])
+		if (!cp_matrix[i++])
 		{
-			free_matrix(matrix_map);
-			close(fd);
-			return (NULL);
+			free_matrix(cp_matrix);
+			return (close(fd), NULL);
 		}
 		line = get_next_line(fd);
-		i++;
 	}
-	matrix_map[i] = NULL;
+	cp_matrix[i] = NULL;
 	close(fd);
 	free(line);
-	return (matrix_map);
+	return (cp_matrix);
 }
 
-/*tenemos que retornar el my_map que ya debe tener todos los espacios llenos*/
-char    **get_final_map(int ac, char **av, t_map *map)
+//como guardamos el resultado en la matriz de la struct, podemos ponerlo a int y asi
+//liberar en el main
+char	**get_final_map(int ac, char **av, t_map *map)
 {
-	int	i;
-	int	j;
-	char	**cp_matrix;
-
-	i = 0;
-	j = 0;
-    if (ac != 2 || check_name(av[1]) != 0)
-		exit_error("Invalid arguments\n", 1);	
-	/*check la raw line*/
-	map->my_map = complete_map(av[1], map);
-	cp_matrix = malloc(sizeof(char *) * (map->fd_lines + 1));
+	//int	i;
+	//int	j;
+	char	**cp_matrix;//tmp
+	
+	cp_matrix = NULL;
+	if (ac != 2 || check_name(av[1]) != 0)
+			exit_error("Invalid arguments\n", 1);
+	cp_matrix = extract_matrix(av[1], map);//no es la final
 	if (!cp_matrix)
 		return (NULL);
-	while (map->my_map[i])
-		cp_matrix[j++] = fill_void(map->my_map[i++], map);
-	cp_matrix[j] = NULL;
-	//ahora tenemos que rellenar el mapa con los chars del mapa original
-	//lo podemos borrar
-	j = 0;
-	while (cp_matrix[j])
-	{
-		printf("%s\n", cp_matrix[j]);
-		j++;
-	}
-    return (cp_matrix);
+	if (!min_chars(cp_matrix))
+		return (NULL);
+	/* if (!get_rawline(cp_matrix, map))
+		return (NULL); */
+	return (cp_matrix);
 }

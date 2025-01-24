@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/21 20:16:06 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/24 18:29:25 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,15 @@
 
 typedef struct s_map
 {
-    void    *mlx;//se inicia al iniciar game(para evitar segv)
-    void    *window;
-	char	*raw_map;
-    char    **my_map;//una vez hecho el parseo, volvemos a splitear el  raw_map
+    //void    *mlx;//se inicia al iniciar game(para evitar segv)
+    //void    *window;
+	char	*rawmap;
+    char    **matrix;
+    char    **tmp_matrix;
+	char	*fd_path;
     int		heigth;
 	int		width;
-    int     nexit;
-    int		pos_h;//para floodfill
-	int		pos_w;
-	size_t	line_size;//line max
+	size_t	line_size;
 	int		fd_lines;
     //t_img   img;
 }           t_map;
@@ -60,30 +59,31 @@ typedef struct s_map
 	int		j;
 }			t_img; */
 
-/*			--parsing_map--			*/
-int		num_strchr(char *str, char c);
-int		min_chars(char *raw_map);
-int     final_map(char **my_map, t_map *map, char *raw_map);
+/*			--main--			*/
+void    init_map_values(t_map *map);
+void	print_matrix(char **matrix, int flag);
 
 
-/*			--fill_map--			*/
-char	*fill_void(char *line, t_map *map);
-size_t	ft_max_size(char *line, size_t max);
-//char	**copy_map(char **my_map, size_t height, t_map *map);
+/*			--fill_matrix--			*/
+char	*fill_void(t_map *map);
+int		complete_matrix(char **src, t_map *map);
 
-
-/*			--getting_map--			*/
-int     check_name(char *name);
-//char	*get_raw_map(char *map_path);
-char	**complete_map(char *map_path, t_map *map);
-char	**get_final_map(int ac, char **av, t_map *map);
-int		count_fd_line(char *map_path, t_map *map);
-
-/*			--errors--			*/
+/*			--free_errors--			*/
 void	exit_error(char *msg, int status);
 void	free_matrix(char **matrix);
+void	clean_data(t_map *map);
 
-/*			--inits--			*/
-void    init_map_values(t_map *map);
+/*			--get_matrix--			*/
+char	*get_rawmap(char *path, t_map *map);
+int		get_final_map(int ac, char **av, t_map *map);
+
+
+/*			--get_matrix_utils--			*/
+int		check_name(char *map_path);
+int		min_chars(char *rawmap);
+int		count_fd_line(char *map_path, t_map *map);
+size_t	ft_max_size(char *line, size_t max);
+
+
 
 #endif

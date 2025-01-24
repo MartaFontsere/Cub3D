@@ -5,66 +5,44 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 17:36:13 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/17 13:44:42 by yanaranj         ###   ########.fr       */
+/*   Created: 2025/01/23 19:42:57 by yanaranj          #+#    #+#             */
+/*   Updated: 2025/01/23 19:56:48 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	num_strchr(char *str, char c)
-{
-	int	n;
-
-	n = 0;
-	while (*str)
-	{
-		if (*str == c)
-			n++;
-		str++;
-	}
-	return (n);
-}
-
-/*	solo puede contener una de las letras indicadas. Y si o si debe haber una
-	orientacion de camara
-*/
-int	min_chars(char *raw_map)
+int		min_chars(char **matrix)
 {
 	int	i;
-	int	count;
+	int	j;
+	int count;
 
 	i = 0;
 	count = 0;
-	while (raw_map[i])
+	while (matrix[i])
 	{
-		if (raw_map[i] == 'N' || raw_map[i] == 'S' || raw_map[i] == 'E' || raw_map[i] == 'W')
+		j = 0;
+		while (matrix[i][j])
 		{
-			count++;
-			i++;
+			if (matrix[i][j] != '1' && matrix[i][j] != '0' && matrix[i][j] != '\n' \
+			&& matrix[i][j] != ' ' && matrix[i][j] != 'N' && matrix[i][j] != 'S' \
+			&& matrix[i][j] != 'E' && matrix[i][j] != 'W')
+			{
+				printf("no me sirve, salgo\n");
+				return (0);
+			}
+			if (matrix[i][j] == 'N' || matrix[i][j] == 'S' || matrix[i][j] == 'E' \
+			|| matrix[i][j] == 'W')
+			{
+				printf("es un valid char\n");
+				count++;
+			}
+			j++;
 		}
-		if (raw_map[i] != '1' && raw_map[i] != '0' && raw_map[i] != '\n')
-		{
-			i++;
-			return (0);	
-		}
-		else
-			i++;
+		i++;
 	}
 	if (count != 1)
-		return (0);
-	return (1);
-}
-
-//my_map es el mapa spliteado despues de haber rellenado los espacios encontrados
-
-int	final_map(char **my_map, t_map *map, char *raw_map)
-{
-	(void)my_map;
-	(void)map;
-	if (!min_chars(raw_map))
-		return (0);
-	/*if (!min_size(map))
-		return (0); */
+		return(0);
 	return (1);
 }

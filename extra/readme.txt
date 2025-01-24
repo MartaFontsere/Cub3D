@@ -27,3 +27,6 @@
 		tantos chars como larga sea la linea y luego hacemos el rawline
 21/01 -	He quitado un par de lineas de CMake que se mostraban al hacer make
 		fd(Findglfw3.cmake y CMakeLists.txt)
+24/01 -	Ya tenemos la rawline, el mapa spliteado y rellenado con 'R's. Tengo el
+		fsanitize comentado por el leak del split. Lo miro mas adelante.
+		Procedo a completar el mapa con los chars que me interesan
