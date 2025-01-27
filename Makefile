@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/01/24 18:20:38 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/01/27 13:29:58 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ NAME = cub3D
 HEADER = inc/cub3D.h src/get_next_line/get_next_line.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 MLXDIR = libs/MLX42
 LIBS = libs/Libft/libft.a #$(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm

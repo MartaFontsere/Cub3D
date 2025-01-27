@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/24 17:38:54 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:25:39 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ size_t	ft_max_size(char *line, size_t max)
 
 int	count_fd_line(char *map_path, t_map *map)
 {
+	(void)map;
 	int		fd;
 	char	*line;
 	int		count;
@@ -75,14 +76,19 @@ int	count_fd_line(char *map_path, t_map *map)
 	line = get_next_line(fd);
 	if (!line)
 		return (0);
+	//count = 1;
+	//printf(RED"%c\n"END, line[0]);
 	while (line)
 	{
-		map->line_size = ft_max_size(line, map->line_size);
+		//map->map_width = ft_max_size(line, map->map_width); //lo tenemos tambien el get_rawmap
 		count++;
 		free(line);
 		line = get_next_line(fd);
+		//printf(PURPLE"%c\n"END, line[0]);
+		//if (line && (line[0] != '\n' || line[0] != '\0'))
 	}
 	close(fd);
 	free(line);
+	//printf("[%d]\n", count);
 	return (count);
 }

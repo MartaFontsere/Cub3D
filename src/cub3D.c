@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/24 18:29:19 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:26:35 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,8 @@ void    init_map_values(t_map *map)
     map->matrix = NULL;
     map->tmp_matrix = NULL;
 	map->rawmap = NULL;
-	map->fd_lines = 0;
-    map->heigth = 0;
-    map->width = 0;
-	map->line_size = 0;
-	map->fd_lines = 0;
+	map->map_width = 0;
+	map->map_height = 0;
 }
 
 int main (int ac, char **av)
@@ -50,7 +47,8 @@ int main (int ac, char **av)
 		clean_data(&map);
 		return (1);
 	}
-	print_matrix(map.tmp_matrix, 1);
+	print_matrix(map.matrix, 1);
+	//print_matrix(map.tmp_matrix, 2);
 	clean_data(&map);
     return (1);
 }

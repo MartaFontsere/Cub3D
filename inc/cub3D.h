@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/24 18:29:25 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/27 16:30:33 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ typedef struct s_map
     char    **matrix;
     char    **tmp_matrix;
 	char	*fd_path;
-    int		heigth;
-	int		width;
-	size_t	line_size;
-	int		fd_lines;
+	size_t	map_width;
+	size_t	map_height;
     //t_img   img;
 }           t_map;
 
@@ -66,7 +64,11 @@ void	print_matrix(char **matrix, int flag);
 
 /*			--fill_matrix--			*/
 char	*fill_void(t_map *map);
+int		mix_matrix(char **src, t_map *map);
 int		complete_matrix(char **src, t_map *map);
+char	**copy_map(char **map, size_t height);
+
+
 
 /*			--free_errors--			*/
 void	exit_error(char *msg, int status);

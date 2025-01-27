@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/24 18:32:21 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:27:08 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*get_rawmap(char *path, t_map *map)
 	tmp_raw = gnl_strjoin(tmp_raw, line);
 	while (line)
 	{
-		map->line_size = ft_max_size(line, map->line_size);
+		map->map_width = ft_max_size(line, map->map_width);
 		free(line);
 		line = get_next_line(fd);
 		if (line)
@@ -54,11 +54,15 @@ int	get_final_map(int ac, char **av, t_map *map)
 		exit_error("Error getting map\n", 2);
 	if (!min_chars(map->rawmap))
 		exit_error("Invalid map\n", 42);
-	cp_matrix = ft_split(map->rawmap,'\n');//LEAK
+	cp_matrix = ft_split(map->rawmap,'\n');
+	print_matrix(cp_matrix, 2);
 	if (!cp_matrix)
 		return (0);
-	print_matrix(cp_matrix, 2);//BORRAR
 	if (!complete_matrix(cp_matrix, map))
+	{
+		free_matrix(cp_matrix);
 		return (0);
+	}
+	free_matrix(cp_matrix);
     return (1);
 }

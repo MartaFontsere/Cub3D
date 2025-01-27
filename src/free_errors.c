@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/24 18:32:05 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:31:38 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	clean_data(t_map *map)
 	if (map->rawmap)
 		free(map->rawmap);
 	map->rawmap = NULL;
-	map->heigth = 0;
-    map->width = 0;
-	map->line_size = 0;
-	map->fd_lines = 0;
+	map->map_height = 0;
+	map->map_width = 0;
+	map->fd_path = NULL;
 }
