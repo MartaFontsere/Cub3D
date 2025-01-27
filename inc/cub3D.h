@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/24 04:10:36 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:58:01 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@
 /*PLAYER ORIENTATION*/
 # define NORTH M_PI / 2 //90 grados
 # define SOUTH 3 * M_PI / 2 // 270 grados
-# define EAST 2 * M_PI //0 grados
+# define EAST 0 //0 grados
 # define WEST M_PI //180 grados
+
+
 
 
 /*MOVE*/

@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/24 04:47:10 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:36:45 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,30 @@ void	prepare_movement(t_game *gdata, double *target_x, double *target_y)
 {
 	printf ("player speed es = |%d|\n", MOVE_SPEED);
 	printf ("move up esta en %d\n", gdata->player.mov_up);
-	if (gdata->player.mov_right == 1 && can_i_move_to(gdata, *target_x * cos(gdata->player.ray.vision_angle)
-			+ MOVE_SPEED, *target_y * sin(gdata->player.ray.vision_angle)))
+	if (gdata->player.mov_right == 1 && can_i_move_to(gdata, *target_x + MOVE_SPEED * cos(gdata->player.ray.vision_angle - M_PI_2), *target_y + MOVE_SPEED * sin(gdata->player.ray.vision_angle - M_PI_2)))
 	{
-		*target_x = (*target_x * cos(gdata->player.ray.vision_angle) + MOVE_SPEED);
+		*target_x = (*target_x + MOVE_SPEED * cos(gdata->player.ray.vision_angle - M_PI_2));
+		*target_y = (*target_y + MOVE_SPEED * sin(gdata->player.ray.vision_angle - M_PI_2));
 		printf ("target = |%f|\n", *target_x);
 	}
-	else if (gdata->player.mov_left == 1 && can_i_move_to(gdata, *target_x * cos(gdata->player.ray.vision_angle)
-			- MOVE_SPEED, *target_y * sin(gdata->player.ray.vision_angle)))
+	else if (gdata->player.mov_left == 1 && can_i_move_to(gdata, *target_x - MOVE_SPEED * cos(gdata->player.ray.vision_angle + M_PI_2), *target_y - MOVE_SPEED * sin(gdata->player.ray.vision_angle + M_PI_2)))
 	{
-		*target_x = (*target_x * cos(gdata->player.ray.vision_angle) - MOVE_SPEED);
+		*target_x = (*target_x + MOVE_SPEED * cos(gdata->player.ray.vision_angle + M_PI_2));
+		*target_y = (*target_y + MOVE_SPEED * sin(gdata->player.ray.vision_angle + M_PI_2));
 		printf ("target = |%f|\n", *target_x);
 	}
-	else if (gdata->player.mov_up == 1 && can_i_move_to(gdata, *target_x * cos(gdata->player.ray.vision_angle),
-			*target_y * sin(gdata->player.ray.vision_angle) - MOVE_SPEED))
+	else if (gdata->player.mov_up == 1 && can_i_move_to(gdata, *target_x - MOVE_SPEED * cos(gdata->player.ray.vision_angle),
+			*target_y - MOVE_SPEED * sin(gdata->player.ray.vision_angle)))
 	{
-		*target_y = (*target_y * sin(gdata->player.ray.vision_angle) - MOVE_SPEED);
+		*target_x = (*target_x - MOVE_SPEED * cos(gdata->player.ray.vision_angle));
+		*target_y = (*target_y - MOVE_SPEED * sin(gdata->player.ray.vision_angle));
 		printf ("target = |%f|\n", *target_y);
 	}
-	else if (gdata->player.mov_down == 1 && can_i_move_to(gdata, *target_x * cos(gdata->player.ray.vision_angle),
-			*target_y * sin(gdata->player.ray.vision_angle) + MOVE_SPEED))
+	else if (gdata->player.mov_down == 1 && can_i_move_to(gdata, *target_x + MOVE_SPEED * cos(gdata->player.ray.vision_angle),
+			*target_y + MOVE_SPEED * sin(gdata->player.ray.vision_angle)))
 	{
-		*target_y = (*target_y * sin(gdata->player.ray.vision_angle) + MOVE_SPEED);
+		*target_x = (*target_x + MOVE_SPEED * cos(gdata->player.ray.vision_angle));
+		*target_y = (*target_y + MOVE_SPEED * sin(gdata->player.ray.vision_angle));
 		printf ("target = |%f|\n", *target_y);
 	}
 }
