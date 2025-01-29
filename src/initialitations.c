@@ -81,16 +81,16 @@ void	init_player_position(t_game *gdata, t_map *map, t_player *player)
 		}
 		i++;
 	}
-	player->x = (player->raw_x * gdata->minimap.cell_width);
-	player->y = (player->raw_y * gdata->minimap.cell_height);
+	player->x = (player->raw_x * gdata->minimap.cell_width) + (gdata->minimap.cell_width / 2);
+	player->y = (player->raw_y * gdata->minimap.cell_height) + (gdata->minimap.cell_height / 2);
 	// printf ("posicion en x |%f|\n", player->x);
 	// printf ("posicion en y |%f|\n", player->y);
 	// printf ("cos del angulo |%f|\n", cos(gdata->player.ray.vision_angle));
 	// printf ("sen del angulo |%f|\n", sin(gdata->player.ray.vision_angle));
 	// printf ("posicion 2 en x |%f|\n", player->x);
 	// printf ("posicion 2 en y |%f|\n", player->y);
-	player->midle_x = player->x + (gdata->minimap.cell_width / 2);
-	player->midle_y = player->y + (gdata->minimap.cell_height / 2);
+	// player->midle_x = player->x + (gdata->minimap.cell_width / 2);
+	// player->midle_y = player->y + (gdata->minimap.cell_height / 2);
 }
 
 void	init_player_orientation(t_map *map, t_player *player)

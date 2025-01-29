@@ -191,6 +191,6 @@ void	print_minimap(t_game *gdata)
 	print_walls (gdata->mlx, gdata->minimap, gdata->map);
 	print_empty_space (gdata->mlx, gdata->minimap, gdata->map);
 		//Estas dos se pueden fusionar, REVISAR
+	print_vision_angle (gdata, gdata->player, gdata->player.x, gdata->player.y, YELLOW1, 4);
 	print_player (gdata, gdata->player, gdata->player.x, gdata->player.y, RED1);
-	print_vision_angle (gdata, gdata->player, gdata->player.x, gdata->player.y, YELLOW1);
 }

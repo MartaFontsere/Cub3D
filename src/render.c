@@ -12,9 +12,6 @@
 
 #include "cub3D.h"
 
-//DESPRES AIXO EM SERVEIX PER QUAN PUGUI ROTAR I ES QUEDI EN QUALSEVOL POSICIO????
-
-
 void render_game (void *param) // todo lo que se tenga que checkear a cada vuelta de renderizado
 {
 	t_game	*gdata;
@@ -28,13 +25,14 @@ void render_game (void *param) // todo lo que se tenga que checkear a cada vuelt
 	{
 		printf ("hay una tecla apretada\n");
 		printf ("la posicion del player es: |%f||%f|\n",gdata->player.x, gdata->player.y);
+		if (gdata->player.rotate_right == 1 || gdata->player.rotate_left == 1)
+		{
+			printf ("entro\n");
+			rotate_player (&gdata->player);
+		}
 		if (gdata->player.mov_right == 1 || gdata->player.mov_left == 1 || gdata->player.mov_up == 1 || gdata->player.mov_down == 1)
 			prepare_movement(gdata, &target_x, &target_y);
 		printf ("el target a donde se va a mover es: |%f||%f|\n",target_x, target_y);
-		if (gdata->player.rotate_right == 1 || gdata->player.rotate_left == 1)
-			{printf ("entro\n");
-			rotate_player (&gdata->player);
-		}
 		print_player_view (gdata, gdata->player, target_x, target_y); // incluir tanto el fov como el point of view
 		print_player_move(gdata, gdata->player, target_x, target_y);
 		gdata->player.x = target_x;
