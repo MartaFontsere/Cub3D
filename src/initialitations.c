@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/26 15:23:00 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/30 02:17:53 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	init_gdata_values(t_game *gdata)
 	gdata->player.x = 0;
 	gdata->player.y = 0;
 	gdata->player.ray.vision_angle = NORTH;
+	gdata->player.ray.last_vision_angle = NORTH;
+	gdata->player.ray.FOV = M_PI / 3;
 	gdata->player.mov_right = 0;
 	gdata->player.mov_left = 0;
 	gdata->player.mov_up = 0;

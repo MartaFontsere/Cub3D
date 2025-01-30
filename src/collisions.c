@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/27 22:14:40 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/29 20:28:16 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_collision(t_game *gdata, double target_x, double target_y)
     {
         double contour_x = target_x + gdata->player.radius * cos(angle);
         double contour_y = target_y + gdata->player.radius * sin(angle);
-         mlx_put_pixel(gdata->mlx.image, contour_x, contour_y, YELLOW1);
+         //mlx_put_pixel(gdata->mlx.image, contour_x, contour_y, YELLOW1);
 
         cell_x = (int)(contour_x / gdata->minimap.cell_width);
         cell_y = (int)(contour_y / gdata->minimap.cell_height);

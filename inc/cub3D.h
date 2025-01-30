@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/27 17:58:01 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/30 02:51:08 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@
 //# define MEDIUM_GREY 0X575757FF
 # define SOFT_GREY 0x959595FF
 # define RED1 0xFF0000FF
-# define YELLOW1 0xFFFF00FF // el FF final es maxima opacidad
-
+//# define YELLOW1 0xFFFF00FF // el FF final es maxima opacidad
+# define YELLOW1 0xFFC006FF
+# define SOFT_YELLOW 0xFEF4D3FF
+//# define SOFT_YELLOW 0xFAFDC9FF
 
 /*PLAYER ORIENTATION*/
 # define NORTH M_PI_2 //90 grados
@@ -62,8 +64,8 @@
 # define MOVE_DOWN 3
 
 /*PLAYER SPEED*/
-# define MOVE_SPEED 4 // cuantos pixeles se mueve cada vez
-# define ROTATION_SPEED 0.03
+# define MOVE_SPEED 4 // cuantos pixeles se mueve cada vez que tocamos una tecla
+# define ROTATION_SPEED 0.015
 
 /*MINIMAP*/
 
@@ -96,10 +98,7 @@ typedef struct s_mlx
 typedef struct s_ray
 {
 	double		vision_angle; // Orientacion Inicial en grados de la vision del personaje
-	double 		start_x;
-    double 		start_y;
-    double 		end_x;
-    double 		end_y;
+	double 		last_vision_angle;
 	double 		FOV; //Field Of View
 
 } 	t_ray;
@@ -116,7 +115,6 @@ typedef struct s_player
 	
 	
 	t_ray 		ray;
-	int  		speed; // Cuantos pixeles se desplaza cada vez que tocamos una tecla
 	int  		mov_right;
 	int  		mov_left;
 	int  		mov_up;
@@ -162,7 +160,8 @@ typedef struct s_game
 	int 			finish_game;
 }					t_game;
 
-//??? En base a que decidir si las variables las creas como puntero o la variable en si
+//??? En base a que decidir si las variables las creas como puntero o la variable en si. Como actua en las llamadas mandarme gdata como puntero y lo de dentro que sean variables, se cambia igual el valor no? NO tengo que mandar como puntero la segunda estructura ej (player, para cambiar x). 
+//Como inicializar en funcion de si es puntero o variable, yo inicializo el contenido final, no el container de la estructura en si, no?
 
 //MAIN
 void	close_window(t_game	*gdata);
@@ -187,7 +186,8 @@ void print_background (t_mlx mlx, t_minimap minimap);
 
 //PRINT PLAYER PARAMS
 void print_player (t_game *gdata, t_player player, double x, double y, int color);
-void print_vision_angle(t_game *gdata, t_player player, double x, double y, int color, int thickness);
+void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, int color);
+void print_FOV(t_game *gdata, t_player player, double x, double y, double vision_angle, int color);
 
 //RENDER
 void render_game (void *param);
@@ -196,7 +196,8 @@ void render_game (void *param);
 void	prepare_movement(t_game *gdata, double *target_x, double *target_y);
 void rotate_player(t_player *player);
 void	print_player_move(t_game *gdata, t_player player, double target_x, double target_y);
-void print_player_view (t_game *gdata, t_player player, double target_x, double target_y);
+void print_player_view_in_motion (t_game *gdata, t_player player, double target_x, double target_y);
+void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x, double target_y);
 
 //PRESS KEY
 int	there_is_a_key_pressed(t_game *gdata);

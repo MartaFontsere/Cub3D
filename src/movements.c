@@ -6,21 +6,29 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/27 17:36:45 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/30 03:11:43 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 
-void print_player_view (t_game *gdata, t_player player, double target_x, double target_y)
+void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x, double target_y)
 {
-	print_vision_angle (gdata, player, target_x, target_y, RED1, 17);
-	print_vision_angle (gdata, player, target_x, target_y, YELLOW1, 4);
-	//falta imprimir el fov
+	print_FOV (gdata, player, player.x, player.y, player.ray.last_vision_angle, DARK_GREY);
+	print_FOV (gdata, player, target_x, target_y, player.ray.vision_angle,  SOFT_YELLOW);
 }
 
-void	print_player_move(t_game *gdata, t_player player, double target_x, double target_y)
+
+void print_player_view_in_motion (t_game *gdata, t_player player, double target_x, double target_y)
+{
+	print_vision_angle (gdata, player.x, player.y, player.ray.last_vision_angle, SOFT_YELLOW);
+	print_vision_angle (gdata, target_x, target_y, player.ray.vision_angle, YELLOW1);
+}
+
+
+
+void print_player_move(t_game *gdata, t_player player, double target_x, double target_y)
 {
 
 	print_player (gdata, player, player.x, player.y, DARK_GREY);
@@ -77,13 +85,13 @@ void	prepare_movement(t_game *gdata, double *target_x, double *target_y)
 	printf ("angulo 4 de rotacion: |%f|\n", gdata->player.ray.vision_angle);
 	if (gdata->player.mov_up == 1) // Ir hacia adelante
 	{
-		move_x += MOVE_SPEED * cos(gdata->player.ray.vision_angle);
-		move_y += MOVE_SPEED * sin(gdata->player.ray.vision_angle);
+		move_x -= MOVE_SPEED * cos(gdata->player.ray.vision_angle);
+		move_y -= MOVE_SPEED * sin(gdata->player.ray.vision_angle);
 	}
 	if (gdata->player.mov_down == 1) // Ir hacia atrás
 	{
-		move_x -= MOVE_SPEED * cos(gdata->player.ray.vision_angle);
-		move_y -= MOVE_SPEED * sin(gdata->player.ray.vision_angle); 
+		move_x += MOVE_SPEED * cos(gdata->player.ray.vision_angle);
+		move_y += MOVE_SPEED * sin(gdata->player.ray.vision_angle); 
 	}
 	 if (gdata->player.mov_right == 1) // Moverse a la derecha
     {
