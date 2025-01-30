@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 03:02:49 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/30 14:35:35 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/01/30 14:36:42 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void print_player (t_game *gdata, t_player player, double x, double y, int color
 //     }
 // }
 
-//VERSION 2
+//VERSION 2 // SIGUE TRAVESANDO ESQUINAS
 void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, int color)
 {              
     double init_x = x;
@@ -234,7 +234,7 @@ void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, 
 
 // }
 
-//BUENO
+//BUENO // SIGUE TRAVESANDO ESQUINAS
 void print_FOV(t_game *gdata, t_player player, double x, double y, double vision_angle, int color)
 {
     double start_angle = vision_angle - (player.ray.FOV / 2);
