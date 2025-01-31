@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/31 17:12:42 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:50:30 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,11 @@ int main (int ac, char **av)
 	init_structs(av, &map);
 	if (!fd_is_correct(&map))
 	{
-		printf("ha habido un err en la lectura del FD\n");
 		clean_data(&map);
 		map.fd_path = NULL;
 		return (0);
 	}
-	prints_check(&map);
+	prints_check(&map);//si hay un error, no va a printar porque ha salido antes
 	clean_data(&map);
     return (1);
 }

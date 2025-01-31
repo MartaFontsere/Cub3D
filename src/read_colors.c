@@ -6,11 +6,12 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/31 17:09:19 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:56:14 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
 //podemos agregar la flag de color
 int	is_valid_value(int value)
 {
@@ -30,7 +31,7 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 	{
 		free_matrix(split);
 		color->shader->err_flag = 1;
-		return ;	
+		return (msg_error("Invaid split\n", NULL));	
 	}
 	while (split[i])
 	{
@@ -43,27 +44,13 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 		else
 		{
 			color->shader->err_flag = 1;
+			msg_error("Is not a valid value: ", split[i]);
 			break ;
 		}
 		i++;
 	}
 	free_matrix(split);
 }
-
-/* void	cpy_colors(char *rgb, t_color *color)
-{
-	char	**split;
-	int		i;
-
-	i = 0;
-	split = ft_split(rgb, ',');
-	if (split[3] != NULL)
-	{
-		free_matrix(split);
-		color->shader->err_flag = 1;
-	}
-	
-} */
 
 void	get_colors(char *line, t_shader *shader, int i, int init)
 {
@@ -85,6 +72,7 @@ void	get_colors(char *line, t_shader *shader, int i, int init)
 		i++;
 	if (line[i] != '\0' || comma != 2)
 	{
+		msg_error("This values are not correct: ", line);
 		shader->err_flag = 1;
 		return ;
 	}
@@ -107,6 +95,7 @@ void	assign_color(char *line, t_shader *shader, int i)
 		i++;
 	if (!ft_isdigit(line[i]))
 	{
+		msg_error("Invalid line: ", line);
 		shader->err_flag = 1;
 		return ;
 	}

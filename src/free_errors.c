@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/31 16:02:23 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:25:55 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ void	msg_error(char *msg, char *msg2)
 {
 	while (*msg)
 		write(2, msg++, 1);
-	while (*msg2)
-		write(2, msg2++, 1);
+	if (msg2)
+	{
+		while (*msg2)
+			write(2, msg2++, 1);	
+	}
 }
 
 void	free_matrix(char **matrix)

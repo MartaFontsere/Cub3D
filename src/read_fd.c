@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/31 16:31:32 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:46:44 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*cpy_path(char *line, t_map *map)
 		i++;
 	if (tmp[i] != '\0')
 	{
+		msg_error("Invalid path:\n", line);
 		map->shader.err_flag = 1;
 		return(free(tmp), NULL);
 	}
@@ -44,14 +45,19 @@ char	*cpy_path(char *line, t_map *map)
 /*verificar que no intentemos asignar una repetida*/
 void	assign_path(char *line, t_map *map, int i)
 {
-	if (line[i] == 'N' && line[i + 1] == 'O' && ft_isspace(line[i + 2]))
+	if (line[i] == 'N' && line[i + 1] == 'O' && ft_isspace(line[i + 2]) && map->shader.err_flag == 0)
 		map->shader.NO = cpy_path(line, map);
-	else if (line[i] == 'S' && line[i + 1] == 'O' && ft_isspace(line[i + 2]))
+	else if (line[i] == 'S' && line[i + 1] == 'O' && ft_isspace(line[i + 2]) && map->shader.err_flag == 0)
 		map->shader.SO = cpy_path(line, map);
-	else if (line[i] == 'E' && line[i + 1] == 'A' && ft_isspace(line[i + 2]))
+	else if (line[i] == 'E' && line[i + 1] == 'A' && ft_isspace(line[i + 2]) && map->shader.err_flag == 0)
 		map->shader.EA = cpy_path(line, map);
-	else if (line[i] == 'W' && line[i + 1] == 'E' && ft_isspace(line[i + 2]))
+	else if (line[i] == 'W' && line[i + 1] == 'E' && ft_isspace(line[i + 2]) && map->shader.err_flag == 0)
 		map->shader.WE = cpy_path(line, map);
+	else
+	{
+		map->shader.err_flag = 1;
+		return (msg_error("Invalid line: ", line));
+	}
 }
 
 int	check_line(char *line, t_map *map)
