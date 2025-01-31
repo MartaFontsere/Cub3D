@@ -30,3 +30,14 @@
 24/01 -	Ya tenemos la rawline, el mapa spliteado y rellenado con 'R's. Tengo el
 		fsanitize comentado por el leak del split. Lo miro mas adelante.
 		Procedo a completar el mapa con los chars que me interesan
+
+27/01 -	Quiero hacer una lectura del FD y asignar en las estructuras, el path
+		correspondiente a cada una. Asi como tambien indicar, desde que punto
+		empieza el mapa, para asi pasar esa len y sacar la matriz desde X.
+		No hago push porque no quiero sobreescribir el progeso hasta ahora.
+
+29/01 -	He agregado una flag para saber si hay error en cuanto a shader, y pondre
+		para cuando el mapa haya iniciado
+30/01 -	Tenemos ya parseados los paths y colores. Me queda modificar que, cuando
+		un color tengo error, no siga adelante con el resto de lecturas
+		Y en cuanto a los colores, ya sabemos que solo hay 3, los rangos de estos

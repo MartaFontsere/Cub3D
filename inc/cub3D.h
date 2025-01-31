@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/27 16:30:33 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:10:42 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,40 @@
 # define STDOUT 1
 # define STDERR 2
 
+typedef struct s_shader	t_shader;
+
+typedef struct s_color
+{
+	int			R;
+	int			G;
+	int			B;
+	char		**split;
+	t_shader	*shader;
+}				t_color;
+
+struct s_shader
+{
+    char		*NO;
+	char		*SO;
+	char		*WE;
+	char		*EA;
+	int			count;
+	int			err_flag;
+	t_color		C;//luego hay que chekear los rangos RGB
+	t_color		F;
+};
+
 typedef struct s_map
 {
-    //void    *mlx;//se inicia al iniciar game(para evitar segv)
-    //void    *window;
-	char	*rawmap;
-    char    **matrix;
-    char    **tmp_matrix;
-	char	*fd_path;
-	size_t	map_width;
-	size_t	map_height;
-    //t_img   img;
-}           t_map;
+	char		*rawmap;
+    char    	**matrix;
+    char    	**tmp_matrix;
+	char		*fd_path;
+	int			is_map;
+	size_t		map_width;
+	size_t		map_height;
+    t_shader	shader;
+}           	t_map;
 
 /* typedef struct s_img
 {
@@ -56,35 +78,34 @@ typedef struct s_map
 	int		i;
 	int		j;
 }			t_img; */
-
 /*			--main--			*/
-void    init_map_values(t_map *map);
+
+void    init_structs(char **av, t_map *map);
+void	init_shader(t_shader *shader);
+void	init_shader(t_shader *shader);
 void	print_matrix(char **matrix, int flag);
-
-
-/*			--fill_matrix--			*/
-char	*fill_void(t_map *map);
-int		mix_matrix(char **src, t_map *map);
-int		complete_matrix(char **src, t_map *map);
-char	**copy_map(char **map, size_t height);
-
 
 
 /*			--free_errors--			*/
 void	exit_error(char *msg, int status);
+void	msg_error(char *msg, char *msg2);
 void	free_matrix(char **matrix);
+void	clean_shader(t_shader *shader);
 void	clean_data(t_map *map);
 
-/*			--get_matrix--			*/
-char	*get_rawmap(char *path, t_map *map);
-int		get_final_map(int ac, char **av, t_map *map);
+/*				--read_fd--				*/
+char	*cpy_path(char *line, t_map *map);
+void	assign_path(char *line, t_map *map, int i);
+int		check_line(char *line, t_map *map);
+int		fd_is_correct(t_map *map);
 
 
-/*			--get_matrix_utils--			*/
-int		check_name(char *map_path);
-int		min_chars(char *rawmap);
-int		count_fd_line(char *map_path, t_map *map);
-size_t	ft_max_size(char *line, size_t max);
+/*				--read_colors--				*/
+void	get_colors(char *line, t_shader *shader, int i, int init);
+void	assign_color(char *line, t_shader *t_shader, int i);
+void	cpy_colors(char *rgb, t_color *color, int i);
+
+
 
 
 

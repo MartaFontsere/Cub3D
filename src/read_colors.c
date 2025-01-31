@@ -1,0 +1,114 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_colors.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
+/*   Updated: 2025/01/31 17:09:19 by yanaranj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3D.h"
+//podemos agregar la flag de color
+int	is_valid_value(int value)
+{
+	if (!value)
+		return (0);
+	if (value >= 0 && value <= 255)
+		return (1);
+	return (1);
+}
+
+void	cpy_colors(char *rgb, t_color *color, int i)
+{
+	char	**split;
+
+	split = ft_split(rgb, ',');
+	if (split[0] == NULL || split[1] == NULL || split[2] == NULL || split[3] != NULL)
+	{
+		free_matrix(split);
+		color->shader->err_flag = 1;
+		return ;	
+	}
+	while (split[i])
+	{
+		if ((ft_atoi(split[i]) >= 0 && ft_atoi(split[i]) <= 255) && i == 0)
+			color->R = ft_atoi(split[i]);
+		else if ((ft_atoi(split[i]) >= 0 && ft_atoi(split[i]) <= 255) && i == 1)
+			color->G = ft_atoi(split[i]);
+		else if ((ft_atoi(split[i]) >= 0 && ft_atoi(split[i]) <= 255) && i == 2)
+			color->B = ft_atoi(split[i]);
+		else
+		{
+			color->shader->err_flag = 1;
+			break ;
+		}
+		i++;
+	}
+	free_matrix(split);
+}
+
+/* void	cpy_colors(char *rgb, t_color *color)
+{
+	char	**split;
+	int		i;
+
+	i = 0;
+	split = ft_split(rgb, ',');
+	if (split[3] != NULL)
+	{
+		free_matrix(split);
+		color->shader->err_flag = 1;
+	}
+	
+} */
+
+void	get_colors(char *line, t_shader *shader, int i, int init)
+{
+	int		start;
+	int		end;
+	char	*str;
+	int		comma;
+
+	comma = 0;
+	start = i;
+	while (ft_isdigit(line[i]) || line[i] == ',')
+	{
+		if (line[i] == ',')
+			comma++;
+		i++;
+	}
+	end = i;
+	while (ft_isspace(line[i]))
+		i++;
+	if (line[i] != '\0' || comma != 2)
+	{
+		shader->err_flag = 1;
+		return ;
+	}
+	str = ft_substr(line, start, end);
+	if (line[init] == 'C')
+		cpy_colors(str, &shader->C, 0);
+	else if (line[init] == 'F')
+		cpy_colors(str, &shader->F, 0);
+	free(str);
+}
+
+void	assign_color(char *line, t_shader *shader, int i)
+{
+	int	init;
+
+	init = i;
+	if ((line[i] == 'C' || line[i] == 'F') && ft_isspace(line[i + 1]))
+		i++;
+	while (ft_isspace(line[i]))
+		i++;
+	if (!ft_isdigit(line[i]))
+	{
+		shader->err_flag = 1;
+		return ;
+	}
+	get_colors(line, shader, i, init);
+}

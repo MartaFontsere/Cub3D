@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/27 17:26:35 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:12:42 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,68 @@ void	print_matrix(char **matrix, int flag)
 		i++;
 	}
 }
-
-void    init_map_values(t_map *map)
+void	prints_check(t_map *map)
 {
+	printf(YELLOW"%s\n"END, map->shader.NO);
+	printf(YELLOW"%s\n"END, map->shader.SO);
+	printf(YELLOW"%s\n"END, map->shader.WE);
+	printf(YELLOW"%s\n"END, map->shader.EA);
+	//colors
+	printf(RED"%d,"END, map->shader.C.R);
+	printf(GREEN"%d,"END, map->shader.C.G);
+	printf(BLUE"%d\n"END, map->shader.C.B);
+	printf(RED"[%d],"END, map->shader.F.R);
+	printf(GREEN"[%d],"END, map->shader.F.G);
+	printf(BLUE"[%d]\n"END, map->shader.F.B);
+}
+//END TEMPORAL
+
+
+
+void    init_structs(char **av, t_map *map)
+{	
+	map->rawmap = NULL;
     map->matrix = NULL;
     map->tmp_matrix = NULL;
-	map->rawmap = NULL;
+	map->fd_path = av[1];
+	map->is_map = 0;
 	map->map_width = 0;
 	map->map_height = 0;
+	init_shader(&map->shader);
+}
+
+void	init_shader(t_shader *shader)
+{
+	shader->NO = NULL;
+	shader->SO = NULL;
+	shader->EA = NULL;
+	shader->WE = NULL;
+	shader->count = 0;
+	shader->err_flag = 0;
+	shader->C.R = 0;
+	shader->C.G = 0;
+	shader->C.B = 0;
+	shader->F.R = 0;
+	shader->F.G = 0;
+	shader->F.B = 0;
+	shader->C.shader = shader;
+	shader->F.shader = shader;
 }
 
 int main (int ac, char **av)
 {
-    t_map   map;
+    t_map		map;
 	
-	init_map_values(&map);
-	if (!get_final_map(ac, av, &map))//de aqui sacamos map.matrix
+	(void)ac;
+	init_structs(av, &map);
+	if (!fd_is_correct(&map))
 	{
-		printf("llego para liberar\n");
+		printf("ha habido un err en la lectura del FD\n");
 		clean_data(&map);
-		return (1);
+		map.fd_path = NULL;
+		return (0);
 	}
-	print_matrix(map.matrix, 1);
-	//print_matrix(map.tmp_matrix, 2);
+	prints_check(&map);
 	clean_data(&map);
     return (1);
 }
