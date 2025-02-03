@@ -24,9 +24,6 @@ void	init_gdata_values(t_game *gdata)
 	gdata->player.raw_y = 0;
 	gdata->player.x = 0;
 	gdata->player.y = 0;
-	gdata->player.ray.vision_angle = NORTH;
-	gdata->player.ray.last_vision_angle = NORTH;
-	gdata->player.ray.FOV = M_PI / 3;
 	gdata->player.mov_right = 0;
 	gdata->player.mov_left = 0;
 	gdata->player.mov_up = 0;
@@ -53,11 +50,27 @@ void	init_gdata_values(t_game *gdata)
 	// gdata->finish_game = 0;
 }
 
+int init_vision_parameters (t_game *gdata, t_vision *vision)
+{
+	vision->vision_angle = NORTH;
+	vision->last_vision_angle = NORTH;
+	vision->FOV.num_rays = gdata->mlx.window_width;
+	vision->FOV.fov_rad = 60 * (M_PI / 180); // 60° a radianes
+	vision->FOV.rays = malloc (sizeof (t_ray) * vision->FOV.num_rays);
+	if (!vision->FOV.rays)
+	{
+		write_error("Unable to allocate memory for lightning");
+		//REVISAR TODO LO QUE HAY QUE LIBERAR
+		return (0);
+	}
+	return (1);
+}
+
 void init_player_parameters (t_game *gdata, t_player *player)
 {
 
-	init_player_position(gdata, &gdata->map, &gdata->player);
-	init_player_orientation(&gdata->map, &gdata->player);
+	init_player_position(gdata, &gdata->map, player); // TENGO QUE MANDARLO COMO PUNTERO O NO CAL PORQUE GDATA YA LO ES?
+	init_player_orientation(&gdata->map, &gdata->vision);
 	player->radius = gdata->minimap.cell_width / 4;
 
 	
@@ -95,7 +108,7 @@ void	init_player_position(t_game *gdata, t_map *map, t_player *player)
 	// player->midle_y = player->y + (gdata->minimap.cell_height / 2);
 }
 
-void	init_player_orientation(t_map *map, t_player *player)
+void	init_player_orientation(t_map *map, t_vision *vision)
 {
 	int	i;
 	int	j;
@@ -108,22 +121,22 @@ void	init_player_orientation(t_map *map, t_player *player)
 		{
 			if (map->matrix[i][j] == 'N')
 			{
-				player->ray.vision_angle = NORTH;
+				vision->vision_angle = NORTH;
 				break;
 			}
 			if (map->matrix[i][j] == 'S')
 			{
-				player->ray.vision_angle = SOUTH;
+				vision->vision_angle = SOUTH;
 				break;
 			}
 			if (map->matrix[i][j] == 'E')
 			{
-				player->ray.vision_angle = EAST;
+				vision->vision_angle = EAST;
 				break;
 			}
 			if (map->matrix[i][j] == 'W')
 			{
-				player->ray.vision_angle = WEST;
+				vision->vision_angle = WEST;
 				break;
 			}
 			j++;

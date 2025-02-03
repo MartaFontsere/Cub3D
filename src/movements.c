@@ -12,18 +12,19 @@
 
 #include "cub3D.h"
 
+//PRINT MOVEMENT MINIMAPA
 
 void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x, double target_y)
 {
-	print_FOV (gdata, player, player.x, player.y, player.ray.last_vision_angle, DARK_GREY);
-	print_FOV (gdata, player, target_x, target_y, player.ray.vision_angle,  SOFT_YELLOW);
+	print_FOV (gdata, gdata->vision, player.x, player.y, gdata->vision.last_vision_angle, DARK_GREY);
+	print_FOV (gdata, gdata->vision, target_x, target_y, gdata->vision.vision_angle,  SOFT_YELLOW);
 }
 
 
 void print_player_view_in_motion (t_game *gdata, t_player player, double target_x, double target_y)
 {
-	print_vision_angle (gdata, player.x, player.y, player.ray.last_vision_angle, SOFT_YELLOW);
-	print_vision_angle (gdata, target_x, target_y, player.ray.vision_angle, YELLOW1);
+	print_vision_angle (gdata, player.x, player.y, gdata->vision.last_vision_angle, SOFT_YELLOW);
+	print_vision_angle (gdata, target_x, target_y, gdata->vision.vision_angle, YELLOW1);
 }
 
 
@@ -54,54 +55,54 @@ void print_player_move(t_game *gdata, t_player player, double target_x, double t
 // 	printf ("angulo de rotacion: |%f|\n", player->ray.vision_angle);
 // }
 
-void rotate_player(t_player *player)
+void rotate_player(t_player *player, t_vision *vision)
 {
     if (player->rotate_right == 1) // Rotar a la derecha (sentido horario)
     {
-        printf("angulo de rotacion1 (derecha): |%f|\n", player->ray.vision_angle);
-        player->ray.vision_angle += ROTATION_SPEED; // Aumentamos el ángulo (sentido horario)
-        if (player->ray.vision_angle > 2 * M_PI) // Si el ángulo supera 2*PI, lo "reiniciamos"
-            player->ray.vision_angle -= 2 * M_PI; // Aseguramos que el ángulo esté en el rango [0, 2π]
-        printf("angulo de rotacion2 (derecha): |%f|\n", player->ray.vision_angle);
+        printf("angulo de rotacion1 (derecha): |%f|\n", vision->vision_angle);
+        vision->vision_angle += ROTATION_SPEED; // Aumentamos el ángulo (sentido horario)
+        if (vision->vision_angle > 2 * M_PI) // Si el ángulo supera 2*PI, lo "reiniciamos"
+            vision->vision_angle -= 2 * M_PI; // Aseguramos que el ángulo esté en el rango [0, 2π]
+        printf("angulo de rotacion2 (derecha): |%f|\n", vision->vision_angle);
     }
     else if (player->rotate_left == 1) // Rotar a la izquierda (sentido antihorario)
     {
-        printf("angulo de rotacion1 (izquierda): |%f|\n", player->ray.vision_angle);
-        player->ray.vision_angle -= ROTATION_SPEED; // Restamos del ángulo (sentido antihorario)
-        if (player->ray.vision_angle < 0) // Si el ángulo es menor que 0, lo "reiniciamos"
-            player->ray.vision_angle += 2 * M_PI; // Aseguramos que el ángulo esté en el rango [0, 2π]
-        printf("angulo de rotacion2 (izquierda): |%f|\n", player->ray.vision_angle);
+        printf("angulo de rotacion1 (izquierda): |%f|\n", vision->vision_angle);
+        vision->vision_angle -= ROTATION_SPEED; // Restamos del ángulo (sentido antihorario)
+        if (vision->vision_angle < 0) // Si el ángulo es menor que 0, lo "reiniciamos"
+            vision->vision_angle += 2 * M_PI; // Aseguramos que el ángulo esté en el rango [0, 2π]
+        printf("angulo de rotacion2 (izquierda): |%f|\n", vision->vision_angle);
     }
 }
 
 
-void	prepare_movement(t_game *gdata, double *target_x, double *target_y)
+void	prepare_movement(t_game *gdata, t_vision vision, double *target_x, double *target_y)
 {
 	double	move_x;
 	double	move_y;
 
 	move_x = 0;
 	move_y = 0;
-	printf ("angulo 4 de rotacion: |%f|\n", gdata->player.ray.vision_angle);
+	printf ("angulo 4 de rotacion: |%f|\n", vision.vision_angle);
 	if (gdata->player.mov_up == 1) // Ir hacia adelante
 	{
-		move_x -= MOVE_SPEED * cos(gdata->player.ray.vision_angle);
-		move_y -= MOVE_SPEED * sin(gdata->player.ray.vision_angle);
+		move_x -= MOVE_SPEED * cos(vision.vision_angle);
+		move_y -= MOVE_SPEED * sin(vision.vision_angle);
 	}
 	if (gdata->player.mov_down == 1) // Ir hacia atrás
 	{
-		move_x += MOVE_SPEED * cos(gdata->player.ray.vision_angle);
-		move_y += MOVE_SPEED * sin(gdata->player.ray.vision_angle); 
+		move_x += MOVE_SPEED * cos(vision.vision_angle);
+		move_y += MOVE_SPEED * sin(vision.vision_angle); 
 	}
 	 if (gdata->player.mov_right == 1) // Moverse a la derecha
     {
-        move_x += MOVE_SPEED * cos(gdata->player.ray.vision_angle - M_PI_2);
-        move_y += MOVE_SPEED * sin(gdata->player.ray.vision_angle - M_PI_2);
+        move_x += MOVE_SPEED * cos(vision.vision_angle - M_PI_2);
+        move_y += MOVE_SPEED * sin(vision.vision_angle - M_PI_2);
     }
     if (gdata->player.mov_left == 1) // Moverse a la izquierda
     {
-        move_x += MOVE_SPEED * cos(gdata->player.ray.vision_angle + M_PI_2);
-        move_y += MOVE_SPEED * sin(gdata->player.ray.vision_angle + M_PI_2);
+        move_x += MOVE_SPEED * cos(vision.vision_angle + M_PI_2);
+        move_y += MOVE_SPEED * sin(vision.vision_angle + M_PI_2);
     }
 	// Solo actualizamos si no hay colisión
 	if (check_collision(gdata, *target_x + move_x, *target_y + move_y))

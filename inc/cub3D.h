@@ -95,13 +95,37 @@ typedef struct s_mlx
 	mlx_image_t	*image;
 }				t_mlx;
 
-typedef struct s_ray
+
+typedef struct s_ray {
+    double dir_x;       // Dirección X del rayo
+    double dir_y;       // Dirección Y del rayo
+    double collision_x; // Punto de colisión en X
+    double collision_y; // Punto de colisión en Y
+   double distance;    // Distancia perpendicular a la pared (para 3D)
+   int wall_position;  // 0 = choque en X, 1 = choque en Y (para texturas)
+   int hit;            // 1 = chocó con una pared, 0 = no
+} t_ray;
+
+
+// Estructura para el campo de visión (FOV)
+typedef struct s_fov {
+    int     num_rays;        // Número de rayos (ej: ancho de la ventana)
+    double  fov_rad;      // Campo de visión en radianes (ej: 1.0472 ≈ 60°)
+    t_ray   *rays;           // Puntero al array de rayos (uno por columna de pantalla)
+} t_fov;
+
+//RAYS SOLO TIENE QUE SER PUNTERO, PORQUE ES DE TIPO ESTRUCTURA CON MAS COSAS DENTRO, SINO SERIA MATRIZ, PARA METER COSAS EN CADA PUNTERO, NO?
+
+
+typedef struct s_vision 	
 {
 	double		vision_angle; // Orientacion Inicial en grados de la vision del personaje
 	double 		last_vision_angle;
-	double 		FOV; //Field Of View
+	t_fov    	FOV;            // Datos del FOV y rayos
 
-} 	t_ray;
+} 				t_vision;
+
+
 
 typedef struct s_player
 {
@@ -112,9 +136,6 @@ typedef struct s_player
 	// double 	midle_x; // Posición del Personaje centrado en la casilla en X (en pixeles para minimapa)
 	// double 	midle_y; // Posición del Personaje centrado en la casilla en Y (en pixeles para minimapa)
 	double  	radius; // radio del circulo que representara el personaje
-	
-	
-	t_ray 		ray;
 	int  		mov_right;
 	int  		mov_left;
 	int  		mov_up;
@@ -153,8 +174,9 @@ typedef struct s_map
 typedef struct s_game
 {
 	t_map			map;
-	t_player		player;
 	t_minimap 		minimap;
+	t_player		player;
+	t_vision 		vision;
 
 	t_mlx			mlx; // ???en funcion de que hacerlo puntero o no?
 	int 			finish_game;
@@ -171,7 +193,8 @@ void	init_gdata_values(t_game *gdata);
 void	init_minimap(t_game *gdata, t_map *map);
 void 	init_player_parameters (t_game *gdata, t_player *player);
 void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
-void	init_player_orientation(t_map *map_info, t_player *player);
+void	init_player_orientation(t_map *map, t_vision *vision);
+int init_vision_parameters (t_game *gdata, t_vision *vision);
 int		init_mlx_and_create_new_image(t_game *gdata, t_mlx *mlx);
 
 //PSEUDOPARSING
@@ -187,14 +210,14 @@ void print_background (t_mlx mlx, t_minimap minimap);
 //PRINT PLAYER PARAMS
 void print_player (t_game *gdata, t_player player, double x, double y, int color);
 void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, int color);
-void print_FOV(t_game *gdata, t_player player, double x, double y, double vision_angle, int color);
+void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision_angle, int color);
 
 //RENDER
 void render_game (void *param);
 
 //MOVE
-void	prepare_movement(t_game *gdata, double *target_x, double *target_y);
-void rotate_player(t_player *player);
+void	prepare_movement(t_game *gdata, t_vision vision, double *target_x, double *target_y);
+void rotate_player(t_player *player, t_vision *vision);
 void	print_player_move(t_game *gdata, t_player player, double target_x, double target_y);
 void print_player_view_in_motion (t_game *gdata, t_player player, double target_x, double target_y);
 void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x, double target_y);

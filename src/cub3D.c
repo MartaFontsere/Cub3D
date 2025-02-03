@@ -38,6 +38,8 @@ int main(int ac, char **av)
 	// A partir de aqui:
 	init_minimap(&gdata, &gdata.map);
 	init_player_parameters(&gdata, &gdata.player);
+	if (init_vision_parameters (&gdata, &gdata.vision) == 0)
+		return (0);
 	// instalar la mlx, y lanzar una pantalla del tamaño, x y, para ver que funciona
 	if (init_mlx_and_create_new_image(&gdata, &gdata.mlx) == 0)
 		return (0);
@@ -53,4 +55,9 @@ int main(int ac, char **av)
 	mlx_loop(gdata.mlx.init);
 	
 
+	//añadir el free de vision->rays
+
 }
+
+//INICIALIZAR ESTRUCTURAS, PUNTEROS, ARRAY... y los punteros de dentro de la estructura
+//CUANDO SI Y CUANDO NO ALOCAR MEMORIA. EJ> *ray DENTRO DE T_FOV
