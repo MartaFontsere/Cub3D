@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/30 02:51:08 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/03 21:03:26 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,21 @@ typedef struct s_mlx
 typedef struct s_ray {
     double dir_x;       // Dirección X del rayo
     double dir_y;       // Dirección Y del rayo
-    double collision_x; // Punto de colisión en X
-    double collision_y; // Punto de colisión en Y
-   double distance;    // Distancia perpendicular a la pared (para 3D)
-   int wall_position;  // 0 = choque en X, 1 = choque en Y (para texturas)
-   int hit;            // 1 = chocó con una pared, 0 = no
+    double first_dist_x; // distancia desde la posición actual del player hasta la primera línea vertical de la celda de la cuadrícula
+    double first_dist_y; // // distancia desde la posición actual del player hasta la primera línea horizontal de la celda de la cuadrícula
+   	//Resumen: Distancia desde el inicio del rayo hasta la primera línea de la cuadrícula en cada dirección (X o Y).
+    double other_dist_x; // Cuánto hay que moverse en X para pasar a la siguiente línea vertical de la celda de la cuadrícula. 
+    double other_dist_y; //Cuánto hay que moverse en Y para pasar a la siguiente línea horizontal de la celda de la cuadrícula.
+    // Resumen: Distancia constante entre cada cruce de líneas en la cuadrícula, después del primer encuentro. Despues del primer cruce, el resto de cruces son constantes.  
+    int x_sign;
+    int y_sign; // Indican si el rayo se mueve hacia adelante o atrás en cada eje.
+    //Ej: Si el rayo va a la izquierda (dir_x < 0), x_sign = -1. Si el rayo va a la derecha (dir_x > 0), x_sign = 1.
+    int line_crossing; //0 = choque en X, 1 = choque en Y (para texturas)// nos dice qué cara de una celda fue atravesada por el rayo en su último avance. Indica si el rayo choca contra una pared vertical (side = 0, osea se movió en X) o una horizontal (side = 1, osea se movió en Y). indica con qué tipo de línea de la celda el rayo acaba de chocar. No indica si chocó con una pared del mapa, sino si cruzó una línea vertical u horizontal dentro de la cuadrícula.
+
+
+    double collision_x; // Punto de colisión en X (en casillas)
+    double collision_y; // Punto de colisión en Y (en casillas)
+   	double wall_distance;    // Distancia perpendicular a la pared (para 3D)
 } t_ray;
 
 

@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 03:02:49 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/30 14:36:42 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/03 21:51:51 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,54 +299,130 @@ void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, 
 
 
 //BUENO // SIGUE TRAVESANDO ESQUINAS
-void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision_angle, int color)
+// void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision_angle, int color)
+// {
+
+// //la cantidad de rayos siempre va a ser el ancho de la ventana en pixeles, es la cantidad de rayos que vamos a ver. Dependiendo del fov, esos rayos van a estar mas o menos espaciados, pero se tienen que repartir.Cada rayo tendra un angulo dentro del FOV, y proporcionara una informacion que es lo que se vera en pantalla. Cuando vayamos moviendo el fov la informacion se actualizara, pero dentro de ese fov 
+// //cada rayo representa un píxel en la imagen final, por eso es el ancho de la ventana.
+// //A mayor FOV, más amplia la visión. La densidad de rayos (por grado) depende del ancho de pantalla
+
+//     double start_angle = vision_angle - (vision.FOV.fov_rad / 2);
+//     double end_angle = vision_angle + (vision.FOV.fov_rad / 2);
+//     double ray_angle_increment = vision.FOV.fov_rad / (double)gdata->minimap.width;
+//     double ray_angle = start_angle;
+
+//     while (ray_angle <= end_angle)
+//     {
+//         double init_x = x;
+//         double init_y = y;
+//         double ray_dir_x = - cos(ray_angle);
+//         double ray_dir_y = - sin(ray_angle);
+
+//         while (1) // Bucle infinito que se romperá manualmente
+//         {
+//             // **Comprobamos primero en X**
+//             double next_x = init_x + ray_dir_x;
+//             int check_x_in_map = (int)(next_x / gdata->minimap.cell_width);
+//             int check_y_in_map = (int)(init_y / gdata->minimap.cell_height);
+
+//             // **Si choca con una pared en X, detenemos el rayo**
+//             if (check_x_in_map < 0 || check_x_in_map >= gdata->map.width || gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
+//                 break;
+//             init_x = next_x; // Solo avanzamos si no hay colisión
+
+//             // **Comprobamos en Y**
+//             double next_y = init_y + ray_dir_y;
+//             check_x_in_map = (int)(init_x / gdata->minimap.cell_width);
+//             check_y_in_map = (int)(next_y / gdata->minimap.cell_height);
+
+//             // **Si choca con una pared en Y, detenemos el rayo**
+//             if (check_y_in_map < 0 || check_y_in_map >= gdata->map.height || gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
+//                 break;
+//             init_y = next_y; // Solo avanzamos si no hay colisión
+
+//             // **Si seguimos aquí, es seguro pintar**
+//             mlx_put_pixel(gdata->mlx.image, (int)init_x, (int)init_y, color);
+//         }
+
+//         ray_angle += ray_angle_increment; // **Siguiente rayo**
+//     }
+// }
+
+
+//BUENO CON DDA
+
+void print_fov_minimap(t_game *gdata, double player_px_x, double player_px_y, double vision_angle, int color) 
 {
+    (void)vision_angle; // Si no se usa pero el parámetro está en la firma
+    const int thickness = 2; // Grosor de los rayos
+    int i = 0;
 
-//la cantidad de rayos siempre va a ser el ancho de la ventana en pixeles, es la cantidad de rayos que vamos a ver. Dependiendo del fov, esos rayos van a estar mas o menos espaciados, pero se tienen que repartir.Cada rayo tendra un angulo dentro del FOV, y proporcionara una informacion que es lo que se vera en pantalla. Cuando vayamos moviendo el fov la informacion se actualizara, pero dentro de ese fov 
-//cada rayo representa un píxel en la imagen final, por eso es el ancho de la ventana.
-//A mayor FOV, más amplia la visión. La densidad de rayos (por grado) depende del ancho de pantalla
-
-    double start_angle = vision_angle - (vision.FOV.fov_rad / 2);
-    double end_angle = vision_angle + (vision.FOV.fov_rad / 2);
-    double ray_angle_increment = vision.FOV.fov_rad / (double)gdata->minimap.width;
-    double ray_angle = start_angle;
-
-    while (ray_angle <= end_angle)
+    while (i < gdata->fov.num_rays) 
     {
-        double init_x = x;
-        double init_y = y;
-        double ray_dir_x = - cos(ray_angle);
-        double ray_dir_y = - sin(ray_angle);
-
-        while (1) // Bucle infinito que se romperá manualmente
+        t_ray *ray = &gdata->fov.rays[i];
+        
+        // Convertir coordenadas del mundo a píxeles del minimapa
+        double end_x = ray->collision_x * gdata->minimap.cell_width;
+        double end_y = ray->collision_y * gdata->minimap.cell_height;
+        
+        // Coordenadas de inicio (posición del jugador ya en píxeles)
+        double start_x = player_px_x;
+        double start_y = player_px_y;
+        
+        // Algoritmo DDA para dibujar línea
+        double dx = end_x - start_x;
+        double dy = end_y - start_y;
+        double steps = fmax(fabs(dx), fabs(dy));
+        double x_inc = dx / steps;
+        double y_inc = dy / steps;
+        
+        int current_step = 0;
+        while (current_step++ < steps) 
         {
-            // **Comprobamos primero en X**
-            double next_x = init_x + ray_dir_x;
-            int check_x_in_map = (int)(next_x / gdata->minimap.cell_width);
-            int check_y_in_map = (int)(init_y / gdata->minimap.cell_height);
-
-            // **Si choca con una pared en X, detenemos el rayo**
-            if (check_x_in_map < 0 || check_x_in_map >= gdata->map.width || gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
+            // Aplicar grosor
+            int offset = -thickness;
+            while (offset <= thickness) 
+            {
+                int px_x = (int)(start_x + offset);
+                int px_y = (int)start_y;
+                
+                // Dibujar en horizontal y vertical alrededor del punto central
+                if (px_x >= 0 && px_x < gdata->minimap.width && 
+                    px_y >= 0 && px_y < gdata->minimap.height) 
+                {
+                    mlx_put_pixel(gdata->mlx.image, px_x, px_y, color);
+                }
+                
+                px_x = (int)start_x;
+                px_y = (int)(start_y + offset);
+                
+                if (px_x >= 0 && px_x < gdata->minimap.width && 
+                    px_y >= 0 && px_y < gdata->minimap.height) 
+                {
+                    mlx_put_pixel(gdata->mlx.image, px_x, px_y, color);
+                }
+                
+                offset++;
+            }
+            
+            start_x += x_inc;
+            start_y += y_inc;
+            
+            // Romper si el rayo sale del mapa antes de chocar
+            if ((int)(start_x/gdata->minimap.cell_width) >= gdata->map.width ||
+                (int)(start_y/gdata->minimap.cell_height) >= gdata->map.height) 
+            {
                 break;
-            init_x = next_x; // Solo avanzamos si no hay colisión
-
-            // **Comprobamos en Y**
-            double next_y = init_y + ray_dir_y;
-            check_x_in_map = (int)(init_x / gdata->minimap.cell_width);
-            check_y_in_map = (int)(next_y / gdata->minimap.cell_height);
-
-            // **Si choca con una pared en Y, detenemos el rayo**
-            if (check_y_in_map < 0 || check_y_in_map >= gdata->map.height || gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
-                break;
-            init_y = next_y; // Solo avanzamos si no hay colisión
-
-            // **Si seguimos aquí, es seguro pintar**
-            mlx_put_pixel(gdata->mlx.image, (int)init_x, (int)init_y, color);
+            }
         }
-
-        ray_angle += ray_angle_increment; // **Siguiente rayo**
+        i++;
     }
 }
+
+
+
+
+
 
 
 
