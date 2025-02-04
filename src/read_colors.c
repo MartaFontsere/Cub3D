@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/31 18:56:14 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:33:58 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 	char	**split;
 
 	split = ft_split(rgb, ',');
-	if (split[0] == NULL || split[1] == NULL || split[2] == NULL || split[3] != NULL)
+	if ((split[0] == NULL || split[1] == NULL || split[2] == NULL) && !split[3])
 	{
 		free_matrix(split);
 		color->shader->err_flag = 1;
@@ -49,6 +49,7 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 		}
 		i++;
 	}
+	color->shader->colors_count++;
 	free_matrix(split);
 }
 
@@ -99,5 +100,11 @@ void	assign_color(char *line, t_shader *shader, int i)
 		shader->err_flag = 1;
 		return ;
 	}
-	get_colors(line, shader, i, init);
+	if (shader->colors_count < 2)
+		get_colors(line, shader, i, init);
+	else
+	{
+		shader->err_flag =1;
+		return (msg_error("The colors are alreday assigned\n", NULL));
+	}
 }

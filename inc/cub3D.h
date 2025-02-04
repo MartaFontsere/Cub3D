@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/31 17:10:42 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:17:13 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ struct s_shader
 	char		*WE;
 	char		*EA;
 	int			count;
+	int			colors_count;
 	int			err_flag;
 	t_color		C;//luego hay que chekear los rangos RGB
 	t_color		F;
@@ -105,6 +106,16 @@ void	get_colors(char *line, t_shader *shader, int i, int init);
 void	assign_color(char *line, t_shader *t_shader, int i);
 void	cpy_colors(char *rgb, t_color *color, int i);
 
+
+
+/*					--get_map--				*/
+int	get_final_map(int ac, t_map *map);
+void	start_map(char *line, t_map *map, int i);
+
+
+
+/*				--get_map_utils--				*/
+int	check_name(char *map_path);
 
 
 

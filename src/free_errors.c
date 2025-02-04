@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/01/31 18:25:55 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/04 13:28:42 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,16 @@ void	exit_error(char *msg, int status)
 
 void	msg_error(char *msg, char *msg2)
 {
+	write (2, RED, ft_strlen(RED));
 	while (*msg)
 		write(2, msg++, 1);
+	write (2, END, ft_strlen(END));
 	if (msg2)
 	{
+		write (2, BLUE, ft_strlen(BLUE));
 		while (*msg2)
-			write(2, msg2++, 1);	
+			write(2, msg2++, 1);
+		write (2, END, ft_strlen(END));
 	}
 }
 
