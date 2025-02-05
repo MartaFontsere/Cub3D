@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/05 01:25:49 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/05 08:47:15 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int main(int ac, char **av)
 	if (init_vision_parameters (&gdata, &gdata.vision) == 0)
 		return (0);
 	// instalar la mlx, y lanzar una pantalla del tamaño, x y, para ver que funciona
+	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	if (init_mlx_and_create_new_image(&gdata, &gdata.mlx) == 0)
 		return (0);
 	if (mlx_image_to_window(gdata.mlx.init, gdata.mlx.image, 0, 0) == -1)

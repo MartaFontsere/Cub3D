@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 03:02:49 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/05 03:13:09 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/05 08:09:05 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,8 +371,8 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
     {
         t_ray *ray = &vision.FOV.rays[i];
         // Convertir coordenadas de colisión a píxeles del minimapa
-        double end_ray_x = (ray->collision_x + 1) * gdata->minimap.cell_width;
-        double end_ray_y = (ray->collision_y + 1) * gdata->minimap.cell_height;
+        double end_ray_x = ray->px_collision_x;
+        double end_ray_y = ray->px_collision_y;
 
         // Coordenadas de inicio (posición del jugador ya en píxeles)de pintar el rayo, esta posicion la iremos avanzando segun el angulo de cada rayo
         double draw_ray_x = x; //double start_ray_x = x;

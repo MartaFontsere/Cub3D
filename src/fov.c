@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/05 07:23:01 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/05 14:29:33 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x,
     ray->dir_y = -sin(ray_angle);
     printf("Rayo %d - Dir: (%.2f, %.2f) - ray angle: |%.2f|\n", i, ray->dir_x, ray->dir_y, ray_angle * (180 / M_PI));
 
-    // Algoritmo DDA
-    ray->other_dist_x = fabs(1 / ray->dir_x); // (en casillas) Cuánto hay que moverse en X para pasar a la siguiente línea vertical de la celda de la cuadrícula. 
-    printf ("   --distancia constante en el eje x :|%f|\n", ray->other_dist_x);
-    ray->other_dist_y = fabs(1 / ray->dir_y); //(en casillas) Cuánto hay que moverse en Y para pasar a la siguiente línea horizontal de la celda de la cuadrícula.
-    printf ("   --distancia constante en el eje y :|%f|\n", ray->other_dist_y);
-    //printf ("ray dir x: |%f|\n", ray->dir_x);
     int check_x_in_map = (int)(x / gdata->minimap.cell_width); // Representa la celda en la cuadrícula donde está el rayo(índices de la matriz del mapa). Empieza en la casilla del player
     printf("   check_x_in_map inicial: (%d)\n", check_x_in_map);
     printf ("  x: %f\n", x);
@@ -40,38 +34,68 @@ static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x,
     printf("   check_y_in_map inicial: (%d)\n", check_y_in_map);
     printf ("  y: %f\n", y);
     printf ("  gdata->minimap.cell_width: %f\n", gdata->minimap.cell_height);
-    int wall_hit = 0; // Es una flag que indica si el rayo ha chocado con una pared. El while se ejecutara hasta que hit == 1 (cuando encuentra una pared).
+
     
-
-    // Determinar x_sign y first_dist_x
-    if (ray->dir_x < 0) 
+    if (fabs(ray->dir_x) < 1e-6) // Evita divisiones por valores casi 0
     {
-        ray->x_sign = -1; //el rayo va a la izquierda
-        ray->first_dist_x = (x - check_x_in_map) * ray->other_dist_x; 
+        ray->other_dist_x = 1e6; // Para evitar división por 0
+        ray->first_dist_x = 1e6;  // Evita valores negativos absurdos
+        ray->x_sign = 0;  // No avanza en X
+    }
+    else
+    {
+        ray->other_dist_x = fabs(1 / ray->dir_x); // (en casillas) Cuánto hay que moverse en X para pasar a la siguiente línea vertical de la celda de la cuadrícula. 
+        // Determinar x_sign y first_dist_x
+        if (ray->dir_x < 0) 
+        {
+            ray->x_sign = -1;//el rayo va a la izquierda
+            ray->first_dist_x = (x - check_x_in_map * gdata->minimap.cell_width) * ray->other_dist_x;
+        } 
+        else 
+        {
+            ray->x_sign = 1; //el rayo va a la derecha
+            ray->first_dist_x = ((check_x_in_map + 1) * gdata->minimap.cell_width - x) * ray->other_dist_x;
+        }
+    }
+    printf ("   --distancia constante en el eje x :|%f|\n", ray->other_dist_x);
+    
+    // Evitar divisiones por valores cercanos a 0
+    if (fabs(ray->dir_y) < 1e-6) 
+    {
+        ray->other_dist_y = 1e6;  // Para evitar valores enormes
+        ray->first_dist_y = 1e6;   // Nunca cruzará una pared horizontal
+        ray->y_sign = 0;          // No se mueve en Y
     } 
     else 
     {
-        ray->x_sign = 1; //el rayo va a la derecha
-        ray->first_dist_x = (check_x_in_map + 1.0 - x) * ray->other_dist_x;
+        ray->other_dist_y = fabs(1 / ray->dir_y); //(en casillas) Cuánto hay que moverse en Y para pasar a la siguiente línea horizontal de la celda de la cuadrícula.
+        // Determinar y_sign y first_dist_y
+        if (ray->dir_y < 0) 
+        {
+            ray->y_sign = -1; //el rayo va arriba
+            ray->first_dist_y = (y - check_y_in_map * gdata->minimap.cell_height) * ray->other_dist_y;
+        } 
+        else 
+        {
+            ray->y_sign = 1; //el rayo va abajo
+            ray->first_dist_y = ((check_y_in_map + 1) * gdata->minimap.cell_height - y) * ray->other_dist_y;
+        }
     }
+    printf ("   --distancia constante en el eje y :|%f|\n", ray->other_dist_y);
+    //printf ("ray dir x: |%f|\n", ray->dir_x);
 
-    // Determinar y_sign y first_dist_y
-    if (ray->dir_y < 0) 
-    {
-        ray->y_sign = -1; //el rayo va arriba
-        ray->first_dist_y = (y - check_y_in_map) * ray->other_dist_y;
-    } 
-    else 
-    {
-        ray->y_sign = 1; //el rayo va abajo
-        ray->first_dist_y = (check_y_in_map + 1.0 - y) * ray->other_dist_y;
-    }
+
+    
+    int wall_hit = 0; // Es una flag que indica si el rayo ha chocado con una pared. El while se ejecutara hasta que hit == 1 (cuando encuentra una pared).
+
 
      // Algoritmo DDA
     while (wall_hit == 0) 
     {
         if (ray->first_dist_x < ray->first_dist_y)  // El rayo toca antes una línea vertical → Avanza en x
         {
+            printf("       ...first_dist_x: (%f)\n", ray->first_dist_x);
+            printf("       ...first_dist_y: (%f)\n", ray->first_dist_y);
             ray->first_dist_x += ray->other_dist_x; // Como acabamos de cruzar una línea vertical, nos preparamos para el siguiente cruce. Sumamos other_dist_x porque nos dice cuánto hay que avanzar en X para llegar a la siguiente línea vertical
             printf("       ...progreso eje x: (%d)\n", check_x_in_map);
             check_x_in_map += ray->x_sign; // check_x_in_map es la celda en la cuadrícula donde está el rayo. x_sign vale +1 si el rayo va a la derecha o -1 si va a la izquierda. Esto actualiza check_x_in_map para reflejar que hemos cambiado de celda en la cuadrícula.
@@ -80,6 +104,8 @@ static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x,
         } 
         else // El rayo toca antes una línea horizontal → Avanza en y
         {
+            printf("          ^*^* first_dist_x: (%f)\n", ray->first_dist_x);
+            printf("          ^*^* first_dist_y: (%f)\n", ray->first_dist_y);
             ray->first_dist_y += ray->other_dist_y;
             check_y_in_map += ray->y_sign;
             printf("       ...progreso eje y: (%d)\n", check_y_in_map);
@@ -98,34 +124,51 @@ static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x,
         }
     }
 
-    // Calcular distancia final y coordenadas de colisión en pixels
+    // Calcular distancia final y coordenadas de colisión
     if (ray->line_crossing == 0) 
     {
-        //ray->wall_distance = (check_x_in_map - (x / gdata->minimap.cell_width) + (1 - ray->x_sign) / 2) / ray->dir_x; // Calcula la distancia desde el jugador hasta la pared usando trigonometría, para sacar la distancia perpendicular a la pared.
-        ray->wall_distance = (check_x_in_map * gdata->minimap.cell_width - x + (1 - ray->x_sign) / 2) / ray->dir_x;
-        printf("       WALL DISTANCE: (%f)\n", ray->wall_distance);
-        if (ray->x_sign > 0) // Rayo venía de la izquierda → borde izquierdo
+        if (ray->x_sign > 0) // Rayo venía de la izquierda → borde izquierdo de la celda
         {
             ray->cell_collision_x = check_x_in_map; // Guarda el punto exacto donde choca el rayo (collision_x)
             ray->px_collision_x = check_x_in_map * gdata->minimap.cell_width;
         }
-        else if (ray->x_sign == -1) // Rayo venía de la derecha → borde derecho
+        else if (ray->x_sign == -1) // Rayo venía de la derecha → borde derecho de la celda
         {
-            ray->collision_x = check_x_in_map + 1;
-            ray->collision_x = (check_x_in_map + 1) * gdata->minimap.cell_width;
+            ray->cell_collision_x = check_x_in_map;
+            ray->px_collision_x = (check_x_in_map) * gdata->minimap.cell_width;
         }
+        //ray->wall_distance = (check_x_in_map - (x / gdata->minimap.cell_width) + (1 - ray->x_sign) / 2) / ray->dir_x; // Calcula la distancia desde el jugador hasta la pared usando trigonometría, para sacar la distancia perpendicular a la pared.
+        ray->wall_distance = fabs(ray->px_collision_x - x) / fabs(ray->dir_x);
+        printf("       WALL DISTANCE: (%f)\n", ray->wall_distance);
+        ray->cell_collision_y = check_y_in_map;
+        // La coordenada Y se obtiene usando la ecuación de la recta del rayo
+        ray->px_collision_y = y + ray->wall_distance * ray->dir_y;
+        
     } 
     else 
     {
+        if (ray->y_sign > 0) // Rayo venía de arriba → borde superior de la celda
+        {
+            ray->cell_collision_y = check_y_in_map;
+            ray->px_collision_y = check_y_in_map * gdata->minimap.cell_height;
+        }
+        else if (ray->y_sign == -1) // Rayo venía de abajo → borde inferior de la celda
+        {
+            ray->cell_collision_y = check_y_in_map;
+            ray->px_collision_y = (check_y_in_map) * gdata->minimap.cell_height;
+        }
         //ray->wall_distance = (check_y_in_map - (y /gdata->minimap.cell_width) + (1 - ray->y_sign) / 2) / ray->dir_y;
-        ray->wall_distance = (check_y_in_map * gdata->minimap.cell_width - y + (1 - ray->y_sign) / 2) / ray->dir_y;
+        ray->wall_distance = (ray->px_collision_y - y) / fabs(ray->dir_y);
         printf("       WALL DISTANCE: (%f)\n", ray->wall_distance);
-        ray->collision_y = check_y_in_map;
-        if (ray->y_sign == -1)
-            ray->collision_y += 1;
+        
+        ray->cell_collision_x = check_x_in_map;
+        // La coordenada X se obtiene usando la ecuación de la recta del rayo
+        ray->px_collision_x = gdata->player.x + ray->wall_distance * ray->dir_x;
+
     }
     // ray->line_crossing = line_crossing;
-    printf("Ray %d -> Collision at: (%f, %f) | Wall Distance: |%f|\n\n", i, ray->collision_x, ray->collision_y, ray->wall_distance);
+    printf("Ray %d -> CASILLA Collision at: (%f, %f)\n\n", i, ray->cell_collision_x, ray->cell_collision_y);
+    printf("Ray %d -> PIXELS Collision at: (%f, %f)\n\n", i, ray->px_collision_x, ray->px_collision_y);
 }
 
 

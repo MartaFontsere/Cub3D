@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/05 05:28:22 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/05 08:47:08 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	init_gdata_values(t_game *gdata)
 
 int init_vision_parameters (t_game *gdata, t_vision *vision)
 {
-	vision->vision_angle = NORTH;
 	vision->last_vision_angle = NORTH;
 	vision->FOV.num_rays = gdata->mlx.window_width;
 	vision->FOV.fov_rad = 60 * (M_PI / 180); // 60° a radianes
@@ -111,6 +110,7 @@ void	init_player_position(t_game *gdata, t_map *map, t_player *player)
 
 void	init_player_orientation(t_map *map, t_vision *vision)
 {
+
 	int	i;
 	int	j;
 
@@ -143,7 +143,7 @@ void	init_player_orientation(t_map *map, t_vision *vision)
 			j++;
 		}
 		i++;
-	}
+	}	
 }
 
 void	init_minimap(t_game *gdata, t_map *map)
