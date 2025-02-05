@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/04 14:17:13 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:46:27 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ struct s_shader
 	char		*SO;
 	char		*WE;
 	char		*EA;
-	int			count;
-	int			colors_count;
+	int			p_count;
+	int			c_count;
 	int			err_flag;
 	t_color		C;//luego hay que chekear los rangos RGB
 	t_color		F;
@@ -81,7 +81,7 @@ typedef struct s_map
 }			t_img; */
 /*			--main--			*/
 
-void    init_structs(char **av, t_map *map);
+void    init_structs(t_map *map);
 void	init_shader(t_shader *shader);
 void	init_shader(t_shader *shader);
 void	print_matrix(char **matrix, int flag);
@@ -99,6 +99,7 @@ char	*cpy_path(char *line, t_map *map);
 void	assign_path(char *line, t_map *map, int i);
 int		check_line(char *line, t_map *map);
 int		fd_is_correct(t_map *map);
+int		curr_char(int cur, char *line, t_map *map);
 
 
 /*				--read_colors--				*/
@@ -109,8 +110,10 @@ void	cpy_colors(char *rgb, t_color *color, int i);
 
 
 /*					--get_map--				*/
-int	get_final_map(int ac, t_map *map);
-void	start_map(char *line, t_map *map, int i);
+int		get_final_map(int ac, char **av, t_map *map);
+int		looking_map(char *line, t_map *map);
+int		init_map(t_map *map);
+//char	**copy_map(char *line, t_map *map);
 
 
 

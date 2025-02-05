@@ -38,6 +38,7 @@
 
 29/01 -	He agregado una flag para saber si hay error en cuanto a shader, y pondre
 		para cuando el mapa haya iniciado
+		
 31/01 -	Tenemos ya parseados los paths y colores. Me queda modificar que, cuando
 		un color tengo error, no siga adelante con el resto de lecturas
 		Y en cuanto a los colores, ya sabemos que solo hay 3, los rangos de estos
@@ -46,3 +47,8 @@
 		- IMP!! Me queda codear la forma de evitar que intente sobreescribir
 		un param que ya este puesto. Y salir de los errores de colores con el msg
 		Una vez tengamos eso hecho, ya podremos hacer el merge de la matrix.(REVISAR!!!)
+
+04/02 -	Hay que hacer mini checkeos a la hora de hacer ala lectura del fd. Revisar
+		nuevamente y agregar casos que pueden pasar.
+
+05/02 -	revisar todo nuevamente

@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/04 14:33:58 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/05 13:44:00 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 	split = ft_split(rgb, ',');
 	if ((split[0] == NULL || split[1] == NULL || split[2] == NULL) && !split[3])
 	{
-		free_matrix(split);
 		color->shader->err_flag = 1;
+		free_matrix(split);
 		return (msg_error("Invaid split\n", NULL));	
 	}
 	while (split[i])
@@ -49,7 +49,7 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 		}
 		i++;
 	}
-	color->shader->colors_count++;
+	color->shader->c_count++;
 	free_matrix(split);
 }
 
@@ -100,7 +100,7 @@ void	assign_color(char *line, t_shader *shader, int i)
 		shader->err_flag = 1;
 		return ;
 	}
-	if (shader->colors_count < 2)
+	if (shader->c_count < 2)
 		get_colors(line, shader, i, init);
 	else
 	{
