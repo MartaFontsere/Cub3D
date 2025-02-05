@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 03:02:49 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/03 21:51:51 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/05 03:13:09 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,73 +348,73 @@ void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, 
 //     }
 // }
 
+//en cada rayo te quedas con la distancia mas corta
+//si al transformar a coordenadas algna es negativa, la desecho y me quedo con la otra distancia como la corta
+// hit x y hit y puntos de choque en pixeles
+// una vez tienes las dos
+// if angulo es uno de los rectos, se que en 90 y 180 la vertical nunca va a existir y al reves. en esos angulos tienes que calcular la interseccion y quedarte con la cntraria
+// 	incrementos por cuadrantes (positivo y negativo segun si el rayo va a derecha o izquierda, arriba o abajo. sacas el incremento y fuerzas el signo que te interesa. La tangente para calcular el incremento de x e y en ambas intersecciones. Fuerzas luego segun el cuadrante si el incremento sera positivo en un eje o negativo)
+
+//para 
+
+//hit x, hit y vertical, hit x, hit y horizontal, a que corresponde ese choque 
+
 
 //BUENO CON DDA
 
-void print_fov_minimap(t_game *gdata, double player_px_x, double player_px_y, double vision_angle, int color) 
+void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision_angle, int color) 
 {
     (void)vision_angle; // Si no se usa pero el parámetro está en la firma
-    const int thickness = 2; // Grosor de los rayos
     int i = 0;
 
-    while (i < gdata->fov.num_rays) 
+    while (i < vision.FOV.num_rays) 
     {
-        t_ray *ray = &gdata->fov.rays[i];
-        
-        // Convertir coordenadas del mundo a píxeles del minimapa
-        double end_x = ray->collision_x * gdata->minimap.cell_width;
-        double end_y = ray->collision_y * gdata->minimap.cell_height;
-        
-        // Coordenadas de inicio (posición del jugador ya en píxeles)
-        double start_x = player_px_x;
-        double start_y = player_px_y;
+        t_ray *ray = &vision.FOV.rays[i];
+        // Convertir coordenadas de colisión a píxeles del minimapa
+        double end_ray_x = (ray->collision_x + 1) * gdata->minimap.cell_width;
+        double end_ray_y = (ray->collision_y + 1) * gdata->minimap.cell_height;
+
+        // Coordenadas de inicio (posición del jugador ya en píxeles)de pintar el rayo, esta posicion la iremos avanzando segun el angulo de cada rayo
+        double draw_ray_x = x; //double start_ray_x = x;
+        double draw_ray_y = y; //double start_ray_y = y;
         
         // Algoritmo DDA para dibujar línea
-        double dx = end_x - start_x;
-        double dy = end_y - start_y;
+        double dx = end_ray_x - draw_ray_x;
+        double dy = end_ray_y - draw_ray_y;
         double steps = fmax(fabs(dx), fabs(dy));
         double x_inc = dx / steps;
         double y_inc = dy / steps;
         
         int current_step = 0;
+        //printf ("steps |%f|\n", steps);
         while (current_step++ < steps) 
         {
-            // Aplicar grosor
-            int offset = -thickness;
-            while (offset <= thickness) 
+            int px_x = (int)draw_ray_x;
+            int px_y = (int)draw_ray_y;
+            
+            // Dibujar el píxel si está dentro del minimapa
+            if (px_x >= 0 && px_x < gdata->minimap.width && 
+                px_y >= 0 && px_y < gdata->minimap.height) 
+            //printf ("whileee\n");
             {
-                int px_x = (int)(start_x + offset);
-                int px_y = (int)start_y;
-                
-                // Dibujar en horizontal y vertical alrededor del punto central
-                if (px_x >= 0 && px_x < gdata->minimap.width && 
-                    px_y >= 0 && px_y < gdata->minimap.height) 
-                {
-                    mlx_put_pixel(gdata->mlx.image, px_x, px_y, color);
-                }
-                
-                px_x = (int)start_x;
-                px_y = (int)(start_y + offset);
-                
-                if (px_x >= 0 && px_x < gdata->minimap.width && 
-                    px_y >= 0 && px_y < gdata->minimap.height) 
-                {
-                    mlx_put_pixel(gdata->mlx.image, px_x, px_y, color);
-                }
-                
-                offset++;
+            	//printf ("imprimooooooooooooo\n");
+                mlx_put_pixel(gdata->mlx.image, px_x, px_y, color);
             }
             
-            start_x += x_inc;
-            start_y += y_inc;
+            draw_ray_x += x_inc;
+            draw_ray_y += y_inc;
             
             // Romper si el rayo sale del mapa antes de chocar
-            if ((int)(start_x/gdata->minimap.cell_width) >= gdata->map.width ||
-                (int)(start_y/gdata->minimap.cell_height) >= gdata->map.height) 
+            if ((int)(draw_ray_x / gdata->minimap.cell_width) >= gdata->map.width ||
+                (int)(draw_ray_y / gdata->minimap.cell_height) >= gdata->map.height) 
             {
                 break;
             }
         }
+            // printf ("i |%d|\n", i);
+            // double angle_step = (vision.FOV.fov_rad / vision.FOV.num_rays);
+            // printf("Rayo %d - Angulo: %f\n", i, angle_step);
+            // printf("Rayo %d - Colisión en (%.2f, %.2f)\n", i, ray->collision_x, ray->collision_y);
         i++;
     }
 }

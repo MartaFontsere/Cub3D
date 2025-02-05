@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/30 11:01:49 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:09:12 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ void	print_minimap(t_game *gdata)
 	print_walls (gdata->mlx, gdata->minimap, gdata->map);
 	print_empty_space (gdata->mlx, gdata->minimap, gdata->map);
 		//Estas dos se pueden fusionar, REVISAR
+	calculate_fov(gdata, gdata->player.x, gdata->player.y);
 	print_FOV (gdata, gdata->vision, gdata->player.x, gdata->player.y, gdata->vision.vision_angle, SOFT_YELLOW);
 	print_vision_angle (gdata, gdata->player.x, gdata->player.y, gdata->vision.vision_angle, YELLOW1);
 	print_player (gdata, gdata->player, gdata->player.x, gdata->player.y, RED1);

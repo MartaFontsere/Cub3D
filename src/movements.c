@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/30 03:11:43 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:42:40 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 
 void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x, double target_y)
 {
+	printf ("hola\n");
+	calculate_fov(gdata, player.x, player.y);
 	print_FOV (gdata, gdata->vision, player.x, player.y, gdata->vision.last_vision_angle, DARK_GREY);
+	calculate_fov(gdata, target_x, target_y);
 	print_FOV (gdata, gdata->vision, target_x, target_y, gdata->vision.vision_angle,  SOFT_YELLOW);
 }
 
@@ -26,6 +29,9 @@ void print_player_view_in_motion (t_game *gdata, t_player player, double target_
 	print_vision_angle (gdata, player.x, player.y, gdata->vision.last_vision_angle, SOFT_YELLOW);
 	print_vision_angle (gdata, target_x, target_y, gdata->vision.vision_angle, YELLOW1);
 }
+
+
+// Si dentro de la funcion print_player_FOV_in_motion tengo que se imprima primero en gris en la posicion que esta y que luego se repinte en amarillo en la posicion a la que se desplaza, no es lo mismo que lo de clear_screen? Es necesario? Ponme  toda el orden logico, el flujo de funciones, para saber en que orden se llaman y donde va cada parte del codigo
 
 
 

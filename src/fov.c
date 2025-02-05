@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/03 21:03:50 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/05 07:23:01 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,31 @@
 
 #include "cub3D.h"
 
+//no quiero trabajar en casilas y luego volver a pixeles. Quiero hacer los calculos con pixeles y luego, una vez encontrada la colision, convertirlo en coordenadas (casillas) para ver a que corresponde y comprovar si
+
 // Calcula un solo rayo usando DDA (almacena datos en t_ray)
-static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x, double y) 
+static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x, double y, int i)// borrar i 
 {
+    (void)i; //BORRAR
    // Inicializar dirección del rayo
-    ray->dir_x = -cos(ray_angle);
+    ray->dir_x = cos(ray_angle);
     ray->dir_y = -sin(ray_angle);
+    printf("Rayo %d - Dir: (%.2f, %.2f) - ray angle: |%.2f|\n", i, ray->dir_x, ray->dir_y, ray_angle * (180 / M_PI));
 
     // Algoritmo DDA
-    ray->other_dist_x = fabs(1 / ray->dir_x); // Cuánto hay que moverse en X para pasar a la siguiente línea vertical de la celda de la cuadrícula. 
-    ray->other_dist_y = fabs(1 / ray->dir_y); //Cuánto hay que moverse en Y para pasar a la siguiente línea horizontal de la celda de la cuadrícula.
-    
-    int check_x_in_map = (int)(x / gdata->minimap.cell_width); // Representa la celda en la cuadrícula donde está el rayo (índices de la matriz del mapa)
-    int check_y_in_map = (int)(y / gdata->minimap.cell_height);// Representa la celda en la cuadrícula donde está el rayo (índices de la matriz del mapa)
+    ray->other_dist_x = fabs(1 / ray->dir_x); // (en casillas) Cuánto hay que moverse en X para pasar a la siguiente línea vertical de la celda de la cuadrícula. 
+    printf ("   --distancia constante en el eje x :|%f|\n", ray->other_dist_x);
+    ray->other_dist_y = fabs(1 / ray->dir_y); //(en casillas) Cuánto hay que moverse en Y para pasar a la siguiente línea horizontal de la celda de la cuadrícula.
+    printf ("   --distancia constante en el eje y :|%f|\n", ray->other_dist_y);
+    //printf ("ray dir x: |%f|\n", ray->dir_x);
+    int check_x_in_map = (int)(x / gdata->minimap.cell_width); // Representa la celda en la cuadrícula donde está el rayo(índices de la matriz del mapa). Empieza en la casilla del player
+    printf("   check_x_in_map inicial: (%d)\n", check_x_in_map);
+    printf ("  x: %f\n", x);
+    printf ("  gdata->minimap.cell_width: %f\n", gdata->minimap.cell_width);
+    int check_y_in_map = (int)(y / gdata->minimap.cell_height);// Representa la celda en la cuadrícula donde está el rayo  (índices de la matriz del mapa). Empieza en la casilla del player
+    printf("   check_y_in_map inicial: (%d)\n", check_y_in_map);
+    printf ("  y: %f\n", y);
+    printf ("  gdata->minimap.cell_width: %f\n", gdata->minimap.cell_height);
     int wall_hit = 0; // Es una flag que indica si el rayo ha chocado con una pared. El while se ejecutara hasta que hit == 1 (cuando encuentra una pared).
     
 
@@ -55,19 +67,22 @@ static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x,
         ray->first_dist_y = (check_y_in_map + 1.0 - y) * ray->other_dist_y;
     }
 
-     // Algoritmo DDA (sin operadores ternarios)
+     // Algoritmo DDA
     while (wall_hit == 0) 
     {
         if (ray->first_dist_x < ray->first_dist_y)  // El rayo toca antes una línea vertical → Avanza en x
         {
             ray->first_dist_x += ray->other_dist_x; // Como acabamos de cruzar una línea vertical, nos preparamos para el siguiente cruce. Sumamos other_dist_x porque nos dice cuánto hay que avanzar en X para llegar a la siguiente línea vertical
+            printf("       ...progreso eje x: (%d)\n", check_x_in_map);
             check_x_in_map += ray->x_sign; // check_x_in_map es la celda en la cuadrícula donde está el rayo. x_sign vale +1 si el rayo va a la derecha o -1 si va a la izquierda. Esto actualiza check_x_in_map para reflejar que hemos cambiado de celda en la cuadrícula.
+            printf("       ...progreso eje x: (%d)\n", check_x_in_map);
             ray->line_crossing = 0; // Indica que hemos chocado contra una linea vertical dde la celda (linea en X)
         } 
         else // El rayo toca antes una línea horizontal → Avanza en y
         {
             ray->first_dist_y += ray->other_dist_y;
             check_y_in_map += ray->y_sign;
+            printf("       ...progreso eje y: (%d)\n", check_y_in_map);
             ray->line_crossing = 1;
         }
 
@@ -75,25 +90,42 @@ static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x,
         if (check_x_in_map < 0 || check_x_in_map >= gdata->map.width || check_y_in_map < 0 || check_y_in_map >= gdata->map.height) 
             break; //Si el rayo sale del mapa, se detiene.
         if (gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
+        {
             wall_hit = 1; //Si el rayo encuentra una celda con 1 (pared), se detiene (hit = 1).
+            printf("    #check_x_in_map: (%d)\n", check_x_in_map);
+            printf("    #check_y_in_map: (%d)\n", check_y_in_map);
+
+        }
     }
 
-    // Calcular distancia final y coordenadas de colisión
+    // Calcular distancia final y coordenadas de colisión en pixels
     if (ray->line_crossing == 0) 
     {
-        ray->wall_distance = (check_x_in_map - gdata->player.x + (1 - ray->x_sign) / 2) / ray->dir_x; // Calcula la distancia desde el jugador hasta la pared usando trigonometría, para sacar la distancia perpendicular a la pared.
-        ray->collision_x = check_x_in_map; // Guarda el punto exacto donde choca el rayo (collision_x)
-        if (ray->x_sign == -1)
-            ray->collision_x += 1;
+        //ray->wall_distance = (check_x_in_map - (x / gdata->minimap.cell_width) + (1 - ray->x_sign) / 2) / ray->dir_x; // Calcula la distancia desde el jugador hasta la pared usando trigonometría, para sacar la distancia perpendicular a la pared.
+        ray->wall_distance = (check_x_in_map * gdata->minimap.cell_width - x + (1 - ray->x_sign) / 2) / ray->dir_x;
+        printf("       WALL DISTANCE: (%f)\n", ray->wall_distance);
+        if (ray->x_sign > 0) // Rayo venía de la izquierda → borde izquierdo
+        {
+            ray->cell_collision_x = check_x_in_map; // Guarda el punto exacto donde choca el rayo (collision_x)
+            ray->px_collision_x = check_x_in_map * gdata->minimap.cell_width;
+        }
+        else if (ray->x_sign == -1) // Rayo venía de la derecha → borde derecho
+        {
+            ray->collision_x = check_x_in_map + 1;
+            ray->collision_x = (check_x_in_map + 1) * gdata->minimap.cell_width;
+        }
     } 
     else 
     {
-        ray->wall_distance = (check_y_in_map - gdata->player.y + (1 - ray->y_sign) / 2) / ray->dir_y;
-        ray->collision_y = check_y_in_map * gdata->minimap.cell_height;
+        //ray->wall_distance = (check_y_in_map - (y /gdata->minimap.cell_width) + (1 - ray->y_sign) / 2) / ray->dir_y;
+        ray->wall_distance = (check_y_in_map * gdata->minimap.cell_width - y + (1 - ray->y_sign) / 2) / ray->dir_y;
+        printf("       WALL DISTANCE: (%f)\n", ray->wall_distance);
+        ray->collision_y = check_y_in_map;
         if (ray->y_sign == -1)
             ray->collision_y += 1;
     }
     // ray->line_crossing = line_crossing;
+    printf("Ray %d -> Collision at: (%f, %f) | Wall Distance: |%f|\n\n", i, ray->collision_x, ray->collision_y, ray->wall_distance);
 }
 
 
@@ -104,15 +136,25 @@ static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x,
 // Calcula TODOS los rayos del FOV y los almacena en t_fov
 void calculate_fov(t_game *gdata, double x, double y) //Mandar las coordenadas del player (actuales y anteriores)
 {
-    double start_angle = gdata->vision.vision_angle - (gdata->vision.FOV.fov_rad);
-    double end_angle = gdata->vision.vision_angle + (gdata->vision.FOV.fov_rad);
+    double start_angle = gdata->vision.vision_angle + (gdata->vision.FOV.fov_rad / 2);
+    double end_angle = gdata->vision.vision_angle - (gdata->vision.FOV.fov_rad / 2);
     double angle_step = (end_angle - start_angle) / gdata->vision.FOV.num_rays;
 
+    printf ("vision.vision_angle: |%f|\n", gdata->vision.vision_angle * (180 / M_PI));
+    printf ("start angle: |%f| end angle: |%f|\n", start_angle * (180 / M_PI), end_angle * (180 / M_PI));
+    printf ("angle_step: |%f|\n", angle_step * (180 / M_PI));
+
     int i = 0; //indice de cada rayo
+    printf ("start angle: |%f|\n", start_angle * (180 / M_PI));
+    printf ("num rays |%d|\n\n", gdata->vision.FOV.num_rays);
+    gdata->vision.FOV.rays[i].current_angle = start_angle;
     while (i < gdata->vision.FOV.num_rays) 
     {
-        double current_angle = start_angle + (angle_step * i); // lo mismo que current angle = current angle + angle step
-        calculate_ray(gdata, &gdata->vision.FOV.rays[i], current_angle, x, y);
+        //printf ("current angle: |%f|\n", current_angle);
+        printf ("**********current angle: |%f|\n", gdata->vision.FOV.rays[i].current_angle * (180 / M_PI));
+        calculate_ray(gdata, &gdata->vision.FOV.rays[i], gdata->vision.FOV.rays[i].current_angle, x, y, i); // borrar i
+        gdata->vision.FOV.rays[i+1].current_angle = gdata->vision.FOV.rays[i].current_angle + angle_step;//current_angle = start_angle + (angle_step * i); // lo mismo que current angle = current angle + angle step
         i++;
     }
 }
+//si resto la diferencia entre current angles y eso lo mltiplico por los 1500 de ancho de la pantalla, me tendria que dar 60 grados, que es el espacio entre el que se reparten

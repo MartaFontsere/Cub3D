@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/22 15:29:58 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/05 01:25:49 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,3 +61,6 @@ int main(int ac, char **av)
 
 //INICIALIZAR ESTRUCTURAS, PUNTEROS, ARRAY... y los punteros de dentro de la estructura
 //CUANDO SI Y CUANDO NO ALOCAR MEMORIA. EJ> *ray DENTRO DE T_FOV
+
+//Lo mejor para ver que todos los numeros se hacen bien, es hacer un mapa de 5x5, ya que asi podemos hacer una ventana de 60x60, asumiendo que cada celda son 12 pixeles y asi cuando pongamos el player en el centro, cuando hagamos el fov de 60 grados, cada rayo ira a un pixel distinto
+//Asi, al ver las cosas con numeros enteros y con un mapa pequenyo, sera mas facil detectar si estamos haciendo bien los calculos, relacionar conceptos y sacar conclusiones si falla algo

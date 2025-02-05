@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/03 21:03:26 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/05 07:14:02 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_mlx
 
 
 typedef struct s_ray {
+    double current_angle;
     double dir_x;       // Dirección X del rayo
     double dir_y;       // Dirección Y del rayo
     double first_dist_x; // distancia desde la posición actual del player hasta la primera línea vertical de la celda de la cuadrícula
@@ -111,9 +112,11 @@ typedef struct s_ray {
     int line_crossing; //0 = choque en X, 1 = choque en Y (para texturas)// nos dice qué cara de una celda fue atravesada por el rayo en su último avance. Indica si el rayo choca contra una pared vertical (side = 0, osea se movió en X) o una horizontal (side = 1, osea se movió en Y). indica con qué tipo de línea de la celda el rayo acaba de chocar. No indica si chocó con una pared del mapa, sino si cruzó una línea vertical u horizontal dentro de la cuadrícula.
 
 
-    double collision_x; // Punto de colisión en X (en casillas)
-    double collision_y; // Punto de colisión en Y (en casillas)
-   	double wall_distance;    // Distancia perpendicular a la pared (para 3D)
+    double cell_collision_x; // Punto de colisión en X (en casillas)
+    double cell_collision_y; // Punto de colisión en Y (en casillas)
+    double px_collision_x; // Punto de colisión en X (en pixeles)
+    double px_collision_y; // Punto de colisión en Y (en pixeles)
+   	double wall_distance;    // Distancia perpendicular a la pared en pixels (para 3D)
 } t_ray;
 
 
@@ -228,9 +231,10 @@ void render_game (void *param);
 //MOVE
 void	prepare_movement(t_game *gdata, t_vision vision, double *target_x, double *target_y);
 void rotate_player(t_player *player, t_vision *vision);
+void calculate_fov(t_game *gdata, double x, double y);
+void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x, double target_y);
 void	print_player_move(t_game *gdata, t_player player, double target_x, double target_y);
 void print_player_view_in_motion (t_game *gdata, t_player player, double target_x, double target_y);
-void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x, double target_y);
 
 //PRESS KEY
 int	there_is_a_key_pressed(t_game *gdata);
