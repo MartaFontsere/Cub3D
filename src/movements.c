@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/05 19:37:59 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/08 15:37:21 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x,
 {
 	printf ("hola%f\n", player.x);
 
-	calculate_fov(gdata, player.x, player.y);
+	//calculate_fov(gdata, player.x, player.y);
 	print_FOV (gdata, gdata->vision, player.x, player.y, gdata->vision.last_vision_angle, DARK_GREY);
 	calculate_fov(gdata, target_x, target_y);
 	print_FOV (gdata, gdata->vision, target_x, target_y, gdata->vision.vision_angle,  SOFT_YELLOW);

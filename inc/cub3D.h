@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/05 07:14:02 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/08 18:39:39 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ typedef struct s_ray {
     double px_collision_x; // Punto de colisión en X (en pixeles)
     double px_collision_y; // Punto de colisión en Y (en pixeles)
    	
-   	double wall_distance;    // El largo del rayo. Distancia perpendicular a la pared en pixels (para 3D)
+   	double diagonal_distance;    // El largo del rayo. Distancia del origen del rayo a la pared en casillas (para 3D)
+   	double perpendicular_distance;
 } t_ray;
 
 
