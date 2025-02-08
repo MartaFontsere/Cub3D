@@ -137,7 +137,7 @@ void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, 
 {
     double init_x = x;
     double init_y = y;
-    double ray_dir_x = cos(vision_angle);
+    double ray_dir_x = -cos(vision_angle);
     double ray_dir_y = -sin(vision_angle); // Negativo para ajustar coordenadas
     int thickness = 4;  // Grosor del rayo
 printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
@@ -414,39 +414,49 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
     (void)vision_angle;
     int i = 0;
     
+
+  //   while (i < vision.FOV.num_rays) 
+  //   {
+  //      printf ("colision en y: %f\n", vision.FOV.rays[i].px_collision_y);
+  //      i++;
+  //   }
+  // i = 0;
+
     while (i < vision.FOV.num_rays) 
     {
+        //printf ("\nRAY %d\n", i);
         t_ray *ray = &vision.FOV.rays[i];
         
         // Coordenadas de inicio (posición del jugador)
         double draw_ray_x = x;
         double draw_ray_y = y;
         
-        // Calcular el punto final del rayo usando la distancia real hasta la colisión
-        double ray_length = ray->wall_distance;
-        double end_ray_x = x + ray->dir_x * ray_length;
-        double end_ray_y = y + ray->dir_y * ray_length;
-        
         // Algoritmo DDA para dibujar la línea del rayo
-        double dx = end_ray_x - draw_ray_x;
-        double dy = end_ray_y - draw_ray_y;
-        double steps = fmax(fabs(dx), fabs(dy));
-        
+        double x_distance = ray->px_collision_x - x; //Cuantos pixeles avanza el rayo en el eje x hasta colisionar
+        double y_distance = ray->px_collision_y - y; //Cuantos pixeles avanza el rayo en el eje y hasta colisionar
+        double steps = fmax(fabs(x_distance), fabs(y_distance)); //Selecciona el valor mayor entre x_distance y y_distance. Porque queremos asegurarnos de recorrer toda la línea sin saltos. Si dx es mayor, significa que la línea se mueve más en X que en Y, así que debemos dividir el movimiento en suficientes pasos para cubrir todos los píxeles en X. Lo mismo ocurre si dy es mayor. Esto se hace para recorrer el rayo sin perder precision
+        // printf ("steps = %f\n", steps);
+        // printf ("ray->px_collision_y = %f\n", ray->px_collision_y);
+
         // Evitar división por cero
-        if (steps < 1e-6)
+        if (steps < 1e-6) // Si steps es casi cero, significa que el rayo es muy corto o que end_ray_x == draw_ray_x y end_ray_y == draw_ray_y. En este caso, se omite este rayo y se pasa al siguiente (continue).
         {
             i++;
             continue;
         }
         
-        double x_inc = dx / steps;
-        double y_inc = dy / steps;
+        //El valor de steps nos ayuda a calcular cuánto debemos movernos en X e Y en cada paso.
+        double x_inc = x_distance / steps; //Cuánto avanzamos en X por cada paso
+        double y_inc = y_distance / steps; //Cuánto avanzamos en Y por cada paso
+        // Esto permite que el rayo se dibuje de manera uniforme sin saltos o distorsiones, asegurando que cada pixel del rayo esté correctamente alineado con su dirección real
+        // Sin este cálculo, el rayo no se trazaría correctamente, saltaría píxeles o se vería cortado.
+
         int current_step = 0;
         
         // Dibujar el rayo paso a paso
         while (current_step < (int)steps) 
         {
-            int px_x = (int)draw_ray_x;
+            int px_x = (int)draw_ray_x; //Se convierten draw_ray_x y draw_ray_y a enteros (px_x, px_y) para representar píxeles en pantalla. Esto se hace porque la función mlx_put_pixel() espera coordenadas de píxeles enteras
             int px_y = (int)draw_ray_y;
             
             // Verificar límites del minimapa
@@ -455,9 +465,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
             {
                 // Verificar si hemos llegado al punto de colisión
                 if (current_step == (int)(steps - 1))
-                {
                     mlx_put_pixel(gdata->mlx.image, px_x, px_y, 0xFF0000FF); // Punto rojo en la colisión
-                }
                 else
                 {
                     mlx_put_pixel(gdata->mlx.image, px_x, px_y, color);

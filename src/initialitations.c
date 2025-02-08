@@ -18,10 +18,10 @@ void	init_gdata_values(t_game *gdata)
 	gdata->map.matrix = NULL;
 	gdata->map.width = 0;
 	gdata->map.height = 0;
-	gdata->mlx.window_height = 1500; // CAMBIAR, ESTA HARDCODEADO;
-	gdata->mlx.window_width = 1500; // CAMBIAR, ESTA HARDCODEADO;
-	// gdata->mlx.window_height = 60; // CAMBIAR, ESTA HARDCODEADO;
-	// gdata->mlx.window_width = 60; // CAMBIAR, ESTA HARDCODEADO;
+	// gdata->mlx.window_height = 1500; // CAMBIAR, ESTA HARDCODEADO;
+	// gdata->mlx.window_width = 1500; // CAMBIAR, ESTA HARDCODEADO;
+	gdata->mlx.window_height = 60; // CAMBIAR, ESTA HARDCODEADO;
+	gdata->mlx.window_width = 60; // CAMBIAR, ESTA HARDCODEADO;
 	gdata->player.raw_x = 0;
 	gdata->player.raw_y = 0;
 	gdata->player.x = 0;
@@ -148,10 +148,10 @@ void	init_player_orientation(t_map *map, t_vision *vision)
 
 void	init_minimap(t_game *gdata, t_map *map)
 {
-	gdata->minimap.width = 1500; // CAMBIAR, ESTA HARDCODEADO
-	gdata->minimap.height = 1500; // CAMBIAR, ESTA HARDCODEADO
-	// gdata->minimap.width = 60; // CAMBIAR, ESTA HARDCODEADO
-	// gdata->minimap.height = 60; // CAMBIAR, ESTA HARDCODEADO
+	// gdata->minimap.width = 1500; // CAMBIAR, ESTA HARDCODEADO
+	// gdata->minimap.height = 1500; // CAMBIAR, ESTA HARDCODEADO
+	gdata->minimap.width = 60; // CAMBIAR, ESTA HARDCODEADO
+	gdata->minimap.height = 60; // CAMBIAR, ESTA HARDCODEADO
 	gdata->minimap.cell_width = gdata->minimap.width / map->width;
 	gdata->minimap.cell_height = gdata->minimap.height / map->height;
 	

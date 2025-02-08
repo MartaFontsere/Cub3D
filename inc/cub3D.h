@@ -116,7 +116,8 @@ typedef struct s_ray {
     double cell_collision_y; // Punto de colisión en Y (en casillas)
     double px_collision_x; // Punto de colisión en X (en pixeles)
     double px_collision_y; // Punto de colisión en Y (en pixeles)
-   	double wall_distance;    // Distancia perpendicular a la pared en pixels (para 3D)
+   	
+   	double wall_distance;    // El largo del rayo. Distancia perpendicular a la pared en pixels (para 3D)
 } t_ray;
 
 
