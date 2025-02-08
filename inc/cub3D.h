@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/08 18:39:39 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/08 22:52:41 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@
 
 /*PLAYER SPEED*/
 # define MOVE_SPEED 4 // cuantos pixeles se mueve cada vez que tocamos una tecla
-# define ROTATION_SPEED 0.015
+# define ROTATION_SPEED 0.025
 
 /*MINIMAP*/
 
@@ -221,6 +221,7 @@ void	print_minimap(t_game *gdata);
 void print_empty_space (t_mlx mlx, t_minimap minimap, t_map map);
 void print_walls (t_mlx mlx, t_minimap minimap, t_map map);
 void print_background (t_mlx mlx, t_minimap minimap);
+void	print_player_and_fov(t_game *gdata);
 
 //PRINT PLAYER PARAMS
 void print_player (t_game *gdata, t_player player, double x, double y, int color);

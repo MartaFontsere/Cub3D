@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/08 15:37:21 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/08 22:56:22 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x,
 	printf ("hola%f\n", player.x);
 
 	//calculate_fov(gdata, player.x, player.y);
-	print_FOV (gdata, gdata->vision, player.x, player.y, gdata->vision.last_vision_angle, DARK_GREY);
+	//print_FOV (gdata, gdata->vision, player.x, player.y, gdata->vision.last_vision_angle, DARK_GREY);
+	print_minimap (gdata);
 	calculate_fov(gdata, target_x, target_y);
 	print_FOV (gdata, gdata->vision, target_x, target_y, gdata->vision.vision_angle,  SOFT_YELLOW);
 }
@@ -27,7 +28,8 @@ void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x,
 
 void print_player_view_in_motion (t_game *gdata, t_player player, double target_x, double target_y)
 {
-	print_vision_angle (gdata, player.x, player.y, gdata->vision.last_vision_angle, SOFT_YELLOW);
+	//print_vision_angle (gdata, player.x, player.y, gdata->vision.last_vision_angle, SOFT_YELLOW);
+	printf ("player%f", player.x); // BORRAR
 	print_vision_angle (gdata, target_x, target_y, gdata->vision.vision_angle, YELLOW1);
 }
 
@@ -38,8 +40,8 @@ void print_player_view_in_motion (t_game *gdata, t_player player, double target_
 
 void print_player_move(t_game *gdata, t_player player, double target_x, double target_y)
 {
-
-	print_player (gdata, player, player.x, player.y, DARK_GREY);
+	//print_player (gdata, player, player.x, player.y, DARK_GREY);
+	printf ("player%f", player.x); // BORRAR
 	print_player (gdata, player, target_x, target_y, RED1);
 }
 

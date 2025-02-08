@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/05 08:47:15 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/08 22:49:28 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int main(int ac, char **av)
 		return (0);
 	}
 	print_minimap(&gdata);
+	print_player_and_fov (&gdata);
 	mlx_key_hook(gdata.mlx.init, press_key, &gdata);
 	mlx_loop_hook(gdata.mlx.init, render_game, &gdata);
 	mlx_loop(gdata.mlx.init);
