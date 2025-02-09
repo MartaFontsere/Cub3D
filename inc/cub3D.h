@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/08 22:52:41 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/09 22:37:20 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 
 /*MLXCOLORS*/
 # define BLACK 0x000000FF
-# define DARK_GREY 0x000000
+# define DARK_GREY 0x3C3C3CFF
 # define MEDIUM_GREY 0X696969FF
 //# define MEDIUM_GREY 0X575757FF
 # define SOFT_GREY 0x959595FF
@@ -47,6 +47,10 @@
 # define YELLOW1 0xFFC006FF
 # define SOFT_YELLOW 0xFEF4D3FF
 //# define SOFT_YELLOW 0xFAFDC9FF
+# define BLUE1 0X9AC4FFFF
+
+
+
 
 /*PLAYER ORIENTATION*/
 # define NORTH M_PI_2 //90 grados
@@ -64,10 +68,16 @@
 # define MOVE_DOWN 3
 
 /*PLAYER SPEED*/
-# define MOVE_SPEED 4 // cuantos pixeles se mueve cada vez que tocamos una tecla
-# define ROTATION_SPEED 0.025
+# define MOVE_SPEED 2 // cuantos pixeles se mueve cada vez que tocamos una tecla
+# define ROTATION_SPEED 0.020
+
+/*MAP*/
+#define PX_MAP_WIDTH 2560
+#define PX_MAP_HEIGHT 1440
 
 /*MINIMAP*/
+#define PX_MINIMAP_WIDTH 520
+#define PX_MINIMAP_HEIGHT 340
 
 
 
@@ -93,10 +103,13 @@ typedef struct s_mlx
 	int			window_height;
 	int			window_width;
 	mlx_image_t	*image;
+	mlx_image_t	*mini_image;
+
 }				t_mlx;
 
 
-typedef struct s_ray {
+typedef struct s_ray 
+{
     double current_angle;
     double dir_x;       // Dirección X del rayo
     double dir_y;       // Dirección Y del rayo
@@ -119,7 +132,7 @@ typedef struct s_ray {
    	
    	double diagonal_distance;    // El largo del rayo. Distancia del origen del rayo a la pared en casillas (para 3D)
    	double perpendicular_distance;
-} t_ray;
+}			t_ray;
 
 
 // Estructura para el campo de visión (FOV)
@@ -163,10 +176,10 @@ typedef struct s_player
 typedef struct s_minimap
 {
 	//mlx_image_t		*background_img;
-	int				width; // Valor máximo X del minimapa (en pixels)
-	int				height; // Valor máximo Y del minimapa (en pixels)
-	double 			cell_width; // Cantidad de pixels en el eje X
-	double 			cell_height; //Cantidad de pixels en el eje Y
+	int				px_width; // Valor máximo X del minimapa (en pixels)
+	int				px_height; // Valor máximo Y del minimapa (en pixels)
+	double 			px_in_cell_width; // Cantidad de pixels por cada celda en el eje X
+	double 			px_in_cell_height; //Cantidad de pixels por cada celda en el eje Y
 }					t_minimap;
 
 typedef struct s_map
@@ -181,8 +194,10 @@ typedef struct s_map
 	// uint32_t		ceiling;
 	char			*rawmap; // Mapa sin procesar
 	char			**matrix; // Mapa en matriz
-	int				width; // Valor máximo X del mapa (en casillas)
-	int				height; // Valor máximo Y del mapa (en casillas)
+	int				px_width; // Valor máximo X del mapa (en pixels)
+	int				px_height; // Valor máximo Y del mapa (en pixels)
+	int				cells_width; // Valor máximo X del mapa (en casillas)
+	int				cells_height; // Valor máximo Y del mapa (en casillas)
 }					t_map;
 
 
@@ -210,10 +225,14 @@ void 	init_player_parameters (t_game *gdata, t_player *player);
 void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
 void	init_player_orientation(t_map *map, t_vision *vision);
 int init_vision_parameters (t_game *gdata, t_vision *vision);
-int		init_mlx_and_create_new_image(t_game *gdata, t_mlx *mlx);
+int		init_mlx(t_mlx *mlx);
+int	create_new_images(t_game *gdata, t_mlx *mlx);
 
 //PSEUDOPARSING
 char **parsing_pre_yahaira(t_game *gdata);
+
+//PRINT MAP
+void print_map (t_mlx mlx, t_map map);
 
 //PRINT MINIMAP
 void	print_minimap(t_game *gdata);

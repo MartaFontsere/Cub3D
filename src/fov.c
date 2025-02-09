@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/08 22:44:00 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/09 22:45:43 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x,
     ray->dir_x = -cos(ray_angle);
     ray->dir_y = -sin(ray_angle);
    
-    int check_x_in_map = (int)(x / gdata->minimap.cell_width); // Representa la celda en la cuadrícula donde está el rayo(índices de la matriz del mapa). Empieza en la casilla del player
-    int check_y_in_map = (int)(y / gdata->minimap.cell_height);// Representa la celda en la cuadrícula donde está el rayo  (índices de la matriz del mapa). Empieza en la casilla del player
-    double cell_player_x =  x / gdata->minimap.cell_width; //posición en casillas del player
-    double cell_player_y = y / gdata->minimap.cell_height;
+    int check_x_in_map = (int)(x / gdata->minimap.px_in_cell_width); // Representa la celda en la cuadrícula donde está el rayo(índices de la matriz del mapa). Empieza en la casilla del player
+    int check_y_in_map = (int)(y / gdata->minimap.px_in_cell_height);// Representa la celda en la cuadrícula donde está el rayo  (índices de la matriz del mapa). Empieza en la casilla del player
+    double cell_player_x =  x / gdata->minimap.px_in_cell_width; //posición en casillas del player
+    double cell_player_y = y / gdata->minimap.px_in_cell_height;
     
     if (fabs(ray->dir_x) < 1e-6) // Evita divisiones por valores casi 0
     {
@@ -107,7 +107,7 @@ static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x,
         }
 
         // Verificar colisión con paredes
-        if (check_x_in_map < 0 || check_x_in_map >= gdata->map.width || check_y_in_map < 0 || check_y_in_map >= gdata->map.height) 
+        if (check_x_in_map < 0 || check_x_in_map >= gdata->map.cells_width || check_y_in_map < 0 || check_y_in_map >= gdata->map.cells_height) 
             break; //Si el rayo sale del mapa, se detiene.
         if (gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
         {
@@ -123,14 +123,14 @@ static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x,
        
         if (ray->x_sign > 0) // Rayo venía de la izquierda → borde izquierdo de la celda
         {
-            ray->px_collision_x = check_x_in_map * gdata->minimap.cell_width;
+            ray->px_collision_x = check_x_in_map * gdata->minimap.px_in_cell_width;
         }
         else if (ray->x_sign == -1) // Rayo venía de la derecha → borde derecho de la celda
         {
-            ray->px_collision_x = (check_x_in_map + 1) * gdata->minimap.cell_width;
+            ray->px_collision_x = (check_x_in_map + 1) * gdata->minimap.px_in_cell_width;
         }
         ray->diagonal_distance = (check_x_in_map - cell_player_x + (1 - ray->x_sign) / 2) / ray->dir_x;
-        ray->px_collision_y = y + (ray->diagonal_distance * gdata->minimap.cell_height) * ray->dir_y;
+        ray->px_collision_y = y + (ray->diagonal_distance * gdata->minimap.px_in_cell_height) * ray->dir_y;
         
     } 
 
@@ -141,17 +141,17 @@ static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x,
         ray->cell_collision_y = check_y_in_map; // Guarda el punto exacto donde choca el rayo (collision_y)
         if (ray->y_sign > 0) // Rayo venía de arriba → borde superior de la celda
         {
-            ray->px_collision_y = check_y_in_map * gdata->minimap.cell_height;
+            ray->px_collision_y = check_y_in_map * gdata->minimap.px_in_cell_height;
         }
         else if (ray->y_sign == -1) // Rayo venía de abajo → borde inferior de la celda
         {
-            ray->px_collision_y = (check_y_in_map + 1) * gdata->minimap.cell_height;
+            ray->px_collision_y = (check_y_in_map + 1) * gdata->minimap.px_in_cell_height;
         }
         ray->diagonal_distance = (check_y_in_map - cell_player_y + (1 - ray->y_sign) / 2) / ray->dir_y;
         
        // ray->cell_collision_x = check_x_in_map;
         // La coordenada X se obtiene usando la ecuación de la recta del rayo
-        ray->px_collision_x = x + (ray->diagonal_distance * gdata->minimap.cell_width) * ray->dir_x;
+        ray->px_collision_x = x + (ray->diagonal_distance * gdata->minimap.px_in_cell_width) * ray->dir_x;
 
     }
     ray->perpendicular_distance = ray->diagonal_distance * cos(ray_angle - gdata->vision.vision_angle);
@@ -175,7 +175,7 @@ void calculate_fov(t_game *gdata, double x, double y) //Mandar las coordenadas d
     gdata->vision.FOV.rays[i].current_angle = start_angle;
     while (i < gdata->vision.FOV.num_rays) 
     {
-        calculate_ray(gdata, &gdata->vision.FOV.rays[i], gdata->vision.FOV.rays[i].current_angle, x, y); 
+        calculate_ray(gdata, &gdata->vision.FOV.rays[i], gdata->vision.FOV.rays[i].current_angle, x, y);
         gdata->vision.FOV.rays[i+1].current_angle = gdata->vision.FOV.rays[i].current_angle + angle_step;//current_angle = start_angle + (angle_step * i); // lo mismo que current angle = current angle + angle step
         i++;
     }
@@ -193,16 +193,16 @@ void calculate_fov(t_game *gdata, double x, double y) //Mandar las coordenadas d
 //     ray->dir_y = -sin(ray_angle);
 //     printf("Rayo %d - Dir: (%.2f, %.2f) - ray angle: |%.2f|\n", i, ray->dir_x, ray->dir_y, ray_angle * (180 / M_PI));
 
-//     int check_x_in_map = (int)(x / gdata->minimap.cell_width); // Representa la celda en la cuadrícula donde está el rayo(índices de la matriz del mapa). Empieza en la casilla del player
+//     int check_x_in_map = (int)(x / gdata->minimap.px_in_cell_width); // Representa la celda en la cuadrícula donde está el rayo(índices de la matriz del mapa). Empieza en la casilla del player
 //     printf("   check_x_in_map inicial: (%d)\n", check_x_in_map);
 //     printf ("  x: %f\n", x);
-//     printf ("  gdata->minimap.cell_width: %f\n", gdata->minimap.cell_width);
-//     int check_y_in_map = (int)(y / gdata->minimap.cell_height);// Representa la celda en la cuadrícula donde está el rayo  (índices de la matriz del mapa). Empieza en la casilla del player
+//     printf ("  gdata->minimap.px_in_cell_width: %f\n", gdata->minimap.px_in_cell_width);
+//     int check_y_in_map = (int)(y / gdata->minimap.px_in_cell_height);// Representa la celda en la cuadrícula donde está el rayo  (índices de la matriz del mapa). Empieza en la casilla del player
 //     printf("   check_y_in_map inicial: (%d)\n", check_y_in_map);
 //     printf ("  y: %f\n", y);
-//     printf ("  gdata->minimap.cell_width: %f\n", gdata->minimap.cell_height);
-//     double cell_player_x =  x / gdata->minimap.cell_width; //posición en casillas del player
-//     double cell_player_y = y / gdata->minimap.cell_height;
+//     printf ("  gdata->minimap.px_in_cell_width: %f\n", gdata->minimap.px_in_cell_height);
+//     double cell_player_x =  x / gdata->minimap.px_in_cell_width; //posición en casillas del player
+//     double cell_player_y = y / gdata->minimap.px_in_cell_height;
     
 //     if (fabs(ray->dir_x) < 1e-6) // Evita divisiones por valores casi 0
 //     {
@@ -287,7 +287,7 @@ void calculate_fov(t_game *gdata, double x, double y) //Mandar las coordenadas d
 //         }
 
 //         // Verificar colisión con paredes
-//         if (check_x_in_map < 0 || check_x_in_map >= gdata->map.width || check_y_in_map < 0 || check_y_in_map >= gdata->map.height) 
+//         if (check_x_in_map < 0 || check_x_in_map >= gdata->map.cells_width || check_y_in_map < 0 || check_y_in_map >= gdata->map.cells_height) 
 //             break; //Si el rayo sale del mapa, se detiene.
 //         if (gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
 //         {
@@ -306,19 +306,19 @@ void calculate_fov(t_game *gdata, double x, double y) //Mandar las coordenadas d
        
 //         if (ray->x_sign > 0) // Rayo venía de la izquierda → borde izquierdo de la celda
 //         {
-//             ray->px_collision_x = check_x_in_map * gdata->minimap.cell_width;
+//             ray->px_collision_x = check_x_in_map * gdata->minimap.px_in_cell_width;
 //         }
 //         else if (ray->x_sign == -1) // Rayo venía de la derecha → borde derecho de la celda
 //         {
-//             ray->px_collision_x = (check_x_in_map + 1) * gdata->minimap.cell_width;
+//             ray->px_collision_x = (check_x_in_map + 1) * gdata->minimap.px_in_cell_width;
 //         }
 //         ray->diagonal_distance = (check_x_in_map - cell_player_x + (1 - ray->x_sign) / 2) / ray->dir_x;
-//         printf("       DIAGONAL WALL DISTANCE in pixels: (%f)\n", ray->diagonal_distance * gdata->minimap.cell_height);
+//         printf("       DIAGONAL WALL DISTANCE in pixels: (%f)\n", ray->diagonal_distance * gdata->minimap.px_in_cell_height);
 //         printf("       DIAGONAL WALL DISTANCE: (%f)\n", ray->diagonal_distance);
 //         printf("Calculando distancia: px_collision_x = %f, px_collision_y = %f\n", ray->px_collision_x, ray->px_collision_y);
 //         //ray->cell_collision_y = check_y_in_map;
 //         // La coordenada Y se obtiene usando la ecuación de la recta del rayo
-//         ray->px_collision_y = y + (ray->diagonal_distance * gdata->minimap.cell_height) * ray->dir_y;
+//         ray->px_collision_y = y + (ray->diagonal_distance * gdata->minimap.px_in_cell_height) * ray->dir_y;
         
 //     } 
 
@@ -329,11 +329,11 @@ void calculate_fov(t_game *gdata, double x, double y) //Mandar las coordenadas d
 //         ray->cell_collision_y = check_y_in_map; // Guarda el punto exacto donde choca el rayo (collision_y)
 //         if (ray->y_sign > 0) // Rayo venía de arriba → borde superior de la celda
 //         {
-//             ray->px_collision_y = check_y_in_map * gdata->minimap.cell_height;
+//             ray->px_collision_y = check_y_in_map * gdata->minimap.px_in_cell_height;
 //         }
 //         else if (ray->y_sign == -1) // Rayo venía de abajo → borde inferior de la celda
 //         {
-//             ray->px_collision_y = (check_y_in_map + 1) * gdata->minimap.cell_height;
+//             ray->px_collision_y = (check_y_in_map + 1) * gdata->minimap.px_in_cell_height;
 //         }
 //         ray->diagonal_distance = (check_y_in_map - cell_player_y + (1 - ray->y_sign) / 2) / ray->dir_y;
 //         printf("Calculando distancia: px_collision_x = %f, px_collision_y = %f\n", ray->px_collision_x, ray->px_collision_y);
@@ -341,12 +341,12 @@ void calculate_fov(t_game *gdata, double x, double y) //Mandar las coordenadas d
         
 //        // ray->cell_collision_x = check_x_in_map;
 //         // La coordenada X se obtiene usando la ecuación de la recta del rayo
-//         ray->px_collision_x = x + (ray->diagonal_distance * gdata->minimap.cell_width) * ray->dir_x;
+//         ray->px_collision_x = x + (ray->diagonal_distance * gdata->minimap.px_in_cell_width) * ray->dir_x;
 
 //     }
 //     ray->perpendicular_distance = ray->diagonal_distance * cos(ray_angle - gdata->vision.vision_angle);
 //     // ray->line_crossing = line_crossing;
-//     printf("       DIAGONAL WALL DISTANCE in pixels: (%f)\n", ray->diagonal_distance * gdata->minimap.cell_width);
+//     printf("       DIAGONAL WALL DISTANCE in pixels: (%f)\n", ray->diagonal_distance * gdata->minimap.px_in_cell_width);
 //     printf("       PERPENDICULAR WALL DISTANCE: (%f)\n", ray->perpendicular_distance);
 //     printf("Ray %d -> CASILLA Collision at: (%f, %f)\n\n", i, ray->cell_collision_x, ray->cell_collision_y);
 //     printf("Ray %d -> PIXELS Collision at: (%f, %f)\n\n", i, ray->px_collision_x, ray->px_collision_y);

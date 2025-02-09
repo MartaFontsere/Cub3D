@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/08 22:56:22 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/09 20:55:33 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void print_player_view_in_motion (t_game *gdata, t_player player, double target_
 
 void print_player_move(t_game *gdata, t_player player, double target_x, double target_y)
 {
+
 	//print_player (gdata, player, player.x, player.y, DARK_GREY);
-	printf ("player%f", player.x); // BORRAR
 	print_player (gdata, player, target_x, target_y, RED1);
 }
 

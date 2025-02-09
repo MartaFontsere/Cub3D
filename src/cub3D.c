@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/08 22:49:28 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/09 22:46:31 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ int main(int ac, char **av)
 	if (init_vision_parameters (&gdata, &gdata.vision) == 0)
 		return (0);
 	// instalar la mlx, y lanzar una pantalla del tamaño, x y, para ver que funciona
-	mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	if (init_mlx_and_create_new_image(&gdata, &gdata.mlx) == 0)
+	//mlx_set_setting(MLX_STRETCH_IMAGE, true);
+	if (init_mlx(&gdata.mlx) == 0)
+		return (0);
+	if (create_new_images(&gdata, &gdata.mlx) == 0)
 		return (0);
 	if (mlx_image_to_window(gdata.mlx.init, gdata.mlx.image, 0, 0) == -1)
 	{
@@ -50,11 +52,19 @@ int main(int ac, char **av)
 		close_window(&gdata);
 		return (0);
 	}
+	if (mlx_image_to_window(gdata.mlx.init, gdata.mlx.mini_image, 15, 15) == -1)
+	{
+		write_error("It's not possible to put new image to window");
+		close_window(&gdata);
+		return (0);
+	}
+	printf ("image %p, mini %p\n",gdata.mlx.image, gdata.mlx.mini_image);
+	print_map (gdata.mlx, gdata.map);
 	print_minimap(&gdata);
-	print_player_and_fov (&gdata);
+		print_player_and_fov (&gdata); //meter dentro de printminimap, y luego en print player fov in motion llamar a print tablero o algo asi
 	mlx_key_hook(gdata.mlx.init, press_key, &gdata);
 	mlx_loop_hook(gdata.mlx.init, render_game, &gdata);
-	mlx_loop(gdata.mlx.init);
+	mlx_loop(gdata.mlx.init); 
 	
 
 	//añadir el free de vision->rays

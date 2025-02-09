@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:39:52 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/08 22:38:38 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/09 22:45:41 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ char **parsing_pre_yahaira(t_game *gdata)
       // Dimensions of the matrix
     int rows = 20;
     int cols = 20;
-    gdata->map.width = 20;
-    gdata->map.height = 20;
+    gdata->map.cells_width = 20;
+    gdata->map.cells_height = 20;
 
     // int rows = 5;
     // int cols = 5;
-    // gdata->map.width = 5;
-    // gdata->map.height = 5;
+    // gdata->map.cells_width = 5;
+    // gdata->map.cells_height = 5;
 
     // Allocate memory for row pointers
     char **matrix = (char **)malloc(rows * sizeof(char *));

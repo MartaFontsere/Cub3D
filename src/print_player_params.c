@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 03:02:49 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/08 22:43:37 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/09 22:45:41 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void print_player (t_game *gdata, t_player player, double x, double y, int color
 		while (draw_x <= x_limit)
 		{
             if (draw_x * draw_x + draw_y * draw_y <= player.radius * player.radius) // implementación directa de la definición de un círculo en coordenadas cartesianas
-                mlx_put_pixel(gdata->mlx.image, x + draw_x, y + draw_y, color); // al dibujar en la posicion draw relativa al centro del circulo, aseguramos que siempre se dibujara dentro del circulo.
+                mlx_put_pixel(gdata->mlx.mini_image, x + draw_x, y + draw_y, color); // al dibujar en la posicion draw relativa al centro del circulo, aseguramos que siempre se dibujara dentro del circulo.
             draw_x++;
 		}
 		draw_y++;
@@ -57,7 +57,7 @@ void print_player (t_game *gdata, t_player player, double x, double y, int color
 //     thickness = 4;
 
 //      // Mientras no colisionemos con una pared ('1' en el mapa)
-//     while (gdata->map.matrix[(int)(init_y / gdata->minimap.cell_width)][(int)(init_x / gdata->minimap.cell_height)] != '1')
+//     while (gdata->map.matrix[(int)(init_y / gdata->minimap.px_in_cell_width)][(int)(init_x / gdata->minimap.px_in_cell_height)] != '1')
 //     {
 //         // **Verificar colisión para cada punto del grosor**
 //         double j = -thickness / 2;
@@ -68,7 +68,7 @@ void print_player (t_game *gdata, t_player player, double x, double y, int color
 //             offset_y = -(int)(j * sin(vision_angle + M_PI_2));  
 
 //             // Verificar si la posición ajustada colisiona con una pared antes de dibujar
-//             if (gdata->map.matrix[(int)((init_y + offset_y) / gdata->minimap.cell_width)][(int)((init_x + offset_x) / gdata->minimap.cell_height)] != '1')
+//             if (gdata->map.matrix[(int)((init_y + offset_y) / gdata->minimap.px_in_cell_width)][(int)((init_x + offset_x) / gdata->minimap.px_in_cell_height)] != '1')
 //                 mlx_put_pixel(gdata->mlx.image, (int)(init_x + offset_x), (int)(init_y + offset_y), color);
 
 //             j += 0.1;  // Dibujamos el píxel desplazado por el grosor en la imagen del juego. // Se avanza en pasos pequeños para un grosor más uniforme. En lugar de hacer j++, avanzamos de 0.2 en 0.2. Esto ayuda a evitar espacios vacíos entre píxeles y suaviza la línea.
@@ -91,11 +91,11 @@ void print_player (t_game *gdata, t_player player, double x, double y, int color
 
 //     while (1)
 //     {
-//         int map_x = (int)(init_x / gdata->minimap.cell_width);
-//         int map_y = (int)(init_y / gdata->minimap.cell_height);
+//         int map_x = (int)(init_x / gdata->minimap.px_in_cell_width);
+//         int map_y = (int)(init_y / gdata->minimap.px_in_cell_height);
 
 //         // **Verificar que estamos dentro del mapa antes de acceder a matrix**
-//         if (map_x < 0 || map_x >= gdata->map.width || map_y < 0 || map_y >= gdata->map.height)
+//         if (map_x < 0 || map_x >= gdata->map.cells_width || map_y < 0 || map_y >= gdata->map.cells_height)
 //             break;
 
 //         // **Si choca con una pared, detenemos el rayo**
@@ -112,12 +112,12 @@ void print_player (t_game *gdata, t_player player, double x, double y, int color
 //             int pixel_x = (int)(init_x + offset_x);
 //             int pixel_y = (int)(init_y + offset_y);
 
-//             int pixel_map_x = pixel_x / gdata->minimap.cell_width;
-//             int pixel_map_y = pixel_y / gdata->minimap.cell_height;
+//             int pixel_map_x = pixel_x / gdata->minimap.px_in_cell_width;
+//             int pixel_map_y = pixel_y / gdata->minimap.px_in_cell_height;
 
 //             // **Verificar límites antes de dibujar**
-//             if (pixel_map_x >= 0 && pixel_map_x < gdata->map.width &&
-//                 pixel_map_y >= 0 && pixel_map_y < gdata->map.height &&
+//             if (pixel_map_x >= 0 && pixel_map_x < gdata->map.cells_width &&
+//                 pixel_map_y >= 0 && pixel_map_y < gdata->map.cells_height &&
 //                 gdata->map.matrix[pixel_map_y][pixel_map_x] != '1')
 //             {
 //                 mlx_put_pixel(gdata->mlx.image, pixel_x, pixel_y, color);
@@ -145,11 +145,11 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
     {
         // **Avanzamos en X**
         double next_x = init_x + ray_dir_x;
-        int map_x = (int)(next_x / gdata->minimap.cell_width);
-        int map_y = (int)(init_y / gdata->minimap.cell_height);
+        int map_x = (int)(next_x / gdata->minimap.px_in_cell_width);
+        int map_y = (int)(init_y / gdata->minimap.px_in_cell_height);
 
         // **Verificar colisión en X**
-        if (map_x < 0 || map_x >= gdata->map.width || map_y < 0 || map_y >= gdata->map.height)
+        if (map_x < 0 || map_x >= gdata->map.cells_width || map_y < 0 || map_y >= gdata->map.cells_height)
             break; // Fuera del mapa
 
         if (gdata->map.matrix[map_y][map_x] == '1')
@@ -159,11 +159,11 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
 
         // **Avanzamos en Y**
         double next_y = init_y + ray_dir_y;
-        map_x = (int)(init_x / gdata->minimap.cell_width);
-        map_y = (int)(next_y / gdata->minimap.cell_height);
+        map_x = (int)(init_x / gdata->minimap.px_in_cell_width);
+        map_y = (int)(next_y / gdata->minimap.px_in_cell_height);
 
         // **Verificar colisión en Y**
-        if (map_y < 0 || map_y >= gdata->map.height || gdata->map.matrix[map_y][map_x] == '1')
+        if (map_y < 0 || map_y >= gdata->map.cells_height || gdata->map.matrix[map_y][map_x] == '1')
             break; // Colisión en Y
 
         init_y = next_y; // Actualizamos la posición en Y
@@ -178,15 +178,15 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
             int pixel_x = (int)(init_x + offset_x);
             int pixel_y = (int)(init_y + offset_y);
 
-            int pixel_map_x = pixel_x / gdata->minimap.cell_width;
-            int pixel_map_y = pixel_y / gdata->minimap.cell_height;
+            int pixel_map_x = pixel_x / gdata->minimap.px_in_cell_width;
+            int pixel_map_y = pixel_y / gdata->minimap.px_in_cell_height;
 
             // **Verificar límites antes de dibujar**
-            if (pixel_map_x >= 0 && pixel_map_x < gdata->map.width &&
-                pixel_map_y >= 0 && pixel_map_y < gdata->map.height &&
+            if (pixel_map_x >= 0 && pixel_map_x < gdata->map.cells_width &&
+                pixel_map_y >= 0 && pixel_map_y < gdata->map.cells_height &&
                 gdata->map.matrix[pixel_map_y][pixel_map_x] != '1')
             {
-                mlx_put_pixel(gdata->mlx.image, pixel_x, pixel_y, color);
+                mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, color);
             }
 
             j += 0.1;  // Incremento pequeño para evitar huecos en la línea
@@ -216,7 +216,7 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
 //     thickness = 4;
 
 //      // Mientras no colisionemos con una pared ('1' en el mapa)
-//     while (gdata->map.matrix[(int)(init_y / gdata->minimap.cell_width)][(int)(init_x / gdata->minimap.cell_height)] != '1')
+//     while (gdata->map.matrix[(int)(init_y / gdata->minimap.px_in_cell_width)][(int)(init_x / gdata->minimap.px_in_cell_height)] != '1')
 //     {
 //         // **Verificar colisión para cada punto del grosor**
 //         double j = -thickness / 2;
@@ -228,21 +228,21 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
 
 //             // **Comprobamos primero en X**
 //             double next_x = init_x + ray_dir_x;
-//             int check_x_in_map = (int)((next_x + offset_x)/ gdata->minimap.cell_width);
-//             int check_y_in_map = (int)(init_y / gdata->minimap.cell_height);
+//             int check_x_in_map = (int)((next_x + offset_x)/ gdata->minimap.px_in_cell_width);
+//             int check_y_in_map = (int)(init_y / gdata->minimap.px_in_cell_height);
 
 //             // **Si choca con una pared en X, detenemos el rayo**
-//             if (check_x_in_map < 0 || check_x_in_map >= gdata->map.width || gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
+//             if (check_x_in_map < 0 || check_x_in_map >= gdata->map.cells_width || gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
 //                 break;
 //             init_x = next_x; // Solo avanzamos si no hay colisión
 
 //             // **Comprobamos en Y**
 //             double next_y = init_y + ray_dir_y;
-//             check_x_in_map = (int)(init_x + offset_y/ gdata->minimap.cell_width);
-//             check_y_in_map = (int)(next_y / gdata->minimap.cell_height);
+//             check_x_in_map = (int)(init_x + offset_y/ gdata->minimap.px_in_cell_width);
+//             check_y_in_map = (int)(next_y / gdata->minimap.px_in_cell_height);
 
 //             // **Si choca con una pared en Y, detenemos el rayo**
-//             if (check_y_in_map < 0 || check_y_in_map >= gdata->map.height || gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
+//             if (check_y_in_map < 0 || check_y_in_map >= gdata->map.cells_height || gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
 //                 break;
 //             init_y = next_y; // Solo avanzamos si no hay colisión
 
@@ -271,7 +271,7 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
 //     end_angle = vision_angle + (player.ray.FOV / 2);    // Mitad del FOV a la derecha
 
 // // **Un rayo por cada píxel horizontal en el FOV**
-//     angle_between_rays =  player.ray.FOV / (double)gdata->minimap.width; //cuánto debemos movernos entre cada rayo para repartirlos uniformemente dentro del FOV. En este caso calculamos un rayo por cada pixel hasta end angle
+//     angle_between_rays =  player.ray.FOV / (double)gdata->minimap.px_width; //cuánto debemos movernos entre cada rayo para repartirlos uniformemente dentro del FOV. En este caso calculamos un rayo por cada pixel hasta end angle
 //     ray_angle = start_angle; // el angulo que se ira moviendo. Empieza en start y para en end.
 //     ray_index = 0;
 
@@ -283,7 +283,7 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
 //         ray_dir_x = - cos(ray_angle);
 //         ray_dir_y = - sin(ray_angle);
 //         distance = 0;
-//     	while (gdata->map.matrix[(int)(init_y / gdata->minimap.cell_width)][(int)(init_x / gdata->minimap.cell_height)] != '1')
+//     	while (gdata->map.matrix[(int)(init_y / gdata->minimap.px_in_cell_width)][(int)(init_x / gdata->minimap.px_in_cell_height)] != '1')
 //     	{
 //             mlx_put_pixel(gdata->mlx.image, (int)init_x, (int)init_y, color);
 //             init_x = init_x + ray_dir_x; // avanzamos en la dirección del rayo.
@@ -308,7 +308,7 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
 
 //     double start_angle = vision_angle - (vision.FOV.fov_rad / 2);
 //     double end_angle = vision_angle + (vision.FOV.fov_rad / 2);
-//     double ray_angle_increment = vision.FOV.fov_rad / (double)gdata->minimap.width;
+//     double ray_angle_increment = vision.FOV.fov_rad / (double)gdata->minimap.px_width;
 //     double ray_angle = start_angle;
 
 //     while (ray_angle <= end_angle)
@@ -322,21 +322,21 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
 //         {
 //             // **Comprobamos primero en X**
 //             double next_x = init_x + ray_dir_x;
-//             int check_x_in_map = (int)(next_x / gdata->minimap.cell_width);
-//             int check_y_in_map = (int)(init_y / gdata->minimap.cell_height);
+//             int check_x_in_map = (int)(next_x / gdata->minimap.px_in_cell_width);
+//             int check_y_in_map = (int)(init_y / gdata->minimap.px_in_cell_height);
 
 //             // **Si choca con una pared en X, detenemos el rayo**
-//             if (check_x_in_map < 0 || check_x_in_map >= gdata->map.width || gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
+//             if (check_x_in_map < 0 || check_x_in_map >= gdata->map.cells_width || gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
 //                 break;
 //             init_x = next_x; // Solo avanzamos si no hay colisión
 
 //             // **Comprobamos en Y**
 //             double next_y = init_y + ray_dir_y;
-//             check_x_in_map = (int)(init_x / gdata->minimap.cell_width);
-//             check_y_in_map = (int)(next_y / gdata->minimap.cell_height);
+//             check_x_in_map = (int)(init_x / gdata->minimap.px_in_cell_width);
+//             check_y_in_map = (int)(next_y / gdata->minimap.px_in_cell_height);
 
 //             // **Si choca con una pared en Y, detenemos el rayo**
-//             if (check_y_in_map < 0 || check_y_in_map >= gdata->map.height || gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
+//             if (check_y_in_map < 0 || check_y_in_map >= gdata->map.cells_height || gdata->map.matrix[check_y_in_map][check_x_in_map] == '1')
 //                 break;
 //             init_y = next_y; // Solo avanzamos si no hay colisión
 
@@ -381,8 +381,8 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
 //             int px_y = (int)draw_ray_y;
             
 //             // Dibujar el píxel si está dentro del minimapa
-//             if (px_x >= 0 && px_x < gdata->minimap.width && 
-//                 px_y >= 0 && px_y < gdata->minimap.height) 
+//             if (px_x >= 0 && px_x < gdata->minimap.px_width && 
+//                 px_y >= 0 && px_y < gdata->minimap.px_height) 
 //             //printf ("whileee\n");
 //             {
 //             	//printf ("imprimooooooooooooo\n");
@@ -393,8 +393,8 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
 //             draw_ray_y += y_inc;
             
 //             // Romper si el rayo sale del mapa antes de chocar
-//             if ((int)(draw_ray_x / gdata->minimap.cell_width) >= gdata->map.width ||
-//                 (int)(draw_ray_y / gdata->minimap.cell_height) >= gdata->map.height) 
+//             if ((int)(draw_ray_x / gdata->minimap.px_in_cell_width) >= gdata->map.cells_width ||
+//                 (int)(draw_ray_y / gdata->minimap.px_in_cell_height) >= gdata->map.cells_height) 
 //             {
 //                 break;
 //             }
@@ -460,15 +460,15 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
             int px_y = (int)draw_ray_y;
             
             // Verificar límites del minimapa
-            if (px_x >= 0 && px_x < gdata->minimap.width && 
-                px_y >= 0 && px_y < gdata->minimap.height) 
+            if (px_x >= 0 && px_x < gdata->minimap.px_width && 
+                px_y >= 0 && px_y < gdata->minimap.px_height) 
             {
                 // Verificar si hemos llegado al punto de colisión
                 if (current_step == (int)(steps - 1))
-                    mlx_put_pixel(gdata->mlx.image, px_x, px_y, 0xFF0000FF); // Punto rojo en la colisión
+                    mlx_put_pixel(gdata->mlx.mini_image, px_x, px_y, 0xFF0000FF); // Punto rojo en la colisión
                 else
                 {
-                    mlx_put_pixel(gdata->mlx.image, px_x, px_y, color);
+                    mlx_put_pixel(gdata->mlx.mini_image, px_x, px_y, color);
                 }
             }
             
@@ -477,11 +477,11 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
             current_step++;
             
             // Verificar si hemos salido del mapa
-            int map_x = (int)(draw_ray_x / gdata->minimap.cell_width);
-            int map_y = (int)(draw_ray_y / gdata->minimap.cell_height);
+            int map_x = (int)(draw_ray_x / gdata->minimap.px_in_cell_width);
+            int map_y = (int)(draw_ray_y / gdata->minimap.px_in_cell_height);
             
-            if (map_x < 0 || map_x >= gdata->map.width ||
-                map_y < 0 || map_y >= gdata->map.height)
+            if (map_x < 0 || map_x >= gdata->map.cells_width ||
+                map_y < 0 || map_y >= gdata->map.cells_height)
             {
                 break;
             }
@@ -515,7 +515,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 // {
 //     double start_angle = vision_angle - (player.ray.FOV / 2);
 //     double end_angle = vision_angle + (player.ray.FOV / 2);
-//     double angle_between_rays = player.ray.FOV / (double)gdata->minimap.width;
+//     double angle_between_rays = player.ray.FOV / (double)gdata->minimap.px_width;
 //     double ray_angle = start_angle;
 
 //     while (ray_angle <= end_angle)
@@ -529,16 +529,16 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 //         {
 //             double next_x = init_x + ray_dir_x * 0.5;
 //             double next_y = init_y + ray_dir_y * 0.5;
-//             int map_x = (int)(next_x / gdata->minimap.cell_width);
-//             int map_y = (int)(next_y / gdata->minimap.cell_height);
+//             int map_x = (int)(next_x / gdata->minimap.px_in_cell_width);
+//             int map_y = (int)(next_y / gdata->minimap.px_in_cell_height);
 
 //             // **Si salimos del mapa, detenemos el rayo**
-//             if (map_x < 0 || map_x >= gdata->map.width || map_y < 0 || map_y >= gdata->map.height)
+//             if (map_x < 0 || map_x >= gdata->map.cells_width || map_y < 0 || map_y >= gdata->map.cells_height)
 //                 break;
 
 //             // **Si el siguiente punto choca con una pared, detenemos el rayo**
-//             if (gdata->map.matrix[map_y][(int)(init_x / gdata->minimap.cell_width)] == '1' || 
-//                 gdata->map.matrix[(int)(init_y / gdata->minimap.cell_height)][map_x] == '1')
+//             if (gdata->map.matrix[map_y][(int)(init_x / gdata->minimap.px_in_cell_width)] == '1' || 
+//                 gdata->map.matrix[(int)(init_y / gdata->minimap.px_in_cell_height)][map_x] == '1')
 //                 break;
 
 //             // **Pintamos solo si no hay colisión**
@@ -592,7 +592,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 //             int check_y = (int)(init_y + offset_y);
 
 //             // **Si cualquier punto del grosor del rayo toca una pared, detener el rayo**
-//             if (gdata->map.matrix[(int)(check_y / gdata->minimap.cell_width)][(int)(check_x / gdata->minimap.cell_height)] == '1')
+//             if (gdata->map.matrix[(int)(check_y / gdata->minimap.px_in_cell_width)][(int)(check_x / gdata->minimap.px_in_cell_height)] == '1')
 //                 return;
 
 // 				//Antes solo verificabas la colisión con init_x, init_y (el centro del rayo). Ahora verificas cada parte del grosor, por lo que el rayo no puede atravesar paredes aunque sea grueso.
@@ -629,7 +629,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 //     i = 0;
 
 //     // Mientras no colisionemos con una pared ('1' en el mapa)
-//     while (gdata->map.matrix[(int)(init_y / gdata->minimap.cell_width)][(int)(init_x / gdata->minimap.cell_height)] != '1')
+//     while (gdata->map.matrix[(int)(init_y / gdata->minimap.px_in_cell_width)][(int)(init_x / gdata->minimap.px_in_cell_height)] != '1')
 //     {
 //         // Dibujamos una línea de "grosor" alrededor del ángulo
 //         double j = -thickness / 2;
@@ -652,7 +652,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 //         i++;
 //     }
 
-//     printf("punto de colision |%d||%d|\n", (int)(init_x / gdata->minimap.cell_height), (int)(init_y / gdata->minimap.cell_width));
+//     printf("punto de colision |%d||%d|\n", (int)(init_x / gdata->minimap.px_in_cell_height), (int)(init_y / gdata->minimap.px_in_cell_width));
 // }
 
 
@@ -697,7 +697,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 //     step_y = delta_y / max_delta;
 
 //     // Mientras no colisionemos con una pared ('1' en el mapa)
-//     while (gdata->map.matrix[(int)(init_y / gdata->minimap.cell_width)][(int)(init_x / gdata->minimap.cell_height)] != '1')
+//     while (gdata->map.matrix[(int)(init_y / gdata->minimap.px_in_cell_width)][(int)(init_x / gdata->minimap.px_in_cell_height)] != '1')
 //     {
 //         // Inicializar j para dibujar el grosor
 //         j = -thickness / 2;
@@ -736,7 +736,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 //         }
 //     }
 
-//     printf("punto de colision |%d||%d|\n", (int)(init_x / gdata->minimap.cell_height), (int)(init_y / gdata->minimap.cell_width));
+//     printf("punto de colision |%d||%d|\n", (int)(init_x / gdata->minimap.px_in_cell_height), (int)(init_y / gdata->minimap.px_in_cell_width));
 // }
 
 
@@ -765,7 +765,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 //     i = 0;
 
 //     // Mientras no colisionemos con una pared ('1' en el mapa)
-//     while (gdata->map.matrix[(int)(init_y / gdata->minimap.cell_width)][(int)(init_x / gdata->minimap.cell_height)] != '1')
+//     while (gdata->map.matrix[(int)(init_y / gdata->minimap.px_in_cell_width)][(int)(init_x / gdata->minimap.px_in_cell_height)] != '1')
 //     {
 //         // Dibujamos una línea de "grosor" 2 alrededor del ángulo
 //         init_x += step_x; // Ajustamos la posición en X
@@ -781,7 +781,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 //     }
 
 //     // Mostramos dónde se detuvo la línea al chocar
-//     printf("punto de colision |%d||%d|\n", (int)(init_x / gdata->minimap.cell_height), (int)(init_y / gdata->minimap.cell_width));
+//     printf("punto de colision |%d||%d|\n", (int)(init_x / gdata->minimap.px_in_cell_height), (int)(init_y / gdata->minimap.px_in_cell_width));
 // }
 
 
@@ -807,7 +807,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 // 	{
 // 		init_x = x;
 // 		init_y = y - player.radius; // Coordenada inicial (parte superior del círculo del jugador)
-// 		while (gdata->map.matrix[(int)(init_y / gdata->minimap.cell_width)][(int)(init_x / gdata->minimap.cell_height)] != '1')
+// 		while (gdata->map.matrix[(int)(init_y / gdata->minimap.px_in_cell_width)][(int)(init_x / gdata->minimap.px_in_cell_height)] != '1')
 // 		{
 // 			init_x = x - 1; // Comienza desde el centro menos la mitad del grosor
 // 			thickness = 0; // se reinicia en cada iteración del bucle externo
@@ -820,7 +820,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 // 			init_y--;
 // 			i++;
 // 		}
-// 		printf ("punto de colision|%d||%d|\n", (int)(init_x / gdata->minimap.cell_height), (int)(init_y / gdata->minimap.cell_width));
+// 		printf ("punto de colision|%d||%d|\n", (int)(init_x / gdata->minimap.px_in_cell_height), (int)(init_y / gdata->minimap.px_in_cell_width));
 
 // 	}
 
@@ -828,7 +828,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 // 	{
 // 		init_x = x;
 // 		init_y = y + player.radius;
-// 		while (gdata->map.matrix[(int)(init_y / gdata->minimap.cell_width)][(int)(init_x / gdata->minimap.cell_height)] != '1')
+// 		while (gdata->map.matrix[(int)(init_y / gdata->minimap.px_in_cell_width)][(int)(init_x / gdata->minimap.px_in_cell_height)] != '1')
 // 		{
 // 			init_x = x - 1; // Comienza desde el centro menos la mitad del grosor
 // 			thickness = 0; // se reinicia en cada iteración del bucle externo
@@ -847,7 +847,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 // 	{
 // 		init_x = x + player.radius;
 // 		init_y = y;
-// 		while (gdata->map.matrix[(int)(init_y / gdata->minimap.cell_width)][(int)(init_x / gdata->minimap.cell_height)] != '1')
+// 		while (gdata->map.matrix[(int)(init_y / gdata->minimap.px_in_cell_width)][(int)(init_x / gdata->minimap.px_in_cell_height)] != '1')
 // 		{
 // 			init_y = y -1; // Comienza desde el centro menos la mitad del grosor
 // 			thickness = 0; // se reinicia en cada iteración del bucle externo
@@ -866,7 +866,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 // 	{
 // 		init_x = x - player.radius;
 // 		init_y = y;
-// 		while (gdata->map.matrix[(int)(init_y / gdata->minimap.cell_width)][(int)(init_x / gdata->minimap.cell_height)] != '1')
+// 		while (gdata->map.matrix[(int)(init_y / gdata->minimap.px_in_cell_width)][(int)(init_x / gdata->minimap.px_in_cell_height)] != '1')
 // 		{
 // 			init_y = y +1; // Comienza desde el centro menos la mitad del grosor
 // 			thickness = 0; // se reinicia en cada iteración del bucle externo
