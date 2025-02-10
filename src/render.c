@@ -27,10 +27,7 @@ void render_game (void *param) // todo lo que se tenga que checkear a cada vuelt
 		printf ("hay una tecla apretada\n");
 		printf ("la posicion del player es: |%f||%f|\n",gdata->player.x, gdata->player.y);
 		if (gdata->player.rotate_right == 1 || gdata->player.rotate_left == 1)
-		{
-			printf ("entro\n");
 			rotate_player (&gdata->player, &gdata->vision);
-		}
 		if (gdata->player.mov_right == 1 || gdata->player.mov_left == 1 || gdata->player.mov_up == 1 || gdata->player.mov_down == 1)
 			prepare_movement(gdata, gdata->vision, &target_x, &target_y);
 		printf ("el target a donde se va a mover es: |%f||%f|\n",target_x, target_y);
@@ -38,6 +35,8 @@ void render_game (void *param) // todo lo que se tenga que checkear a cada vuelt
 		print_player_FOV_in_motion(gdata, gdata->player, target_x, target_y);
 		print_player_view_in_motion (gdata, gdata->player, target_x, target_y); // incluir tanto el fov como el point of view
 		print_player_move(gdata, gdata->player, target_x, target_y);
+		//mapa
+		print_map (gdata, gdata->mlx, gdata->map);
 		gdata->player.x = target_x;
 		gdata->player.y = target_y;
 	}

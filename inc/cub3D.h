@@ -42,6 +42,7 @@
 # define MEDIUM_GREY 0X696969FF
 //# define MEDIUM_GREY 0X575757FF
 # define SOFT_GREY 0x959595FF
+//# define LIGHT_GREY 0XD7D7D7FF
 # define RED1 0xFF0000FF
 //# define YELLOW1 0xFFFF00FF // el FF final es maxima opacidad
 # define YELLOW1 0xFFC006FF
@@ -52,12 +53,12 @@
 
 
 
+
 /*PLAYER ORIENTATION*/
 # define NORTH M_PI_2 //90 grados
 # define SOUTH 3 * M_PI_2 // 270 grados
 # define EAST 0 //0 grados
 # define WEST M_PI //180 grados
-
 
 
 
@@ -74,6 +75,13 @@
 /*MAP*/
 #define PX_MAP_WIDTH 2560
 #define PX_MAP_HEIGHT 1440
+#define NORTH_WALL_COLOR 0XFF9A9AFF
+#define SOUTH_WALL_COLOR 0XFFD29AFF
+#define EAST_WALL_COLOR 0XFFFF9AFF
+#define WEST_WALL_COLOR 0XFF9AFBFF
+#define SKY_COLOR 0X9AC4FFFF
+#define FLOOR_COLOR 0XA3FF9AFF
+
 
 /*MINIMAP*/
 #define PX_MINIMAP_WIDTH 520
@@ -232,7 +240,7 @@ int	create_new_images(t_game *gdata, t_mlx *mlx);
 char **parsing_pre_yahaira(t_game *gdata);
 
 //PRINT MAP
-void print_map (t_mlx mlx, t_map map);
+void print_map (t_game *gdata, t_mlx mlx, t_map map);
 
 //PRINT MINIMAP
 void	print_minimap(t_game *gdata);

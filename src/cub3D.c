@@ -59,7 +59,8 @@ int main(int ac, char **av)
 		return (0);
 	}
 	printf ("image %p, mini %p\n",gdata.mlx.image, gdata.mlx.mini_image);
-	print_map (gdata.mlx, gdata.map);
+	calculate_fov(&gdata, gdata.player.x, gdata.player.y);
+	print_map (&gdata, gdata.mlx, gdata.map);
 	print_minimap(&gdata);
 		print_player_and_fov (&gdata); //meter dentro de printminimap, y luego en print player fov in motion llamar a print tablero o algo asi
 	mlx_key_hook(gdata.mlx.init, press_key, &gdata);
