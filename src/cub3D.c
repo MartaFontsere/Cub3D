@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/09 22:46:31 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/11 21:03:49 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int main(int ac, char **av)
 	}
 	printf ("image %p, mini %p\n",gdata.mlx.image, gdata.mlx.mini_image);
 	calculate_fov(&gdata, gdata.player.x, gdata.player.y);
+	prepare_textures (&gdata);
 	print_map (&gdata, gdata.mlx, gdata.map);
 	print_minimap(&gdata);
 		print_player_and_fov (&gdata); //meter dentro de printminimap, y luego en print player fov in motion llamar a print tablero o algo asi

@@ -6,13 +6,16 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:39:52 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/09 22:45:41 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:54:42 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 //TODO ESTO ESTA HARDCODEADO
+
+
+
 
 char **parsing_pre_yahaira(t_game *gdata)
 {
@@ -94,4 +97,9 @@ char **parsing_pre_yahaira(t_game *gdata)
     }
     matrix[rows] = NULL;  // Agregar NULL al final para protección
     return matrix;  
+
+    gdata->texture.path.NO = "NORTH_TEXTURE";
+    gdata->texture.path.SO = "SOUTH_TEXTURE";
+    gdata->texture.path.WE = "WEST_TEXTURE";
+    gdata->texture.path.EA = "EAST_TEXTURE";
 }

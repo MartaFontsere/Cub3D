@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/09 22:37:20 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/11 22:48:15 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@
 //# define SOFT_YELLOW 0xFAFDC9FF
 # define BLUE1 0X9AC4FFFF
 
-
+/*TEXTURES*/ //LUEGO BORRAR, PARA MIENTRAS SIN PARSING
+#define NORTH_TEXTURE "textures/map_walls/ok/Norte.xpm42"
+#define SOUTH_TEXTURE "textures/map_walls/ok/Sur.xpm42"
+#define WEST_TEXTURE "textures/map_walls/ok/Oeste.xpm42"
+#define EAST_TEXTURE "textures/map_walls/ok/Este.xpm42"
 
 
 
@@ -99,11 +103,44 @@ Center of the Projection Plane = (160,100)
 Distance to the Projection Plane = 277 units
 Angle between subsequent rays = 60/320 degrees*/
 
-typedef struct s_images
+typedef struct s_color
+{
+	int					R;
+	int					G;
+	int					B;
+	char				**split;
+	struct s_path		*shader;
+}						t_color;
+
+typedef struct s_path
+{
+    char		*NO;//Path textura cara norte
+	char		*SO;//Path textura cara sur
+	char		*WE;//Path textura cara oeste
+	char		*EA;//Path textura cara este
+	int			p_count;
+	int			c_count;
+	int			err_flag;
+	t_color		C; //Estructura con el color en RGB
+	t_color		F; //Estructura con el color en RGB
+	int 		C_hex; // Color transformado a hexadecimal
+	int 		F_hex; // Color transformado a hexadecimal
+}				t_path;
+
+typedef struct s_image
 {
 	xpm_t		*xpm;
 	mlx_image_t	*data;
-}				t_images;
+}				t_image;
+
+typedef struct s_texture 
+{
+	t_path 		path;
+	t_image 	north_wall_img;
+	t_image 	south_wall_img;
+	t_image 	west_wall_img;
+	t_image 	east_wall_img;
+} 				t_texture;
 
 typedef struct s_mlx
 {
@@ -217,6 +254,7 @@ typedef struct s_game
 	t_vision 		vision;
 
 	t_mlx			mlx; // ???en funcion de que hacerlo puntero o no?
+	t_texture 		texture;
 	int 			finish_game;
 }					t_game;
 
@@ -240,6 +278,7 @@ int	create_new_images(t_game *gdata, t_mlx *mlx);
 char **parsing_pre_yahaira(t_game *gdata);
 
 //PRINT MAP
+int	prepare_textures (t_game *gdata);
 void print_map (t_game *gdata, t_mlx mlx, t_map map);
 
 //PRINT MINIMAP

@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/09 22:45:43 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:22:06 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,8 @@ static void calculate_ray(t_game *gdata, t_ray *ray, double ray_angle, double x,
 // Calcula TODOS los rayos del FOV y los almacena en t_fov
 void calculate_fov(t_game *gdata, double x, double y) //Mandar las coordenadas del player (actuales y anteriores)
 {
-    double start_angle = gdata->vision.vision_angle + (gdata->vision.FOV.fov_rad / 2);
-    double end_angle = gdata->vision.vision_angle - (gdata->vision.FOV.fov_rad / 2);
+    double start_angle = gdata->vision.vision_angle - (gdata->vision.FOV.fov_rad / 2);
+    double end_angle = gdata->vision.vision_angle + (gdata->vision.FOV.fov_rad / 2);
     double angle_step = (end_angle - start_angle) / gdata->vision.FOV.num_rays; // = FOV/ancho pantalla
 
    

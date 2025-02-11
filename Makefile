@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/02/09 17:58:39 by mfontser         ###   ########.fr        #
+#    Updated: 2025/02/11 21:06:28 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ ORANGE = \e[1;38;2;255;128;0m
 	#Makefile con dependencias
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
 
-FILES =  cub3D.c initialitations.c pseudoparsing.c print_map.c print_minimap.c print_player_params.c render.c press_key.c collisions.c movements.c fov.c error.c
+FILES =  cub3D.c initialitations.c pseudoparsing.c print_map.c print_minimap.c print_player_params.c render.c press_key.c collisions.c movements.c fov.c error.c prepare_textures.c 
 
 
 SRCDIR = src/
