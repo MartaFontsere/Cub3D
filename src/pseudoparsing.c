@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:39:52 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/11 20:54:42 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/11 22:49:55 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,3 +103,6 @@ char **parsing_pre_yahaira(t_game *gdata)
     gdata->texture.path.WE = "WEST_TEXTURE";
     gdata->texture.path.EA = "EAST_TEXTURE";
 }
+
+
+
