@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/09 22:45:45 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:39:21 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ void print_walls (t_mlx mlx, t_minimap minimap, t_map map)
 		}
 		y++;
 	}
-	printf ("entro\n");
 	printf ("image %p, mini %p\n",mlx.image, mlx.mini_image);
 }
 
@@ -191,8 +190,6 @@ void print_background (t_mlx mlx, t_minimap minimap)
 
 void	print_minimap(t_game *gdata)
 {
-	printf ("entro2\n");
-	
 	print_background (gdata->mlx, gdata->minimap); //CONFIRMAR si yo me paso esta info asi, no estoy mandando el puntero, por lo que si modifico algo en la estructura no se mantiene el cambio. aunque gdata sea puntero, lo que mando es algo nuevo, si quiero que sea puntero tendre que indicarlo concretamente para esa variable, aunque forme parte de gdata. 
 	print_walls (gdata->mlx, gdata->minimap, gdata->map);
 	print_empty_space (gdata->mlx, gdata->minimap, gdata->map);

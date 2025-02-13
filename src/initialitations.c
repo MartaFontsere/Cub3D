@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/11 20:57:53 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:34:20 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ void	init_gdata_values(t_game *gdata)
 {
 	gdata->map.rawmap = NULL;
 	gdata->map.matrix = NULL;
-	gdata->map.cells_width = 20;// ESTA HARDCODEADO
-	gdata->map.cells_height = 20; //ESTA HARDCODEADO
-	gdata->map.px_width = PX_MAP_WIDTH;// ESTA HARDCODEADO
-	gdata->map.px_height = PX_MAP_HEIGHT; //ESTA HARDCODEADO
+	
 	gdata->mlx.window_width = PX_MAP_WIDTH;
 	gdata->mlx.window_height = PX_MAP_HEIGHT;
 	gdata->player.raw_x = 0;
@@ -132,6 +129,18 @@ void	init_player_orientation(t_map *map, t_vision *vision)
 	}	
 }
 
+void init_map (t_map *map)
+{
+	map->cells_width = 20;// ESTA HARDCODEADO
+	map->cells_height = 20; //ESTA HARDCODEADO
+	// map->cells_width = 5000;// ESTA HARDCODEADO
+	// map->cells_height = 3; //ESTA HARDCODEADO
+	map->px_width = PX_MAP_WIDTH;
+	map->px_height = PX_MAP_HEIGHT;
+	printf("map->px_width= |%d|\n", map->px_width);
+
+}
+
 void	init_minimap(t_game *gdata, t_map *map)
 {
 	gdata->minimap.px_width = PX_MINIMAP_WIDTH;
@@ -177,4 +186,16 @@ int	create_new_images(t_game *gdata, t_mlx *mlx)
 		return (0);
 	}
 	return (1);
+}
+
+void init_texture_params (t_texture *texture)
+{
+	texture->north_wall_img.xpm->texture.width = 1500;// HARDCODEADO adaptar a las texturas finales
+	texture->north_wall_img.xpm->texture.height = 994;// HARDCODEADO adaptar a las texturas finales
+	texture->south_wall_img.xpm->texture.width = 360;// HARDCODEADO adaptar a las texturas finales
+	texture->south_wall_img.xpm->texture.height = 240;// HARDCODEADO adaptar a las texturas finales
+	texture->west_wall_img.xpm->texture.width = 626;// HARDCODEADO adaptar a las texturas finales
+	texture->west_wall_img.xpm->texture.height = 417;// HARDCODEADO adaptar a las texturas finales
+	texture->east_wall_img.xpm->texture.width = 626;// HARDCODEADO adaptar a las texturas finales
+	texture->east_wall_img.xpm->texture.height = 414;// HARDCODEADO adaptar a las texturas finales
 }

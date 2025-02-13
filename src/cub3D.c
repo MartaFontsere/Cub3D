@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/13 04:22:05 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:04:38 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int main(int ac, char **av)
 		return 1;
 	}
 	// A partir de aqui:
+	init_map (&gdata.map);
 	init_minimap(&gdata, &gdata.map);
 	init_player_parameters(&gdata, &gdata.player);
 	if (init_vision_parameters (&gdata, &gdata.vision) == 0)
@@ -62,7 +63,7 @@ int main(int ac, char **av)
 	calculate_fov(&gdata, gdata.player.x, gdata.player.y);
 	if (prepare_textures (&gdata) == 0)
 		return (1);
-	
+	init_texture_params (&gdata.texture);
 	print_map (&gdata, gdata.mlx, gdata.map);
 	print_minimap(&gdata);
 		print_player_and_fov (&gdata); //meter dentro de printminimap, y luego en print player fov in motion llamar a print tablero o algo asi

@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/13 01:04:15 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/13 20:03:01 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@
 # define BLUE1 0X9AC4FFFF
 
 /*TEXTURES*/ //LUEGO BORRAR, PARA MIENTRAS SIN PARSING
-#define NORTH_TEXTURE "textures/map_walls/ok/Norte1.xpm42"
-#define SOUTH_TEXTURE "textures/map_walls/ok/Sur1.xpm42"
-#define WEST_TEXTURE "textures/map_walls/ok/Oeste1.xpm42"
-#define EAST_TEXTURE "textures/map_walls/ok/Este1.xpm42"
+#define NORTH_TEXTURE "textures/map_walls/ok/Norte.xpm42"
+#define SOUTH_TEXTURE "textures/map_walls/ok/Sur.xpm42"
+#define WEST_TEXTURE "textures/map_walls/ok/Oeste.xpm42"
+#define EAST_TEXTURE "textures/map_walls/ok/Este.xpm42"
 
 
 
@@ -79,10 +79,10 @@
 /*MAP*/
 #define PX_MAP_WIDTH 2560
 #define PX_MAP_HEIGHT 1440
-#define NORTH_WALL_COLOR 0XFF9A9AFF
-#define SOUTH_WALL_COLOR 0XFFD29AFF
-#define EAST_WALL_COLOR 0XFFFF9AFF
-#define WEST_WALL_COLOR 0XFF9AFBFF
+// #define NORTH_WALL_COLOR 0XFF9A9AFF
+// #define SOUTH_WALL_COLOR 0XFFD29AFF
+// #define EAST_WALL_COLOR 0XFFFF9AFF
+// #define WEST_WALL_COLOR 0XFF9AFBFF
 #define SKY_COLOR 0X9AC4FFFF
 #define FLOOR_COLOR 0XA3FF9AFF
 
@@ -273,6 +273,8 @@ void	init_player_orientation(t_map *map, t_vision *vision);
 int init_vision_parameters (t_game *gdata, t_vision *vision);
 int		init_mlx(t_mlx *mlx);
 int	create_new_images(t_game *gdata, t_mlx *mlx);
+void init_texture_params (t_texture *texture);
+void init_map (t_map *map);
 
 //PSEUDOPARSING
 char **parsing_pre_yahaira(t_game *gdata);
