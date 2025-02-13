@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/11 22:48:15 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/13 01:04:15 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@
 # define BLUE1 0X9AC4FFFF
 
 /*TEXTURES*/ //LUEGO BORRAR, PARA MIENTRAS SIN PARSING
-#define NORTH_TEXTURE "textures/map_walls/ok/Norte.xpm42"
-#define SOUTH_TEXTURE "textures/map_walls/ok/Sur.xpm42"
-#define WEST_TEXTURE "textures/map_walls/ok/Oeste.xpm42"
-#define EAST_TEXTURE "textures/map_walls/ok/Este.xpm42"
+#define NORTH_TEXTURE "textures/map_walls/ok/Norte1.xpm42"
+#define SOUTH_TEXTURE "textures/map_walls/ok/Sur1.xpm42"
+#define WEST_TEXTURE "textures/map_walls/ok/Oeste1.xpm42"
+#define EAST_TEXTURE "textures/map_walls/ok/Este1.xpm42"
 
 
 

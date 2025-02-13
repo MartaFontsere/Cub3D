@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:39:52 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/11 22:49:55 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/13 02:59:50 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,7 @@ char **parsing_pre_yahaira(t_game *gdata)
     }
     matrix[rows] = NULL;  // Agregar NULL al final para protección
     return matrix;  
-
-    gdata->texture.path.NO = "NORTH_TEXTURE";
-    gdata->texture.path.SO = "SOUTH_TEXTURE";
-    gdata->texture.path.WE = "WEST_TEXTURE";
-    gdata->texture.path.EA = "EAST_TEXTURE";
 }
-
+ 
 
 
