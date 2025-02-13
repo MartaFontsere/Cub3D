@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/05 16:47:13 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:08:14 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	curr_char(int cur, char *line, t_map *map)
 	
 	counter = map->shader.c_count + map->shader.p_count;
 	if (cur != 'N' && cur != 'S' && cur != 'E' && cur != 'W' && cur != 'C' \
-	&& cur != 'F' && cur != '1' && cur != '0' && cur != '\0')
+	&& cur != 'F' && cur != '1' && cur != '0' && cur != '\0' && cur != '\n')
 	{
 		map->shader.err_flag = 1;
 		msg_error("We can't process this line: ", line);
@@ -102,7 +102,7 @@ int	check_line(char *line, t_map *map)
 	int		i;
 
 	i = 0;
-	while (ft_isspace(line[i]))
+	while (ft_isspace(line[i]))//aqui me va a comer los saltos de linea
 		i++;
 	if (!curr_char(line[i], line, map))
 		return (0);
@@ -122,6 +122,12 @@ int	check_line(char *line, t_map *map)
 		map->map_height++;
 	if (map->shader.err_flag == 1)
 		return (0);
+	if (map->is_map == 1 && (map->shader.c_count + map->shader.p_count) == 6)
+	{
+		if (!create_matrix(line, map, i))
+			return (0);
+		//printf(ORANGE"%s"END, map->tmp_matrix[0]);
+	}
 	return (1);
 }
 

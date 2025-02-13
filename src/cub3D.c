@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/05 14:13:28 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/13 12:49:07 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ void	print_matrix(char **matrix, int flag)
 {
 	int	i = 0;
 
-	while (matrix[i])
+	//if (!matrix)
+	while (*matrix && matrix[i])
 	{
 		if (flag == 1)
-			printf(YELLOW"%s\n"END, matrix[i]);
+			printf(YELLOW"%s"END, matrix[i]);
 		else
-			printf(BLUE"%s\n"END, matrix[i]);
+			printf(BLUE"%s"END, matrix[i]);
 		i++;
 	}
 }
@@ -53,6 +54,7 @@ void    init_structs(t_map *map)
 	map->is_map = 0;
 	map->map_width = 0;
 	map->map_height = 0;
+	map->j = 0;
 	init_shader(&map->shader);
 }
 
@@ -85,7 +87,7 @@ int main (int ac, char **av)
 		clean_data(&map);
 		return (0);
 	}
-	prints_check(&map);//si hay un error, no va a printar porque ha salido antes
+	prints_check(&map);
 	clean_data(&map);
     return (1);
 }

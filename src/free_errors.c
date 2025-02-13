@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/05 14:17:56 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:47:34 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	clean_data(t_map *map)
 {
 	clean_shader(&map->shader);
 	free_matrix(map->matrix);
-	free_matrix(map->tmp_matrix);
+	if (map->tmp_matrix)
+		free_matrix(map->tmp_matrix);
 	if (map->rawmap)
 		free(map->rawmap);
 	map->rawmap = NULL;

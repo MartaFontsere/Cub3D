@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:04:50 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/05 16:48:14 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/13 12:50:07 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,45 @@
 	map_tmp[i] = NULL;
 	return (map_tmp);
 } */
-
+/* 
 //iterador puede ser param
 int	looking_map(char *line, t_map *map)
 {
 	int	i;
 
 	i = 0;
-	(void)map;
-	while (ft_isspace(line[i]))
+	map->tmp_matrix = malloc(sizeof(char *) * (map->map_height + 1));
+	if (!map->tmp_matrix)
+		return (0);
+	while (line[i] == '\t' || line[i] == ' ')
 		i++;
+	//printf("line[%d]\n", i);
 	if (line[i] == '1' || line[i] == '0')
 	{
-		printf("Is map\n");
+		printf("a map was found\n");
+		map->is_map = 1;
 	}
-		//copy_map(line, map);
+	if (map->is_map == 1)
+	{
+		if (line[i] == '\0')
+			map->tmp_matrix[map->j] = ft_strdup("");
+		else
+			map->tmp_matrix[map->j] = ft_strdup(line);
+		//printf(PURPLE"%d - %s\n"END, map->j, map->tmp_matrix[map->j]);
+		map->j++;
+		//map->tmp_matrix[map->j] = NULL;
+	}
+	if (!map->tmp_matrix)
+	{
+		free_matrix(map->tmp_matrix);
+		return (0);
+	}
+	if ((size_t)map->j >= map->map_height)
+	{
+		map->tmp_matrix[map->j] = NULL;
+	}
+	//if (map->is_map == 1)
+	//	printf(RED"%d - %s\n"END, (map->j - 1), map->tmp_matrix[map->j - 1]);
 	return (1);
 }
 
@@ -57,26 +81,34 @@ int	init_map(t_map *map)
 	int		fd;
 	char	*line;
 
+	map->is_map = 0;//reiniciamos la flag de map
 	fd = open(map->fd_path, O_RDONLY);
 	line = get_next_line(fd);
 	if (!line)
 		return (0);
+	int	i = 0;
 	while (line)
-	{
+	{  
 		if (!looking_map(line, map))
 		{
 			free(line);
 			close(fd);
 			return (0);
 		}
+		if (map->is_map == 1)
+			printf(CYAN"%s\n"END, map->tmp_matrix[i]);
 		free(line);
+		i++;
 		line = get_next_line(fd);
 	}
-	if (line)
-		free(line);
+	//printf(CYAN"%s\n"END, map->tmp_matrix[2]);
+	//print_matrix(map->tmp_matrix, 1);
+	//if (line)
+	//	free(line);
 	close(fd);
 	return (1);
-}
+} */
+
 //este clean_data me daba doble free
 int	get_final_map(int ac, char **av, t_map *map)
 {
@@ -87,15 +119,26 @@ int	get_final_map(int ac, char **av, t_map *map)
 	{
 		if (map->shader.p_count != 4 && map->shader.err_flag == 0)
 			msg_error("A path is missing\n", NULL);
-		//clean_data(map);
 		map->fd_path = NULL;
 		return (0);
 	}
-	printf("La altura del mapa es: [%zu]\n", map->map_height);
-	if (map->is_map == 1)
-	{
-		if (!init_map(map))
-			return (0);
-	}
+	//print_matrix(map->tmp_matrix, 1);
+	return (1);
+}
+
+int	create_matrix(char *line, t_map *map, int i)
+{
+	(void)i;
+	printf(RED"%zu\t"END, map->map_height);
+	printf(RED"%d\n"END, map->j);
+	if (map->j == 0)
+		map->tmp_matrix = malloc(sizeof(char *) * (map->map_height + 1));
+	else
+		map->tmp_matrix = realloc(map->tmp_matrix, sizeof(char *) * (map->map_height + 1));
+	if (!map->tmp_matrix)
+		return (0);
+	map->tmp_matrix[map->j] = ft_strdup(line);
+	map->j++;
+	map->tmp_matrix[map->j] = NULL;
 	return (1);
 }

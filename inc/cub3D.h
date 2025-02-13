@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/05 16:46:27 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/13 12:47:11 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_color
 	t_shader	*shader;
 }				t_color;
 
+/*Cambiar el nombre de shader a path */
 struct s_shader
 {
     char		*NO;
@@ -56,10 +57,11 @@ struct s_shader
 	int			p_count;
 	int			c_count;
 	int			err_flag;
-	t_color		C;//luego hay que chekear los rangos RGB
+	t_color		C;
 	t_color		F;
 };
 
+/*Cambiar el nombre de map_w y map_h a cells_* */
 typedef struct s_map
 {
 	char		*rawmap;
@@ -69,6 +71,7 @@ typedef struct s_map
 	int			is_map;
 	size_t		map_width;
 	size_t		map_height;
+	int			j;
     t_shader	shader;
 }           	t_map;
 
@@ -111,8 +114,9 @@ void	cpy_colors(char *rgb, t_color *color, int i);
 
 /*					--get_map--				*/
 int		get_final_map(int ac, char **av, t_map *map);
-int		looking_map(char *line, t_map *map);
-int		init_map(t_map *map);
+//int		looking_map(char *line, t_map *map);
+//int		init_map(t_map *map);
+int		create_matrix(char *line, t_map *map, int i);
 //char	**copy_map(char *line, t_map *map);
 
 
