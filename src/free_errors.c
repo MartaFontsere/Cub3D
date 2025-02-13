@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/10 13:47:34 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:51:50 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,31 +52,31 @@ void	free_matrix(char **matrix)
 	matrix = NULL;
 }
 
-void	clean_shader(t_shader *shader)//deberia ser un free, no?
+void	clean_path(t_path *path)//deberia ser un free, no?
 {
-	free(shader->NO);
-	free(shader->SO);
-	free(shader->EA);
-	free(shader->WE);
+	free(path->NO);
+	free(path->SO);
+	free(path->EA);
+	free(path->WE);
 	//no hace falta volver a poner a 0
-	shader->C.R = 0;
-	shader->C.G = 0;
-	shader->C.B = 0;
-	shader->F.R = 0;
-	shader->F.G = 0;
-	shader->F.B = 0;
+	path->C.R = 0;
+	path->C.G = 0;
+	path->C.B = 0;
+	path->F.R = 0;
+	path->F.G = 0;
+	path->F.B = 0;
 }
 
 void	clean_data(t_map *map)
 {
-	clean_shader(&map->shader);
+	clean_path(&map->path);
 	free_matrix(map->matrix);
-	if (map->tmp_matrix)
-		free_matrix(map->tmp_matrix);
+	free_matrix(map->tmp_matrix);
+	free_matrix(map->void_matrix);
 	if (map->rawmap)
 		free(map->rawmap);
 	map->rawmap = NULL;
-	map->map_height = 0;
-	map->map_width = 0;
+	map->cells_height = 0;
+	map->cells_width = 0;
 	map->fd_path = NULL;
 }

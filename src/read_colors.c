@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/05 13:44:00 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:38:38 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 	split = ft_split(rgb, ',');
 	if ((split[0] == NULL || split[1] == NULL || split[2] == NULL) && !split[3])
 	{
-		color->shader->err_flag = 1;
+		color->path->err_flag = 1;
 		free_matrix(split);
 		return (msg_error("Invaid split\n", NULL));	
 	}
@@ -43,17 +43,17 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 			color->B = ft_atoi(split[i]);
 		else
 		{
-			color->shader->err_flag = 1;
+			color->path->err_flag = 1;
 			msg_error("Is not a valid value: ", split[i]);
 			break ;
 		}
 		i++;
 	}
-	color->shader->c_count++;
+	color->path->c_count++;
 	free_matrix(split);
 }
 
-void	get_colors(char *line, t_shader *shader, int i, int init)
+void	get_colors(char *line, t_path *path, int i, int init)
 {
 	int		start;
 	int		end;
@@ -74,18 +74,18 @@ void	get_colors(char *line, t_shader *shader, int i, int init)
 	if (line[i] != '\0' || comma != 2)
 	{
 		msg_error("This values are not correct: ", line);
-		shader->err_flag = 1;
+		path->err_flag = 1;
 		return ;
 	}
 	str = ft_substr(line, start, end);
 	if (line[init] == 'C')
-		cpy_colors(str, &shader->C, 0);
+		cpy_colors(str, &path->C, 0);
 	else if (line[init] == 'F')
-		cpy_colors(str, &shader->F, 0);
+		cpy_colors(str, &path->F, 0);
 	free(str);
 }
 
-void	assign_color(char *line, t_shader *shader, int i)
+void	assign_color(char *line, t_path *path, int i)
 {
 	int	init;
 
@@ -97,14 +97,14 @@ void	assign_color(char *line, t_shader *shader, int i)
 	if (!ft_isdigit(line[i]))
 	{
 		msg_error("Invalid line: ", line);
-		shader->err_flag = 1;
+		path->err_flag = 1;
 		return ;
 	}
-	if (shader->c_count < 2)
-		get_colors(line, shader, i, init);
+	if (path->c_count < 2)
+		get_colors(line, path, i, init);
 	else
 	{
-		shader->err_flag =1;
+		path->err_flag =1;
 		return (msg_error("The colors are alreday assigned\n", NULL));
 	}
 }

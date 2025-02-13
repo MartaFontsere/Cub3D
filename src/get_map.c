@@ -6,139 +6,81 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:04:50 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/13 12:50:07 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/13 23:02:03 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-
-/* char	**copy_map(char *line, t_map *map)
+/* static void	fill_tabs(char c, int num)
 {
-	char	**map_tmp;
-	size_t	i;
-
-	i = 0;
-	map_tmp = malloc(sizeof(char*) * (map->map_height + 1));
-	if (!map_tmp)
-		return (NULL);
-	while (i < map->map_height)
-	{
-		map_tmp[i] = ft_strdup(line);
-		if (!map_tmp[i])
-			return (free_matrix(map_tmp), NULL);
-		i++;
-	}
-	map_tmp[i] = NULL;
-	return (map_tmp);
+	while (num--)
+		write(1, &c, 1);
 } */
-/* 
-//iterador puede ser param
-int	looking_map(char *line, t_map *map)
+
+char	*cub_strdup(char *s1, size_t len)
 {
-	int	i;
+	char	*str;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	map->tmp_matrix = malloc(sizeof(char *) * (map->map_height + 1));
+	j = 0;
+	if (!s1)
+		return (NULL);
+	printf("len: [%zu]\n", len);
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		if (s1[i] == '\t')
+		{
+			while (j <= 4)
+				str[j++] = '-';
+			i++;
+			//printf("j%c\n", str[j - 1]);
+			//printf("i%c\n", str[i]);
+		}
+		//va un else, no?
+		str[j++] = s1[i++];
+	}
+	printf("END: [%zu]\n", j);
+	str[j] = '\0';
+	printf(RED"\n%s\n"END, str);
+	return (str);
+}
+//me crea la matriz y hace un realloc a medida que se actualiza la altura del mapa
+int	create_matrix(char *line, t_map *map)
+{
+	if (map->j == 0)
+		map->tmp_matrix = malloc(sizeof(char *) * (map->cells_height + 1));
+	else
+		map->tmp_matrix = realloc(map->tmp_matrix, sizeof(char *) * (map->cells_height + 1));
 	if (!map->tmp_matrix)
 		return (0);
-	while (line[i] == '\t' || line[i] == ' ')
-		i++;
-	//printf("line[%d]\n", i);
-	if (line[i] == '1' || line[i] == '0')
-	{
-		printf("a map was found\n");
-		map->is_map = 1;
-	}
-	if (map->is_map == 1)
-	{
-		if (line[i] == '\0')
-			map->tmp_matrix[map->j] = ft_strdup("");
-		else
-			map->tmp_matrix[map->j] = ft_strdup(line);
-		//printf(PURPLE"%d - %s\n"END, map->j, map->tmp_matrix[map->j]);
-		map->j++;
-		//map->tmp_matrix[map->j] = NULL;
-	}
-	if (!map->tmp_matrix)
-	{
-		free_matrix(map->tmp_matrix);
-		return (0);
-	}
-	if ((size_t)map->j >= map->map_height)
-	{
-		map->tmp_matrix[map->j] = NULL;
-	}
-	//if (map->is_map == 1)
-	//	printf(RED"%d - %s\n"END, (map->j - 1), map->tmp_matrix[map->j - 1]);
+	map->tmp_matrix[map->j] = cub_strdup(line, map->cells_width);
+	map->j++;
+	map->tmp_matrix[map->j] = NULL;
 	return (1);
 }
 
-
-//Puedo agregar  en esta funcion para que encuentre la linea mas larga
-int	init_map(t_map *map)
-{
-	int		fd;
-	char	*line;
-
-	map->is_map = 0;//reiniciamos la flag de map
-	fd = open(map->fd_path, O_RDONLY);
-	line = get_next_line(fd);
-	if (!line)
-		return (0);
-	int	i = 0;
-	while (line)
-	{  
-		if (!looking_map(line, map))
-		{
-			free(line);
-			close(fd);
-			return (0);
-		}
-		if (map->is_map == 1)
-			printf(CYAN"%s\n"END, map->tmp_matrix[i]);
-		free(line);
-		i++;
-		line = get_next_line(fd);
-	}
-	//printf(CYAN"%s\n"END, map->tmp_matrix[2]);
-	//print_matrix(map->tmp_matrix, 1);
-	//if (line)
-	//	free(line);
-	close(fd);
-	return (1);
-} */
-
-//este clean_data me daba doble free
 int	get_final_map(int ac, char **av, t_map *map)
 {
 	map->fd_path = av[1];
 	if (ac != 2 || !check_name(map->fd_path))
 		return (0);
-	if (!fd_is_correct(map) || map->shader.p_count != 4)
+	if (!fd_is_correct(map) || map->path.p_count != 4)
 	{
-		if (map->shader.p_count != 4 && map->shader.err_flag == 0)
+		if (map->path.p_count != 4 && map->path.err_flag == 0)
 			msg_error("A path is missing\n", NULL);
 		map->fd_path = NULL;
 		return (0);
 	}
-	//print_matrix(map->tmp_matrix, 1);
+	printf("\n");
+	if (!complete_matrix(map->tmp_matrix, map))
+		return (0);
 	return (1);
 }
 
-int	create_matrix(char *line, t_map *map, int i)
-{
-	(void)i;
-	printf(RED"%zu\t"END, map->map_height);
-	printf(RED"%d\n"END, map->j);
-	if (map->j == 0)
-		map->tmp_matrix = malloc(sizeof(char *) * (map->map_height + 1));
-	else
-		map->tmp_matrix = realloc(map->tmp_matrix, sizeof(char *) * (map->map_height + 1));
-	if (!map->tmp_matrix)
-		return (0);
-	map->tmp_matrix[map->j] = ft_strdup(line);
-	map->j++;
-	map->tmp_matrix[map->j] = NULL;
-	return (1);
-}
+

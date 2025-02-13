@@ -52,3 +52,9 @@
 		nuevamente y agregar casos que pueden pasar.
 
 05/02 -	revisar todo nuevamente
+
+13/02 -	Estoy en proceso de transformar las tabulaciones a espacios, para asi poder
+		tener las lines bien colocadas y no haya errores en el mapa a la hora de
+		hacer el mix.
+		Podria ser fallo a la hora de iterar las dos strings que queremos crear.
+		Los tabs en medio de la string no funcionan
