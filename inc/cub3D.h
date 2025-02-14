@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/13 21:50:47 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/14 20:04:07 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,18 @@ char	*cub_strdup(char *s1, size_t len);
 int		check_name(char *map_path);
 size_t	ft_max_size(char *line, size_t max);
 char	**copy_map(char **map, size_t height);
-//char	**copy_map(char *line, t_map *map);
 int		mix_matrix(char **src, t_map *map);
 char	*fill_void(t_map *map);
 int		complete_matrix(char **src, t_map *map);
+
+
+/*				--get_map_utils--				*/
+int		parse_map(char **matrix, t_map *map);
+int	min_chars(char **matrix, t_map *map);
+
+
+
+
 
 
 #endif

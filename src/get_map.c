@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:04:50 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/14 18:38:39 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/14 19:51:17 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ int	get_final_map(int ac, char **av, t_map *map)
 		map->fd_path = NULL;
 		return (0);
 	}
-	printf("\n");
 	if (!complete_matrix(map->tmp_matrix, map))
+		return (0);
+	if (!parse_map(map->matrix, map))
 		return (0);
 	return (1);
 }

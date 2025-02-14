@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/13 17:51:50 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/14 19:48:34 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,6 @@ void	clean_path(t_path *path)//deberia ser un free, no?
 	free(path->SO);
 	free(path->EA);
 	free(path->WE);
-	//no hace falta volver a poner a 0
-	path->C.R = 0;
-	path->C.G = 0;
-	path->C.B = 0;
-	path->F.R = 0;
-	path->F.G = 0;
-	path->F.B = 0;
 }
 
 void	clean_data(t_map *map)
@@ -75,8 +68,4 @@ void	clean_data(t_map *map)
 	free_matrix(map->void_matrix);
 	if (map->rawmap)
 		free(map->rawmap);
-	map->rawmap = NULL;
-	map->cells_height = 0;
-	map->cells_width = 0;
-	map->fd_path = NULL;
 }
