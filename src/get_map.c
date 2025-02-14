@@ -6,29 +6,23 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:04:50 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/13 23:02:03 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/14 18:38:39 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-/* static void	fill_tabs(char c, int num)
-{
-	while (num--)
-		write(1, &c, 1);
-} */
 
 char	*cub_strdup(char *s1, size_t len)
 {
 	char	*str;
 	size_t	i;
 	size_t	j;
+	int		tabs;
 
 	i = 0;
 	j = 0;
 	if (!s1)
 		return (NULL);
-	printf("len: [%zu]\n", len);
 	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
@@ -36,20 +30,21 @@ char	*cub_strdup(char *s1, size_t len)
 	{
 		if (s1[i] == '\t')
 		{
-			while (j <= 4)
+			tabs = 4;
+			while (tabs--)
 				str[j++] = '-';
 			i++;
-			//printf("j%c\n", str[j - 1]);
-			//printf("i%c\n", str[i]);
 		}
-		//va un else, no?
-		str[j++] = s1[i++];
+		else
+			str[j++] = s1[i++];
 	}
-	printf("END: [%zu]\n", j);
 	str[j] = '\0';
-	printf(RED"\n%s\n"END, str);
+	//printf("END: [%zu]\n", j);
+	//printf("[%c]\n", str[j]);
+	//printf(RED"STR:\n%s\n"END, str);
 	return (str);
 }
+
 //me crea la matriz y hace un realloc a medida que se actualiza la altura del mapa
 int	create_matrix(char *line, t_map *map)
 {

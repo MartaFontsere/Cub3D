@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/13 22:39:18 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/14 18:40:34 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,31 @@ int	check_name(char *map_path)
 	}
 	return (1);
 }
-
 size_t	ft_max_size(char *line, size_t max)
 {
 	size_t	size;
-	int		flag;
+	int		tabs;
 
 	size = 0;
-	flag = 0;
+	tabs = 0;
 	while (line[size])
 	{
 		if (line[size] == '\t')
-			flag = 1;
+			tabs++;
 		size++;
 	}
-	if (flag == 1)
-		size += 4;
-	size -= 1;//me quita el null final
+	//printf(BLUE"[%zu] - ", size);
+	//printf("%s"END, line);
+	while (tabs--)
+		size += 3;
+	//size -= 1;
+	//printf("size: %zu\n", size);
+	//printf("max: %zu\n", max);
 	if (max < size)
+	{
 		max = size;
-	printf("MAX: %zu\n", max);
+	//	printf("new_max: %zu\n", max);
+	}
 	return (max);
 }
 
@@ -87,7 +92,6 @@ char	**copy_map(char **map, size_t height)
 	return (map_tmp);
 }
 
-//las tabulaciones no las esta detectando correctamente
 int	mix_matrix(char **src, t_map *map)
 {
 	size_t	i;

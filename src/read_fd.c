@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/13 22:12:25 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/14 18:06:58 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	check_line(char *line, t_map *map, int i)
 		map->is_map = 1;
 		map->cells_height++;
 		map->cells_width = ft_max_size(line, map->cells_width);
+		//printf("map_w: [%zu]\n", map->cells_width);
 	}
 	if (line[i] == '\0' && map->is_map == 1)
 		map->cells_height++;

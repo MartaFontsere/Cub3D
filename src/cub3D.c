@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/13 17:52:54 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/14 18:40:14 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	prints_check(t_map *map)
 	printf(RED"[%d],"END, map->path.F.R);
 	printf(GREEN"[%d],"END, map->path.F.G);
 	printf(BLUE"[%d]\n"END, map->path.F.B);
-	printf(ORANGE"%zu\n"END, map->cells_height);
-	printf(ORANGE"%zu\n"END, map->cells_width);
+	printf(ORANGE"m_h %zu\n"END, map->cells_height);
+	printf(ORANGE"m_w %zu\n"END, map->cells_width);
 	print_matrix(map->tmp_matrix, 1);
 	printf("\n");
 	print_matrix(map->matrix, 3);
