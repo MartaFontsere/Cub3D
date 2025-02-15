@@ -59,6 +59,12 @@ int	prepare_textures (t_game *gdata)
 	if (!load_image(gdata, &gdata->texture.west_wall_img, WEST_TEXTURE))
 		printf ("hola"); //BORRAR
 		//return (free_error_idle_right(0, gdata)); //MIRAR LA FUNCION DE ERROR PERTINENTE
+	
+//BONUS
+	if (!load_image(gdata, &gdata->texture.sky_img, SKY_TEXTURE))
+		printf ("hola"); //BORRAR
+		//return (free_error_idle_right(0, gdata)); //MIRAR LA FUNCION DE ERROR PERTINENTE
+	
 	return (1);
 }
 

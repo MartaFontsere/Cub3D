@@ -50,13 +50,42 @@
 //# define SOFT_YELLOW 0xFAFDC9FF
 # define BLUE1 0X9AC4FFFF
 
-/*TEXTURES*/ //LUEGO BORRAR, PARA MIENTRAS SIN PARSING
-#define NORTH_TEXTURE "textures/map_walls/ok/Norte.xpm42"
-#define SOUTH_TEXTURE "textures/map_walls/ok/Sur.xpm42"
-#define WEST_TEXTURE "textures/map_walls/ok/Oeste.xpm42"
-#define EAST_TEXTURE "textures/map_walls/ok/Este.xpm42"
+/*TEXTURES*/ //LUEGO BORRAR PATHS, PARA MIENTRAS SIN PARSING
+#define NORTH_TEXTURE "textures/map_walls/opcion2/Norte.xpm42"
+#define SOUTH_TEXTURE "textures/map_walls/opcion2/Sur.xpm42"
+#define WEST_TEXTURE "textures/map_walls/opcion2/Oeste.xpm42"
+#define EAST_TEXTURE "textures/map_walls/opcion2/Este.xpm42"
+//esto no borrar:
+#define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
+	//opcion1
+// #define WIDTH_NORTH_TEXTURE 1500
+// #define HEIGHT_NORTH_TEXTURE 994
+// #define WIDTH_SOUTH_TEXTURE 360
+// #define HEIGHT_SOUTH_TEXTURE 240
+// #define WIDTH_WEST_TEXTURE 626
+// #define HEIGHT_WEST_TEXTURE 417
+// #define WIDTH_EAST_TEXTURE 626
+// #define HEIGHT_EAST_TEXTURE 414
 
+	//opcion2
+#define WIDTH_NORTH_TEXTURE 1000
+#define HEIGHT_NORTH_TEXTURE 1000
+#define WIDTH_SOUTH_TEXTURE 1000
+#define HEIGHT_SOUTH_TEXTURE 1000
+#define WIDTH_WEST_TEXTURE 1000
+#define HEIGHT_WEST_TEXTURE 1000
+#define WIDTH_EAST_TEXTURE 1000
+#define HEIGHT_EAST_TEXTURE 1000
 
+//cielo
+// #define WIDTH_SKY_TEXTURE 1920
+// #define HEIGHT_SKY_TEXTURE 960
+// #define WIDTH_SKY_TEXTURE 1800
+// #define HEIGHT_SKY_TEXTURE 1013
+// #define WIDTH_SKY_TEXTURE 1408
+// #define HEIGHT_SKY_TEXTURE 704
+#define WIDTH_SKY_TEXTURE 2816
+#define HEIGHT_SKY_TEXTURE 704
 
 /*PLAYER ORIENTATION*/
 # define NORTH M_PI_2 //90 grados
@@ -83,9 +112,17 @@
 // #define SOUTH_WALL_COLOR 0XFFD29AFF
 // #define EAST_WALL_COLOR 0XFFFF9AFF
 // #define WEST_WALL_COLOR 0XFF9AFBFF
-#define SKY_COLOR 0X9AC4FFFF
-#define FLOOR_COLOR 0XA3FF9AFF
+// #define SKY_COLOR 0X9AC4FFFF
+// #define FLOOR_COLOR 0X588650FF
+// #define FLOOR_COLOR0XA3FF9AFF
 
+//BORRAR, ESTARA EN EL PARSING
+#define CEELING_R 154
+#define CEELING_G 196
+#define CEELING_B 255
+#define FLOOR_R 88
+#define FLOOR_G 134
+#define FLOOR_B 80
 
 /*MINIMAP*/
 #define PX_MINIMAP_WIDTH 520
@@ -123,8 +160,6 @@ typedef struct s_path
 	int			err_flag;
 	t_color		C; //Estructura con el color en RGB
 	t_color		F; //Estructura con el color en RGB
-	int 		C_hex; // Color transformado a hexadecimal
-	int 		F_hex; // Color transformado a hexadecimal
 }				t_path;
 
 typedef struct s_image
@@ -140,6 +175,11 @@ typedef struct s_texture
 	t_image 	south_wall_img;
 	t_image 	west_wall_img;
 	t_image 	east_wall_img;
+	int 		C_hex_color; // Color transformado a hexadecimal
+	int 		F_hex_color; // Color transformado a hexadecimal
+
+	//BONUS
+	t_image 	sky_img;
 } 				t_texture;
 
 typedef struct s_mlx
@@ -248,13 +288,13 @@ typedef struct s_map
 
 typedef struct s_game
 {
+	t_texture 		texture;
+	t_player		player;
 	t_map			map;
 	t_minimap 		minimap;
-	t_player		player;
 	t_vision 		vision;
 
 	t_mlx			mlx; // ???en funcion de que hacerlo puntero o no?
-	t_texture 		texture;
 	int 			finish_game;
 }					t_game;
 
