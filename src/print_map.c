@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:55:35 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/13 22:57:39 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/15 21:51:16 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ Cuando guardamos los valores en RGB, estos siguen siendo enteros normales en bas
 Lo que realmente ocurre es que cuando los combinas con desplazamiento de bits (<<) y operaciones OR (|), el resultado se almacena en una variable entera de 32 bits
 
 Internamente, siguen siendo números enteros.
-El formato hexadecimal solo se usa cuando imprimes el número con %X o %x en printf.
+El formato hexadecimal solo se usa cuando imprimes el número con %X o %x en //printf.
 En código, los números son solo números. La forma en que los ves depende de cómo los imprimas.
 
 
@@ -86,7 +86,7 @@ int get_texture_pixel(t_image *texture, int tex_x, int tex_y)
     uint8_t *pixel = &texture->xpm->texture.pixels[index];
 
     // Obtener el color del píxel
-    int color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
+    uint32_t color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3]; //para detectar los limites del color
     return color;
 }
 
@@ -123,8 +123,8 @@ void print_map (t_game *gdata, t_mlx mlx, t_map map)
 
         // Calcular la altura de la pared en píxeles
         double wall_height = map.px_height / ray->perpendicular_distance; // altura total de la pantalla / distancia del jugador a la pared perpendiclarmente (para evitar ojo de pez). A menor distancia, la pared será más alta; a mayor distancia, la pared será más baja
-// printf ("map.px_height %d\n", map.px_height);
-// printf ("ray->perpendicular_distance %f\n", ray->perpendicular_distance);
+// //printf ("map.px_height %d\n", map.px_height);
+// //printf ("ray->perpendicular_distance %f\n", ray->perpendicular_distance);
 
          // Calcular los límites verticales de la pared
         int draw_wall_start = (map.px_height / 2) - (wall_height / 2);
@@ -147,11 +147,27 @@ void print_map (t_game *gdata, t_mlx mlx, t_map map)
         // Obtener la textura del cielo
 		t_image *sky_texture = &gdata->texture.sky_img;
 
-		// Calcular el desplazamiento del cielo en función de la dirección y la posición del jugador
+		
+		//Calcular qué parte de la textura del cielo se debe mostrar en la pantalla, basado en dos factores:
+		// ray->current_angle / (2 * M_PI) --> Como current_angle está en radianes, dividirlo entre 2 * π lo convierte en un número entre 0 y 1. , de modo que el desplazamiento de la textura no dependa del valor absoluto de los radianes, sino que se base en una proporción cíclica. Osea cuando has recorrido la textura entera, regresa a 0
+			//Dividir por 2 * π transforma el ángulo en un valor entre 0 y 1. Luego se usa para seleccionar qué parte de la textura del cielo mostrar
+			//¿Por qué hacemos esto?
+				//El valor sky_offset_x se usa para seleccionar qué parte de la textura del cielo se debe mostrar en la pantalla. Como la textura del cielo es un fondo infinito, se desplaza de forma cíclica.
+				//Si ray->current_angle fuera 0, veríamos una parte de la textura. Si ray->current_angle fuera π, veríamos la mitad de la textura desplazada. Y si el jugador gira completamente (2π rad), la textura del cielo vuelve a su punto de inicio
+		//(gdata->player.x * 0.0007)
+			//Se agrega un pequeño desplazamiento basado en la posición x del jugador.
+			//Este término introduce movimiento lateral en el cielo cuando el jugador se desplaza hacia los lados, pero el factor 0.0007 es pequeño para evitar que el movimiento sea excesivo.
+		
+
+
 		double sky_offset_x = (ray->current_angle / (2 * M_PI)) 
 		                    + (gdata->player.x * 0.0007);  // Reducir impacto del movimiento lateral
 
-		sky_offset_x -= floor(sky_offset_x);  // Mantener solo la parte decimal
+		sky_offset_x -= floor(sky_offset_x);  // Mantener solo la parte decimal --> Esto elimina la parte entera de sky_offset_x, asegurando que el valor siempre esté entre 0 y 1, sin importar cuántas vueltas haya dado el jugador
+		// asi, hemos calculado el desplazamiento del cielo en función de la dirección y la posición del jugador
+
+
+
 
 		// Obtener dimensiones de la textura
 		int sky_tex_width = sky_texture->xpm->texture.width;
@@ -165,7 +181,7 @@ void print_map (t_game *gdata, t_mlx mlx, t_map map)
 		{
 		    // Aplicar corrección de perspectiva con un pequeño ajuste por el movimiento en Y
 		    double screen_y_ratio = (double)(y - (mlx.window_height / 4)) / (mlx.window_height / 4);
-		    double vertical_offset = gdata->player.y * 0.0003; // Pequeño desplazamiento en el eje Y
+		    double vertical_offset = gdata->player.y * 0.0002; // Pequeño desplazamiento en el eje Y
 		    int tex_y = (int)((0.5 + screen_y_ratio * 0.5 + vertical_offset) * sky_tex_height);
 		    
 		    int tex_x = (tex_x_start + x) % sky_tex_width; // Hacer que la textura sea infinita
@@ -183,12 +199,12 @@ void print_map (t_game *gdata, t_mlx mlx, t_map map)
         if (ray->line_crossing == 0)  // Pared vertical
         {
             wall_x = ray->px_collision_y / gdata->minimap.px_in_cell_height;  // Usar la coordenada Y del punto de impacto. Osea miro en que pixel colisiona del eje Y y luego lo divido por el tamaño en pixeles de una casilla en el minimapa (representacion 2d) para saber en que parte de esa casilla esta colisionando. Ej: si colisiona en la casilla 4,75, significa que dentro de la casilla 4 choca en el 75% de esa casilla (entendiendo una casilla como el 100%). Nos quedamos solo con ese 75, porque indica que parte de la textura debemos pintar, me da igual el numero de la casilla
-        	//printf ("casilla de colision para textura |%f|\n", wall_x);
+        	////printf ("casilla de colision para textura |%f|\n", wall_x);
         }
         else  // Pared horizontal
         {
             wall_x = ray->px_collision_x / gdata->minimap.px_in_cell_width;  // Usar la coordenada X del punto de impacto. esa coordenada corresponde a la columna en el eje x de la textura que debera pintarse
-        	//printf ("casilla de colision para textura |%f|\n", wall_x);
+        	////printf ("casilla de colision para textura |%f|\n", wall_x);
         }
         
         wall_x = wall_x - floor(wall_x);  // Parte fraccional de la posición dentro de la casilla --> Elimina la parte entera de wall_x y se queda solo con la fracción decimal. Queremos saber dentro de la casilla en qué punto impacta el rayo. Por ejemplo, si wall_x = 4.75, significa que el rayo impactó en la casilla 4, pero dentro de esa casilla impactó en el 75% de su ancho. Nos quedamos solo con 0.75
@@ -272,7 +288,7 @@ void print_map (t_game *gdata, t_mlx mlx, t_map map)
 
 
 
-
+ 
 
 
 
@@ -300,8 +316,8 @@ void print_map (t_game *gdata, t_mlx mlx, t_map map)
 
 //         // Calcular la altura de la pared en píxeles
 //         double wall_height = map.px_height / ray->perpendicular_distance; // altura total de la pantalla / distancia del jugador a la pared perpendiclarmente (para evitar ojo de pez). A menor distancia, la pared será más alta; a mayor distancia, la pared será más baja
-// // printf ("map.px_height %d\n", map.px_height);
-// // printf ("ray->perpendicular_distance %f\n", ray->perpendicular_distance);
+// // //printf ("map.px_height %d\n", map.px_height);
+// // //printf ("ray->perpendicular_distance %f\n", ray->perpendicular_distance);
 
 //          // Calcular los límites verticales de la pared
 //         int draw_wall_start = (map.px_height / 2) - (wall_height / 2);
@@ -336,12 +352,12 @@ void print_map (t_game *gdata, t_mlx mlx, t_map map)
 //         if (ray->line_crossing == 0)  // Pared vertical
 //         {
 //             wall_x = ray->px_collision_y / gdata->minimap.px_in_cell_height;  // Usar la coordenada Y del punto de impacto. Osea miro en que pixel colisiona del eje Y y luego lo divido por el tamaño en pixeles de una casilla en el minimapa (representacion 2d) para saber en que parte de esa casilla esta colisionando. Ej: si colisiona en la casilla 4,75, significa que dentro de la casilla 4 choca en el 75% de esa casilla (entendiendo una casilla como el 100%). Nos quedamos solo con ese 75, porque indica que parte de la textura debemos pintar, me da igual el numero de la casilla
-//         	//printf ("casilla de colision para textura |%f|\n", wall_x);
+//         	////printf ("casilla de colision para textura |%f|\n", wall_x);
 //         }
 //         else  // Pared horizontal
 //         {
 //             wall_x = ray->px_collision_x / gdata->minimap.px_in_cell_width;  // Usar la coordenada X del punto de impacto. esa coordenada corresponde a la columna en el eje x de la textura que debera pintarse
-//         	//printf ("casilla de colision para textura |%f|\n", wall_x);
+//         	////printf ("casilla de colision para textura |%f|\n", wall_x);
 //         }
         
 //         wall_x = wall_x - floor(wall_x);  // Parte fraccional de la posición dentro de la casilla --> Elimina la parte entera de wall_x y se queda solo con la fracción decimal. Queremos saber dentro de la casilla en qué punto impacta el rayo. Por ejemplo, si wall_x = 4.75, significa que el rayo impactó en la casilla 4, pero dentro de esa casilla impactó en el 75% de su ancho. Nos quedamos solo con 0.75
@@ -488,8 +504,8 @@ Esto hace que cuando tex_y supere texture->xpm->texture.height, vuelva a empezar
 
 //         // Calcular la altura de la pared en píxeles
 //         double wall_height = map.px_height / ray->perpendicular_distance; // altura total de la pantalla / distancia del jugador a la pared perpendiclarmente (para evitar ojo de pez). A menor distancia, la pared será más alta; a mayor distancia, la pared será más baja
-// // printf ("map.px_height %d\n", map.px_height);
-// // printf ("ray->perpendicular_distance %f\n", ray->perpendicular_distance);
+// // //printf ("map.px_height %d\n", map.px_height);
+// // //printf ("ray->perpendicular_distance %f\n", ray->perpendicular_distance);
 
 //          // Calcular los límites verticales de la pared
 //         int draw_wall_start = (map.px_height / 2) - (wall_height / 2);

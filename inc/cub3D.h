@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/13 20:03:01 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/15 18:55:44 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@
 # define MOVE_DOWN 3
 
 /*PLAYER SPEED*/
-# define MOVE_SPEED 2 // cuantos pixeles se mueve cada vez que tocamos una tecla
-# define ROTATION_SPEED 0.020
+# define MOVE_SPEED 3 // cuantos pixeles se mueve cada vez que tocamos una tecla
+# define ROTATION_SPEED 0.04
 
 /*MAP*/
 #define PX_MAP_WIDTH 2560
