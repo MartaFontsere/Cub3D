@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/15 18:55:44 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/18 21:19:00 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@
 #define WEST_TEXTURE "textures/map_walls/opcion2/Oeste.xpm42"
 #define EAST_TEXTURE "textures/map_walls/opcion2/Este.xpm42"
 //esto no borrar:
-#define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
+// #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
+#define SKY_TEXTURE "textures/sky/Sky_32.xpm42"
 	//opcion1
 // #define WIDTH_NORTH_TEXTURE 1500
 // #define HEIGHT_NORTH_TEXTURE 994
