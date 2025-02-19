@@ -6,48 +6,11 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/14 18:06:58 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:38:54 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-char	*cpy_path(char *line, t_map *map)
-{
-	char	*tmp;
-	char	*path;
-	int		len;
-	int		i;
-
-	i = 0;
-	len = 0;
-	tmp = ft_strdup(ft_strchr(line, '.'));
-	if (!tmp)
-	{
-		msg_error("A path does not exists: ", line);
-		return ((map->path.err_flag = 1), NULL);
-	}
-	while (tmp[i] && !ft_isspace(tmp[i]))
-		i++;
-	len = i;
-	while (ft_isspace(tmp[i]))
-		i++;
-	if (tmp[i] != '\0')
-	{
-		msg_error("Invalid path: ", line);
-		map->path.err_flag = 1;
-		return(free(tmp), NULL);
-	}
-	path = malloc(sizeof(char *) * (len + 1));
-	i = 0;
-	len = 0;
-	while (tmp[i] && !ft_isspace(tmp[i]))
-		path[len++] = tmp[i++];
-	path[len] = '\0';
-	free(tmp);
-	map->path.p_count++;
-	return (path);
-}
 
 void	assign_path(char *line, t_map *map, int i)
 {
@@ -90,10 +53,26 @@ int	curr_char(int cur, char *line, t_map *map)
 	if ((cur == '1' || cur == '0') && counter != 6)
 	{
 		map->path.err_flag = 1;
-		msg_error("Paths and colors are nor fully assigned yet\n", \
+		msg_error("Paths and colors are not fully assigned yet\n", \
 		"Cannot initialize map\n");
 		return (0);
 	}
+	return (1);
+}
+
+int	create_matrix(char *line, t_map *map)
+{
+	if (map->j == 0)
+		map->tmp_matrix = malloc(sizeof(char *) * (map->cells_height + 1));
+	else
+		map->tmp_matrix = realloc(map->tmp_matrix, sizeof(char *) * (map->cells_height + 1));
+	if (!map->tmp_matrix)
+		return (0);
+	//printf("F_W: [%zu]\n", map->cells_width);
+	//printf(GREEN"%s"END, map->tmp_matrix[map->j]);
+	map->tmp_matrix[map->j] = cub_strdup(line, map->cells_width);
+	map->j++;
+	map->tmp_matrix[map->j] = NULL;
 	return (1);
 }
 
@@ -113,8 +92,9 @@ int	check_line(char *line, t_map *map, int i)
 	{
 		map->is_map = 1;
 		map->cells_height++;
-		map->cells_width = ft_max_size(line, map->cells_width);
-		//printf("map_w: [%zu]\n", map->cells_width);
+		map->cells_width = ft_max_size(line, map->cells_width);//celda maxima
+		//if (!map->cells_width)
+		//	return (0);
 	}
 	if (line[i] == '\0' && map->is_map == 1)
 		map->cells_height++;
@@ -146,6 +126,7 @@ int	fd_is_correct(t_map *map)
 		free(line);
 		line = get_next_line(fd);
 	}
+	//printf(PURPLE"FINAL_line size: %zu\n"END, map->cells_width);
 	if (line)
 		free(line);
 	close(fd);

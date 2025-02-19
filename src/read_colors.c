@@ -6,21 +6,20 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/13 13:38:38 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:44:17 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-//podemos agregar la flag de color
-int	is_valid_value(int value)
+/* static int	is_valid_value(int value)
 {
 	if (!value)
 		return (0);
 	if (value >= 0 && value <= 255)
 		return (1);
 	return (1);
-}
+} */
 
 void	cpy_colors(char *rgb, t_color *color, int i)
 {

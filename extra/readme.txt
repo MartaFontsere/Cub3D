@@ -58,3 +58,8 @@
 		hacer el mix.
 		Podria ser fallo a la hora de iterar las dos strings que queremos crear.
 		Los tabs en medio de la string no funcionan
+
+19/02 -	Tengo que hacer -2 en la len del parseo, ya que esta pillando el final de
+		linea y el salto de linea tambien. Si mas adelante vemos que da error,
+		podemos utilizar el rawmap y sacar la matriz con un split, asi nos quitamos
+		chars que pueden estar y que no vemos.

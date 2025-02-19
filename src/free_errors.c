@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/14 19:48:34 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:34:49 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	msg_error(char *msg, char *msg2)
 		write (2, BLUE, ft_strlen(BLUE));
 		while (*msg2)
 			write(2, msg2++, 1);
-		//write(2, "\n", 1);
 		write (2, END, ft_strlen(END));
 	}
 }
@@ -66,6 +65,6 @@ void	clean_data(t_map *map)
 	free_matrix(map->matrix);
 	free_matrix(map->tmp_matrix);
 	free_matrix(map->void_matrix);
-	if (map->rawmap)
-		free(map->rawmap);
+	//if (map->rawmap)
+	//	free(map->rawmap);
 }

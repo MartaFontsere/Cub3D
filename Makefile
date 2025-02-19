@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/02/14 20:07:00 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/02/18 20:57:27 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ ORANGE = \e[1;38;2;255;128;0m
 	#Makefile con dependencias
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
 
-FILES = cub3D.c free_errors.c read_fd.c read_colors.c get_map.c get_map_utils.c
+FILES = cub3D.c free_errors.c read_fd.c read_fd_utils.c read_colors.c get_map.c get_map_utils.c
 FILES += get_next_line/get_next_line.c get_next_line/get_next_line_utils.c parse_map.c
 
 SRCDIR = src/
