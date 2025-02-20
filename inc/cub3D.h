@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/20 12:29:41 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:39:38 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ typedef struct s_map
 	char		**void_matrix;
 	char		*fd_path;
 	int			is_map;
-	size_t		cells_width;
-	size_t		cells_height;
+	size_t		c_width;
+	size_t		c_height;
 	int			j;
 	int			init;
 	int			open;
@@ -92,17 +92,19 @@ void	clean_path(t_path *path);
 void	clean_data(t_map *map);
 
 /*				--read_fd--				*/
-void	assign_path(char *line, t_map *map, int i);
 int		create_matrix(char *line, t_map *map);
-int		curr_char(int cur, char *line, t_map *map);
+void	assign_path(char *line, t_map *map, int i);
 int		check_line(char *line, t_map *map, int i);
 int		fd_is_correct(t_map *map);
+int		read_file(int ac, char **av, t_map *map);
 
 
 /*				--read_fd_utils--				*/
+int		check_name(char *map_path);
 char	*cpy_path(char *line, t_map *map);
-char	*cub_strdup(char *s1, size_t len);
+int		curr_char(int cur, char *line, t_map *map);
 size_t	ft_max_size(char *line, size_t max);
+void	map_control(char *line, t_map *map);
 
 
 /*				--read_colors--				*/
@@ -111,27 +113,24 @@ void	get_colors(char *line, t_path *path, int i, int init);
 void	assign_color(char *line, t_path *t_path, int i);
 
 
-
 /*					--get_map--				*/
 int		mix_matrix(char **src, t_map *map);
 char	*fill_void(t_map *map);
-int		complete_matrix(char **src, t_map *map);
-int		get_final_map(int ac, char **av, t_map *map);
+int		get_final_map(char **src, t_map *map);
 
 
 /*				--get_map_utils--				*/
-int		check_name(char *map_path);
+char	*cub_strdup(char *s1, size_t len);
 char	**copy_map(char **map, size_t height);
 
 
 /*				--parse_map--				*/
-int		parse_map(char **matrix, t_map *map);
-int		min_chars(char **map, int i);
+int		check_borders(char **matrix, int i, t_map *map);
+int		check_esp(char **mapa, size_t x, size_t y, t_map *map);
+int		check_zero(char **mapa, size_t x, size_t y, t_map *map);
 int		is_close(char **matrix, t_map *map);
-//int		check_y(size_t i, size_t j, t_map *map);
-//int		check_x(size_t i, size_t j, t_map *map);
-int	check_esp(char **mapa, size_t x, size_t y, t_map *map);
-
+int		min_chars(char **map, int i);
+int		parse_map(char **matrix, t_map *map);
 
 
 #endif

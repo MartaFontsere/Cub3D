@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/20 15:14:00 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:27:41 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	create_matrix(char *line, t_map *map)
 {
-	//int i;
-
-	//i = 0;
 	if (map->j == 0)
 		map->tmp_matrix = malloc(sizeof(char *) * (map->c_height + 1));
 	else
