@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/18 20:44:17 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:08:25 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	get_colors(char *line, t_path *path, int i, int init)
 		i++;
 	if (line[i] != '\0' || comma != 2)
 	{
-		msg_error("This values are not correct: ", line);
+		msg_error("RGB values are not correct: ", line);
 		path->err_flag = 1;
 		return ;
 	}

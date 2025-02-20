@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/20 15:39:38 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:55:03 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ int		read_file(int ac, char **av, t_map *map);
 
 /*				--read_fd_utils--				*/
 int		check_name(char *map_path);
-char	*cpy_path(char *line, t_map *map);
+char	*cpy_path(char *line, t_map *map, int pos);
+//char	*cpy_path(char *line, t_map *map);
 int		curr_char(int cur, char *line, t_map *map);
 size_t	ft_max_size(char *line, size_t max);
 void	map_control(char *line, t_map *map);

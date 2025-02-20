@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/20 15:27:41 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:28:49 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ void	assign_path(char *line, t_map *map, int i)
 {
 	if (line[i] == 'N' && line[i + 1] == 'O' && ft_isspace(line[i + 2]) \
 	&& !map->path.NO)
-			map->path.NO = cpy_path(line, map);
+			map->path.NO = cpy_path(line, map, (i + 2));
 	else if (line[i] == 'S' && line[i + 1] == 'O' && ft_isspace(line[i + 2]) \
 	&& !map->path.SO)
-			map->path.SO = cpy_path(line, map);
+			map->path.SO = cpy_path(line, map, (i + 2));
 	else if (line[i] == 'E' && line[i + 1] == 'A' && ft_isspace(line[i + 2]) \
 	&& !map->path.EA)
-			map->path.EA = cpy_path(line, map);
+			map->path.EA = cpy_path(line, map, (i + 2));
 	else if (line[i] == 'W' && line[i + 1] == 'E' && ft_isspace(line[i + 2]) \
 	&& !map->path.WE)
-			map->path.WE = cpy_path(line, map);
+			map->path.WE = cpy_path(line, map, (i + 2));
 	else
 	{
 		if (map->path.NO || map->path.SO || map->path.EA \
@@ -107,6 +107,8 @@ int	fd_is_correct(t_map *map)
 	if (line)
 		free(line);
 	close(fd);
+	if (map->is_map == 0)
+		return (msg_error("Map is missing", "\n"), 0);
 	return (1);
 }
 

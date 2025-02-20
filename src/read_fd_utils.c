@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/20 15:11:50 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:06:38 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,37 @@ int	check_name(char *map_path)
 	}
 	return (1);
 }
+//esta recibiendo directamente el espacio
+char	*cpy_path(char *line, t_map *map, int pos)
+{
+	char	*path;
+	int		i;
+	
+	i = 0;
+	while (ft_isspace(line[pos]))
+		pos++;
+	if (line[pos] == '\0')
+	{
+		msg_error("Path is not found: ", line);
+		return ((map->path.err_flag = 1), NULL);
+	}
+	else
+		path = ft_strdup(ft_strchr(line, line[pos]));//dup de la line desde el char encontrado
+	while (path[i] && !ft_isspace(path[i]))
+		i++;
+	while (ft_isspace(path[i]))
+		i++;
+	if (path[i] != '\0')
+	{
+		msg_error(path, ": is not a valid path");
+		return ((map->path.err_flag = 1), NULL);	
+	}
+	map->path.p_count++;
+	return (path);
+	
+}
 //tengo que arreglarlo para que pille cualquier cosa del str
-char	*cpy_path(char *line, t_map *map)
+/* char	*cpy_path(char *line, t_map *map)
 {
 	char	*tmp;
 	char	*path;
@@ -34,7 +63,7 @@ char	*cpy_path(char *line, t_map *map)
 
 	i = 0;
 	len = 0;
-	tmp = ft_strdup(ft_strchr(line, '.'));
+	tmp = ft_strdup(ft_strchr(line, '.'));//me da una str despues del .
 	if (!tmp)
 	{
 		msg_error("A path does not exists: ", line);
@@ -61,7 +90,7 @@ char	*cpy_path(char *line, t_map *map)
 	free(tmp);
 	map->path.p_count++;
 	return (path);
-}
+} */
 
 /*
 	Si hay un char que no este permitido, bye

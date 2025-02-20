@@ -66,3 +66,5 @@
 		Mirar de limpiar todo. Volver a ordenar y nuevamente revisar trozo a trozo
 		el parseo, ya que los errores de tab, deberia salir en el max size, y no
 		en min_chars.
+20/02 -	Podemos unificar los archivos de get_map y get_map_utils
+		

@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:04:50 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/20 13:20:58 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:49:58 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	mix_matrix(char **src, t_map *map)
 		j = 0;
 		k = 0;
 		while (src[i][j] && src[i][j] != '\n')
-		{//si  no es espacio, copia en esta nueva matriz
+		{
 			if (src[i][j] == '1' || src[i][j] == '0' || src[i][j] == 'N'\
 			|| src[i][j] == 'S' || src[i][j] == 'E' || src[i][j] == 'W')
 				map->void_matrix[i][k] = src[i][j];
