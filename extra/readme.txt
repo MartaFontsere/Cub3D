@@ -63,3 +63,6 @@
 		linea y el salto de linea tambien. Si mas adelante vemos que da error,
 		podemos utilizar el rawmap y sacar la matriz con un split, asi nos quitamos
 		chars que pueden estar y que no vemos.
+		Mirar de limpiar todo. Volver a ordenar y nuevamente revisar trozo a trozo
+		el parseo, ya que los errores de tab, deberia salir en el max size, y no
+		en min_chars.

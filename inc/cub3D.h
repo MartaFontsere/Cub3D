@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/18 20:56:35 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:29:41 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void	clean_data(t_map *map);
 
 /*				--read_fd--				*/
 void	assign_path(char *line, t_map *map, int i);
-int		curr_char(int cur, char *line, t_map *map);
 int		create_matrix(char *line, t_map *map);
+int		curr_char(int cur, char *line, t_map *map);
 int		check_line(char *line, t_map *map, int i);
 int		fd_is_correct(t_map *map);
 
@@ -128,9 +128,9 @@ char	**copy_map(char **map, size_t height);
 int		parse_map(char **matrix, t_map *map);
 int		min_chars(char **map, int i);
 int		is_close(char **matrix, t_map *map);
-//int		check_neg(int i, int j, t_map *map);
-//int		check_pos(int i, int j, t_map *map);
-
+//int		check_y(size_t i, size_t j, t_map *map);
+//int		check_x(size_t i, size_t j, t_map *map);
+int	check_esp(char **mapa, size_t x, size_t y, t_map *map);
 
 
 

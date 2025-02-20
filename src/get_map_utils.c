@@ -5,24 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/18 22:31:05 by yanaranj         ###   ########.fr       */
+/*   Created: 2025/02/03 16:04:50 by yanaranj          #+#    #+#             */
+/*   Updated: 2025/02/20 13:21:28 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	check_name(char *map_path)
+char	*cub_strdup(char *s1, size_t len)
 {
-	int	len;
+	char	*str;
+	size_t	i;
+	size_t	j;
 
-	len = ft_strlen(map_path);
-	if (ft_strncmp(map_path + len - 4, ".cub", 4) != 0)
-	{
-		printf("Invalid name map\n");
-		return (0);
-	}
-	return (1);
+	i = 0;
+	j = 0;
+	if (!s1)
+		return (NULL);
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	while (s1[i] != '\0')
+		str[j++] = s1[i++];
+	str[j] = '\0';
+	return (str);
 }
 
 char	**copy_map(char **map, size_t height)

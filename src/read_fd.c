@@ -6,11 +6,32 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/19 12:38:54 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:14:00 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+int	create_matrix(char *line, t_map *map)
+{
+	//int i;
+
+	//i = 0;
+	if (map->j == 0)
+		map->tmp_matrix = malloc(sizeof(char *) * (map->c_height + 1));
+	else
+	{
+		map->tmp_matrix = realloc(map->tmp_matrix, sizeof(char *) * \
+		(map->c_height + 1));
+		
+	}
+	if (!map->tmp_matrix)
+		return (0);
+	map->tmp_matrix[map->j] = cub_strdup(line, map->c_width);
+	map->j++;
+	map->tmp_matrix[map->j] = NULL;
+	return (1);
+}
 
 void	assign_path(char *line, t_map *map, int i)
 {
@@ -38,47 +59,9 @@ void	assign_path(char *line, t_map *map, int i)
 	}
 }
 
-int	curr_char(int cur, char *line, t_map *map)
-{
-	int	counter;
-	
-	counter = map->path.c_count + map->path.p_count;
-	if (cur != 'N' && cur != 'S' && cur != 'E' && cur != 'W' && cur != 'C' \
-	&& cur != 'F' && cur != '1' && cur != '0' && cur != '\0' && cur != '\n')
-	{
-		map->path.err_flag = 1;
-		msg_error("We can't process this line: ", line);
-		return (0);
-	}
-	if ((cur == '1' || cur == '0') && counter != 6)
-	{
-		map->path.err_flag = 1;
-		msg_error("Paths and colors are not fully assigned yet\n", \
-		"Cannot initialize map\n");
-		return (0);
-	}
-	return (1);
-}
-
-int	create_matrix(char *line, t_map *map)
-{
-	if (map->j == 0)
-		map->tmp_matrix = malloc(sizeof(char *) * (map->cells_height + 1));
-	else
-		map->tmp_matrix = realloc(map->tmp_matrix, sizeof(char *) * (map->cells_height + 1));
-	if (!map->tmp_matrix)
-		return (0);
-	//printf("F_W: [%zu]\n", map->cells_width);
-	//printf(GREEN"%s"END, map->tmp_matrix[map->j]);
-	map->tmp_matrix[map->j] = cub_strdup(line, map->cells_width);
-	map->j++;
-	map->tmp_matrix[map->j] = NULL;
-	return (1);
-}
-
 int	check_line(char *line, t_map *map, int i)
 {
-	while (ft_isspace(line[i]))
+	while (ft_isspace(line[i]))//si no es mapa, go ahead
 		i++;
 	if (!curr_char(line[i], line, map))
 		return (0);
@@ -91,13 +74,11 @@ int	check_line(char *line, t_map *map, int i)
 	else if (line[i] == '1' || (line [i] == '0'))
 	{
 		map->is_map = 1;
-		map->cells_height++;
-		map->cells_width = ft_max_size(line, map->cells_width);//celda maxima
-		//if (!map->cells_width)
-		//	return (0);
+		map_control(line, map);
+		map->c_height++;
 	}
 	if (line[i] == '\0' && map->is_map == 1)
-		map->cells_height++;
+		map->c_height++;
 	if (map->path.err_flag == 1)
 		return (0);
 	if (map->is_map == 1 && (map->path.c_count + map->path.p_count) == 6)
@@ -126,9 +107,26 @@ int	fd_is_correct(t_map *map)
 		free(line);
 		line = get_next_line(fd);
 	}
-	//printf(PURPLE"FINAL_line size: %zu\n"END, map->cells_width);
 	if (line)
 		free(line);
 	close(fd);
+	return (1);
+}
+
+int	read_file(int ac, char **av, t_map *map)
+{
+	map->fd_path = av[1];
+	
+	if (ac != 2 || !check_name(map->fd_path))
+		return (0);
+	if (!fd_is_correct(map) || map->path.p_count != 4)//te genera la matriz con el realloc
+	{
+		if (map->path.p_count != 4 && map->path.err_flag == 0)
+			msg_error("A path is missing\n", NULL);
+		map->fd_path = NULL;
+		return (0);
+	}
+	if (!get_final_map(map->tmp_matrix, map))
+		return (0);
 	return (1);
 }
