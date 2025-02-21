@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/13 19:34:20 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:40:10 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,4 +208,6 @@ void init_texture_params (t_texture *texture) //PONER EN PREPARE TEXTURE
 	//BONUS
 	texture->sky_img.xpm->texture.width = WIDTH_SKY_TEXTURE;
 	texture->sky_img.xpm->texture.height = HEIGHT_SKY_TEXTURE;
+	texture->floor_img.xpm->texture.width = WIDTH_FLOOR_TEXTURE;
+	texture->floor_img.xpm->texture.height = HEIGHT_FLOOR_TEXTURE;
 }

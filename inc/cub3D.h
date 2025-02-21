@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/18 21:19:00 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:51:09 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 //esto no borrar:
 // #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
 #define SKY_TEXTURE "textures/sky/Sky_32.xpm42"
+#define FLOOR_TEXTURE "textures/floor/Floor.xpm42"
 	//opcion1
 // #define WIDTH_NORTH_TEXTURE 1500
 // #define HEIGHT_NORTH_TEXTURE 994
@@ -87,6 +88,13 @@
 // #define HEIGHT_SKY_TEXTURE 704
 #define WIDTH_SKY_TEXTURE 2816
 #define HEIGHT_SKY_TEXTURE 704
+
+//floor
+// #define WIDTH_FLOOR_TEXTURE 1024
+// #define HEIGHT_FLOOR_TEXTURE 1024
+#define WIDTH_FLOOR_TEXTURE 2024
+#define HEIGHT_FLOOR_TEXTURE 2024
+
 
 /*PLAYER ORIENTATION*/
 # define NORTH M_PI_2 //90 grados
@@ -181,6 +189,7 @@ typedef struct s_texture
 
 	//BONUS
 	t_image 	sky_img;
+	t_image 	floor_img;
 } 				t_texture;
 
 typedef struct s_mlx
@@ -194,11 +203,13 @@ typedef struct s_mlx
 }				t_mlx;
 
 
-typedef struct s_ray 
+typedef struct s_wray 
 {
     double current_angle;
     double dir_x;       // Dirección X del rayo
     double dir_y;       // Dirección Y del rayo
+
+    //Wall
     double first_dist_x; // distancia desde la posición actual del player hasta la primera línea vertical de la celda de la cuadrícula
     double first_dist_y; // // distancia desde la posición actual del player hasta la primera línea horizontal de la celda de la cuadrícula
    	//Resumen: Distancia desde el inicio del rayo hasta la primera línea de la cuadrícula en cada dirección (X o Y).
@@ -210,7 +221,7 @@ typedef struct s_ray
     //Ej: Si el rayo va a la izquierda (dir_x < 0), x_sign = -1. Si el rayo va a la derecha (dir_x > 0), x_sign = 1.
     int line_crossing; //0 = choque en X, 1 = choque en Y (para texturas)// nos dice qué cara de una celda fue atravesada por el rayo en su último avance. Indica si el rayo choca contra una pared vertical (side = 0, osea se movió en X) o una horizontal (side = 1, osea se movió en Y). indica con qué tipo de línea de la celda el rayo acaba de chocar. No indica si chocó con una pared del mapa, sino si cruzó una línea vertical u horizontal dentro de la cuadrícula.
 
-
+    	//CAMBIAR POR WALL HIT quizas mejor
     double cell_collision_x; // Punto de colisión en X (en casillas)
     double cell_collision_y; // Punto de colisión en Y (en casillas)
     double px_collision_x; // Punto de colisión en X (en pixeles)
@@ -218,14 +229,28 @@ typedef struct s_ray
    	
    	double diagonal_distance;    // El largo del rayo. Distancia del origen del rayo a la pared en casillas (para 3D)
    	double perpendicular_distance;
-}			t_ray;
 
+   	//Floor
+   	double floor_hit_x;
+   	double floor_hit_y;
+
+}			t_wray;
+
+
+typedef struct s_fray 
+{
+	double distance_to_floor; // distancia del player al pixel de suelo
+	double floor_x; //posicion del pixel en x
+	double floor_y; //posicion del pixel en y
+
+} t_fray;
 
 // Estructura para el campo de visión (FOV)
 typedef struct s_fov {
     int     num_rays;        // Número de rayos (ej: ancho de la ventana)
     double  fov_rad;      // Campo de visión en radianes (ej: 1.0472 ≈ 60°)
-    t_ray   *rays;           // Puntero al array de rayos (uno por columna de pantalla)
+    t_wray   *ray_to_wall;           // Puntero al array de rayos (uno por columna de pantalla)
+    t_fray   *ray_to_floor;
 } t_fov;
 
 //RAYS SOLO TIENE QUE SER PUNTERO, PORQUE ES DE TIPO ESTRUCTURA CON MAS COSAS DENTRO, SINO SERIA MATRIZ, PARA METER COSAS EN CADA PUNTERO, NO?

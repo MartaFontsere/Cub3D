@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/13 04:22:00 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:16:45 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ int	prepare_textures (t_game *gdata)
 	
 //BONUS
 	if (!load_image(gdata, &gdata->texture.sky_img, SKY_TEXTURE))
+		printf ("hola"); //BORRAR
+		//return (free_error_idle_right(0, gdata)); //MIRAR LA FUNCION DE ERROR PERTINENTE
+
+	if (!load_image(gdata, &gdata->texture.floor_img, FLOOR_TEXTURE))
 		printf ("hola"); //BORRAR
 		//return (free_error_idle_right(0, gdata)); //MIRAR LA FUNCION DE ERROR PERTINENTE
 	

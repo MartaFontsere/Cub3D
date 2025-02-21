@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/13 18:04:38 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:16:53 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int main(int ac, char **av)
 	gdata.map.matrix = parsing_pre_yahaira(&gdata);
 	if(!gdata.map.matrix)
 	{
-		write(2, "error generating the map matrix\n", 32);
+		int res = write(2, "error generating the map matrix\n", 32);
+		(void)res; //BORRAR Y TAMBIEN EL RES DE ARRIBA
 		return 1;
 	}
 	// A partir de aqui:

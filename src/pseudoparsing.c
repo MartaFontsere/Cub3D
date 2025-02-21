@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:39:52 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/15 22:16:06 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:58:18 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char **parsing_pre_yahaira(t_game *gdata)
     // gdata->map.cells_height = 5;
 
     // Allocate memory for row pointers
-    char **matrix = (char **)malloc(rows * sizeof(char *));
+    char **matrix = (char **)malloc((rows + 1) * sizeof(char *));
     if (matrix == NULL) {
         printf("Memory allocation failed\n");
         return NULL;

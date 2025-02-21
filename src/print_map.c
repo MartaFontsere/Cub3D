@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:55:35 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/18 22:08:31 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/21 00:24:02 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int get_texture_pixel(t_image *texture, int tex_x, int tex_y)
     return color;
 }
 
+
 //VERSION 3. TEXTURAS EN PAREDES Y CIELO, COLOR EN SUELO SIN TEXTO DE APUNTES
 
 void print_map (t_game *gdata, t_mlx mlx, t_map map)
@@ -138,49 +139,72 @@ void print_map (t_game *gdata, t_mlx mlx, t_map map)
 		sky_offset_x -= floor(sky_offset_x);  // Mantener solo la parte decimal --> Esto elimina la parte entera de sky_offset_x, asegurando que el valor siempre esté entre 0 y 1, sin importar cuántas vueltas haya dado el jugador
 		// asi, hemos calculado el desplazamiento del cielo en función de la dirección y la posición del jugador
 
+double camera_x = 0;
+double camera_y = 0;
+if (gdata->player.mov_up == 1) // Ir hacia adelante
+	{
+		camera_x -= MOVE_SPEED * cos(gdata->vision.vision_angle);
+		camera_y -= MOVE_SPEED * sin(gdata->vision.vision_angle);
+	}
+	if (gdata->player.mov_down == 1) // Ir hacia atrás
+	{
+		camera_x += MOVE_SPEED * cos(gdata->vision.vision_angle);
+		camera_y += MOVE_SPEED * sin(gdata->vision.vision_angle); 
+	}
+	 if (gdata->player.mov_right == 1) // Moverse a la derecha
+    {
+        camera_x += MOVE_SPEED * cos(gdata->vision.vision_angle - M_PI_2);
+        camera_y += MOVE_SPEED * sin(gdata->vision.vision_angle - M_PI_2);
+    }
+    if (gdata->player.mov_left == 1) // Moverse a la izquierda
+    {
+        camera_x += MOVE_SPEED * cos(gdata->vision.vision_angle + M_PI_2);
+        camera_y += MOVE_SPEED * sin(gdata->vision.vision_angle + M_PI_2);
+    }
+
 
 // Ajustar el desplazamiento horizontal en función del movimiento lateral (gdata->player.x)
-double lateral_offset = gdata->player.x * 0.0005; // Ajuste pequeño en el eje X
+double lateral_offset = camera_x * 0.0005; // Ajuste pequeño en el eje X
 sky_offset_x += lateral_offset;
 sky_offset_x -= floor(sky_offset_x);  // Mantenerlo entre 0 y 1
 
 
+		/// Aplicar el desplazamiento vertical del cielo basado en el movimiento hacia adelante y hacia atrás
+double vertical_offset = camera_y * 0.0005;
+
+// Calcular posición inicial en la textura (tex_x)
+int tex_x_start = (int)(sky_offset_x * sky_tex_width);
+
+int y = 0;
 
 
-		// Calcular posición inicial en la textura (tex_x)
-		int tex_x_start = (int)(sky_offset_x * sky_tex_width);
+while (y < draw_wall_start)
+{
+    // Aplicar corrección de perspectiva con un pequeño ajuste por el movimiento en Y
+    double screen_y_ratio = (double)(y - (mlx.window_height / 4)) / (mlx.window_height / 4);
 
-		// Calcular el desplazamiento vertical del cielo (tex_y) basado solo en la posición vertical del jugador
-		double vertical_offset = gdata->player.y * 0.0005;  // Ajuste pequeño en el eje Y
+    // Calcular tex_y basado en la posición vertical y el desplazamiento vertical
+    int tex_y = (int)((0.5 + screen_y_ratio * 0.5 + vertical_offset) * sky_tex_height);
 
-		int y = 0;
-		while (y < draw_wall_start)
-		{
-		    // Aplicar corrección de perspectiva con un pequeño ajuste por el movimiento en Y
-		    double screen_y_ratio = (double)(y - (mlx.window_height / 4)) / (mlx.window_height / 4);
+    // Restringir tex_y a los límites de la textura (0 a sky_tex_height - 1)
+    if (tex_y < 0) 
+    {
+        tex_y = 0;
+    }
+    if (tex_y >= sky_tex_height) 
+    {
+        tex_y = sky_tex_height - 1;
+    }
 
-		    // Calcular tex_y basado en la posición vertical y el desplazamiento vertical
-		    int tex_y = (int)((0.5 + screen_y_ratio * 0.5 + vertical_offset) * sky_tex_height);
+    // Obtener la parte correcta de la textura del cielo (tex_x)
+    int tex_x = (tex_x_start + x) % sky_tex_width;  // Hacer que la textura sea infinita
 
-		    // Restringir tex_y a los límites de la textura (0 a sky_tex_height - 1)
-		    if (tex_y < 0) 
-		    {
-		        tex_y = 0;  // No dejar que sea menor que 0
-		    }
-		    if (tex_y >= sky_tex_height) 
-		    {
-		        tex_y = sky_tex_height - 1;  // No dejar que supere el alto de la textura
-		    }
-
-		    // Obtener la parte correcta de la textura del cielo (tex_x)
-		    int tex_x = (tex_x_start + x) % sky_tex_width;  // Hacer que la textura sea infinita
-
-		    // Obtener el color de la textura y colocar el pixel en la imagen
-		    int color = get_texture_pixel(sky_texture, tex_x, tex_y);
-		    mlx_put_pixel(mlx.image, x, y, color);
-		    y++;
-		}
-        
+    // Obtener el color de la textura y colocar el pixel en la imagen
+    int color = get_texture_pixel(sky_texture, tex_x, tex_y);
+    mlx_put_pixel(mlx.image, x, y, color);
+    y++;
+}
+ 
 // Texturizar la pared
         t_image *texture = get_wall_texture(ray, gdata);  // Obtener la textura correcta segun si el rayo impacta en una pared norte, sur, este u oeste, ya que la textura debe ser diferente.
         
@@ -239,10 +263,28 @@ sky_offset_x -= floor(sky_offset_x);  // Mantenerlo entre 0 y 1
             y++;
         }
 
-        // Dibujar el suelo
+        // Dibujar el suelo con textura
+
+        
+        t_image *floor_texture = &gdata->texture.floor_img;
+        int floor_tex_width = floor_texture->xpm->texture.width;
+        int floor_tex_height = floor_texture->xpm->texture.height;
+
         while (y < map.px_height)
         {
-            mlx_put_pixel(mlx.image, x, y, gdata->texture.F_hex_color);
+            double floor_dist = (map.px_height / (2.0 * y - map.px_height)) / ray->perpendicular_distance;
+
+            double floor_x = gdata->player.x + floor_dist * cos(ray->current_angle);
+            double floor_y = gdata->player.y + floor_dist * sin(ray->current_angle);
+
+            int tex_x = (int)(floor_x * floor_tex_width) % floor_tex_width;
+            int tex_y = (int)(floor_y * floor_tex_height) % floor_tex_height;
+
+            if (tex_x < 0) tex_x += floor_tex_width;
+            if (tex_y < 0) tex_y += floor_tex_height;
+
+            int color = get_texture_pixel(floor_texture, tex_x, tex_y);
+            mlx_put_pixel(mlx.image, x, y, color);
             y++;
         }
 
