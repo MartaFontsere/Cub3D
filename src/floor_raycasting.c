@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:33:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/21 14:27:47 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:56:36 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,36 @@ include "cub3D.h"
 //calcula el punto del suelo en el minimapa 2D usando la distancia del rayo y el ángulo de visión. Importante para la perspectiva
 
 //ray es el rayo actual
-void calculate_floor_point(t_ray ray, t_game *gdata)
+void calculate_floor_point(t_game *gdata, t_ray *ray, int screen_y)
 {
 
     // Usar la información del choque con la pared ya calculada en calculate_ray.
     // Determinar el suelo visible entre la posición del jugador y ese punto de choque con la pared.
     // Para cada pixel de la columna de la pantalla (debajo del punto de colisión de la pared), calcular su posición en el mundo y su profundidad correcta.
+
+
+
+
+    // La distancia desde el jugador hasta el punto del suelo que estamos calculando
+    distance_to_floor = gdata->player.height / (screen_y - gdata->vision.center_y);
+
+    // Corregimos la distancia para eliminar la distorsión en perspectiva
+    distance_to_floor /= cos(ray->current_angle - gdata->vision.vision_angle);
+
+    // Calculamos la posición real en el mundo del píxel del suelo
+    floor_x = gdata->player.x + distance_to_floor * ray->dir_x;
+    floor_y = gdata->player.y + distance_to_floor * ray->dir_y;
+
+    // Guardamos la posición del píxel del suelo para su renderizado
+    ray->px_collision_x = floor_x;
+    ray->px_collision_y = floor_y;
+
+
+
+
+
+
+
 
     int check_x_in_map = ray->cell_collision_x; // Usamos la posición de la celda de colisión del rayo con la pared. Estas celdas nos sirven como punto de partida para buscar el suelo
     int check_y_in_map = ray->cell_collision_y;
