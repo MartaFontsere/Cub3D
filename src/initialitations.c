@@ -47,6 +47,7 @@ int init_vision_parameters (t_game *gdata, t_vision *vision)
 		//REVISAR TODO LO QUE HAY QUE LIBERAR
 		return (0);
 	}
+	vision->projection_factor = (gdata->map.px_height / 2) / tan(vision->FOV.fov_rad / 2);
 	return (1);
 }
 
@@ -54,6 +55,7 @@ void init_player_parameters (t_game *gdata, t_player *player)
 {
 	init_player_position(gdata, &gdata->map, player); // TENGO QUE MANDARLO COMO PUNTERO O NO CAL PORQUE GDATA YA LO ES?
 	init_player_orientation(&gdata->map, &gdata->vision);
+	player->height = gdata->minimap.px_height / 2;
 	player->radius = gdata->minimap.px_in_cell_width / 4;
 
 	

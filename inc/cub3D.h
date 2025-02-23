@@ -203,7 +203,7 @@ typedef struct s_mlx
 }				t_mlx;
 
 
-typedef struct s_wray 
+typedef struct s_ray 
 {
     double current_angle;
     double dir_x;       // Dirección X del rayo
@@ -231,26 +231,18 @@ typedef struct s_wray
    	double perpendicular_distance;
 
    	//Floor
-   	double floor_hit_x;
-   	double floor_hit_y;
+   	// double distance_to_floor; // distancia del player al pixel de suelo que queremos dibujar en casillas
+	// double floor_x; //posicion del pixel en x
+	// double floor_y; //posicion del pixel en y
 
-}			t_wray;
+}			t_ray;
 
-
-typedef struct s_fray 
-{
-	double distance_to_floor; // distancia del player al pixel de suelo
-	double floor_x; //posicion del pixel en x
-	double floor_y; //posicion del pixel en y
-
-} t_fray;
 
 // Estructura para el campo de visión (FOV)
 typedef struct s_fov {
     int     num_rays;        // Número de rayos (ej: ancho de la ventana)
     double  fov_rad;      // Campo de visión en radianes (ej: 1.0472 ≈ 60°)
-    t_wray   *ray_to_wall;           // Puntero al array de rayos (uno por columna de pantalla)
-    t_fray   *ray_to_floor;
+    t_ray   *rays;           // Puntero al array de rayos (uno por columna de pantalla)
 } t_fov;
 
 //RAYS SOLO TIENE QUE SER PUNTERO, PORQUE ES DE TIPO ESTRUCTURA CON MAS COSAS DENTRO, SINO SERIA MATRIZ, PARA METER COSAS EN CADA PUNTERO, NO?
@@ -259,8 +251,9 @@ typedef struct s_fov {
 typedef struct s_vision 	
 {
 	double		vision_angle; // Orientacion Inicial en grados de la vision del personaje
-	double 		last_vision_angle;
+	double 		last_vision_angle; //CONFIRMAR SI LA USO
 	t_fov    	FOV;            // Datos del FOV y rayos
+    double 	projection_factor; // Es como un factor de escala que convierte distancias del mundo 2D (minimapa) en una altura en la pantalla (3D), , asegurando que los objetos más lejanos sean más pequeños y los cercanos sean más grandes.
 
 } 				t_vision;
 
@@ -268,6 +261,7 @@ typedef struct s_vision
 
 typedef struct s_player
 {
+	int 		height; // Altura del player en el mundo 3D
 	int			raw_x; // Posición Inicial del Personaje en X (en casillas)
 	int			raw_y; // Posición Inicial del Personaje en Y (en casillas)
 	double		x; // Posición Inicial del Personaje centrado en la casilla en X (en pixeles para minimapa)
@@ -348,6 +342,8 @@ char **parsing_pre_yahaira(t_game *gdata);
 //PRINT MAP
 int	prepare_textures (t_game *gdata);
 void print_map (t_game *gdata, t_mlx mlx, t_map map);
+void draw_floor(int column, int row, t_game *gdata, t_ray *ray);
+int get_texture_pixel(t_image *texture, int tex_x, int tex_y);
 
 //PRINT MINIMAP
 void	print_minimap(t_game *gdata);
