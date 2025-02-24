@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/20 17:08:25 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:54:53 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 		}
 		i++;
 	}
+	color->assigned = 1;
 	color->path->c_count++;
 	free_matrix(split);
 }
@@ -101,9 +102,12 @@ void	assign_color(char *line, t_path *path, int i)
 	}
 	if (path->c_count < 2)
 		get_colors(line, path, i, init);
-	else
+	if (path->c_count == 2 && (!path->C.assigned || !path->F.assigned))
 	{
 		path->err_flag =1;
-		return (msg_error("The colors are alreday assigned\n", NULL));
+		if (!path->F.assigned)
+			return (msg_error("Floor colors are missing", "\n"));
+		else if (!path->C.assigned)
+			return (msg_error("Celing colors are missing", "\n"));
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/20 15:40:02 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:15:21 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,13 @@ void	init_path(t_path *path)
 	path->C.R = 0;
 	path->C.G = 0;
 	path->C.B = 0;
+	path->C.path = path;
+	path->C.assigned = 0;
 	path->F.R = 0;
 	path->F.G = 0;
 	path->F.B = 0;
-	path->C.path = path;
 	path->F.path = path;
+	path->F.assigned = 0;
 }
 
 int main (int ac, char **av)

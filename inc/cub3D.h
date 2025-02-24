@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/20 15:55:03 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:14:46 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_color
 	int			G;
 	int			B;
 	char		**split;
+	int			assigned;
 	t_path		*path;
 }				t_color;
 

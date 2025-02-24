@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:45:21 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/20 13:37:35 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:11:04 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	is_close(char **matrix, t_map *map)
 		->los '*' no deben tener un 0 en ninguna de sus posiciones, porque seria mapa abierto
 */
 
-
+//estoy repitiendo la comprovacion de los chars, pro incluyo el * y player count
 int	min_chars(char **map, int i)
 {
 	int	j;
@@ -143,8 +143,8 @@ int	min_chars(char **map, int i)
 		j = 0;
 		while (map[i][j])
 		{	
-			if (map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E'\
-			&& map[i][j] != 'W' && map[i][j] != '1' && map[i][j] != '0'\
+			if (map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' \
+			&& map[i][j] != 'W' && map[i][j] != '1' && map[i][j] != '0' \
 			&& map[i][j] != '\n' && map[i][j] != ' ' && map[i][j] != '*')
 				return (0);
 			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E'\
@@ -165,7 +165,6 @@ int		parse_map(char **matrix, t_map *map)
 	if (!min_chars(matrix, 0))
 		return (0);
 	map->is_map = 0;
-	//print_matrix(map->matrix, 1);
 	if (!is_close(matrix, map))
 		return (0);
 	return (1);

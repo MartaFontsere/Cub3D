@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/20 17:28:49 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:02:24 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ void	assign_path(char *line, t_map *map, int i)
 			map->path.WE = cpy_path(line, map, (i + 2));
 	else
 	{
-		if (map->path.NO || map->path.SO || map->path.EA \
-		|| map->path.WE)
+		if ((line[i] == 'N' && line[i + 1] != 'O') || (line[i] == 'S' \
+		&& line[i + 1] != 'O') || (line[i] == 'W' && line[i + 1] != 'E') \
+		|| (line[i] == 'E' && line[i + 1] != 'A'))
+			msg_error("Invalid texture name: ", line);
+		else if (map->path.NO || map->path.SO || map->path.EA || map->path.WE)
 			msg_error("There's a previus path assigned: ", line);
 		else
 			msg_error("Invalid line: ", line);
