@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/24 16:30:23 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:01:31 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,8 @@ size_t	ft_max_size(char *line, size_t max)
 			return (msg_error("Tabs are an invalid char inside map", "\n"), 0);
 		size++;
 	}
-	//printf("last max: %zu\n", max);
 	if (max < size)
 		max = size;
-	//printf("new_max: %zu\n", max);
-	//printf("char: %c\n", line[max - 3]);
 	return (max);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/24 16:02:24 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:01:42 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,21 @@ int	check_line(char *line, t_map *map, int i)
 {
 	while (ft_isspace(line[i]))//si no es mapa, go ahead
 		i++;
-	if (!curr_char(line[i], line, map))
-		return (0);
+	curr_char(line[i], line, map);
 	if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W') \
-	&& map->path.err_flag == 0 && map->is_map == 0)
+	&& map->path.err_flag == 0 && (map->path.c_count + map->path.p_count) != 6)
 		assign_path(line, map, i);
 	else if ((line[i] == 'C' || line[i] == 'F') && map->path.err_flag == 0 \
 	&& map->is_map == 0)
 		assign_color(line, &map->path, i);
-	else if (line[i] == '1' || (line [i] == '0'))
+	else if (line[i] == '1' || line [i] == '0' || line[i] == 'N' \
+	|| line[i] == 'S' || line[i] == 'W' || line[i] == 'E' || (line[i] == '\0' \
+	&& map->is_map))
 	{
 		map->is_map = 1;
 		map_control(line, map);
 		map->c_height++;
 	}
-	if (line[i] == '\0' && map->is_map == 1)
-		map->c_height++;
 	if (map->path.err_flag == 1)
 		return (0);
 	if (map->is_map == 1 && (map->path.c_count + map->path.p_count) == 6)
