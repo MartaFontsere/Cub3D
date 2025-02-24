@@ -58,7 +58,7 @@
 //esto no borrar:
 // #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
 #define SKY_TEXTURE "textures/sky/Sky_32.xpm42"
-#define FLOOR_TEXTURE "textures/floor/Floor.xpm42"
+#define FLOOR_TEXTURE "textures/floor/Floor_4.xpm42"
 	//opcion1
 // #define WIDTH_NORTH_TEXTURE 1500
 // #define HEIGHT_NORTH_TEXTURE 994
@@ -90,10 +90,10 @@
 #define HEIGHT_SKY_TEXTURE 704
 
 //floor
-// #define WIDTH_FLOOR_TEXTURE 1024
-// #define HEIGHT_FLOOR_TEXTURE 1024
-#define WIDTH_FLOOR_TEXTURE 2024
-#define HEIGHT_FLOOR_TEXTURE 2024
+#define WIDTH_FLOOR_TEXTURE 1024
+#define HEIGHT_FLOOR_TEXTURE 1024
+// #define WIDTH_FLOOR_TEXTURE 2024
+// #define HEIGHT_FLOOR_TEXTURE 2024
 
 
 /*PLAYER ORIENTATION*/
@@ -253,7 +253,8 @@ typedef struct s_vision
 	double		vision_angle; // Orientacion Inicial en grados de la vision del personaje
 	double 		last_vision_angle; //CONFIRMAR SI LA USO
 	t_fov    	FOV;            // Datos del FOV y rayos
-    double 	projection_factor; // Es como un factor de escala que convierte distancias del mundo 2D (minimapa) en una altura en la pantalla (3D), , asegurando que los objetos más lejanos sean más pequeños y los cercanos sean más grandes.
+    double 		projection_factor; // Es como un factor de escala que convierte distancias del mundo 2D (minimapa) en una altura en la pantalla (3D), , asegurando que los objetos más lejanos sean más pequeños y los cercanos sean más grandes.
+    double 		camera_height_scale; // Es una constante que se deriva de la altura de la cámara o jugador. Se trata de un valor utilizado para la proyección del mundo 3D sobre la pantalla 2D. Se utiliza como un factor de escala para ajustar las dimensiones en la proyección según la altura del jugador. 
 
 } 				t_vision;
 

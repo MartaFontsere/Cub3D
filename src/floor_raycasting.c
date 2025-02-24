@@ -16,72 +16,104 @@
 
 //ray es el rayo actual
 
-double calculate_floor_distance(int row, t_ray *ray, t_game *gdata)
+// double calculate_floor_distance(int row, t_ray *ray, t_game *gdata)
+// {
+//     // Usamos una proyección para convertir row en una distancia real en el mundo --> es una manera correcta de tener en cuenta la perspectiva y la distancia a medida que dibujas el suelo.
+//     double distance_to_floor = (gdata->vision.camera_height_scale) / (row - (gdata->map.px_height / 2));
+
+//     // Corregimos la distorsión aplicando la distancia perpendicular
+//     distance_to_floor = distance_to_floor / cos(ray->current_angle - gdata->vision.vision_angle);
+
+//     return (distance_to_floor);
+// }
+
+
+// Calcula la posición en el mundo del punto de suelo correspondiente a este píxel
+// y añade un offset horizontal basado en la columna para que la textura avance.
+void calculate_floor_point(double distance_to_floor, t_ray *ray, t_game *gdata, double *floor_x, double *floor_y, int column)
 {
-    // Usamos una proyección para convertir row en una distancia real en el mundo --> es una manera correcta de tener en cuenta la perspectiva y la distancia a medida que dibujas el suelo.
-    double distance_to_floor = (gdata->player.height * gdata->vision.projection_factor) / (row - (gdata->map.px_height / 2));
+    // Calcula la posición base en el mundo para este píxel del suelo.
+    double base_floor_x = gdata->player.x + ray->dir_x * distance_to_floor;
+    double base_floor_y = gdata->player.y + ray->dir_y * distance_to_floor;
 
-    // Corregimos la distorsión aplicando la distancia perpendicular
-    distance_to_floor = distance_to_floor / cos(ray->current_angle - gdata->vision.vision_angle);
+    // Calcula el offset horizontal.
+    // Se basa en la diferencia entre la columna actual y el centro de la pantalla.
+    // floor_horizontal_scale es un factor (definido en t_game) que debe ajustarse para que una celda del minimapa
+    // se mapee correctamente a la textura del suelo.
+    double horizontal_offset = ((column - (gdata->map.px_width / 2)) / (double)gdata->map.px_width) * gdata->minimap.px_in_cell_width;
 
-    return (distance_to_floor);
+    // Ajusta la coordenada del piso incorporando el offset.
+    *floor_x = base_floor_x + horizontal_offset; // floor x es la posicion del pixel en el minimapa
+    *floor_y = base_floor_y; //floor y es la posicion del pixel en el minimapa
+
+     
+     
 }
 
 
-void calculate_floor_point(double distance_to_floor, t_ray *ray, t_game *gdata, double *floor_x, double *floor_y)
+void render_floor_pixel(int column, int row, t_game *gdata, double floor_x, double floor_y, int floor_tex_width, int floor_tex_height)
 {
-    // Calcula la posición en el mundo del punto de suelo correspondiente a este píxel
-    *floor_x = gdata->player.x + ray->dir_x * distance_to_floor;
-    *floor_y = gdata->player.y + ray->dir_y * distance_to_floor;
-}
-
-
-void render_floor_pixel(int column, int row, t_game *gdata, double floor_x, double floor_y)
-{
+    // Color basado en textura 
     int color;
 
-    // Color basado en textura 
+        
+        // Mapear las coordenadas del mundo a la textura.
+        int tex_x = (int)(floor_x * gdata->minimap.px_in_cell_width) % floor_tex_width; // gdata->minimap.px_in_cell_width se usa como un valor constante en los diferentes calculos para escalar de manera coherente todas las medidas
+        int tex_y = (int)(floor_y * gdata->minimap.px_in_cell_height) % floor_tex_height;
+        // Asegurarse de que los índices sean positivos.
+        if (tex_x < 0) tex_x += floor_tex_width;
+        if (tex_y < 0) tex_y += floor_tex_height;
 
-    int tex_x = (int)(floor_x * gdata->texture.floor_img.xpm->texture.width) % gdata->texture.floor_img.xpm->texture.width;
-    int tex_y = (int)(floor_y * gdata->texture.floor_img.xpm->texture.height) % gdata->texture.floor_img.xpm->texture.height;
-    color = get_texture_pixel(&gdata->texture.floor_img, tex_x, tex_y);
+        // Obtener el color del píxel de la textura.
+        color = get_texture_pixel(&gdata->texture.floor_img, tex_x, tex_y);
 
-    // Pinta el píxel en pantalla
+
+    //en lugar de acceder repetidamente a gdata->texture.floor_img.xpm->texture.width y gdata->texture.floor_img.xpm->texture.height en cada llamada (dentro del bucle), se pueden almacenar esos valores en variables locales una sola vez para mejorar el rendimiento
+    
+    // Dibuja el píxel en la pantalla en la posición (column, row)
     mlx_put_pixel(gdata->mlx.image, column, row, color);
 }
 
 void draw_floor(int column, int row, t_game *gdata, t_ray *ray)
 {
+    //double constant_factor = gdata->player.height * gdata->vision.projection_factor; COMO NO CAMBIA LA ALTURA, LO INICIALIZAMOS AL PRINCIPIO Y NO HACE FALTA RECALCULAR POR CADA RAYO
+    
+    // Calcula el factor de corrección para la perspectiva: corrige la distancia para compensar la distorsión de la perspectiva.
+    double angle_correction_factor = 1.0 / cos(ray->current_angle - gdata->vision.vision_angle); // Se calcula el inverso del coseno de la diferencia de ángulos para la corrección de perspectiva. Hay que calcularlo para cada columna, ya que depende del angulo de cada rayo
+
+    // Caché de dimensiones de la textura: se obtienen una sola vez.
+        int floor_tex_width = gdata->texture.floor_img.xpm->texture.width;
+        int floor_tex_height = gdata->texture.floor_img.xpm->texture.height;
+
     double distance_to_floor; // distancia del player al pixel de suelo que queremos dibujar en pixeles
     double floor_x; //posicion del pixel en x
     double floor_y; //posicion del pixel en y
 
-    //Como lo calculamos por cada pixel de la columna, iremos sobreescriviendo el valor a cada vuelta, no tiene sentido guardarlo en una estrucutra
+//Como lo calculamos por cada pixel de la columna, iremos sobreescriviendo el valor a cada vuelta, no tiene sentido guardarlo en una estrucutra, para no ocupar mucha memoria en el programa
 
-
-    // Mientras queden píxeles de suelo por dibujar en esta columna
+// Mientras queden píxeles de suelo por dibujar en esta columna
     while (row < gdata->map.px_height)
     {
-    //while (row < gdata->map.px_height)
-        printf ("1\n");
-        // Calcula la distancia del píxel en el mundo 3D
-        distance_to_floor = calculate_floor_distance(row, ray, gdata);
+        // Ajustar la proyección vertical, ya que a medida que te alejas del centro de la pantalla, la distancia cambia
+        // Calcula la diferencia vertical entre el píxel actual (row) y el centro de la pantalla (o mapa).
+        double denominator = row - (gdata->map.px_height / 2);
+        
+        // Calcula la distancia desde la camara (jugador) hasta cada pixel de suelo de esa columna en pixeles
+        distance_to_floor = (gdata->vision.camera_height_scale * angle_correction_factor) / denominator;
+        // Calcula las coordenadas en el mapa 2D para ese punto del suelo (a que punto del mapa corresponde ese pixel de suelo).
+         calculate_floor_point(distance_to_floor, ray, gdata, &floor_x, &floor_y, column);
+        // Dibuja el píxel del suelo en la pantalla.
+        render_floor_pixel(column, row, gdata, floor_x, floor_y, floor_tex_width, floor_tex_height);
 
-        // Calcula qué punto del mapa 2D corresponde a este píxel
-        calculate_floor_point(distance_to_floor, ray, gdata, &floor_x, &floor_y);
-
-        // Dibuja el píxel en pantalla
-        render_floor_pixel(column, row, gdata, floor_x, floor_y);
-
-        // Avanza al siguiente píxel de la columna
+         // Avanza al siguiente píxel de la columna
         row++;
     }
 }
-
-
-
-
     
+
+//Optimizaciones para evitar, dentro de los bucles, el acceso repetido a campos de estructuras (como las dimensiones de la textura) y recalcular operaciones que no varían entre iteraciones.
+
+
 
 
 // void calculate_floor_point(t_game *gdata, t_wray *ray_to_wall, t_fray *ray_to_floor, int row)

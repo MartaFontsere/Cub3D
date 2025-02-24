@@ -47,7 +47,18 @@ int init_vision_parameters (t_game *gdata, t_vision *vision)
 		//REVISAR TODO LO QUE HAY QUE LIBERAR
 		return (0);
 	}
-	vision->projection_factor = (gdata->map.px_height / 2) / tan(vision->FOV.fov_rad / 2);
+
+	//PARA EL SUELO
+	vision->projection_factor = (gdata->map.px_height / 2) / tan(vision->FOV.fov_rad / 2); // Es como un factor de escala que convierte distancias del mundo 2D (minimapa) en una altura en la pantalla (3D), asegurando que los objetos más lejanos sean más pequeños y los cercanos sean más grandes.
+	vision->camera_height_scale = gdata->player.height * vision->projection_factor; // SI LA ALTURA DEL JUGADOR CAMBIARA, ESTO SE TENDRIA QUE IR RECALCULANDO
+	// camera_height_scale Es la cantidad de pixeles que corresponde a la altura del jugador, ya escalada para la proyección.
+	//Por ejemplo, si el jugador mide 1.75 pixeles y el projection factor (derivado del FOV y la altura de la pantalla) es 415, 
+	//el constant factor sería aproximadamente 1.75 * 415 = 726.25. 
+	//Esto quiere decir que, en términos de proyección, 726.25 pixeles se distribuyen verticalmente desde el centro de la pantalla 
+	//(en el eje de la proyección)
+	//se trata de un factor que escala (o transforma) la altura del jugador a las dimensiones de la proyección en pantalla. 
+	//Este valor se usa para ajustar la altura de la cámara o del jugador a la escala de la imagen renderizada.
+	
 	return (1);
 }
 
@@ -133,8 +144,8 @@ void	init_player_orientation(t_map *map, t_vision *vision)
 
 void init_map (t_map *map)
 {
-	map->cells_width = 20;// ESTA HARDCODEADO
-	map->cells_height = 20; //ESTA HARDCODEADO
+	map->cells_width = 20;// cantidad de celdas ESTA HARDCODEADO
+	map->cells_height = 20; //cantidad de celdas ESTA HARDCODEADO
 	// map->cells_width = 5000;// ESTA HARDCODEADO
 	// map->cells_height = 3; //ESTA HARDCODEADO
 	map->px_width = PX_MAP_WIDTH;
