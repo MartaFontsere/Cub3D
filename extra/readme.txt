@@ -67,4 +67,18 @@
 		el parseo, ya que los errores de tab, deberia salir en el max size, y no
 		en min_chars.
 20/02 -	Podemos unificar los archivos de get_map y get_map_utils
-		
+
+25/02 -	PARSING:
+		En caso de tener \n al final del map, los "elimino", asi no las leemos.
+		El contador se queda en la linea siguiente del mapa, ya que simula el '\0'
+		y asi, si el fd acaba con una linea valida de mapa, no genera error.
+		->check_borders()
+			se comprueba la primera y ultima linea y se evitan los '0'
+			saltamos los espacios de la linea actual y si el char no es 1, fuera
+		->check_esp()
+			comprueba que el char siguiente tanto en x && y sean 1 o espacio
+		->check_zero()
+			comprueba que el char siguiente tanto en x && y sean 1 o Player
+		->check_player()
+			tengo que poner la comprobacion de NSWE para que funcione bien. El
+			resto queda como el esp y zero
