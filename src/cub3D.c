@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/20 15:16:53 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:01:43 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void	close_window(t_game	*gdata)
 {
-	// if (gdata->finish_game == 0)
-	// 	ft_write(1, "\nOoops... You left the game before finishing 😩\n", 50);
+	if (gdata->finish_game == 0)
+	{
+		ft_write(1, "\nYou've left The Game... but The Game will never leave you 👀\n", 64);
+		ft_write(1, "    See you soon 😈🔥\n", 25);
+		//ft_write(1, "\nOoops... You left the game before finishing 😩\n", 50);
+	}
 	mlx_close_window(gdata->mlx.init);
 }
 
@@ -24,42 +28,24 @@ int main(int ac, char **av)
 {
 	t_game	gdata;
 
-
+ //YAJA
 	(void)ac;
 	(void)av;
-	init_gdata_values(&gdata);
+
+
 	//Primero necesito tener el mapa convertido a matriz
-	gdata.map.matrix = parsing_pre_yahaira(&gdata);
+	gdata.map.matrix = parsing_pre_yajaira(&gdata);
 	if(!gdata.map.matrix)
 	{
-		int res = write(2, "error generating the map matrix\n", 32);
-		(void)res; //BORRAR Y TAMBIEN EL RES DE ARRIBA
+		ft_write(2, "Error generating the map matrix\n", 32);
 		return 1;
 	}
 	// A partir de aqui:
-	init_map (&gdata.map);
-	init_minimap(&gdata, &gdata.map);
-	init_player_parameters(&gdata, &gdata.player);
-	if (init_vision_parameters (&gdata, &gdata.vision) == 0)
+	
+	if (init_gdata_values(&gdata) == 0)
 		return (1);
-	// instalar la mlx, y lanzar una pantalla del tamaño, x y, para ver que funciona
-	//mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	if (init_mlx(&gdata.mlx) == 0)
-		return (1);
-	if (create_new_images(&gdata, &gdata.mlx) == 0)
-		return (1);
-	if (mlx_image_to_window(gdata.mlx.init, gdata.mlx.image, 0, 0) == -1)
-	{
-		write_error("It's not possible to put new image to window");
-		close_window(&gdata);
-		return (1);
-	}
-	if (mlx_image_to_window(gdata.mlx.init, gdata.mlx.mini_image, 15, 15) == -1)
-	{
-		write_error("It's not possible to put new image to window");
-		close_window(&gdata);
-		return (1);
-	}
+	
+	
 	printf ("image %p, mini %p\n",gdata.mlx.image, gdata.mlx.mini_image);
 	calculate_fov(&gdata, gdata.player.x, gdata.player.y);
 	if (prepare_textures (&gdata) == 0)
@@ -67,7 +53,8 @@ int main(int ac, char **av)
 	init_texture_params (&gdata.texture);
 	print_map (&gdata, gdata.mlx, gdata.map);
 	print_minimap(&gdata);
-		print_player_and_fov (&gdata); //meter dentro de printminimap, y luego en print player fov in motion llamar a print tablero o algo asi
+		
+	
 	mlx_key_hook(gdata.mlx.init, press_key, &gdata);
 	mlx_loop_hook(gdata.mlx.init, render_game, &gdata);
 	mlx_loop(gdata.mlx.init); 

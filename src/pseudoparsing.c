@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:39:52 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/20 11:58:18 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:34:03 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 
 
-char **parsing_pre_yahaira(t_game *gdata)
+char **parsing_pre_yajaira(t_game *gdata)
 {
       // Dimensions of the matrix
     int rows = 20;

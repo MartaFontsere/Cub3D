@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/20 15:16:45 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:01:51 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,29 @@ int	prepare_textures (t_game *gdata)
 	return (1);
 }
 
-	
+
+void init_texture_params (t_texture *texture) //PONER EN PREPARE TEXTURE
+{
+	texture->north_wall_img.xpm->texture.width = WIDTH_NORTH_TEXTURE;
+	texture->north_wall_img.xpm->texture.height = HEIGHT_NORTH_TEXTURE;
+	texture->south_wall_img.xpm->texture.width = WIDTH_SOUTH_TEXTURE;
+	texture->south_wall_img.xpm->texture.height = HEIGHT_SOUTH_TEXTURE;
+	texture->west_wall_img.xpm->texture.width = WIDTH_WEST_TEXTURE;
+	texture->west_wall_img.xpm->texture.height = HEIGHT_WEST_TEXTURE;
+	texture->east_wall_img.xpm->texture.width = WIDTH_EAST_TEXTURE;
+	texture->east_wall_img.xpm->texture.height = HEIGHT_EAST_TEXTURE;
+	texture->path.C.R = CEELING_R;
+	texture->path.C.G = CEELING_G;
+	texture->path.C.B = CEELING_B;
+	texture->path.F.R = FLOOR_R;
+	texture->path.F.G = FLOOR_G;
+	texture->path.F.B = FLOOR_B;
+
+
+
+	//BONUS
+	texture->sky_img.xpm->texture.width = WIDTH_SKY_TEXTURE;
+	texture->sky_img.xpm->texture.height = HEIGHT_SKY_TEXTURE;
+	texture->floor_img.xpm->texture.width = WIDTH_FLOOR_TEXTURE;
+	texture->floor_img.xpm->texture.height = HEIGHT_FLOOR_TEXTURE;
+}

@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/21 14:51:09 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:34:07 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 //esto no borrar:
 // #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
 #define SKY_TEXTURE "textures/sky/Sky_32.xpm42"
-#define FLOOR_TEXTURE "textures/floor/Floor_4.xpm42"
+#define FLOOR_TEXTURE "textures/floor/Floor5.xpm42"
 	//opcion1
 // #define WIDTH_NORTH_TEXTURE 1500
 // #define HEIGHT_NORTH_TEXTURE 994
@@ -115,8 +115,8 @@
 # define ROTATION_SPEED 0.04
 
 /*MAP*/
-#define PX_MAP_WIDTH 2560
-#define PX_MAP_HEIGHT 1440
+#define MAP_PX_WIDTH 2560
+#define MAP_PX_HEIGHT 1440
 // #define NORTH_WALL_COLOR 0XFF9A9AFF
 // #define SOUTH_WALL_COLOR 0XFFD29AFF
 // #define EAST_WALL_COLOR 0XFFFF9AFF
@@ -134,8 +134,8 @@
 #define FLOOR_B 80
 
 /*MINIMAP*/
-#define PX_MINIMAP_WIDTH 520
-#define PX_MINIMAP_HEIGHT 340
+#define MINIMAP_PX_WIDTH 520
+#define MINIMAP_PX_HEIGHT 340
 
 
 
@@ -290,14 +290,6 @@ typedef struct s_minimap
 
 typedef struct s_map
 {
-//	char			*north;
-//	char			*south;
-//	char			*west;
-//	char			*east;
-	// char			*raw_floor;
-	// char			*raw_ceiling;
-	// uint32_t		floor;
-	// uint32_t		ceiling;
 	char			*rawmap; // Mapa sin procesar
 	char			**matrix; // Mapa en matriz
 	int				px_width; // Valor máximo X del mapa (en pixels)
@@ -326,7 +318,7 @@ typedef struct s_game
 void	close_window(t_game	*gdata);
 
 //INITIALITATIONS
-void	init_gdata_values(t_game *gdata);
+int	init_gdata_values(t_game *gdata);
 void	init_minimap(t_game *gdata, t_map *map);
 void 	init_player_parameters (t_game *gdata, t_player *player);
 void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
@@ -334,11 +326,12 @@ void	init_player_orientation(t_map *map, t_vision *vision);
 int init_vision_parameters (t_game *gdata, t_vision *vision);
 int		init_mlx(t_mlx *mlx);
 int	create_new_images(t_game *gdata, t_mlx *mlx);
+int	put_image_to_window(t_game *gdata, t_mlx *mlx);
 void init_texture_params (t_texture *texture);
 void init_map (t_map *map);
 
 //PSEUDOPARSING
-char **parsing_pre_yahaira(t_game *gdata);
+char **parsing_pre_yajaira(t_game *gdata);
 
 //PRINT MAP
 int	prepare_textures (t_game *gdata);
