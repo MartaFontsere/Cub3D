@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/24 16:14:46 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:46:14 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ int		check_zero(char **mapa, size_t x, size_t y, t_map *map);
 int		is_close(char **matrix, t_map *map);
 int		min_chars(char **map, int i);
 int		parse_map(char **matrix, t_map *map);
+
+void	check_n_line(char **src, t_map *map);
 
 
 #endif

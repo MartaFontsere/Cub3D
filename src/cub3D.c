@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/24 16:15:21 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:54:59 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int main (int ac, char **av)
 		clean_data(&map);
 		return (0);
 	}
-	prints_check(&map);
+	//prints_check(&map);
 	printf("MAP IS CORRECT!\n");
 	clean_data(&map);
     return (1);
