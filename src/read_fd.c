@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/24 19:01:42 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:33:09 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	create_matrix(char *line, t_map *map)
 	{
 		map->tmp_matrix = realloc(map->tmp_matrix, sizeof(char *) * \
 		(map->c_height + 1));
-		
 	}
 	if (!map->tmp_matrix)
 		return (0);
@@ -33,24 +32,24 @@ int	create_matrix(char *line, t_map *map)
 void	assign_path(char *line, t_map *map, int i)
 {
 	if (line[i] == 'N' && line[i + 1] == 'O' && ft_isspace(line[i + 2]) \
-	&& !map->path.NO)
-			map->path.NO = cpy_path(line, map, (i + 2));
+	&& !map->path.no)
+		map->path.no = cpy_path(line, map, (i + 2));
 	else if (line[i] == 'S' && line[i + 1] == 'O' && ft_isspace(line[i + 2]) \
-	&& !map->path.SO)
-			map->path.SO = cpy_path(line, map, (i + 2));
+	&& !map->path.so)
+		map->path.so = cpy_path(line, map, (i + 2));
 	else if (line[i] == 'E' && line[i + 1] == 'A' && ft_isspace(line[i + 2]) \
-	&& !map->path.EA)
-			map->path.EA = cpy_path(line, map, (i + 2));
+	&& !map->path.ea)
+		map->path.ea = cpy_path(line, map, (i + 2));
 	else if (line[i] == 'W' && line[i + 1] == 'E' && ft_isspace(line[i + 2]) \
-	&& !map->path.WE)
-			map->path.WE = cpy_path(line, map, (i + 2));
+	&& !map->path.we)
+		map->path.we = cpy_path(line, map, (i + 2));
 	else
 	{
 		if ((line[i] == 'N' && line[i + 1] != 'O') || (line[i] == 'S' \
 		&& line[i + 1] != 'O') || (line[i] == 'W' && line[i + 1] != 'E') \
 		|| (line[i] == 'E' && line[i + 1] != 'A'))
 			msg_error("Invalid texture name: ", line);
-		else if (map->path.NO || map->path.SO || map->path.EA || map->path.WE)
+		else if (map->path.no || map->path.so || map->path.ea || map->path.we)
 			msg_error("There's a previus path assigned: ", line);
 		else
 			msg_error("Invalid line: ", line);
@@ -61,7 +60,7 @@ void	assign_path(char *line, t_map *map, int i)
 
 int	check_line(char *line, t_map *map, int i)
 {
-	while (ft_isspace(line[i]))//si no es mapa, go ahead
+	while (ft_isspace(line[i]))
 		i++;
 	curr_char(line[i], line, map);
 	if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W') \
@@ -95,7 +94,7 @@ int	fd_is_correct(t_map *map)
 
 	fd = open (map->fd_path, O_RDONLY);
 	if (fd < 0)
-		exit_error("Cannot open the file\n", 1);
+		exit_error("Cannot open the file\n", 42);
 	line = get_next_line(fd);
 	if (!line)
 		return (0);
@@ -117,10 +116,9 @@ int	fd_is_correct(t_map *map)
 int	read_file(int ac, char **av, t_map *map)
 {
 	map->fd_path = av[1];
-	
 	if (ac != 2 || !check_name(map->fd_path))
 		return (0);
-	if (!fd_is_correct(map) || map->path.p_count != 4)//te genera la matriz con el realloc
+	if (!fd_is_correct(map) || map->path.p_count != 4)
 	{
 		if (map->path.p_count != 4 && map->path.err_flag == 0)
 			msg_error("A path is missing\n", NULL);

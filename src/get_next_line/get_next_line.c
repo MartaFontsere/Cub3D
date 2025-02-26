@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 23:31:32 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/20 13:55:59 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:34:25 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,3 @@ char	*get_next_line(int fd)
 	store = update_store(store);
 	return (line);
 }
-

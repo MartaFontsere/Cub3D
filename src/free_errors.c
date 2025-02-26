@@ -6,13 +6,12 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/19 12:34:49 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:12:23 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-//el exit me libera al salir, pero es mejor si yo tengo control sobre estas variables
 void	exit_error(char *msg, int status)
 {
 	while (*msg)
@@ -51,12 +50,12 @@ void	free_matrix(char **matrix)
 	matrix = NULL;
 }
 
-void	clean_path(t_path *path)//deberia ser un free, no?
+void	clean_path(t_path *path)
 {
-	free(path->NO);
-	free(path->SO);
-	free(path->EA);
-	free(path->WE);
+	free(path->no);
+	free(path->so);
+	free(path->ea);
+	free(path->we);
 }
 
 void	clean_data(t_map *map)
@@ -65,6 +64,4 @@ void	clean_data(t_map *map)
 	free_matrix(map->matrix);
 	free_matrix(map->tmp_matrix);
 	free_matrix(map->void_matrix);
-	//if (map->rawmap)
-	//	free(map->rawmap);
 }
