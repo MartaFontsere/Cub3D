@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/25 20:08:19 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:40:18 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,16 +128,15 @@ char	**copy_map(char **map, size_t height);
 
 /*				--parse_map--				*/
 int		check_borders(char **matrix, int i, t_map *map);
-//int		check_esp(char **mapa, size_t x, size_t y, t_map *map);
-//int		check_zero(char **mapa, size_t x, size_t y, t_map *map);
-int		check_esp(size_t x, size_t y, t_map *map);
-int		check_zero(size_t x, size_t y, t_map *map);
-int		check_player(size_t x, size_t y, t_map *map);
 int		is_close(char **matrix, t_map *map);
 int		min_chars(char **map, int i);
 int		parse_map(char **matrix, t_map *map);
 
+/*				--parse_utils--				*/
 void	check_n_line(char **src, t_map *map);
+int		check_esp(size_t x, size_t y, t_map *map);
+int		check_zero(size_t x, size_t y, t_map *map);
+int		check_player(size_t x, size_t y, t_map *map);
 
 
 #endif
