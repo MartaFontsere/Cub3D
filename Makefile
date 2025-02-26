@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/02/27 00:21:39 by mfontser         ###   ########.fr        #
+#    Updated: 2025/02/27 00:54:55 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,13 +31,13 @@ ORANGE = \e[1;38;2;255;128;0m
 	#Makefile con dependencias
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
 
-FILES = cub3D.c floor_raycasting.c pseudoparsing.c print_map.c print_minimap.c print_player_params.c render.c press_or_release_key.c error.c textures.c 
+FILES = cub3D.c floor_raycasting.c pseudoparsing.c print_map.c print_minimap.c print_player_params.c render.c  error.c textures.c 
 
 FILES += initialitations/initialitations.c initialitations/init_map_minimap_params.c initialitations/init_player_vision_params.c initialitations/init_mlx_params.c
 
 FILES += fov/calculate_fov.c fov/calculate_ray.c fov/utils_calculate_ray.c 
 
-FILES += movements/prepare_move.c movements/check_collisions.c
+FILES += movements/press_or_release_key.c movements/prepare_move.c movements/check_collisions.c
 
 FILES += print_minimap/print_player_and_vision_params.c 
 
