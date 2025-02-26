@@ -3,6 +3,7 @@ _____________________________________________________________________________
 08.01.2025
 Hay tres branches definidas:
  - Yaja
+ - backs_yaja
  - Marta
  - Merge: donde iremos haciendo el merge manual del proyecto a medida que avancemos. Por el momento trabajaría en las ramas individuales,
    y ya cuando tengamos algo sólido vamos juntando, pero como son dos partes muy diferenciadas no es necesario hacerlo muy frecuentemente,
