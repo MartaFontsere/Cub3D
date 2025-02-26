@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/25 17:34:07 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/27 00:52:55 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@
 # define BLUE1 0X9AC4FFFF
 
 /*TEXTURES*/ //LUEGO BORRAR PATHS, PARA MIENTRAS SIN PARSING
-#define NORTH_TEXTURE "textures/map_walls/opcion2/Norte.xpm42"
+#define NORTH_TEXTURE "textures/map_walls/opcion2/Norte1.xpm42"
 #define SOUTH_TEXTURE "textures/map_walls/opcion2/Sur.xpm42"
 #define WEST_TEXTURE "textures/map_walls/opcion2/Oeste.xpm42"
 #define EAST_TEXTURE "textures/map_walls/opcion2/Este.xpm42"
 //esto no borrar:
 // #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
 #define SKY_TEXTURE "textures/sky/Sky_32.xpm42"
-#define FLOOR_TEXTURE "textures/floor/Floor5.xpm42"
+#define FLOOR_TEXTURE "textures/floor/Floor_4.xpm42"
 	//opcion1
 // #define WIDTH_NORTH_TEXTURE 1500
 // #define HEIGHT_NORTH_TEXTURE 994
@@ -117,6 +117,7 @@
 /*MAP*/
 #define MAP_PX_WIDTH 2560
 #define MAP_PX_HEIGHT 1440
+#define TILE_SIZE 64
 // #define NORTH_WALL_COLOR 0XFF9A9AFF
 // #define SOUTH_WALL_COLOR 0XFFD29AFF
 // #define EAST_WALL_COLOR 0XFFFF9AFF
@@ -213,9 +214,11 @@ typedef struct s_ray
     double first_dist_x; // distancia desde la posición actual del player hasta la primera línea vertical de la celda de la cuadrícula
     double first_dist_y; // // distancia desde la posición actual del player hasta la primera línea horizontal de la celda de la cuadrícula
    	//Resumen: Distancia desde el inicio del rayo hasta la primera línea de la cuadrícula en cada dirección (X o Y).
-    double other_dist_x; // Cuánto hay que moverse en X para pasar a la siguiente línea vertical de la celda de la cuadrícula. 
+    double other_dist_x; // Cuánto  hay que moverse en X para pasar a la siguiente línea vertical de la celda de la cuadrícula. 
     double other_dist_y; //Cuánto hay que moverse en Y para pasar a la siguiente línea horizontal de la celda de la cuadrícula.
     // Resumen: Distancia constante entre cada cruce de líneas en la cuadrícula, después del primer encuentro. Despues del primer cruce, el resto de cruces son constantes.  
+    int check_ray_x_in_map; // Representa la celda en la cuadrícula donde está el rayo(índices de la matriz del mapa). Empieza en la casilla del player
+    int check_ray_y_in_map; // Representa la celda en la cuadrícula donde está el rayo  (índices de la matriz del mapa). Empieza en la casilla del player
     int x_sign;
     int y_sign; // Indican si el rayo se mueve hacia adelante o atrás en cada eje.
     //Ej: Si el rayo va a la izquierda (dir_x < 0), x_sign = -1. Si el rayo va a la derecha (dir_x > 0), x_sign = 1.
@@ -265,10 +268,10 @@ typedef struct s_player
 	int 		height; // Altura del player en el mundo 3D
 	int			raw_x; // Posición Inicial del Personaje en X (en casillas)
 	int			raw_y; // Posición Inicial del Personaje en Y (en casillas)
-	double		x; // Posición Inicial del Personaje centrado en la casilla en X (en pixeles para minimapa)
-	double		y; // Posición Inicial del Personaje centrado en la casilla en Y (en pixeles para minimapa)
-	// double 	midle_x; // Posición del Personaje centrado en la casilla en X (en pixeles para minimapa)
-	// double 	midle_y; // Posición del Personaje centrado en la casilla en Y (en pixeles para minimapa)
+	double		x; // Posición Inicial del Personaje centrado en la casilla en X (en pixeles para minimapa). A cada movimiento se ira actualizando
+	double		y; // Posición Inicial del Personaje centrado en la casilla en Y (en pixeles para minimapa). A cada movimiento se ira actualizando
+	double cell_player_x; //posición en casillas del player
+    double cell_player_y; //posición en casillas del player
 	double  	radius; // radio del circulo que representara el personaje
 	int  		mov_right;
 	int  		mov_left;
@@ -327,7 +330,7 @@ int init_vision_parameters (t_game *gdata, t_vision *vision);
 int		init_mlx(t_mlx *mlx);
 int	create_new_images(t_game *gdata, t_mlx *mlx);
 int	put_image_to_window(t_game *gdata, t_mlx *mlx);
-void init_texture_params (t_texture *texture);
+void init_map_background_params (t_texture *texture);
 void init_map (t_map *map);
 
 //PSEUDOPARSING
@@ -344,7 +347,7 @@ void	print_minimap(t_game *gdata);
 
 void print_empty_space (t_mlx mlx, t_minimap minimap, t_map map);
 void print_walls (t_mlx mlx, t_minimap minimap, t_map map);
-void print_background (t_mlx mlx, t_minimap minimap);
+void print_floor (t_mlx mlx, t_minimap minimap);
 void	print_player_and_fov(t_game *gdata);
 
 //PRINT PLAYER PARAMS
@@ -355,10 +358,21 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 //RENDER
 void render_game (void *param);
 
-//MOVE
-void	prepare_movement(t_game *gdata, t_vision vision, double *target_x, double *target_y);
-void rotate_player(t_player *player, t_vision *vision);
+//FOV
 void calculate_fov(t_game *gdata, double x, double y);
+void calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
+void controll_x_limit_case (t_ray *ray, int check_ray_x_in_map, double cell_player_x);
+void controll_y_limit_case (t_ray *ray, int check_ray_y_in_map, double cell_player_y);
+void init_ray_direction (t_ray *ray, t_game *gdata, int check_ray_x_in_map,  int check_ray_y_in_map);
+void traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map);
+void find_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, double x, double y);
+double compute_collision_coordinate(int check_ray_coord, int ray_sign, double px_in_cell_size);
+
+//MOVE
+void	move_player(t_game *gdata, t_vision vision, double *target_x, double *target_y);
+void rotate_player(t_player *player, t_vision *vision);
+
+void calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
 void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x, double target_y);
 void	print_player_move(t_game *gdata, t_player player, double target_x, double target_y);
 void print_player_view_in_motion (t_game *gdata, t_player player, double target_x, double target_y);

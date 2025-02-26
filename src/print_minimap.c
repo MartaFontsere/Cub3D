@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/25 18:20:17 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/27 00:28:20 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void print_walls (t_mlx mlx, t_minimap minimap, t_map map)
 	printf ("image %p, mini %p\n",mlx.image, mlx.mini_image);
 }
 
-void print_background (t_mlx mlx, t_minimap minimap)
+void print_floor (t_mlx mlx, t_minimap minimap)
 {
 
 	int	x;
@@ -194,15 +194,14 @@ void	print_player_and_fov(t_game *gdata)
 	print_FOV (gdata, gdata->vision, gdata->player.x, gdata->player.y, gdata->vision.vision_angle, SOFT_YELLOW);
 	print_vision_angle (gdata, gdata->player.x, gdata->player.y, gdata->vision.vision_angle, YELLOW1);
 	print_player (gdata, gdata->player, gdata->player.x, gdata->player.y, RED1);
-	
 }
 
 
 void	print_minimap(t_game *gdata)
 {
-	print_background (gdata->mlx, gdata->minimap); //CONFIRMAR si yo me paso esta info asi, no estoy mandando el puntero, por lo que si modifico algo en la estructura no se mantiene el cambio. aunque gdata sea puntero, lo que mando es algo nuevo, si quiero que sea puntero tendre que indicarlo concretamente para esa variable, aunque forme parte de gdata. 
+	print_floor (gdata->mlx, gdata->minimap); //CONFIRMAR si yo me paso esta info asi, no estoy mandando el puntero, por lo que si modifico algo en la estructura no se mantiene el cambio. aunque gdata sea puntero, lo que mando es algo nuevo, si quiero que sea puntero tendre que indicarlo concretamente para esa variable, aunque forme parte de gdata. 
 	print_walls (gdata->mlx, gdata->minimap, gdata->map);
-	print_empty_space (gdata->mlx, gdata->minimap, gdata->map);
+	//print_empty_space (gdata->mlx, gdata->minimap, gdata->map);
 		//Estas dos se pueden fusionar, REVISAR
 	print_player_and_fov (gdata); //meter dentro de printminimap, y luego en print player fov in motion llamar a print tablero o algo asi
 	

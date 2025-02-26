@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:33:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/25 16:00:57 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:22:26 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void render_floor_pixel(int column, int row, t_game *gdata, double floor_x, doub
 
         
         // Mapear las coordenadas del mundo a la textura.
-        int tex_x = (int)(floor_x * gdata->minimap.px_in_cell_width / 5) % floor_tex_width; // gdata->minimap.px_in_cell_width se usa como un valor constante en los diferentes calculos para escalar de manera coherente todas las medidas
+        int tex_x = (int)(floor_x * gdata->minimap.px_in_cell_width / 6) % floor_tex_width; // gdata->minimap.px_in_cell_width se usa como un valor constante en los diferentes calculos para escalar de manera coherente todas las medidas
         int tex_y = (int)(floor_y * gdata->minimap.px_in_cell_height / 5) % floor_tex_height;
         // Asegurarse de que los índices sean positivos.
         if (tex_x < 0) tex_x += floor_tex_width;

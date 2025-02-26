@@ -1,16 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prepare_textures.c                                 :+:      :+:    :+:   */
+/*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/25 18:01:51 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/26 22:16:07 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void init_map_background_params (t_texture *texture) 
+{
+	// texture->north_wall_img.xpm->texture.width = WIDTH_NORTH_TEXTURE;
+	// texture->north_wall_img.xpm->texture.height = HEIGHT_NORTH_TEXTURE;
+	// texture->south_wall_img.xpm->texture.width = WIDTH_SOUTH_TEXTURE;
+	// texture->south_wall_img.xpm->texture.height = HEIGHT_SOUTH_TEXTURE;
+	// texture->west_wall_img.xpm->texture.width = WIDTH_WEST_TEXTURE;
+	// texture->west_wall_img.xpm->texture.height = HEIGHT_WEST_TEXTURE;
+	// texture->east_wall_img.xpm->texture.width = WIDTH_EAST_TEXTURE;
+	// texture->east_wall_img.xpm->texture.height = HEIGHT_EAST_TEXTURE;
+
+	//ESTO LO HACE YA YAJA??????
+	texture->path.C.R = CEELING_R; 
+	texture->path.C.G = CEELING_G;
+	texture->path.C.B = CEELING_B;
+	texture->path.F.R = FLOOR_R;
+	texture->path.F.G = FLOOR_G;
+	texture->path.F.B = FLOOR_B;
+
+
+
+	//BONUS
+	// texture->sky_img.xpm->texture.width = WIDTH_SKY_TEXTURE;
+	// texture->sky_img.xpm->texture.height = HEIGHT_SKY_TEXTURE;
+	// texture->floor_img.xpm->texture.width = WIDTH_FLOOR_TEXTURE;
+	// texture->floor_img.xpm->texture.height = HEIGHT_FLOOR_TEXTURE;
+}
 
 int	check_file_can_be_open(char *path) //PREGUNTAR YAJA SI YA LO HACE ELLA
 {
@@ -34,6 +62,7 @@ int	load_image(t_game *gdata, t_image *image, char *path)
 		return (0);
 	}
 	image->xpm = mlx_load_xpm42(path);
+	printf ("**************|%d|\n", image->xpm->texture.height);
 	image->data = mlx_texture_to_image(gdata->mlx.init, &image->xpm->texture);
 	// index = mlx_image_to_window(gdata->mlx.init, image->data, -100, -100);
 	// mlx_set_instance_depth(&image->data->instances[index], 8);
@@ -70,31 +99,4 @@ int	prepare_textures (t_game *gdata)
 		//return (free_error_idle_right(0, gdata)); //MIRAR LA FUNCION DE ERROR PERTINENTE
 	
 	return (1);
-}
-
-
-void init_texture_params (t_texture *texture) //PONER EN PREPARE TEXTURE
-{
-	texture->north_wall_img.xpm->texture.width = WIDTH_NORTH_TEXTURE;
-	texture->north_wall_img.xpm->texture.height = HEIGHT_NORTH_TEXTURE;
-	texture->south_wall_img.xpm->texture.width = WIDTH_SOUTH_TEXTURE;
-	texture->south_wall_img.xpm->texture.height = HEIGHT_SOUTH_TEXTURE;
-	texture->west_wall_img.xpm->texture.width = WIDTH_WEST_TEXTURE;
-	texture->west_wall_img.xpm->texture.height = HEIGHT_WEST_TEXTURE;
-	texture->east_wall_img.xpm->texture.width = WIDTH_EAST_TEXTURE;
-	texture->east_wall_img.xpm->texture.height = HEIGHT_EAST_TEXTURE;
-	texture->path.C.R = CEELING_R;
-	texture->path.C.G = CEELING_G;
-	texture->path.C.B = CEELING_B;
-	texture->path.F.R = FLOOR_R;
-	texture->path.F.G = FLOOR_G;
-	texture->path.F.B = FLOOR_B;
-
-
-
-	//BONUS
-	texture->sky_img.xpm->texture.width = WIDTH_SKY_TEXTURE;
-	texture->sky_img.xpm->texture.height = HEIGHT_SKY_TEXTURE;
-	texture->floor_img.xpm->texture.width = WIDTH_FLOOR_TEXTURE;
-	texture->floor_img.xpm->texture.height = HEIGHT_FLOOR_TEXTURE;
 }

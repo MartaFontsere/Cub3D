@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/25 18:01:43 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/26 22:14:25 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,25 @@ int main(int ac, char **av)
 	(void)av;
 
 
-	//Primero necesito tener el mapa convertido a matriz
 	gdata.map.matrix = parsing_pre_yajaira(&gdata);
 	if(!gdata.map.matrix)
 	{
 		ft_write(2, "Error generating the map matrix\n", 32);
 		return 1;
 	}
-	// A partir de aqui:
-	
+
 	if (init_gdata_values(&gdata) == 0)
 		return (1);
-	
-	
+
 	printf ("image %p, mini %p\n",gdata.mlx.image, gdata.mlx.mini_image);
 	calculate_fov(&gdata, gdata.player.x, gdata.player.y);
 	if (prepare_textures (&gdata) == 0)
 		return (1);
-	init_texture_params (&gdata.texture);
+	init_map_background_params (&gdata.texture);
 	print_map (&gdata, gdata.mlx, gdata.map);
 	print_minimap(&gdata);
 		
-	
+
 	mlx_key_hook(gdata.mlx.init, press_key, &gdata);
 	mlx_loop_hook(gdata.mlx.init, render_game, &gdata);
 	mlx_loop(gdata.mlx.init); 

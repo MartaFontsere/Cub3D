@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 03:02:49 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/25 19:39:33 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/25 22:38:30 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
         // Sin este cálculo, el rayo no se trazaría correctamente, saltaría píxeles o se vería cortado.
 
         int current_step = 0;
-        printf ("llego\n");
         // Dibujar el rayo paso a paso
         while (current_step < (int)steps) 
         {
@@ -158,10 +157,7 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
                 if (current_step == (int)(steps - 1))
                     mlx_put_pixel(gdata->mlx.mini_image, px_x, px_y, 0xFF0000FF); // Punto rojo en la colisión
                 else
-                {
-                    printf ("***************\n");
                     mlx_put_pixel(gdata->mlx.mini_image, px_x, px_y, color);
-                }
             }
             
             draw_ray_x += x_inc;

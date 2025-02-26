@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:47:23 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/25 19:38:44 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:57:41 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "cub3D.h"
@@ -84,7 +84,7 @@ void init_player_parameters (t_game *gdata, t_player *player)
 {
 	player->raw_x = 0;
 	player->raw_y = 0;
-	player->mov_right = 0;
+	player->mov_right = 0; 
 	player->mov_left = 0;
 	player->mov_up = 0;
 	player->mov_down = 0;
@@ -104,7 +104,7 @@ int init_vision_parameters (t_game *gdata, t_vision *vision)
 	vision->FOV.rays = malloc (sizeof (t_ray) * vision->FOV.num_rays);
 	if (!vision->FOV.rays)
 	{
-		write_error("Unable to allocate memory for lightning");
+		write_error("Unable to allocate memory for FOV rays");
 		//REVISAR TODO LO QUE HAY QUE LIBERAR
 		return (0);
 	}
