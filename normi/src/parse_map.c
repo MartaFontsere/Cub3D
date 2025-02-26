@@ -6,16 +6,15 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:45:21 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/26 12:59:31 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:59:56 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-
 int	check_borders(char **matrix, int i, t_map *map)
 {
-	size_t		j;
+	size_t	j;
 	size_t	end;
 
 	j = 0;
@@ -26,29 +25,24 @@ int	check_borders(char **matrix, int i, t_map *map)
 		j++;
 	while (matrix[i][end] == '*' && end != 0)
 		end--;
-	//printf("%c\n", matrix[i][end]);
 	if (end == 0 || j == map->c_width)
-	{
-		printf("HERE\n");
 		return (1);
-	}
 	else if (matrix[i][j] != '1' || matrix[i][end] != '1')
 	{
-		printf("\n%c\n", matrix[i][end]);//char que genera el error
 		if (matrix[i][j] != '0')
-			return(msg_error("Player must be inside map\n", NULL), 0);
-		return(msg_error("Map must be close with walls\n", NULL), 0);
+			return (msg_error("Player must be inside map\n", NULL), 0);
+		return (msg_error("Map must be close with walls\n", NULL), 0);
 	}
 	return (1);
 }
 
-int is_close(char **matrix, t_map *map)
+int	is_close(char **matrix, t_map *map)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	if (matrix[map->c_height - 1][0] == '*')//la primera pos de esta linea es un espacio
+	if (matrix[map->c_height - 1][0] == '*')
 		check_n_line(matrix, map);
 	while (i < map->c_height)
 	{
@@ -58,12 +52,10 @@ int is_close(char **matrix, t_map *map)
 		while (j < map->c_width)
 		{
 			if (matrix[i][j] == '1')
-				printf(" ");
-			else if (!check_esp(i, j, map))//✅
-				return(0);
-			else if (!check_zero(i, j, map))//✅
-				return(0);
-			else if(!check_player(i, j, map))//✅
+				;
+			else if (!check_esp(i, j, map) || !check_zero(i, j, map))
+				return (0);
+			else if (!check_player(i, j, map))
 				return (0);
 			j++;
 		}
@@ -72,10 +64,10 @@ int is_close(char **matrix, t_map *map)
 	return (1);
 }
 
-int min_chars(char **map, int i)
+int	min_chars(char **map, int i)
 {
-	int j;
-	int count;
+	int	j;
+	int	count;
 
 	count = 0;
 	while (map[i])
@@ -99,27 +91,13 @@ int min_chars(char **map, int i)
 	return (1);
 }
 
-int parse_map(char **matrix, t_map *map)
+int	parse_map(char **matrix, t_map *map)
 {
-	print_matrix(matrix, 2);
 	if (!min_chars(matrix, 0))
 		return (0);
 	map->is_map = 0;
 	if (!is_close(matrix, map))
 		return (0);
+	printf("✅\n");
 	return (1);
-}
-
-void	print_dirs(char **matrix, int i, int j, int end)
-{
-	if (i != 0)
-		printf(BLUE"   [%c]\n"END, matrix[i - 1][j]);
-	if (j != 0)
-		printf(BLUE"[%c]"END, matrix[i][j - 1]);
-	printf(PURPLE"[%c]"END, matrix[i][j]);
-	if (j != '\0')
-		printf(BLUE"[%c]\n"END, matrix[i][j + 1]);
-	if (i != end)
-		printf(BLUE"   [%c]\n"END, matrix[i + 1][j]);
-			
 }
