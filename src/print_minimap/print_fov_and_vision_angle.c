@@ -1,40 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_player_params.c                              :+:      :+:    :+:   */
+/*   print_fov_and_vision_angle.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 03:02:49 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/25 22:38:30 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:47:16 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void print_player (t_game *gdata, t_player player, double x, double y, int color)
-{
-	double x_limit;
-	double y_limit;
-	double draw_x;
-	double draw_y;
 
-	draw_y = -player.radius; // asi tengo el inicio del circulo en y
-	y_limit = player.radius; // asi tengo el limite final del circulo en y
-    while (draw_y <= y_limit)
-	{
-		draw_x = -player.radius;
-		x_limit = player.radius;
-		while (draw_x <= x_limit)
-		{
-            if (draw_x * draw_x + draw_y * draw_y <= player.radius * player.radius) // implementación directa de la definición de un círculo en coordenadas cartesianas
-                mlx_put_pixel(gdata->mlx.mini_image, x + draw_x, y + draw_y, color); // al dibujar en la posicion draw relativa al centro del circulo, aseguramos que siempre se dibujara dentro del circulo.
-
-            draw_x++;
-		}
-		draw_y++;
-	}	
-}
 
 
 void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, int color)
@@ -178,9 +156,9 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
     }
 }
 
-
-
-
-
-
-
+void    calculate_and_print_fov_and_vision_angle(t_game *gdata)
+{
+    calculate_fov(gdata, gdata->player.x, gdata->player.y);
+    print_FOV (gdata, gdata->vision, gdata->player.x, gdata->player.y, gdata->vision.vision_angle, SOFT_YELLOW);
+    print_vision_angle (gdata, gdata->player.x, gdata->player.y, gdata->vision.vision_angle, YELLOW1);
+}

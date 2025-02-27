@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 00:52:45 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/27 21:05:05 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void render_game (void *param) // todo lo que se tenga que checkear a cada vuelt
 		printf ("el target a donde se va a mover es: |%f||%f|\n",target_x, target_y);
 		//minimapa
 		print_player_FOV_in_motion(gdata, gdata->player, target_x, target_y);
-		print_player_view_in_motion (gdata, gdata->player, target_x, target_y); // incluir tanto el fov como el point of view
+		//print_player_view_in_motion (gdata, gdata->player, target_x, target_y); // incluir tanto el fov como el point of view
 		print_player_move(gdata, gdata->player, target_x, target_y);
 		//mapa
 		print_map (gdata, gdata->mlx, gdata->map);
