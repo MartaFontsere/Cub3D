@@ -82,3 +82,15 @@
 		->check_player()
 			tengo que poner la comprobacion de NSWE para que funcione bien. El
 			resto queda como el esp y zero
+26/02 -	Esta version esta con norminette, por lo que a partir de esta fecha, todo
+		lo que genere sera pensado para el bonus
+		-> El  Makefile actual compila los archivos *_bonus pero hay que cambiar por
+		completo la forma de compilacion
+		-> Estoy haciendo la puerta, mirar porque lo toma como char invalido en
+		map_control. Creo que el error viene dado por el Makefile, que no lo compila
+		bien. Asi que primero he de asegurarme que este funcine perfecto para continuar
+		con el parsing de la puerta
+27/02 -	Al hacer el "make bonus" no genera un nuevo ejecutable. QUIZA HACER UNA EJECUTABLE PARA EL BONUS
+
+		-HABEMUS BONUUUUUUUUSS!!!! El gnl lo he movido a libs, asi no tenemos que
+		duplicarlo en los *_bonus. Aunque podemoos crear otro dir solo para resources

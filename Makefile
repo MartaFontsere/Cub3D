@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/02/26 13:23:04 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/02/27 17:42:27 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,10 @@ ORANGE = \e[1;38;2;255;128;0m
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
 
 FILES = cub3D.c free_errors.c read_fd.c read_fd_utils.c read_colors.c get_map.c parse_map.c parse_utils.c
-FILES += get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+FILES += ../libs/get_next_line/get_next_line.c ../libs/get_next_line/get_next_line_utils.c
+
+B_FILES = cub3D_bonus.c free_errors_bonus.c read_fd_bonus.c read_fd_utils_bonus.c read_colors_bonus.c get_map_bonus.c parse_map_bonus.c parse_utils_bonus.c
+B_FILES += ../libs/get_next_line/get_next_line.c ../libs/get_next_line/get_next_line_utils.c
 
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))
@@ -40,11 +43,18 @@ SRCS = 	$(addprefix $(SRCDIR), $(FILES))
 OBJDIR = obj/
 OBJS = $(patsubst $(SRCDIR)%.c, $(OBJDIR)%.o, $(SRCS))
 
-INCLUDES = -I ./libs/Libft -I ./inc -I ./src/get_next_line/
+SRCDIR_BONUS = src_bonus/
+SRC_BONUS = $(addprefix $(SRCDIR_BONUS), $(B_FILES))
+#ponemos los objs de bonus dentro de la carpeta de objs que ya se ha creado
+OBJDIR_BONUS = obj_bonus/
+OBJS_BONUS = $(patsubst $(SRCDIR_BONUS)%.c, $(OBJDIR_BONUS)%.o, $(SRC_BONUS))
+
+INCLUDES = -I ./libs/Libft -I ./inc -I ./libs/get_next_line/
 
 NAME = cub3D
 
-HEADER = inc/cub3D.h src/get_next_line/get_next_line.h
+HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h
+HEADER_BONUS = inc/cub3D.h libs/get_next_line/get_next_line.h inc/cub3D_bonus.h
 CC = cc 
 RM = rm -rf 
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
@@ -61,6 +71,10 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile libs/Libft/libft.a #$(MLXDIR)/buil
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
 
+$(OBJDIR_BONUS)%.o: $(SRCDIR_BONUS)%.c $(HEADER_BONUS) Makefile libs/Libft/libft.a #$(MLXDIR)/build/libmlx42.a 
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
 # Mis metodos
 
 all: make_libs ${NAME}
@@ -69,8 +83,15 @@ make_libs:
 	@make -C libs/Libft all --no-print-directory
 #	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4 --no-print-directory
 
-${NAME}: ${OBJS}
+ifndef BONUS
+${NAME}: ${OBJS} dragon
 	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)
+else
+${NAME}: ${OBJS_BONUS} dragon
+	@$(CC) $(CFLAGS) ${OBJS_BONUS} $(LIBS) -o $(NAME)
+endif
+	
+dragon:
 	@echo "	⠀⠀⠀⠀⠀⠀⠀"⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⣰⠂⠀$(BLUE)⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠀⠀⠀⠀⠀"⠀⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⡟⢆$(BLUE)⢠⢣⠀$(YELLOW)  ⣔⡀⠀⠀ ⠀$(BLUE)⠀⡘⡇⠀⠀⠀⠀⠀⠀"⠀⠀
@@ -107,13 +128,16 @@ ${NAME}: ${OBJS}
 	@echo "				    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ $(RED)⠈⠛⠁⠀⠀⠀⠀$(END)⠀⠀"
 	@echo ""
 
+bonus: 
+	@$(MAKE) BONUS=42
+#	$(CC) $(CFLAGS) $(OBJS) $(OBJS_BONUS) $(LIBS) -o $(NAME)
+
 clean:
-	@${RM} ${OBJDIR}
+	@${RM} ${OBJDIR} ${OBJDIR_BONUS}
 	@make -C libs/Libft clean --no-print-directory
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)$(NC)$(END)"
 
-fclean:
-	@${RM} ${OBJDIR}
+fclean: clean
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)"
 	@${RM} ${NAME}
 	@make -C libs/Libft fclean --no-print-directory

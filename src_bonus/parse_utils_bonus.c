@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   parse_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:37:00 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/27 10:45:49 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:00:16 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 void	check_n_line(char **src, t_map *map)
 {
@@ -67,10 +67,9 @@ int	check_zero(size_t x, size_t y, t_map *map)
 		&& map->matrix[x][y + 1] != 'W' && map->matrix[x][y + 1] != 'E' \
 		&& map->matrix[x][y + 1] != '0' && map->matrix[x][y + 1] != '1')
 		|| (map->matrix[x + 1][y] != 'N' && map->matrix[x + 1][y] != 'S' \
-		&& map->matrix[x + 1][y] != 'W' && map->matrix[x + 1][y] != 'E' \
+		&& map->matrix[x + 1][y] != 'W' && map->matrix[x + 1][y] != 'S' \
 		&& map->matrix[x + 1][y] != '0' && map->matrix[x + 1][y] != '1'))
 		{
-			//print_dirs(map->matrix, x, y, map->c_width - 2);
 			msg_error("'0' must be followed by '1', '0' or player\n", NULL);
 			return (0);
 		}
@@ -98,16 +97,7 @@ int	check_player(size_t x, size_t y, t_map *map)
 	return (1);
 }
 
-void	print_dirs(char **matrix, int i, int j, int end)
-{
-	if (i != 0)
-		printf(BLUE"   [%c]\n"END, matrix[i - 1][j]);
-	if (j != 0)
-		printf(BLUE"[%c]"END, matrix[i][j - 1]);
-	printf(PURPLE"[%c]"END, matrix[i][j]);
-	if (j != '\0')
-		printf(BLUE"[%c]\n"END, matrix[i][j + 1]);
-	if (i != end)
-		printf(BLUE"   [%c]\n"END, matrix[i + 1][j]);
-			
-}
+//int	check_door(size_t x, size_t y, t_map *map)
+//{
+//	printf("soy puerta\n");
+//}
