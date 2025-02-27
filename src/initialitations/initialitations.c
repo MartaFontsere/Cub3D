@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/25 18:01:41 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/27 01:46:16 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	init_gdata_values(t_game *gdata)
 {
 	
-	init_map (&gdata->map);
+	init_map (gdata, &gdata->map);
 	init_minimap(gdata, &gdata->map);
 	init_player_parameters(gdata, &gdata->player);
 	if (init_vision_parameters (gdata, &gdata->vision) == 0)

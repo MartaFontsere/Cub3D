@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/26 22:14:25 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/27 01:48:41 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int main(int ac, char **av)
 	calculate_fov(&gdata, gdata.player.x, gdata.player.y);
 	if (prepare_textures (&gdata) == 0)
 		return (1);
-	init_map_background_params (&gdata.texture);
 	print_map (&gdata, gdata.mlx, gdata.map);
 	print_minimap(&gdata);
 		

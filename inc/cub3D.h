@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 00:52:55 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/27 03:13:37 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@
 // #define HEIGHT_EAST_TEXTURE 414
 
 	//opcion2
-#define WIDTH_NORTH_TEXTURE 1000
-#define HEIGHT_NORTH_TEXTURE 1000
-#define WIDTH_SOUTH_TEXTURE 1000
-#define HEIGHT_SOUTH_TEXTURE 1000
-#define WIDTH_WEST_TEXTURE 1000
-#define HEIGHT_WEST_TEXTURE 1000
-#define WIDTH_EAST_TEXTURE 1000
-#define HEIGHT_EAST_TEXTURE 1000
+// #define WIDTH_NORTH_TEXTURE 1000
+// #define HEIGHT_NORTH_TEXTURE 1000
+// #define WIDTH_SOUTH_TEXTURE 1000
+// #define HEIGHT_SOUTH_TEXTURE 1000
+// #define WIDTH_WEST_TEXTURE 1000
+// #define HEIGHT_WEST_TEXTURE 1000
+// #define WIDTH_EAST_TEXTURE 1000
+// #define HEIGHT_EAST_TEXTURE 1000
 
 //cielo
 // #define WIDTH_SKY_TEXTURE 1920
@@ -86,12 +86,12 @@
 // #define HEIGHT_SKY_TEXTURE 1013
 // #define WIDTH_SKY_TEXTURE 1408
 // #define HEIGHT_SKY_TEXTURE 704
-#define WIDTH_SKY_TEXTURE 2816
-#define HEIGHT_SKY_TEXTURE 704
+// #define WIDTH_SKY_TEXTURE 2816
+// #define HEIGHT_SKY_TEXTURE 704
 
 //floor
-#define WIDTH_FLOOR_TEXTURE 1024
-#define HEIGHT_FLOOR_TEXTURE 1024
+// #define WIDTH_FLOOR_TEXTURE 1024
+// #define HEIGHT_FLOOR_TEXTURE 1024
 // #define WIDTH_FLOOR_TEXTURE 2024
 // #define HEIGHT_FLOOR_TEXTURE 2024
 
@@ -111,8 +111,8 @@
 # define MOVE_DOWN 3
 
 /*PLAYER SPEED*/
-# define MOVE_SPEED 3 // cuantos pixeles se mueve cada vez que tocamos una tecla
-# define ROTATION_SPEED 0.04
+# define MOVE_SPEED 4 // cuantos pixeles se mueve cada vez que tocamos una tecla
+# define ROTATION_SPEED 0.06
 
 /*MAP*/
 #define MAP_PX_WIDTH 2560
@@ -284,12 +284,19 @@ typedef struct s_player
 
 typedef struct s_minimap
 {
-	//mlx_image_t		*background_img;
 	int				px_width; // Valor máximo X del minimapa (en pixels)
 	int				px_height; // Valor máximo Y del minimapa (en pixels)
 	double 			px_in_cell_width; // Cantidad de pixels por cada celda en el eje X
 	double 			px_in_cell_height; //Cantidad de pixels por cada celda en el eje Y
 }					t_minimap;
+
+typedef struct s_print
+{
+	double wall_height;
+	double draw_wall_start;
+	int draw_wall_end;
+
+} t_print;
 
 typedef struct s_map
 {
@@ -299,6 +306,7 @@ typedef struct s_map
 	int				px_height; // Valor máximo Y del mapa (en pixels)
 	int				cells_width; // Valor máximo X del mapa (en casillas)
 	int				cells_height; // Valor máximo Y del mapa (en casillas)
+	
 }					t_map;
 
 
@@ -309,7 +317,7 @@ typedef struct s_game
 	t_map			map;
 	t_minimap 		minimap;
 	t_vision 		vision;
-
+	t_print 		print_map;
 	t_mlx			mlx; // ???en funcion de que hacerlo puntero o no?
 	int 			finish_game;
 }					t_game;
@@ -331,7 +339,7 @@ int		init_mlx(t_mlx *mlx);
 int	create_new_images(t_game *gdata, t_mlx *mlx);
 int	put_image_to_window(t_game *gdata, t_mlx *mlx);
 void init_map_background_params (t_texture *texture);
-void init_map (t_map *map);
+void init_map (t_game *gdata, t_map *map);
 
 //PSEUDOPARSING
 char **parsing_pre_yajaira(t_game *gdata);
@@ -341,13 +349,17 @@ int	prepare_textures (t_game *gdata);
 void print_map (t_game *gdata, t_mlx mlx, t_map map);
 void draw_floor(int column, int row, t_game *gdata, t_ray *ray);
 int get_texture_pixel(t_image *texture, int tex_x, int tex_y);
+int rgb_to_hex(int r, int g, int b);
+t_image *get_wall_texture(t_ray *ray, t_game *gdata);
+int get_texture_pixel(t_image *texture, int tex_x, int tex_y);
+
 
 //PRINT MINIMAP
 void	print_minimap(t_game *gdata);
 
 void print_empty_space (t_mlx mlx, t_minimap minimap, t_map map);
 void print_walls (t_mlx mlx, t_minimap minimap, t_map map);
-void print_floor (t_mlx mlx, t_minimap minimap);
+void print_background (t_mlx mlx, t_minimap minimap);
 void	print_player_and_fov(t_game *gdata);
 
 //PRINT PLAYER PARAMS
