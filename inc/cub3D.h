@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 03:13:37 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/02/27 05:07:44 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,6 +295,7 @@ typedef struct s_print
 	double wall_height;
 	double draw_wall_start;
 	int draw_wall_end;
+	int color;
 
 } t_print;
 
@@ -347,12 +348,17 @@ char **parsing_pre_yajaira(t_game *gdata);
 //PRINT MAP
 int	prepare_textures (t_game *gdata);
 void print_map (t_game *gdata, t_mlx mlx, t_map map);
-void draw_floor(int column, int row, t_game *gdata, t_ray *ray);
 int get_texture_pixel(t_image *texture, int tex_x, int tex_y);
 int rgb_to_hex(int r, int g, int b);
 t_image *get_wall_texture(t_ray *ray, t_game *gdata);
 int get_texture_pixel(t_image *texture, int tex_x, int tex_y);
+void print_texture_walls (t_game *gdata, t_ray *ray, int *row, int *column);
+void print_wall_column(t_game *gdata, int *row, int *column, t_image *texture, int tex_x, double tex_start_offset);
+void get_texture_row(t_game *gdata, t_image *texture,  double *tex_start_offset);
+void get_texture_column(t_image *texture, double *wall_x, int *tex_x);
+void get_wall_column (t_game *gdata, t_ray *ray, double *wall_x);
 
+void draw_floor(int column, int row, t_game *gdata, t_ray *ray);
 
 //PRINT MINIMAP
 void	print_minimap(t_game *gdata);

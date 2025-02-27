@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/02/27 01:55:11 by mfontser         ###   ########.fr        #
+#    Updated: 2025/02/27 05:26:38 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ FILES += fov/calculate_fov.c fov/calculate_ray.c fov/utils_calculate_ray.c
 
 FILES += movements/press_or_release_key.c movements/move_player.c movements/rotate_player.c movements/check_collisions.c
 
-FILES += print_map/print_map.c print_map/print_utils.c
+FILES += print_map/print_map.c print_map/print_walls.c print_map/print_utils.c
 
 FILES += print_minimap/print_minimap.c  print_minimap/print_player_and_vision_params.c print_minimap/print_player_params.c
 
