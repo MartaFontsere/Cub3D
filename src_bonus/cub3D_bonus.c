@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/26 17:19:10 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/28 09:09:28 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_structs(t_map *map)
 	map->matrix = NULL;
 	map->tmp_matrix = NULL;
 	map->void_matrix = NULL;
+	map->pos = '\0';
 	map->is_map = 0;
 	map->c_width = 0;
 	map->c_height = 0;
@@ -49,7 +50,6 @@ int	main(int ac, char **av)
 {
 	t_map	map;
 
-	printf("SOY BONUS\n");
 	init_structs(&map);
 	if (!read_file(ac, av, &map))
 	{

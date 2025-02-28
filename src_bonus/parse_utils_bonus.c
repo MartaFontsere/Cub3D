@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:37:00 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/27 11:00:16 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:12:37 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ int	check_zero(size_t x, size_t y, t_map *map)
 {
 	if (map->matrix[x][y] == '0')
 	{
-		if ((map->matrix[x][y + 1] != 'N' && map->matrix[x][y + 1] != 'S' \
-		&& map->matrix[x][y + 1] != 'W' && map->matrix[x][y + 1] != 'E' \
-		&& map->matrix[x][y + 1] != '0' && map->matrix[x][y + 1] != '1')
-		|| (map->matrix[x + 1][y] != 'N' && map->matrix[x + 1][y] != 'S' \
-		&& map->matrix[x + 1][y] != 'W' && map->matrix[x + 1][y] != 'S' \
-		&& map->matrix[x + 1][y] != '0' && map->matrix[x + 1][y] != '1'))
+		if ((map->matrix[x][y + 1] != map->pos \
+		&& map->matrix[x][y + 1] != '0' && map->matrix[x][y + 1] != '1' \
+		&& map->matrix[x][y + 1] != 'D')
+		|| (map->matrix[x + 1][y] != map->pos \
+		&& map->matrix[x + 1][y] != '0' && map->matrix[x + 1][y] != '1' \
+		&& map->matrix[x + 1][y] != 'D'))
 		{
-			msg_error("'0' must be followed by '1', '0' or player\n", NULL);
+			msg_error("'0' must be followed by '1', '0', Door or Player", "\n");
 			return (0);
 		}
 	}
@@ -79,25 +79,20 @@ int	check_zero(size_t x, size_t y, t_map *map)
 
 int	check_player(size_t x, size_t y, t_map *map)
 {
-	if (map->matrix[x][y] == 'N' || map->matrix[x][y] == 'S' \
-	|| map->matrix[x][y] == 'W' || map->matrix[x][y] == 'E')
+	if (map->matrix[x][y] == map->pos)
 	{
 		if (x == 0 || x == map->c_height - 1 || y == 0 || y == map->c_width - 2)
 		{
-			msg_error("camera must be inside the map", "\n");
+			msg_error("Player must be inside the map", "\n");
 			return (0);
 		}
-		if ((map->matrix[x][y + 1] != '1' && map->matrix[x][y + 1] != '0') \
-		|| (map->matrix[x + 1][y] != '1' && map->matrix[x + 1][y] != '0'))
+		if ((map->matrix[x][y + 1] != '1' && map->matrix[x][y + 1] != '0' \
+		&& map->matrix[x][y + 1] != 'D') || (map->matrix[x + 1][y] != '1' \
+		&& map->matrix[x + 1][y] != '0' && map->matrix[x + 1][y] != 'D'))
 		{
-			msg_error("Player must be next to '1' or '0'\n", NULL);
+			msg_error("Player must be next to '1' or '0' or Door\n", NULL);
 			return (0);
 		}
 	}
 	return (1);
 }
-
-//int	check_door(size_t x, size_t y, t_map *map)
-//{
-//	printf("soy puerta\n");
-//}

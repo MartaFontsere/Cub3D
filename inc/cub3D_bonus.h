@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 09:42:09 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:15:39 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_map
 	char		**tmp_matrix;
 	char		**void_matrix;
 	char		*fd_path;
+	char		pos;
 	int			is_map;
 	size_t		c_width;
 	size_t		c_height;
@@ -75,6 +76,8 @@ typedef struct s_map
 	int			open;
 	t_path		path;
 }				t_map;
+
+void	print_dirs(char **matrix, int i, int j, int end);
 
 //-------------------------------------------------
 //					MAIN
@@ -140,5 +143,12 @@ void	check_n_line(char **src, t_map *map);
 int		check_esp(size_t x, size_t y, t_map *map);
 int		check_zero(size_t x, size_t y, t_map *map);
 int		check_player(size_t x, size_t y, t_map *map);
+
+//------------------------------------------------
+//					PARSE_MAP_UTILS2
+//------------------------------------------------
+int		is_door(size_t x, size_t y, t_map *map);
+int		check_y_pos(int x, int y, t_map *map);
+int		check_x_pos(int x, int y, t_map *map);
 
 #endif

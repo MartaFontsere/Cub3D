@@ -6,11 +6,24 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:45:21 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/27 10:15:12 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:12:18 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D_bonus.h"
+
+void	print_dirs(char **matrix, int i, int j, int end)
+{
+	if (i != 0)
+		printf(BLUE"   [%c]\n"END, matrix[i - 1][j]);
+	if (j != 0)
+		printf(BLUE"[%c]"END, matrix[i][j - 1]);
+	printf(PURPLE"[%c]"END, matrix[i][j]);
+	if (j != '\0')
+		printf(BLUE"[%c]\n"END, matrix[i][j + 1]);
+	if (i != end)
+		printf(BLUE"   [%c]\n"END, matrix[i + 1][j]);
+}
 
 int	check_borders(char **matrix, int i, t_map *map)
 {
@@ -51,14 +64,11 @@ int	is_close(char **matrix, t_map *map)
 		j = 0;
 		while (j < map->c_width)
 		{
-			if (matrix[i][j] == '1' || matrix[i][j] ==  'D')
-			{
-				if (matrix[i][j] == 'D')
-					printf("hola soy puerta\n");
-			}
+			if (matrix[i][j] == '1')
+				;
 			else if (!check_esp(i, j, map) || !check_zero(i, j, map))
 				return (0);
-			else if (!check_player(i, j, map)/*  || !check_door(i, j, map) */)
+			else if (!check_player(i, j, map) || !is_door(i, j, map))
 				return (0);
 			j++;
 		}

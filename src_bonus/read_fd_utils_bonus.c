@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/27 11:11:03 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:13:03 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,9 @@ void	map_control(char *line, t_map *map)
 			map->path.err_flag = 1;
 			return (msg_error(": NOT invalid char\n", NULL));
 		}
+		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' \
+		|| line[i] == 'E')
+			map->pos = line[i];
 		i++;
 	}
 }

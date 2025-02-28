@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/02/27 17:42:27 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/02/28 10:10:25 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ ORANGE = \e[1;38;2;255;128;0m
 FILES = cub3D.c free_errors.c read_fd.c read_fd_utils.c read_colors.c get_map.c parse_map.c parse_utils.c
 FILES += ../libs/get_next_line/get_next_line.c ../libs/get_next_line/get_next_line_utils.c
 
-B_FILES = cub3D_bonus.c free_errors_bonus.c read_fd_bonus.c read_fd_utils_bonus.c read_colors_bonus.c get_map_bonus.c parse_map_bonus.c parse_utils_bonus.c
+B_FILES = cub3D_bonus.c free_errors_bonus.c read_fd_bonus.c read_fd_utils_bonus.c read_colors_bonus.c get_map_bonus.c
+B_FILES += parse_map_bonus.c parse_utils_bonus.c parse_utils2_bonus.c
 B_FILES += ../libs/get_next_line/get_next_line.c ../libs/get_next_line/get_next_line_utils.c
 
 SRCDIR = src/
@@ -130,7 +131,6 @@ dragon:
 
 bonus: 
 	@$(MAKE) BONUS=42
-#	$(CC) $(CFLAGS) $(OBJS) $(OBJS_BONUS) $(LIBS) -o $(NAME)
 
 clean:
 	@${RM} ${OBJDIR} ${OBJDIR_BONUS}
