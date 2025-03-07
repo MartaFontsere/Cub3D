@@ -94,3 +94,6 @@
 
 		-HABEMUS BONUUUUUUUUSS!!!! El gnl lo he movido a libs, asi no tenemos que
 		duplicarlo en los *_bonus. Aunque podemoos crear otro dir solo para resources
+07/03 -	No recuerdo porque tenia que cambiar la X && Y de mi parseo, cuando la info que nos interesa
+		esta correctamente guardada en la struct y Marta puede trabajar sin problema desde esa info.
+		No puedo trabajar desde aqui por el SO, que la minilibx no es compatible.

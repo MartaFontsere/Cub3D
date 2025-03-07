@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaja <yaja@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/26 14:33:09 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/07 06:25:33 by yaja             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+
+/*Hasta aqui c_w && c_h are ok*/
 int	create_matrix(char *line, t_map *map)
 {
 	if (map->j == 0)

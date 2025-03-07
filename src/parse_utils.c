@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaja <yaja@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:37:00 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/28 10:16:41 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/07 06:39:09 by yaja             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,21 @@ void	check_n_line(char **src, t_map *map)
 		map->c_height -= i;
 }
 
-int	check_esp(size_t x, size_t y, t_map *map)
+int	check_esp(size_t i, size_t j, t_map *map)
 {
-	if (map->matrix[x][y] == '*')
+	if (map->matrix[i][j] == '*')
 	{
-		if (x == map->c_height - 1)
+		if (i == map->c_height - 1)
 		{
-			if ((map->matrix[x][y + 1] != '*' && map->matrix[x][y + 1] != '1') \
-			&& y != (map->c_width - 2))
+			if ((map->matrix[i][j + 1] != '*' && map->matrix[i][j + 1] != '1') \
+			&& j != (map->c_width - 2))
 				return (1);
 		}
 		else
 		{
-			if (((map->matrix[x][y + 1] != '*' && map->matrix[x][y + 1] != '1') \
-			|| (map->matrix[x + 1][y] != '*' && map->matrix[x + 1][y] != '1')) \
-			&& (y != map->c_width - 2))
+			if (((map->matrix[i][j + 1] != '*' && map->matrix[i][j + 1] != '1') \
+			|| (map->matrix[i + 1][j] != '*' && map->matrix[i + 1][j] != '1')) \
+			&& (j != map->c_width - 2))
 			{
 				msg_error("' ' must be followed by '1' or ' '\n", NULL);
 				return (0);
@@ -59,16 +59,16 @@ int	check_esp(size_t x, size_t y, t_map *map)
 	return (1);
 }
 
-int	check_zero(size_t x, size_t y, t_map *map)
+int	check_zero(size_t i, size_t j, t_map *map)
 {
-	if (map->matrix[x][y] == '0')
+	if (map->matrix[i][j] == '0')
 	{
-		if ((map->matrix[x][y + 1] != 'N' && map->matrix[x][y + 1] != 'S' \
-		&& map->matrix[x][y + 1] != 'W' && map->matrix[x][y + 1] != 'E' \
-		&& map->matrix[x][y + 1] != '0' && map->matrix[x][y + 1] != '1')
-		|| (map->matrix[x + 1][y] != 'N' && map->matrix[x + 1][y] != 'S' \
-		&& map->matrix[x + 1][y] != 'W' && map->matrix[x + 1][y] != 'E' \
-		&& map->matrix[x + 1][y] != '0' && map->matrix[x + 1][y] != '1'))
+		if ((map->matrix[i][j + 1] != 'N' && map->matrix[i][j + 1] != 'S' \
+		&& map->matrix[i][j + 1] != 'W' && map->matrix[i][j + 1] != 'E' \
+		&& map->matrix[i][j + 1] != '0' && map->matrix[i][j + 1] != '1')
+		|| (map->matrix[i + 1][j] != 'N' && map->matrix[i + 1][j] != 'S' \
+		&& map->matrix[i + 1][j] != 'W' && map->matrix[i + 1][j] != 'E' \
+		&& map->matrix[i + 1][j] != '0' && map->matrix[i + 1][j] != '1'))
 		{
 			msg_error("'0' must be followed by '1', '0' or player\n", NULL);
 			return (0);
@@ -77,18 +77,18 @@ int	check_zero(size_t x, size_t y, t_map *map)
 	return (1);
 }
 
-int	check_player(size_t x, size_t y, t_map *map)
+int	check_player(size_t i, size_t j, t_map *map)
 {
-	if (map->matrix[x][y] == 'N' || map->matrix[x][y] == 'S' \
-	|| map->matrix[x][y] == 'W' || map->matrix[x][y] == 'E')
+	if (map->matrix[i][j] == 'N' || map->matrix[i][j] == 'S' \
+	|| map->matrix[i][j] == 'W' || map->matrix[i][j] == 'E')
 	{
-		if (x == 0 || x == map->c_height - 1 || y == 0 || y == map->c_width - 2)
+		if (i == 0 || i == map->c_height - 1 || j == 0 || j == map->c_width - 2)
 		{
 			msg_error("camera must be inside the map", "\n");
 			return (0);
 		}
-		if ((map->matrix[x][y + 1] != '1' && map->matrix[x][y + 1] != '0') \
-		|| (map->matrix[x + 1][y] != '1' && map->matrix[x + 1][y] != '0'))
+		if ((map->matrix[i][j + 1] != '1' && map->matrix[i][j + 1] != '0') \
+		|| (map->matrix[i + 1][j] != '1' && map->matrix[i + 1][j] != '0'))
 		{
 			msg_error("Player must be next to '1' or '0'\n", NULL);
 			return (0);
