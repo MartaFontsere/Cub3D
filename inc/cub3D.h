@@ -365,7 +365,7 @@ void get_texture_row(t_game *gdata, t_image *texture,  double *tex_start_offset)
 void get_texture_column(t_image *texture, double *wall_x, int *tex_x);
 void get_wall_column (t_game *gdata, t_ray *ray, double *wall_x);
 
-void draw_floor(int x, int *y, t_game *gdata, t_ray *ray);
+void draw_floor(int column, int row, t_game *gdata, t_ray *ray);
 
 //PRINT MINIMAP
 void	print_minimap(t_game *gdata);

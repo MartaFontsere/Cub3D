@@ -92,7 +92,7 @@
 
 
 
-//VERSION 5. TEXTURAS EN PAREDES Y CIELO, COLOR EN SUELO SIN TEXTO DE APUNTES
+//VERSION 5. TEXTURAS EN PAREDES, CIELO y EN SUELO SIN TEXTO DE APUNTES
 
 void print_map (t_game *gdata, t_mlx mlx, t_map map)
 {
@@ -266,17 +266,7 @@ while (row < draw_wall_start)
         }
 
         // Dibujar el suelo con textura
-
-       // draw_floor(column, row, gdata, ray);
-        // while (row < map.px_height)
-        // {
-        //     mlx_put_pixel(mlx.image, column, row, gdata->texture.F_hex_color);
-        //     row++;
-        // }
-
-        // … se dibujan cielo, paredes, etc.
-        // Luego, para cada columna, se invoca la función de suelo/techo:
-        draw_floor(column, &row, gdata, ray);
+        draw_floor(column, row, gdata, ray);
         
         column++;
       
