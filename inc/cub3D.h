@@ -104,6 +104,13 @@
 
 
 
+
+#define X 0
+#define Y 1
+
+
+
+
 /*MOVE*/
 # define MOVE_RIGHT 0
 # define MOVE_LEFT 1
@@ -117,7 +124,7 @@
 /*MAP*/
 #define MAP_PX_WIDTH 2560
 #define MAP_PX_HEIGHT 1440
-#define TILE_SIZE 64
+// #define TILE_SIZE 64
 // #define NORTH_WALL_COLOR 0XFF9A9AFF
 // #define SOUTH_WALL_COLOR 0XFFD29AFF
 // #define EAST_WALL_COLOR 0XFFFF9AFF
@@ -234,7 +241,7 @@ typedef struct s_ray
    	double perpendicular_distance;
 
    	//Floor
-   	// double distance_to_floor; // distancia del player al pixel de suelo que queremos dibujar en casillas
+   	 double pixel_distance_to_floor; // distancia del player al pixel de suelo que queremos dibujar en casillas
 	// double floor_x; //posicion del pixel en x
 	// double floor_y; //posicion del pixel en y
 
@@ -358,7 +365,7 @@ void get_texture_row(t_game *gdata, t_image *texture,  double *tex_start_offset)
 void get_texture_column(t_image *texture, double *wall_x, int *tex_x);
 void get_wall_column (t_game *gdata, t_ray *ray, double *wall_x);
 
-void draw_floor(int column, int row, t_game *gdata, t_ray *ray);
+void draw_floor(int x, int *y, t_game *gdata, t_ray *ray);
 
 //PRINT MINIMAP
 void	print_minimap(t_game *gdata);
@@ -366,7 +373,14 @@ void	print_minimap(t_game *gdata);
 void print_empty_space (t_mlx mlx, t_minimap minimap, t_map map);
 void print_walls (t_mlx mlx, t_minimap minimap, t_map map);
 void print_background (t_mlx mlx, t_minimap minimap);
-void	print_player_and_fov(t_game *gdata);
+void    calculate_and_print_fov_and_vision_angle(t_game *gdata);
+void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision_angle, int color) ;
+void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, int color);
+void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x, double target_y);
+void	print_player_move(t_game *gdata, t_player player, double target_x, double target_y);
+void print_player_view_in_motion (t_game *gdata, t_player player, double target_x, double target_y);
+
+
 
 //PRINT PLAYER PARAMS
 void print_player (t_game *gdata, t_player player, double x, double y, int color);
@@ -391,9 +405,6 @@ void	move_player(t_game *gdata, t_vision vision, double *target_x, double *targe
 void rotate_player(t_player *player, t_vision *vision);
 
 void calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
-void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x, double target_y);
-void	print_player_move(t_game *gdata, t_player player, double target_x, double target_y);
-void print_player_view_in_motion (t_game *gdata, t_player player, double target_x, double target_y);
 
 //PRESS KEY
 int	there_is_a_key_pressed(t_game *gdata);

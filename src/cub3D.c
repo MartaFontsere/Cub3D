@@ -17,7 +17,7 @@ void	close_window(t_game	*gdata)
 	if (gdata->finish_game == 0)
 	{
 		ft_write(1, "\nYou've left The Game... but The Game will never leave you 👀\n", 64);
-		ft_write(1, "    See you soon 😈🔥\n", 25);
+		ft_write(1, "    See you soon 😈🔥\n", 26);
 		//ft_write(1, "\nOoops... You left the game before finishing 😩\n", 50);
 	}
 	mlx_close_window(gdata->mlx.init);

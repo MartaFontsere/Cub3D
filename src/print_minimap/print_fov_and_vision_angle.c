@@ -14,7 +14,6 @@
 
 
 
-
 void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, int color)
 {
     double init_x = x;
@@ -67,9 +66,7 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
             if (pixel_map_x >= 0 && pixel_map_x < gdata->map.cells_width &&
                 pixel_map_y >= 0 && pixel_map_y < gdata->map.cells_height &&
                 gdata->map.matrix[pixel_map_y][pixel_map_x] != '1')
-            {
                 mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, color);
-            }
 
             j += 0.1;  // Incremento pequeño para evitar huecos en la línea
         }

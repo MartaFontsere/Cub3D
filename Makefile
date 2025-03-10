@@ -41,7 +41,9 @@ FILES += movements/press_or_release_key.c movements/move_player.c movements/rota
 
 FILES += print_map/print_map.c print_map/print_walls.c print_map/print_utils.c
 
-FILES += print_minimap/print_minimap.c  print_minimap/print_player_and_vision_params.c print_minimap/print_player_params.c
+FILES += print_minimap/print_minimap_skeleton.c  print_minimap/print_fov_and_vision_angle.c print_minimap/print_items_in_motion.c
+
+FILES += bonus/floor_raycasting.c 
 
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))
