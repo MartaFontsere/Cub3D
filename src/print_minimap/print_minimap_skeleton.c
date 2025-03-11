@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/11 19:21:17 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:21:31 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ printf ("start_y + pixel_y = %d\n", start_y + pixel_y);
         while (pixel_x < gdata->minimap.px_width) 
         {
             // Determina si el pixel actual está dentro de los límites del mapa
-            if (start_x + pixel_x < 0 || start_y + pixel_y < 0)
+            if (start_x + pixel_x < 0 || start_y + pixel_y < 0 || start_x + pixel_x > gdata->minimap.px_in_cell_width * gdata->map.c_width || start_y + pixel_y > gdata->minimap.px_in_cell_height * gdata->map.c_height)
             	{
 	                // Dibuja el patrón de ajedrez para espacios vacíos
 		            if (((pixel_x / 4) % 2 == (pixel_y / 4) % 2)) 
@@ -207,7 +207,6 @@ printf ("start_y + pixel_y = %d\n", start_y + pixel_y);
 		            else 
 		                mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, MEDIUM_GREY);
 	            }
-
             else
             {
             	//Calcula a que casilla de la matriz corresponde ese pixel

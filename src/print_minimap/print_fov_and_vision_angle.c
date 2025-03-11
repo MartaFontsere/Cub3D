@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 03:02:49 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 20:47:16 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/11 22:45:29 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
         //printf ("\nRAY %d\n", i);
         t_ray *ray = &vision.FOV.rays[i];
         
-        // Coordenadas de inicio (posición del jugador)
+        // Coordenadas de inicio (posición del jugador en el centro del minimapa)
         double draw_ray_x = x;
         double draw_ray_y = y;
         
         // Algoritmo DDA para dibujar la línea del rayo
-        double x_distance = (ray->px_collision_x - gdata->player.x) + x - draw_ray_x; //Cuantos pixeles avanza el rayo en el eje x hasta colisionar
-        double y_distance = (ray->px_collision_y - gdata->player.y) + y - draw_ray_y; //Cuantos pixeles avanza el rayo en el eje y hasta colisionar
+        double x_distance = (ray->px_collision_x - gdata->player.x) ; //Cuantos pixeles avanza el rayo en el eje x hasta colisionar
+        double y_distance = (ray->px_collision_y - gdata->player.y) ; //Cuantos pixeles avanza el rayo en el eje y hasta colisionar
         double steps = fmax(fabs(x_distance), fabs(y_distance)); //Selecciona el valor mayor entre x_distance y y_distance. Porque queremos asegurarnos de recorrer toda la línea sin saltos. Si dx es mayor, significa que la línea se mueve más en X que en Y, así que debemos dividir el movimiento en suficientes pasos para cubrir todos los píxeles en X. Lo mismo ocurre si dy es mayor. Esto se hace para recorrer el rayo sin perder precision
         // printf ("steps = %f\n", steps);
         // printf ("ray->px_collision_y = %f\n", ray->px_collision_y);
@@ -125,8 +125,8 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 
         while (current_step < (int)steps) 
         {
-            int px_x = (int)draw_ray_x; //Se convierten draw_ray_x y draw_ray_y a enteros (px_x, px_y) para representar píxeles en pantalla. Esto se hace porque la función mlx_put_pixel() espera coordenadas de píxeles enteras
-            int px_y = (int)draw_ray_y;
+            int px_x = (int)(draw_ray_x + 0.5); //Se convierten draw_ray_x y draw_ray_y a enteros (px_x, px_y) para representar píxeles en pantalla. Esto se hace porque la función mlx_put_pixel() espera coordenadas de píxeles enteras
+            int px_y = (int)(draw_ray_y + 0.5); // Añadir 0.5 antes de convertir a entero para redondear al entero más cercano
             
             // Verificar límites del minimapa
             if (px_x >= 0 && px_x < gdata->minimap.px_width && 
@@ -143,13 +143,16 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
             draw_ray_y += y_inc;
             current_step++;
             
-            // Verificar si hemos salido del mapa
-            int map_x = (int)(draw_ray_x / gdata->minimap.px_in_cell_width);
-            int map_y = (int)(draw_ray_y / gdata->minimap.px_in_cell_height);
             
+            // Ajustar las coordenadas de colisión para reflejar la posición real en el mapa
+            int map_x = (int)((draw_ray_x - x + gdata->player.x) / gdata->minimap.px_in_cell_width);
+            int map_y = (int)((draw_ray_y - y + gdata->player.y) / gdata->minimap.px_in_cell_height);
+            
+            // Verificar si hemos salido del mapa
             if (map_x < 0 || map_x >= gdata->map.c_width ||
                 map_y < 0 || map_y >= gdata->map.c_height)
             {
+                printf ("entro\n");
                 break;
             }
         }

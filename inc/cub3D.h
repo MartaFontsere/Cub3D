@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/11 18:59:57 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:23:33 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@
 
 
 /*MLXCOLORS*/
-# define BLACK 0x000000FF
+# define BLACK 0x00000080
 # define DARK_GREY 0x3C3C3CFF
-# define MEDIUM_GREY 0X696969FF
+# define MEDIUM_GREY 0X69696980
 //# define MEDIUM_GREY 0X575757FF
 # define SOFT_GREY 0x959595FF
 //# define LIGHT_GREY 0XD7D7D7FF
@@ -106,8 +106,8 @@
 
 
 
-#define X 0
-#define Y 1
+// #define X 0
+// #define Y 1
 
 
 
@@ -149,8 +149,8 @@
 /*MINIMAP*/
 #define MINIMAP_PX_WIDTH 515
 #define MINIMAP_PX_HEIGHT 340
-#define MINIMAP_PX_CELL_WIDTH 28
-#define MINIMAP_PX_CELL_HEIGHT 28
+#define MINIMAP_PX_CELL_WIDTH 24
+#define MINIMAP_PX_CELL_HEIGHT 24
 
 
 
