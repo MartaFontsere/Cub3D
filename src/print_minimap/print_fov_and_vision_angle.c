@@ -22,6 +22,7 @@ void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, 
     double ray_dir_y = -sin(vision_angle); // Negativo para ajustar coordenadas
     int thickness = 4;  // Grosor del rayo
 printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
+   
     while (1)
     {
         // **Avanzamos en X**
@@ -50,26 +51,34 @@ printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
         init_y = next_y; // Actualizamos la posición en Y
 
         // **Dibujar la línea con grosor usando while**
-        double j = -thickness / 2;
-        while (j <= thickness / 2)
+        double minimap_x = gdata->minimap.center_x + (init_x - gdata->player.x);
+double minimap_y = gdata->minimap.center_y + (init_y - gdata->player.y);
+double j = -thickness / 2;
+while (j <= thickness / 2)
+{
+    int offset_x = (int)(j * cos(vision_angle + M_PI_2));  
+    int offset_y = -(int)(j * sin(vision_angle + M_PI_2));
+
+    int pixel_x = (int)(minimap_x + offset_x);
+    int pixel_y = (int)(minimap_y + offset_y);
+
+    // Corregir el cálculo para verificar la colisión en el mapa
+    int pixel_map_x = (int)((gdata->player.x + offset_x) / gdata->minimap.px_in_cell_width);
+    int pixel_map_y = (int)((gdata->player.y + offset_y) / gdata->minimap.px_in_cell_height);
+
+    // **Verificar límites antes de dibujar**
+    if (pixel_x >= 0 && pixel_x < gdata->minimap.px_width && pixel_y >= 0 && pixel_y < gdata->minimap.px_height)
+    {
+        if (pixel_map_x >= 0 && pixel_map_x < gdata->map.c_width &&
+            pixel_map_y >= 0 && pixel_map_y < gdata->map.c_height &&
+            gdata->map.matrix[pixel_map_y][pixel_map_x] != '1')
         {
-            int offset_x = (int)(j * cos(vision_angle + M_PI_2));  
-            int offset_y = -(int)(j * sin(vision_angle + M_PI_2));
-
-            int pixel_x = (int)(init_x + offset_x);
-            int pixel_y = (int)(init_y + offset_y);
-
-            int pixel_map_x = pixel_x / gdata->minimap.px_in_cell_width;
-            int pixel_map_y = pixel_y / gdata->minimap.px_in_cell_height;
-
-            // **Verificar límites antes de dibujar**
-            if (pixel_map_x >= 0 && pixel_map_x < gdata->map.c_width &&
-                pixel_map_y >= 0 && pixel_map_y < gdata->map.c_height &&
-                gdata->map.matrix[pixel_map_y][pixel_map_x] != '1')
-                mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, color);
-
-            j += 0.1;  // Incremento pequeño para evitar huecos en la línea
+            mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, color);
         }
+    }
+
+    j += 0.1;  // Incremento pequeño para evitar huecos en la línea
+}
     }
 }
 
@@ -81,13 +90,6 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
     int i = 0;
     
 
-  //   while (i < vision.FOV.num_rays) 
-  //   {
-  //      printf ("colision en y: %f\n", vision.FOV.rays[i].px_collision_y);
-  //      i++;
-  //   }
-  // i = 0;
-
     while (i < vision.FOV.num_rays) 
     {
         //printf ("\nRAY %d\n", i);
@@ -98,8 +100,8 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
         double draw_ray_y = y;
         
         // Algoritmo DDA para dibujar la línea del rayo
-        double x_distance = ray->px_collision_x - x; //Cuantos pixeles avanza el rayo en el eje x hasta colisionar
-        double y_distance = ray->px_collision_y - y; //Cuantos pixeles avanza el rayo en el eje y hasta colisionar
+        double x_distance = (ray->px_collision_x - gdata->player.x) + x - draw_ray_x; //Cuantos pixeles avanza el rayo en el eje x hasta colisionar
+        double y_distance = (ray->px_collision_y - gdata->player.y) + y - draw_ray_y; //Cuantos pixeles avanza el rayo en el eje y hasta colisionar
         double steps = fmax(fabs(x_distance), fabs(y_distance)); //Selecciona el valor mayor entre x_distance y y_distance. Porque queremos asegurarnos de recorrer toda la línea sin saltos. Si dx es mayor, significa que la línea se mueve más en X que en Y, así que debemos dividir el movimiento en suficientes pasos para cubrir todos los píxeles en X. Lo mismo ocurre si dy es mayor. Esto se hace para recorrer el rayo sin perder precision
         // printf ("steps = %f\n", steps);
         // printf ("ray->px_collision_y = %f\n", ray->px_collision_y);
@@ -118,7 +120,9 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
         // Sin este cálculo, el rayo no se trazaría correctamente, saltaría píxeles o se vería cortado.
 
         int current_step = 0;
+
         // Dibujar el rayo paso a paso
+
         while (current_step < (int)steps) 
         {
             int px_x = (int)draw_ray_x; //Se convierten draw_ray_x y draw_ray_y a enteros (px_x, px_y) para representar píxeles en pantalla. Esto se hace porque la función mlx_put_pixel() espera coordenadas de píxeles enteras
@@ -156,6 +160,6 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 void    calculate_and_print_fov_and_vision_angle(t_game *gdata)
 {
     calculate_fov(gdata, gdata->player.x, gdata->player.y);
-    print_FOV (gdata, gdata->vision, gdata->player.x, gdata->player.y, gdata->vision.vision_angle, SOFT_YELLOW);
+    print_FOV (gdata, gdata->vision,gdata->minimap.center_x, gdata->minimap.center_y, gdata->vision.vision_angle, SOFT_YELLOW);
     print_vision_angle (gdata, gdata->player.x, gdata->player.y, gdata->vision.vision_angle, YELLOW1);
 }

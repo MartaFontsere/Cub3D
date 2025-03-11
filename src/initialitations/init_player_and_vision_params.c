@@ -34,8 +34,8 @@ void	init_player_position(t_game *gdata, t_map *map, t_player *player)
 	}
 	player->x = (player->raw_x * gdata->minimap.px_in_cell_width) + (gdata->minimap.px_in_cell_width / 2);
 	player->y = (player->raw_y * gdata->minimap.px_in_cell_height) + (gdata->minimap.px_in_cell_height / 2);
-	// printf ("posicion en x |%f|\n", player->x);
-	// printf ("posicion en y |%f|\n", player->y);
+	printf ("posicion en x |%f|\n", player->x);
+	printf ("posicion en y |%f|\n", player->y);
 	// printf ("cos del angulo |%f|\n", cos(gdata->player.ray.vision_angle));
 	// printf ("sen del angulo |%f|\n", sin(gdata->player.ray.vision_angle));
 	// printf ("posicion 2 en x |%f|\n", player->x);

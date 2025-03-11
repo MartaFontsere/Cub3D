@@ -16,7 +16,7 @@
 
 int	init_gdata_values(t_game *gdata)
 {
-	init_minimap_params(gdata, &gdata->map);
+	init_minimap_params(gdata);
 	init_player_parameters(gdata, &gdata->player);
 	if (init_vision_parameters (gdata, &gdata->vision) == 0)
 		return (0);

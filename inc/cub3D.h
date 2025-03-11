@@ -147,9 +147,10 @@
 
 
 /*MINIMAP*/
-#define MINIMAP_PX_WIDTH 520
+#define MINIMAP_PX_WIDTH 515
 #define MINIMAP_PX_HEIGHT 340
-
+#define MINIMAP_PX_CELL_WIDTH 37
+#define MINIMAP_PX_CELL_HEIGHT 37
 
 
 
@@ -307,10 +308,15 @@ typedef struct s_player
 
 typedef struct s_minimap
 {
+	int 			c_width; // Número de casillas que caben en el eje X dentro de la ventana del minimapa
+	int 			c_height; // Número de casillas que caben en el eje Y dentro de la ventana del minimapa
 	int				px_width; // Valor máximo X del minimapa (en pixels)
 	int				px_height; // Valor máximo Y del minimapa (en pixels)
 	int 			px_in_cell_width; // Cantidad de pixels por cada celda en el eje X
 	int 			px_in_cell_height; //Cantidad de pixels por cada celda en el eje Y
+	int 			center_x; //casilla central del minimapa en el eje X
+	int 			center_y; //casilla central del minimapa en el eje Y
+
 }					t_minimap;
 
 
@@ -441,7 +447,7 @@ void	close_window(t_game	*gdata);
 
 //INITIALITATIONS
 int	init_gdata_values(t_game *gdata);
-void	init_minimap_params(t_game *gdata, t_map *map);
+void	init_minimap_params(t_game *gdata);
 void 	init_player_parameters (t_game *gdata, t_player *player);
 void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
 void	init_player_orientation(t_map *map, t_vision *vision);
@@ -473,6 +479,7 @@ void draw_floor(int x, int *y, t_game *gdata, t_ray *ray);
 
 //PRINT MINIMAP
 void	print_minimap(t_game *gdata);
+void print_player(t_game *gdata, t_player player, int x, int y);
 
 void print_empty_space (t_mlx mlx, t_minimap minimap, t_map map);
 void print_walls (t_mlx mlx, t_minimap minimap, t_map map);
@@ -483,11 +490,6 @@ void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, 
 void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x, double target_y);
 void	print_player_move(t_game *gdata, t_player player, double target_x, double target_y);
 void print_player_view_in_motion (t_game *gdata, t_player player, double target_x, double target_y);
-
-
-
-//PRINT PLAYER PARAMS
-void print_player (t_game *gdata, t_player player, double x, double y, int color);
 void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, int color);
 void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision_angle, int color);
 

@@ -32,9 +32,10 @@ void render_game (void *param) // todo lo que se tenga que checkear a cada vuelt
 			move_player (gdata, gdata->vision, &target_x, &target_y);
 		printf ("el target a donde se va a mover es: |%f||%f|\n",target_x, target_y);
 		//minimapa
-		print_player_FOV_in_motion(gdata, gdata->player, target_x, target_y);
-		print_player_view_in_motion (gdata, gdata->player, target_x, target_y); // incluir tanto el fov como el point of view
-		print_player_move(gdata, gdata->player, target_x, target_y);
+		// print_player_FOV_in_motion(gdata, gdata->player, target_x, target_y);
+		// print_player_view_in_motion (gdata, gdata->player, target_x, target_y); // incluir tanto el fov como el point of view
+		// print_player_move(gdata, gdata->player, target_x, target_y);
+		print_minimap (gdata);
 		//mapa
 		print_map (gdata, gdata->mlx, gdata->map);
 		gdata->player.x = target_x;
