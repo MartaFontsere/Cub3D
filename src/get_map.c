@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:04:50 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/26 13:56:55 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:56:11 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**copy_map(char **map, size_t height)
 
 int	mix_matrix(char **src, t_map *map)
 {
-	size_t	i;
+	size_t	i; 
 	size_t	j;
 	size_t	k;
 

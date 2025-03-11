@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/28 10:16:57 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:10:43 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ typedef struct s_map
 	size_t		c_width;
 	size_t		c_height;
 	int			j;
-	int			init;
-	int			open;
 	t_path		path;
 }				t_map;
 
@@ -140,6 +138,5 @@ void	check_n_line(char **src, t_map *map);
 int		check_esp(size_t x, size_t y, t_map *map);
 int		check_zero(size_t x, size_t y, t_map *map);
 int		check_player(size_t x, size_t y, t_map *map);
-int		is_door(size_t x, size_t y, t_map *map);
 
 #endif
