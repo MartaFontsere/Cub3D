@@ -1,10 +1,10 @@
 F 76,76,76
 C 99,99,99
 
-NO textures/simonkraft/cobblestone.xpm
-SO textures/simonkraft/cobblestone_01.xpm
-WE textures/simonkraft/mossy_cobblestone1.xpm
-EA textures/simonkraft/cobblestone_02.xpm
+NO textures/map_walls/opcion2/Norte.xpm42
+SO textures/map_walls/opcion2/Sur.xpm42
+EA textures/map_walls/opcion2/Este.xpm42
+WE textures/map_walls/opcion2/Oeste.xpm42
 
 1111111111111111111
 10W1001001001000001
