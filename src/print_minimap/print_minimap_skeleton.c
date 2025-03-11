@@ -217,7 +217,7 @@ printf ("start_y + pixel_y = %d\n", start_y + pixel_y);
 	            {
 	                if (gdata->map.matrix[matrix_cell_y][matrix_cell_x] == '1') 
 	                    mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, SOFT_GREY);
-	                else if (gdata->map.matrix[matrix_cell_y][matrix_cell_x]) 
+	                else if (gdata->map.matrix[matrix_cell_y][matrix_cell_x])
 	                    mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, DARK_GREY);
 	            } 
 	            else 
