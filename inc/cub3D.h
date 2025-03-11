@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 05:07:44 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:59:57 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,8 @@
 /*MINIMAP*/
 #define MINIMAP_PX_WIDTH 515
 #define MINIMAP_PX_HEIGHT 340
-#define MINIMAP_PX_CELL_WIDTH 37
-#define MINIMAP_PX_CELL_HEIGHT 37
+#define MINIMAP_PX_CELL_WIDTH 28
+#define MINIMAP_PX_CELL_HEIGHT 28
 
 
 

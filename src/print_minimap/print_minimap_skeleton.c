@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_minimap.c                                    :+:      :+:    :+:   */
+/*   print_minimap_skeleton.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 19:58:37 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:21:17 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,21 +213,22 @@ printf ("start_y + pixel_y = %d\n", start_y + pixel_y);
             	//Calcula a que casilla de la matriz corresponde ese pixel
 	            matrix_cell_x = (start_x + pixel_x) / gdata->minimap.px_in_cell_width;
 	            matrix_cell_y = (start_y + pixel_y) / gdata->minimap.px_in_cell_height;
+            	//printf ("estoy en una celda tipo |%c|\n", gdata->map.matrix[matrix_cell_y][matrix_cell_x]);
 	            if (matrix_cell_x >= 0 && matrix_cell_x < gdata->map.c_width && matrix_cell_y >= 0 && matrix_cell_y < gdata->map.c_height) 
 	            {
 	                if (gdata->map.matrix[matrix_cell_y][matrix_cell_x] == '1') 
 	                    mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, SOFT_GREY);
-	                else if (gdata->map.matrix[matrix_cell_y][matrix_cell_x])
+	                else if (gdata->map.matrix[matrix_cell_y][matrix_cell_x] == '0' || gdata->map.matrix[matrix_cell_y][matrix_cell_x] == 'N' || gdata->map.matrix[matrix_cell_y][matrix_cell_x] == 'S' || gdata->map.matrix[matrix_cell_y][matrix_cell_x] == 'W' || gdata->map.matrix[matrix_cell_y][matrix_cell_x] == 'E')
 	                    mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, DARK_GREY);
-	            } 
-	            else 
-	            {
-	                // Dibuja el patrón de ajedrez para espacios vacíos
-		            if (((pixel_x / 4) % 2 == (pixel_y / 4) % 2)) 
-		            	mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, BLACK);
 		            else 
-		                mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, MEDIUM_GREY);
-	            }
+		            {
+		                // Dibuja el patrón de ajedrez para espacios vacíos
+			            if (((pixel_x / 4) % 2 == (pixel_y / 4) % 2)) 
+			            	mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, BLACK);
+			            else 
+			                mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, MEDIUM_GREY);
+		            }
+	            } 
 	        }
 
             pixel_x++;

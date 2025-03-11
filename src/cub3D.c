@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 01:48:41 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:07:33 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,22 @@ int main(int ac, char **av)
 	if (prepare_textures (&gdata) == 0)
 		return (1);
 	print_map (&gdata, gdata.mlx, gdata.map);
+
+ 	printf("The matrix is:\n");
+ 	int i = 0;
+ 	while (gdata.map.matrix[i])
+ 	{
+ 		int j = 0;
+ 		while (gdata.map.matrix[i][j])
+ 		{
+ 			printf ("%c", gdata.map.matrix[i][j]);
+ 			j++;
+ 		}
+ 		printf("\n");
+ 		i++;
+ 	}
+
+
 	print_minimap(&gdata);
 		
 
