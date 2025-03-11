@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 03:02:49 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/11 22:45:29 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/11 23:37:48 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, 
 {
     double init_x = x;
     double init_y = y;
-    double ray_dir_x = -cos(vision_angle);
-    double ray_dir_y = -sin(vision_angle); // Negativo para ajustar coordenadas
+    double ray_dir_x = cos(vision_angle);
+    double ray_dir_y = sin(vision_angle); 
     int thickness = 4;  // Grosor del rayo
 printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
    

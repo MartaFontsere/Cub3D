@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 21:05:05 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/11 23:14:54 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,3 @@ void render_game (void *param) // todo lo que se tenga que checkear a cada vuelt
 		gdata->player.y = target_y;
 	}
 }
-
-// void render_game (void *param)
-// {
-// 	t_game	*gdata;
-
-// 	gdata = param;
-//  	printf ("hola %d\n", gdata->minimap.px_width);
-// }
