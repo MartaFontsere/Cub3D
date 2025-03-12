@@ -3,63 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/26 13:54:29 by yanaranj         ###   ########.fr       */
+/*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
+/*   Updated: 2025/03/11 22:48:13 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	init_structs(t_map *map)
+void	close_window(t_game	*gdata)
 {
-	map->matrix = NULL;
-	map->tmp_matrix = NULL;
-	map->void_matrix = NULL;
-	map->is_map = 0;
-	map->c_width = 0;
-	map->c_height = 0;
-	map->j = 0;
-	init_path(&map->path);
+	if (gdata->finish_game == 0)
+	{
+		ft_write(1, "\nYou've left The Game... but The Game will never leave you 👀\n", 64);
+		ft_write(1, "    See you soon 😈🔥\n", 26);
+	}
+	mlx_close_window(gdata->mlx.init);
 }
 
-void	init_path(t_path *path)
-{
-	path->no = NULL;
-	path->so = NULL;
-	path->ea = NULL;
-	path->we = NULL;
-	path->p_count = 0;
-	path->c_count = 0;
-	path->err_flag = 0;
-	path->c.r = 0;
-	path->c.g = 0;
-	path->c.b = 0;
-	path->c.path = path;
-	path->c.assigned = 0;
-	path->f.r = 0;
-	path->f.g = 0;
-	path->f.b = 0;
-	path->f.path = path;
-	path->f.assigned = 0;
-}
 
-int	main(int ac, char **av)
+int main(int ac, char **av)
 {
-	t_map	map;
+	t_game	gdata;
 
-	init_structs(&map);
-	if (!read_file(ac, av, &map))
+	//gdata.map.matrix = parsing_pre_yajaira(&gdata);
+	// if(!gdata.map.matrix)
+	// {
+	// 	ft_write(2, "Error generating the map matrix\n", 32);
+	// 	return 1;
+	// }
+
+	init_map_params (&gdata.map);
+	init_textures_and_colors_path(&gdata.texture.path);
+	if (!read_file(ac, av, &gdata))
 	{
-		clean_data(&map);
-		return (0);
+		clean_data(&gdata);
+		return (1);
 	}
-	if (!parse_map(map.matrix, &map))
+	if (init_gdata_values(&gdata) == 0)
 	{
-		clean_data(&map);
-		return (0);
+		clean_data(&gdata);
+		return (1);
 	}
-	clean_data(&map);
-	return (1);
+	if (!parse_map(gdata.map.matrix, &gdata.map))
+	{
+		clean_data(&gdata);
+		return (1);
+	}
+	// printf ("letra del player |%c|\n", gdata.player)
+	printf ("image pointer %p, mini pointer %p\n",gdata.mlx.image, gdata.mlx.mini_image);
+	calculate_fov(&gdata, gdata.player.x, gdata.player.y);
+	if (prepare_textures (&gdata) == 0)
+		return (1);
+	print_map (&gdata, gdata.mlx, gdata.map);
+
+ 	printf("The matrix is:\n");
+ 	int i = 0;
+ 	while (gdata.map.matrix[i])
+ 	{
+ 		int j = 0;
+ 		while (gdata.map.matrix[i][j])
+ 		{
+ 			printf ("%c", gdata.map.matrix[i][j]);
+ 			j++;
+ 		}
+ 		printf("\n");
+ 		i++;
+ 	}
+
+
+	print_minimap(&gdata);
+		
+
+	mlx_key_hook(gdata.mlx.init, press_key, &gdata);
+	mlx_loop_hook(gdata.mlx.init, render_game, &gdata);
+	mlx_loop(gdata.mlx.init); 
+	
+	clean_data(&gdata); //añadir el free de vision->rays
+	return (0);
+
 }

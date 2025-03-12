@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
+#    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 03:53:26 by mfontser          #+#    #+#              #
-#    Updated: 2025/02/27 10:16:52 by yanaranj         ###   ########.fr        #
+#    Updated: 2024/11/20 00:55:14 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRCSBONUS = ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c ft_lstl
  			
 OBJS = ${SRCS:.c=.o}
 	#se crearan los object files a partir de los source files cambiando el .c por .o
- 
+OBJSBONUS = ${SRCSBONUS:.c=.o}
 	#se crearan los object bonus files a partir de los source bonus files cambiando el .c por .o
 NAME = libft.a
 HEADER = libft.h

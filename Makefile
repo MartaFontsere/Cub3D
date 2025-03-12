@@ -3,42 +3,27 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yaja <yaja@student.42.fr>                  +#+  +:+       +#+         #
+#    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/07 06:46:10 by yaja             ###   ########.fr        #
+#    Updated: 2025/03/11 23:47:07 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #------------------------------------------------COLORS------------------------------------------------------#
 
-#NC = \033[0m
-#RED = \e[1;91m
-#GREEN = \e[1;92m
-#YELLOW = \e[1;93m
-#BLUE = \e[1;94m
-#TURQUOISE = \e[1;38;5;80m
-#PINK = \e[1;38;5;213m
-#FUCSIA = \e[1;38;5;201m
-#PURPLE = \e[1;38;5;135m
-#CYAN = \e[1;96m
-#LIME_GREEN = \e[1;38;5;118m
-#ORANGE = \e[1;38;2;255;128;0m
-
-#---------------------------------------------MAC_COLORS-----------------------------------------------------#
-NC= \033[0m
-RED= \033[1;91m
-GREEN= \033[1;92m
-YELLOW= \033[1;93m
-BLUE= \033[1;94m
-TURQUOISE= \033[1;38;5;80m
-PINK= \033[1;38;5;213m
-FUCSIA= \033[1;38;5;201m
-PURPLE= \033[1;38;5;135m
-CYAN= \033[1;96m
-LIME_GREEN= \033[1;38;5;118m
-ORANGE= \033[38;2;255;128;0m
-
+NC = \033[0m
+RED = \e[1;91m
+GREEN = \e[1;92m
+YELLOW = \e[1;93m
+BLUE = \e[1;94m
+TURQUOISE = \e[1;38;5;80m
+PINK = \e[1;38;5;213m
+FUCSIA = \e[1;38;5;201m
+PURPLE = \e[1;38;5;135m
+CYAN = \e[1;96m
+LIME_GREEN = \e[1;38;5;118m
+ORANGE = \e[1;38;2;255;128;0m
 
 #------------------------------------------------VARIABLES---------------------------------------------------#
 
@@ -46,12 +31,27 @@ ORANGE= \033[38;2;255;128;0m
 	#Makefile con dependencias
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
 
-FILES = cub3D.c free_errors.c read_fd.c read_fd_utils.c read_colors.c get_map.c parse_map.c parse_utils.c
+FILES = cub3D.c get_map.c render.c textures.c 
+
+FILES += initialitations/initialitations.c initialitations/init_map_minimap_params.c initialitations/init_player_and_vision_params.c initialitations/init_print_params.c initialitations/init_mlx_params.c
+
+FILES += read/read_fd.c read/read_fd_utils.c read/read_colors.c 
+
+FILES += parsing/parse_map.c parsing/parse_utils.c
+
+FILES += fov/calculate_fov.c fov/calculate_ray.c fov/utils_calculate_ray.c 
+
+FILES += movements/press_or_release_key.c movements/move_player.c movements/rotate_player.c movements/check_collisions.c
+
+FILES += print_map/print_map.c print_map/print_walls.c print_map/print_utils.c
+
+FILES += print_minimap/print_minimap_skeleton.c print_minimap/print_fov_and_vision_angle.c print_minimap/print_items_in_motion.c
+
+FILES += error/error.c error/free_errors.c
+
 FILES += ../libs/get_next_line/get_next_line.c ../libs/get_next_line/get_next_line_utils.c
 
-B_FILES = cub3D_bonus.c free_errors_bonus.c read_fd_bonus.c read_fd_utils_bonus.c read_colors_bonus.c get_map_bonus.c
-B_FILES += parse_map_bonus.c parse_utils_bonus.c parse_utils2_bonus.c
-B_FILES += ../libs/get_next_line/get_next_line.c ../libs/get_next_line/get_next_line_utils.c
+FILES += bonus/floor_raycasting.c bonus/print_map.c
 
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))
@@ -59,55 +59,37 @@ SRCS = 	$(addprefix $(SRCDIR), $(FILES))
 OBJDIR = obj/
 OBJS = $(patsubst $(SRCDIR)%.c, $(OBJDIR)%.o, $(SRCS))
 
-SRCDIR_BONUS = src_bonus/
-SRC_BONUS = $(addprefix $(SRCDIR_BONUS), $(B_FILES))
-#ponemos los objs de bonus dentro de la carpeta de objs que ya se ha creado
-OBJDIR_BONUS = obj_bonus/
-OBJS_BONUS = $(patsubst $(SRCDIR_BONUS)%.c, $(OBJDIR_BONUS)%.o, $(SRC_BONUS))
-
 INCLUDES = -I ./libs/Libft -I ./inc -I ./libs/get_next_line/
 
 NAME = cub3D
 
 HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h
-HEADER_BONUS = inc/cub3D.h libs/get_next_line/get_next_line.h inc/cub3D_bonus.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Ofast #-g -fsanitize=address
 
 MLXDIR = libs/MLX42
-LIBS = libs/Libft/libft.a #$(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
+LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
 
 #--------------------------------------------------NORMAS----------------------------------------------------#
 
 #Metodo implicito
 
-$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile libs/Libft/libft.a #$(MLXDIR)/build/libmlx42.a 
+$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a 
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
 
-$(OBJDIR_BONUS)%.o: $(SRCDIR_BONUS)%.c $(HEADER_BONUS) Makefile libs/Libft/libft.a #$(MLXDIR)/build/libmlx42.a 
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
 # Mis metodos
 
 all: make_libs ${NAME}
 
 make_libs:
-	@make -C libs/Libft all --no-print-directory
-#	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4 --no-print-directory
+	@make -C libs/Libft all
+	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4
 
-ifndef BONUS
-${NAME}: ${OBJS} dragon
+${NAME}: ${OBJS}
 	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)
-else
-${NAME}: ${OBJS_BONUS} dragon
-	@$(CC) $(CFLAGS) ${OBJS_BONUS} $(LIBS) -o $(NAME)
-endif
-	
-dragon:
 	@echo "	⠀⠀⠀⠀⠀⠀⠀"⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⣰⠂⠀$(BLUE)⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠀⠀⠀⠀⠀"⠀⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⡟⢆$(BLUE)⢠⢣⠀$(YELLOW)  ⣔⡀⠀⠀ ⠀$(BLUE)⠀⡘⡇⠀⠀⠀⠀⠀⠀"⠀⠀
@@ -144,18 +126,16 @@ dragon:
 	@echo "				    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ $(RED)⠈⠛⠁⠀⠀⠀⠀$(END)⠀⠀"
 	@echo ""
 
-bonus: 
-	@$(MAKE) BONUS=42
-
 clean:
-	@${RM} ${OBJDIR} ${OBJDIR_BONUS}
-	@make -C libs/Libft clean --no-print-directory
+	@${RM} ${OBJDIR}
+	@make -C libs/Libft clean
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)$(NC)$(END)"
 
-fclean: clean
+fclean:
+	@${RM} ${OBJDIR}
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)"
 	@${RM} ${NAME}
-	@make -C libs/Libft fclean --no-print-directory
+	@make -C libs/Libft fclean
 	@echo "$(RED)CUB3D EXEC DELETED$(END)$(END)"
 	@echo "$(ORANGE)"
 	@echo "	⠀⠀⠀⠀⠀⠀⢱⣆⠀⠀"

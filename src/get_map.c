@@ -6,17 +6,17 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:04:50 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/11 13:56:11 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:56:55 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-char	*cub_strdup(char *s1, size_t len)
+char	*cub_strdup(char *s1, int len)
 {
 	char	*str;
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -31,10 +31,10 @@ char	*cub_strdup(char *s1, size_t len)
 	return (str);
 }
 
-char	**copy_map(char **map, size_t height)
+char	**copy_map(char **map, int height)
 {
 	char	**map_tmp;
-	size_t	i;
+	int	i;
 
 	i = 0;
 	map_tmp = malloc(sizeof(char *) * (height + 1));
@@ -53,9 +53,9 @@ char	**copy_map(char **map, size_t height)
 
 int	mix_matrix(char **src, t_map *map)
 {
-	size_t	i; 
-	size_t	j;
-	size_t	k;
+	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
 	while (i < map->c_height)
