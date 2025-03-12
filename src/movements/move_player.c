@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 22:27:22 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/12 22:40:22 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,19 @@ void	move_player (t_game *gdata, t_vision vision, double *target_x, double *targ
 	prepare_next_position (gdata, vision, &move_x, &move_y);
 
 	// Solo actualizamos si no hay colisión
-	if (check_collision(gdata, *target_x + move_x, *target_y + move_y))
-	{
-		*target_x += move_x;
-		*target_y += move_y;
-	}
+	// if (check_collision(gdata, *target_x + move_x, *target_y + move_y))
+	// {
+	// 	*target_x += move_x;
+	// 	*target_y += move_y;
+	// }
+
+	// Verificar colisión independientemente para X y Y
+    if (check_collision_x(gdata, *target_x + move_x)) {
+        *target_x += move_x;  // Actualizar X si no hay colisión
+    }
+    if (check_collision_y(gdata, *target_y + move_y)) {
+        *target_y += move_y;  // Actualizar Y si no hay colisión
+    }
 	// Verificar los movimientos
     printf("movimiento | X: %f, Y: %f\n", move_x, move_y);
 }

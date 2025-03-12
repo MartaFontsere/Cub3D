@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 22:27:27 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/12 22:41:01 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -533,7 +533,9 @@ void	reset_mov_params(t_game *gdata);
 void	release_key(mlx_key_data_t keydata, t_game *gdata);
 
 //COLLISIONS
-int	check_collision(t_game *gdata, double target_x, double target_y);
+//int	check_collision(t_game *gdata, double target_x, double target_y);
+int check_collision_x(t_game *gdata, double target_x);
+int check_collision_y(t_game *gdata, double target_y);
 
 //ERROR
 void	write_error(const char *str);
