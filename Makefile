@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
+#    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/11 23:47:07 by mfontser         ###   ########.fr        #
+#    Updated: 2025/03/12 17:15:03 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #------------------------------------------------COLORS------------------------------------------------------#
 
-NC = \033[0m
+END = \033[0m
 RED = \e[1;91m
 GREEN = \e[1;92m
 YELLOW = \e[1;93m
@@ -30,6 +30,7 @@ ORANGE = \e[1;38;2;255;128;0m
 #DUDAS:
 	#Makefile con dependencias
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
+
 
 FILES = cub3D.c get_map.c render.c textures.c 
 
@@ -63,7 +64,7 @@ INCLUDES = -I ./libs/Libft -I ./inc -I ./libs/get_next_line/
 
 NAME = cub3D
 
-HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h
+HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h #inc/cub3D_bonus.h
 CC = cc 
 RM = rm -rf 
 CFLAGS = -Wall -Wextra -Werror -Ofast #-g -fsanitize=address
@@ -75,21 +76,28 @@ LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
 
 #Metodo implicito
 
-$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a 
+$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
+# aqui reglas de BONUS
 
 # Mis metodos
 
 all: make_libs ${NAME}
 
 make_libs:
-	@make -C libs/Libft all
-	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4
+	@make -C libs/Libft all --no-print-directory
+	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4 --no-print-directory
 
-${NAME}: ${OBJS}
+ifndef BONUS
+${NAME}: ${OBJS} dragon
 	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)
+else
+${NAME}: ${OBJS_BONUS} dragon
+	@$(CC) $(CFLAGS) ${OBJS_BONUS} $(LIBS) -o $(NAME)
+endif
+dragon:
 	@echo "	⠀⠀⠀⠀⠀⠀⠀"⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⣰⠂⠀$(BLUE)⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠀⠀⠀⠀⠀"⠀⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⡟⢆$(BLUE)⢠⢣⠀$(YELLOW)  ⣔⡀⠀⠀ ⠀$(BLUE)⠀⡘⡇⠀⠀⠀⠀⠀⠀"⠀⠀
@@ -126,16 +134,18 @@ ${NAME}: ${OBJS}
 	@echo "				    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ $(RED)⠈⠛⠁⠀⠀⠀⠀$(END)⠀⠀"
 	@echo ""
 
+bonus: 
+	@$(MAKE) BONUS=42
+	
 clean:
-	@${RM} ${OBJDIR}
-	@make -C libs/Libft clean
+	@${RM} ${OBJDIR} ${OBJDIR_BONUS}
+	@make -C libs/Libft clean --no-print-directory
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)$(NC)$(END)"
 
-fclean:
-	@${RM} ${OBJDIR}
+fclean: clean
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)"
 	@${RM} ${NAME}
-	@make -C libs/Libft fclean
+	@make -C libs/Libft fclean --no-print-directory
 	@echo "$(RED)CUB3D EXEC DELETED$(END)$(END)"
 	@echo "$(ORANGE)"
 	@echo "	⠀⠀⠀⠀⠀⠀⢱⣆⠀⠀"
@@ -155,4 +165,4 @@ fclean:
 re: fclean all
 	@echo "CUB3D RE DONE"
 
-.PHONY: all clean fclean re⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+.PHONY: all clean fclean re
