@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 22:22:08 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/11 23:37:37 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/12 01:09:20 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void init_ray_direction (t_ray *ray, t_game *gdata, int check_ray_x_in_map,  int
     //IDEA, PASARME GDATA Y VOLVER A INICIALIZAR LAS VARIABLES AQUI EN LOCAL
     // Inicializar dirección del rayo
     ray->dir_x = cos(ray->current_angle);
-    ray->dir_y = sin(ray->current_angle);
-     printf ("ray->dir_x %f\n", ray->dir_x * (180 / M_PI));
-    printf ("ray->dir_y %f\n", ray->dir_y * (180 / M_PI));
+    ray->dir_y = -sin(ray->current_angle);
+    //  printf ("ray->dir_x %f\n", ray->dir_x * (180 / M_PI));
+    // printf ("ray->dir_y %f\n", ray->dir_y * (180 / M_PI));
 
     controll_x_limit_case (ray, check_ray_x_in_map, gdata->player.cell_player_x);
     controll_y_limit_case (ray, check_ray_y_in_map, gdata->player.cell_player_y);

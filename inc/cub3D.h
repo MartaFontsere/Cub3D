@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/11 20:23:33 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/11 23:51:47 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -475,7 +475,8 @@ void get_texture_row(t_game *gdata, t_image *texture,  double *tex_start_offset)
 void get_texture_column(t_image *texture, double *wall_x, int *tex_x);
 void get_wall_column (t_game *gdata, t_ray *ray, double *wall_x);
 
-void draw_floor(int x, int *y, t_game *gdata, t_ray *ray);
+//void draw_floor(int x, int *y, t_game *gdata, t_ray *ray);
+void draw_floor(int column, int row, t_game *gdata, t_ray *ray);
 
 //PRINT MINIMAP
 void	print_minimap(t_game *gdata);
