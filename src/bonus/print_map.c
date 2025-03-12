@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:55:35 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 00:26:00 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/12 02:02:20 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,13 @@ printf ("entro\n");
      int sky_tex_height = sky_texture->xpm->texture.height;
 
      // Calcular el desplazamiento horizontal del cielo (tex_x) basado solo en el ángulo de rotación
-     double sky_offset_x = ray->current_angle / (2 * M_PI);  // Normalizar el ángulo a un valor entre 0 y 1
+     double sky_offset_x = -ray->current_angle / (2 * M_PI);  // Normalizar el ángulo a un valor entre 0 y 1
      sky_offset_x -= floor(sky_offset_x);  // Mantener solo la parte decimal --> Esto elimina la parte entera de sky_offset_x, asegurando que el valor siempre esté entre 0 y 1, sin importar cuántas vueltas haya dado el jugador
      // asi, hemos calculado el desplazamiento del cielo en función de la dirección y la posición del jugador
 
 
 // Ajustar el desplazamiento horizontal en función del movimiento lateral (gdata->player.x)
-double lateral_offset = gdata->player.x * 0.0005; // Ajuste pequeño en el eje X
+double lateral_offset = gdata->player.x * 0.0003; // Ajuste pequeño en el eje X
 sky_offset_x += lateral_offset;
 sky_offset_x -= floor(sky_offset_x);  // Mantenerlo entre 0 y 1
 
@@ -154,7 +154,7 @@ sky_offset_x -= floor(sky_offset_x);  // Mantenerlo entre 0 y 1
      int tex_x_start = (int)(sky_offset_x * sky_tex_width);
 
      // Calcular el desplazamiento vertical del cielo (tex_y) basado solo en la posición vertical del jugador
-     double vertical_offset = gdata->player.y * 0.0005;  // Ajuste pequeño en el eje Y
+     double vertical_offset = gdata->player.y * 0.0003;  // Ajuste pequeño en el eje Y
 
      int y = 0;
      while (y < draw_wall_start)
