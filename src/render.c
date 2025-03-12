@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/11 23:14:54 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:41:18 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void render_game (void *param) // todo lo que se tenga que checkear a cada vuelt
 		print_minimap (gdata);
 		//mapa
 		print_map (gdata, gdata->mlx, gdata->map);
+		do_dragon_animation (gdata);
 		gdata->player.x = target_x;
 		gdata->player.y = target_y;
 	}

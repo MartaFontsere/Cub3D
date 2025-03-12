@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/11 23:51:47 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/12 22:27:27 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,18 @@
 #define SOUTH_TEXTURE "textures/map_walls/opcion2/Sur.xpm42"
 #define WEST_TEXTURE "textures/map_walls/opcion2/Oeste.xpm42"
 #define EAST_TEXTURE "textures/map_walls/opcion2/Este.xpm42"
+
 //esto no borrar:
 // #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
 #define SKY_TEXTURE "textures/sky/Sky_32.xpm42"
 #define FLOOR_TEXTURE "textures/floor/Floor_4.xpm42"
+#define DRAGON_1 "textures/flying_dragon/dragon1.xpm42"
+#define DRAGON_2 "textures/flying_dragon/dragon2.xpm42"
+#define DRAGON_3 "textures/flying_dragon/dragon3.xpm42"
+#define DRAGON_WIDTH 380
+#define DRAGON_HEIGHT 213
+
+
 	//opcion1
 // #define WIDTH_NORTH_TEXTURE 1500
 // #define HEIGHT_NORTH_TEXTURE 994
@@ -206,6 +214,7 @@ typedef struct s_texture
 	//BONUS
 	t_image 	sky_img;
 	t_image 	floor_img;
+	t_image 	dragon_img[4];
 } 				t_texture;
 
 typedef struct s_print
@@ -463,6 +472,9 @@ void	init_textures_and_colors_path(t_path *path);
 char **parsing_pre_yajaira(t_game *gdata);
 
 //PRINT MAP
+void do_dragon_animation (t_game *gdata);
+void	print_dragon(t_game *gdata);
+int	prepare_animation (t_game *gdata);
 int	prepare_textures (t_game *gdata);
 void print_map (t_game *gdata, t_mlx mlx, t_map map);
 int get_texture_pixel(t_image *texture, int tex_x, int tex_y);

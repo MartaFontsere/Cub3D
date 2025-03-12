@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/11 23:47:07 by mfontser         ###   ########.fr        #
+#    Updated: 2025/03/12 06:18:51 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ FILES += error/error.c error/free_errors.c
 
 FILES += ../libs/get_next_line/get_next_line.c ../libs/get_next_line/get_next_line_utils.c
 
-FILES += bonus/floor_raycasting.c bonus/print_map.c
+FILES += bonus/floor_raycasting.c bonus/print_map.c bonus/print_dragon.c bonus/do_dragon_animation.c
 
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))

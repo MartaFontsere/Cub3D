@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/11 22:48:13 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:43:07 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,27 @@ int main(int ac, char **av)
 	printf ("image pointer %p, mini pointer %p\n",gdata.mlx.image, gdata.mlx.mini_image);
 	calculate_fov(&gdata, gdata.player.x, gdata.player.y);
 	if (prepare_textures (&gdata) == 0)
-		return (1);
+		return (1); //LIBERAR COSAS
+	if (prepare_animation (&gdata) == 0)
+		return (1); //LIBERAR COSAS
 	print_map (&gdata, gdata.mlx, gdata.map);
 
- 	printf("The matrix is:\n");
- 	int i = 0;
- 	while (gdata.map.matrix[i])
- 	{
- 		int j = 0;
- 		while (gdata.map.matrix[i][j])
- 		{
- 			printf ("%c", gdata.map.matrix[i][j]);
- 			j++;
- 		}
- 		printf("\n");
- 		i++;
- 	}
-
+ 	// printf("The matrix is:\n");
+ 	// int i = 0;
+ 	// while (gdata.map.matrix[i])
+ 	// {
+ 	// 	int j = 0;
+ 	// 	while (gdata.map.matrix[i][j])
+ 	// 	{
+ 	// 		printf ("%c", gdata.map.matrix[i][j]);
+ 	// 		j++;
+ 	// 	}
+ 	// 	printf("\n");
+ 	// 	i++;
+ 	// }
 
 	print_minimap(&gdata);
-		
+	print_dragon (&gdata);
 
 	mlx_key_hook(gdata.mlx.init, press_key, &gdata);
 	mlx_loop_hook(gdata.mlx.init, render_game, &gdata);

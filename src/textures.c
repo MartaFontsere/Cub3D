@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 01:21:10 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:39:22 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,23 @@ int	prepare_textures (t_game *gdata)
 		//return error; //MIRAR LA FUNCION DE FREE PERTINENTE y escribir error
 	if (!load_image(gdata, &gdata->texture.floor_img, FLOOR_TEXTURE))
 		printf ("hola"); //BORRAR
+	return (1);
+}
+
+int	prepare_animation (t_game *gdata)
+{
 		///return error; //MIRAR LA FUNCION DE FREE PERTINENTE y escribir error
-	
+	if (!load_image(gdata, &gdata->texture.dragon_img[0], DRAGON_1))
+		printf ("hola"); //BORRAR
+		//return error; //MIRAR LA FUNCION DE FREE PERTINENTE y escribir error
+	if (!load_image(gdata, &gdata->texture.dragon_img[1], DRAGON_2))
+		printf ("hola"); //BORRAR
+		//return error; //MIRAR LA FUNCION DE FREE PERTINENTE y escribir error
+	if (!load_image(gdata, &gdata->texture.dragon_img[2], DRAGON_3))
+		printf ("hola"); //BORRAR
+		//return error; //MIRAR LA FUNCION DE FREE PERTINENTE y escribir error
+	if (!load_image(gdata, &gdata->texture.dragon_img[3], DRAGON_2))
+		printf ("hola"); //BORRAR
+		//return error; //MIRAR LA FUNCION DE FREE PERTINENTE y escribir error
 	return (1);
 }

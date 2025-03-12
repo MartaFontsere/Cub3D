@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:09:51 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/25 17:31:18 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/12 05:53:19 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	create_new_images(t_game *gdata, t_mlx *mlx)
 		//free_raw_and_map(gdata); REVISAR 
 		return (0);
 	}
+	printf("llego\n");
 	return (1);
 }
 
@@ -65,5 +66,6 @@ int	put_image_to_window(t_game *gdata, t_mlx *mlx)
 		close_window(gdata);
 		return (0);
 	}
+
 	return (1);
 }
