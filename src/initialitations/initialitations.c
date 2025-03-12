@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   initialitations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 01:46:16 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:19:12 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-
 
 int	init_gdata_values(t_game *gdata)
 {

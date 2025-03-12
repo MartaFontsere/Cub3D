@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/12 17:15:03 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/03/12 19:33:27 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,28 +31,47 @@ ORANGE = \e[1;38;2;255;128;0m
 	#Makefile con dependencias
 	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
 
+# Files by directory
+BASE_FILES = cub3D.c get_map.c render.c textures.c 
 
-FILES = cub3D.c get_map.c render.c textures.c 
+INIT_FILES = initialitations.c init_map_minimap_params.c init_player_and_vision_params.c init_print_params.c init_mlx_params.c
+FOV_FILES = calculate_fov.c calculate_ray.c utils_calculate_ray.c 
+MOVE_FILES = press_or_release_key.c move_player.c rotate_player.c check_collisions.c
+PRINT_FILES = print_map.c print_walls.c print_utils.c
+PRINT_MINI_FILES = print_minimap_skeleton.c print_fov_and_vision_angle.c print_items_in_motion.c
+PARSE_FILES = parse_map.c parse_utils.c
+READ_FILES = read_fd.c read_fd_utils.c read_colors.c 
+ERROR_FILES = error.c free_errors.c
+GNL_FILES = get_next_line.c get_next_line_utils.c
+BONUS_FILES = floor_raycasting.c print_map.c
 
-FILES += initialitations/initialitations.c initialitations/init_map_minimap_params.c initialitations/init_player_and_vision_params.c initialitations/init_print_params.c initialitations/init_mlx_params.c
+# Directories
+INIT_DIR = initialitations/
+FOV_DIR = fov/
+MOVE_DIR = movements/
+PRINT_DIR = print_map/
+PRINT_MINI_DIR = print_minimap/
+PARSE_DIR = parsing/
+READ_DIR = read/
+ERROR_DIR = error/
+GNL_DIR = ../libs/get_next_line/
+BONUS_DIR = bonus/
 
-FILES += read/read_fd.c read/read_fd_utils.c read/read_colors.c 
+INIT_SRCS = $(addprefix $(INIT_DIR), $(INIT_FILES))
+FOV_SRCS = $(addprefix $(FOV_DIR), $(FOV_FILES))
+MOVE_SRCS = $(addprefix $(MOVE_DIR), $(MOVE_FILES))
+PRINT_SRCS = $(addprefix $(PRINT_DIR), $(PRINT_FILES))
+PRINT_MINI_SRCS = $(addprefix $(PRINT_MINI_DIR), $(PRINT_MINI_FILES))
+PARSE_SRCS = $(addprefix $(PARSE_DIR), $(PARSE_FILES))
+READ_SRCS = $(addprefix $(READ_DIR), $(READ_FILES))
+ERROR_SRCS = $(addprefix $(ERROR_DIR), $(ERROR_FILES))
+GNL_SRCS = $(addprefix $(GNL_DIR), $(GNL_FILES))
+BONUS_SRCS = $(addprefix $(BONUS_DIR), $(BONUS_FILES))
 
-FILES += parsing/parse_map.c parsing/parse_utils.c
-
-FILES += fov/calculate_fov.c fov/calculate_ray.c fov/utils_calculate_ray.c 
-
-FILES += movements/press_or_release_key.c movements/move_player.c movements/rotate_player.c movements/check_collisions.c
-
-FILES += print_map/print_map.c print_map/print_walls.c print_map/print_utils.c
-
-FILES += print_minimap/print_minimap_skeleton.c print_minimap/print_fov_and_vision_angle.c print_minimap/print_items_in_motion.c
-
-FILES += error/error.c error/free_errors.c
-
-FILES += ../libs/get_next_line/get_next_line.c ../libs/get_next_line/get_next_line_utils.c
-
-FILES += bonus/floor_raycasting.c bonus/print_map.c
+#todos los files con su respectivo path
+FILES = $(BASE_FILES) $(INIT_SRCS) $(FOV_SRCS) $(MOVE_SRCS) $(PRINT_SRCS) \
+		$(PRINT_MINI_SRCS) $(PARSE_SRCS) $(READ_SRCS) $(ERROR_SRCS) $(GNL_SRCS) \
+		$(BONUS_SRCS)
 
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))

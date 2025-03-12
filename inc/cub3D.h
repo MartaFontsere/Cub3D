@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/11 23:51:47 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:31:19 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@
 # include "../libs/get_next_line/get_next_line.h"
 # include "../libs/MLX42/include/MLX42/MLX42.h"
 # include "../libs/Libft/libft.h"
-//# include "sprites.h"
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
-
 
 /*COLORS*/
 # define END "\x1b[0m"
@@ -60,56 +58,12 @@
 // #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
 #define SKY_TEXTURE "textures/sky/Sky_32.xpm42"
 #define FLOOR_TEXTURE "textures/floor/Floor_4.xpm42"
-	//opcion1
-// #define WIDTH_NORTH_TEXTURE 1500
-// #define HEIGHT_NORTH_TEXTURE 994
-// #define WIDTH_SOUTH_TEXTURE 360
-// #define HEIGHT_SOUTH_TEXTURE 240
-// #define WIDTH_WEST_TEXTURE 626
-// #define HEIGHT_WEST_TEXTURE 417
-// #define WIDTH_EAST_TEXTURE 626
-// #define HEIGHT_EAST_TEXTURE 414
-
-	//opcion2
-// #define WIDTH_NORTH_TEXTURE 1000
-// #define HEIGHT_NORTH_TEXTURE 1000
-// #define WIDTH_SOUTH_TEXTURE 1000
-// #define HEIGHT_SOUTH_TEXTURE 1000
-// #define WIDTH_WEST_TEXTURE 1000
-// #define HEIGHT_WEST_TEXTURE 1000
-// #define WIDTH_EAST_TEXTURE 1000
-// #define HEIGHT_EAST_TEXTURE 1000
-
-//cielo
-// #define WIDTH_SKY_TEXTURE 1920
-// #define HEIGHT_SKY_TEXTURE 960
-// #define WIDTH_SKY_TEXTURE 1800
-// #define HEIGHT_SKY_TEXTURE 1013
-// #define WIDTH_SKY_TEXTURE 1408
-// #define HEIGHT_SKY_TEXTURE 704
-// #define WIDTH_SKY_TEXTURE 2816
-// #define HEIGHT_SKY_TEXTURE 704
-
-//floor
-// #define WIDTH_FLOOR_TEXTURE 1024
-// #define HEIGHT_FLOOR_TEXTURE 1024
-// #define WIDTH_FLOOR_TEXTURE 2024
-// #define HEIGHT_FLOOR_TEXTURE 2024
-
 
 /*PLAYER ORIENTATION*/
 # define NORTH M_PI_2 //90 grados
 # define SOUTH 3 * M_PI_2 // 270 grados
 # define EAST 0 //0 grados
 # define WEST M_PI //180 grados
-
-
-
-
-// #define X 0
-// #define Y 1
-
-
 
 
 /*MOVE*/
@@ -125,26 +79,6 @@
 /*MAP*/
 #define MAP_PX_WIDTH 2560
 #define MAP_PX_HEIGHT 1440
-// #define TILE_SIZE 64
-// #define NORTH_WALL_COLOR 0XFF9A9AFF
-// #define SOUTH_WALL_COLOR 0XFFD29AFF
-// #define EAST_WALL_COLOR 0XFFFF9AFF
-// #define WEST_WALL_COLOR 0XFF9AFBFF
-// #define SKY_COLOR 0X9AC4FFFF
-// #define FLOOR_COLOR 0X588650FF
-// #define FLOOR_COLOR0XA3FF9AFF
-
-
-
-//BORRAR, ESTARA EN EL PARSING
-#define CEELING_R 154
-#define CEELING_G 196
-#define CEELING_B 255
-#define FLOOR_R 88
-#define FLOOR_G 134
-#define FLOOR_B 80
-
-
 
 /*MINIMAP*/
 #define MINIMAP_PX_WIDTH 515
@@ -152,16 +86,7 @@
 #define MINIMAP_PX_CELL_WIDTH 24
 #define MINIMAP_PX_CELL_HEIGHT 24
 
-
-
-//DEFINIR TAMAÑO DE VENTANA DE LAS CASILLAS CORRESPONDIENTES * 64 PIXELES (encontrar el mapa maximo)
-//ALTURA DEL PLAYER DE 32 PIXELES
-//PROJECTION PLANE DE 320 DE ANCHO Y 200 DE ALTO
-/*
-Dimension of the Projection Plane = 320 x 200 units
-Center of the Projection Plane = (160,100)
-Distance to the Projection Plane = 277 units
-Angle between subsequent rays = 60/320 degrees*/
+typedef struct s_path	t_path;
 
 typedef struct s_image
 {
@@ -171,27 +96,27 @@ typedef struct s_image
 
 typedef struct s_color
 {
-	int					R;
-	int					G;
-	int					B;
-	char				**split;
-	int					assigned;
-	struct s_path		*path;
-}						t_color;
+	int			R;
+	int			G;
+	int			B;
+	char		**split;
+	int			assigned;
+	t_path		*path;
+}				t_color;
 
-typedef struct s_path
+struct s_path
 {
-    char		*NO;//Path textura cara norte
-	char		*SO;//Path textura cara sur
-	char		*WE;//Path textura cara oeste
-	char		*EA;//Path textura cara este
-	char		*tmp_str; //DEFINIR
-	int			p_count;  //DEFINIR
-	int			c_count; //DEFINIR
-	int			err_flag; //DEFINIR
-	t_color		C; //Estructura con el color en RGB
-	t_color		F; //Estructura con el color en RGB
-}				t_path;
+	char		*NO;
+	char		*SO;
+	char		*WE;
+	char		*EA;
+	char		*tmp_str;
+	int			p_count;
+	int			c_count;
+	int			err_flag;
+	t_color		C;
+	t_color		F;
+};
 
 typedef struct s_texture 
 {
@@ -264,7 +189,6 @@ typedef struct s_ray
 
 }				t_ray;
 
-
 // Estructura para el campo de visión (FOV)
 typedef struct s_fov 
 {
@@ -272,8 +196,6 @@ typedef struct s_fov
     double 	 	fov_rad;      // Campo de visión en radianes (ej: 1.0472 ≈ 60°)
     t_ray   	*rays;           // Puntero al array de rayos (uno por columna de pantalla)
 }			 	t_fov;
-
-
 
 typedef struct s_vision 	
 {
@@ -284,8 +206,6 @@ typedef struct s_vision
     double 		camera_height_scale; // Es una constante que se deriva de la altura de la cámara o jugador. Se trata de un valor utilizado para la proyección del mundo 3D sobre la pantalla 2D. Se utiliza como un factor de escala para ajustar las dimensiones en la proyección según la altura del jugador. 
 
 } 				t_vision;
-
-
 
 typedef struct s_player
 {
@@ -319,26 +239,20 @@ typedef struct s_minimap
 
 }					t_minimap;
 
-
 typedef struct s_map
 {
-
-	char			**matrix; // Mapa en matriz
-	char			**tmp_matrix; //DEFINIR
-	char			**void_matrix; //DEFINIR
-	char			*fd_path; //DEFINIR
-	int				is_map; //DEFINIR
-	int				j; //DEFINIR
-	int				init; //DEFINIR
-	int				open; //DEFINIR
-
-	int				px_width; // Valor máximo X del mapa (en pixels)
-	int				px_height; // Valor máximo Y del mapa (en pixels)
-	int				c_width; // Valor máximo X del mapa (en casillas)
-	int				c_height; // Valor máximo Y del mapa (en casillas)
-	
-}					t_map;
-
+	char		**matrix;
+	char		**tmp_matrix;
+	char		**void_matrix;
+	char		*fd_path;
+	int			is_map;
+	int		c_width;
+	int		c_height;
+	int			px_width; // Valor máximo X del mapa (en pixels)
+	int			px_height; // Valor máximo Y del mapa (en pixels)
+	int			j;
+	t_path		path;
+}				t_map;
 
 typedef struct s_game
 {

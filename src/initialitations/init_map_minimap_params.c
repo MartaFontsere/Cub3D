@@ -3,25 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init_map_minimap_params.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:06:18 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 01:46:35 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:19:56 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
- 
+
  #include "cub3D.h"
 
-// void init_floor_and_ceil_colors (t_texture *texture) 
-// {
-// 	//ESTO LO HACE YA YAJA??????
-// 	texture->path.C.R = CEELING_R; 
-// 	texture->path.C.G = CEELING_G;
-// 	texture->path.C.B = CEELING_B;
-// 	texture->path.F.R = FLOOR_R;
-// 	texture->path.F.G = FLOOR_G;
-// 	texture->path.F.B = FLOOR_B;
-// }
 
 void init_map_params (t_map *map)
 {

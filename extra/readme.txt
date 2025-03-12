@@ -97,3 +97,4 @@
 07/03 -	No recuerdo porque tenia que cambiar la X && Y de mi parseo, cuando la info que nos interesa
 		esta correctamente guardada en la struct y Marta puede trabajar sin problema desde esa info.
 		No puedo trabajar desde aqui por el SO, que la minilibx no es compatible.
+12/03 -Tener en cuenta las mayusculas del .h NSWE
