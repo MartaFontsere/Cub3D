@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 19:31:19 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:14:23 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -436,8 +436,5 @@ void	release_key(mlx_key_data_t keydata, t_game *gdata);
 
 //COLLISIONS
 int	check_collision(t_game *gdata, double target_x, double target_y);
-
-//ERROR
-void	write_error(const char *str);
 
 #endif

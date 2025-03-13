@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/27 18:28:11 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:14:57 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,10 @@ void	map_control(char *line, t_map *map, t_path *path)
 
 	i = 0;
 	map->c_width = ft_max_size(line, map->c_width);
-	if (!map->c_width)
+	if (!map->c_width || map->c_width > 120)
 	{
+		msg_error("Max width is: 120. And your input is: ", \
+		ft_itoa(map->c_width));
 		path->err_flag = 1;
 		return ;
 	}

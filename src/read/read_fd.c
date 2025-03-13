@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaja <yaja@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/07 06:25:33 by yaja             ###   ########.fr       */
+/*   Updated: 2025/03/13 14:16:14 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-
-/*Hasta aqui c_w && c_h are ok*/
 int	create_matrix(char *line, t_map *map)
 {
 	if (map->j == 0)
@@ -23,6 +21,9 @@ int	create_matrix(char *line, t_map *map)
 		map->tmp_matrix = realloc(map->tmp_matrix, sizeof(char *) * \
 		(map->c_height + 1));
 	}
+	if (map->c_height > 100)
+		return (msg_error("Max height is 100. And your input is: ", \
+		ft_itoa(map->c_height)), 0);
 	if (!map->tmp_matrix)
 		return (0);
 	map->tmp_matrix[map->j] = cub_strdup(line, map->c_width);
@@ -102,10 +103,6 @@ int	fd_is_correct(t_game *gdata, t_map *map)
 		return (0);
 	while (line)
 	{
-		// printf ("textura WE: %s\n", gdata.texture.path.WE);
-		// printf ("textura NO: %s\n", gdata.texture.path.NO);
-		// printf ("textura SO: %s\n", gdata.texture.path.SO);
-		// printf ("textura EA: %s\n", gdata.texture.path.EA);
 		if (!check_line(line, &gdata->texture.path, map, 0))
 			return (free(line), 0);
 		free(line);
@@ -131,6 +128,7 @@ int	read_file(int ac, char **av, t_game *gdata)
 		gdata->map.fd_path = NULL;
 		return (0);
 	}
+	printf(RED"%u\n"END, gdata->map.c_height);
 	if (!get_final_map(gdata->map.tmp_matrix, &gdata->map))
 		return (0);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 19:19:12 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:19:02 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,3 @@ int	init_gdata_values(t_game *gdata)
 	return (1);
 	//gdata->finish_game = 0;
 }
-
-
