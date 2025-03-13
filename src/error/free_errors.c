@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/13 12:34:11 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:07:11 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,6 @@ void	clean_path(t_path *path)
 	free(path->EA);
 	free(path->WE);
 }
-/* void	clean_vision(t_vision *vision)
-{
-	
-} */
 
 void	clean_data(t_game *gdata)
 {
@@ -68,5 +64,8 @@ void	clean_data(t_game *gdata)
 	free_matrix(gdata->map.matrix);
 	free_matrix(gdata->map.tmp_matrix);
 	free_matrix(gdata->map.void_matrix);
-	//clean_vision(&gdata->vision);
+	//entiendo que esto libera el malloc de rays alocado en init_vision_parameters 105
+	//no puedo comprobarlo porque el fsanitize esta desactivado y no me compilaria
+	//correctamente
+	//free(gdata->vision.FOV.rays);
 }

@@ -97,4 +97,9 @@
 07/03 -	No recuerdo porque tenia que cambiar la X && Y de mi parseo, cuando la info que nos interesa
 		esta correctamente guardada en la struct y Marta puede trabajar sin problema desde esa info.
 		No puedo trabajar desde aqui por el SO, que la minilibx no es compatible.
-12/03 -Tener en cuenta las mayusculas del .h NSWE
+12/03 -	Tener en cuenta las mayusculas del .h NSWE
+13/03 -	Los rays ya estan liberados, asi como tambien ya esta unificado los mensaje
+		de error. El max height es 100 y width es 120. Y mis funciones del libft
+		que he tocado ya estan sustituidas.
+		No puedo tocar mas porque Marta ha de pasarme su ultima version y asi
+		podre trabajar con los nuevos cambios.

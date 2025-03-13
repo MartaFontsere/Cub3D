@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/13 14:16:14 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:34:13 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	create_matrix(char *line, t_map *map)
 		(map->c_height + 1));
 	}
 	if (map->c_height > 100)
-		return (msg_error("Max height is 100. And your input is: ", \
-		ft_itoa(map->c_height)), 0);
+		return (msg_error("Max height is 100. If you follow this rule\n", \
+		"Dracarys team will thank you 🔥"), 0);
 	if (!map->tmp_matrix)
 		return (0);
 	map->tmp_matrix[map->j] = cub_strdup(line, map->c_width);

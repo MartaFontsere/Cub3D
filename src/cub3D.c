@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/13 13:54:21 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:26:43 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int main(int ac, char **av)
 		clean_data(&gdata);
 		return (1);
 	}
-	if (init_gdata_values(&gdata) == 0)
+	if (init_gdata_values(&gdata) == 0)// no deberiamos hacer el parseo antes de esto?
 	{
 		clean_data(&gdata);
 		return (1);
