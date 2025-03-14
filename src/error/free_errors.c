@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_errors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/27 09:22:56 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/13 23:18:20 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,5 @@ void	clean_data(t_game *gdata)
 	free_matrix(gdata->map.matrix);
 	free_matrix(gdata->map.tmp_matrix);
 	free_matrix(gdata->map.void_matrix);
+	free(gdata->vision.FOV.rays); //REVISAR
 }

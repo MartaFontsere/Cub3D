@@ -6,86 +6,85 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:55:35 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/11 23:47:34 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/14 01:16:27 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-// void print_floor (t_game *gdata, t_mlx mlx, int *row, int *column)
-// {
-//      gdata->texture.F_hex_color = rgb_to_hex(gdata->texture.path.F.R, gdata->texture.path.F.G, gdata->texture.path.F.B);
-//         while (*row < gdata->map.px_height)
-//         {
-//             mlx_put_pixel(mlx.image, *column, *row, gdata->texture.F_hex_color);
-//             (*row)++;
-//         }
-// }
+void print_floor (t_game *gdata, t_mlx mlx, int *row, int *column)
+{
+     gdata->texture.F_hex_color = rgb_to_hex(gdata->texture.path.F.R, gdata->texture.path.F.G, gdata->texture.path.F.B);
+        while (*row < gdata->map.px_height)
+        {
+            mlx_put_pixel(mlx.image, *column, *row, gdata->texture.F_hex_color);
+            (*row)++;
+        }
+}
 
-// void print_sky (t_game *gdata, t_mlx mlx, int *row, int *column)
-// {
+void print_sky (t_game *gdata, t_mlx mlx, int *row, int *column)
+{
     
-//     gdata->texture.C_hex_color = rgb_to_hex(gdata->texture.path.C.R, gdata->texture.path.C.G, gdata->texture.path.C.B);
-//     while (*row < gdata->print_map.draw_wall_start)
-//     {
-//         mlx_put_pixel(mlx.image, *column, *row, gdata->texture.C_hex_color);
-//         (*row)++;
-//     }
-// }
+    gdata->texture.C_hex_color = rgb_to_hex(gdata->texture.path.C.R, gdata->texture.path.C.G, gdata->texture.path.C.B);
+    while (*row < gdata->print_map.draw_wall_start)
+    {
+        mlx_put_pixel(mlx.image, *column, *row, gdata->texture.C_hex_color);
+        (*row)++;
+    }
+}
 
-// void prepare_print_params (t_game *gdata, t_ray *ray, t_map map)
-// {
-//     // Calcular la altura de la pared en píxeles
-//     gdata->print_map.wall_height = map.px_height / ray->perpendicular_distance; // altura total de la pantalla / distancia del jugador a la pared perpendiclarmente (para evitar ojo de pez). A menor distancia, la pared será más alta; a mayor distancia, la pared será más baja
-//     //printf ("map.px_height %d\n", map.px_height);
-//     //printf ("ray->perpendicular_distance %f\n", ray->perpendicular_distance);
+void prepare_print_params (t_game *gdata, t_ray *ray, t_map map)
+{
+    // Calcular la altura de la pared en píxeles
+    gdata->print_map.wall_height = map.px_height / ray->perpendicular_distance; // altura total de la pantalla / distancia del jugador a la pared perpendiclarmente (para evitar ojo de pez). A menor distancia, la pared será más alta; a mayor distancia, la pared será más baja
+    //printf ("map.px_height %d\n", map.px_height);
+    //printf ("ray->perpendicular_distance %f\n", ray->perpendicular_distance);
 
-//      // Calcular los límites verticales de la pared
-//     gdata->print_map.draw_wall_start = (map.px_height / 2) - (gdata->print_map.wall_height / 2);
-//     gdata->print_map.draw_wall_end = (map.px_height / 2) + (gdata->print_map.wall_height / 2);
+     // Calcular los límites verticales de la pared
+    gdata->print_map.draw_wall_start = (map.px_height / 2) - (gdata->print_map.wall_height / 2);
+    gdata->print_map.draw_wall_end = (map.px_height / 2) + (gdata->print_map.wall_height / 2);
 
-//     //Limitar un valor dentro de un rango permitido
-//     //Si wall_height es muy grande, draw_wall_start podría volverse negativo, y draw_wall_end podría ser mayor que map.px_height, lo que haría que mlx_put_pixel() intentara acceder a píxeles fuera del rango de la imagen, causando el segfault
-//     //Aseguramos que draw_wall_start nunca sea menor que 0 y que draw_wall_end nunca sea mayor que map.px_height - 1
-//     if (gdata->print_map.draw_wall_start < 0) 
-//         gdata->print_map.draw_wall_start = 0;
-
-
-//     if (gdata->print_map.draw_wall_end >= map.px_height)
-//         gdata->print_map.draw_wall_end = map.px_height - 1;
-
-// }
+    //Limitar un valor dentro de un rango permitido
+    //Si wall_height es muy grande, draw_wall_start podría volverse negativo, y draw_wall_end podría ser mayor que map.px_height, lo que haría que mlx_put_pixel() intentara acceder a píxeles fuera del rango de la imagen, causando el segfault
+    //Aseguramos que draw_wall_start nunca sea menor que 0 y que draw_wall_end nunca sea mayor que map.px_height - 1
+    if (gdata->print_map.draw_wall_start < 0) 
+        gdata->print_map.draw_wall_start = 0;
 
 
-// //VERSION 2, TEXTURAS EN PAREDES Y COLORES EN CIELO Y SUELO
-// void print_map (t_game *gdata, t_mlx mlx, t_map map)
-// {
-//     int column; 
-//     int row;
+    if (gdata->print_map.draw_wall_end >= map.px_height)
+        gdata->print_map.draw_wall_end = map.px_height - 1;
 
-//     column = 0;
-//     while (column < gdata->vision.FOV.num_rays)
-//     {
-//         row = 0;
+}
 
-//         // igualar el rayo actual a una variable local para simplificar
-//         t_ray *ray = &gdata->vision.FOV.rays[column];
 
-//         //Preparacion para printar paredes
-//         prepare_print_params (gdata, ray, map);
+//VERSION 2, TEXTURAS EN PAREDES Y COLORES EN CIELO Y SUELO
+void print_map (t_game *gdata, t_mlx mlx, t_map map)
+{
+    int column; 
+    int row;
+    column = 0;
+    while (column < gdata->vision.FOV.num_rays)
+    {
+        row = 0;
 
-//         // Dibujar el cielo
-//         print_sky (gdata, mlx, &row, &column);
+        // igualar el rayo actual a una variable local para simplificar
+        t_ray *ray = &gdata->vision.FOV.rays[column];
 
-//         // Texturizar la pared
-//         print_texture_walls (gdata, ray, &row, &column);
+        //Preparacion para printar paredes
+        prepare_print_params (gdata, ray, map);
 
-//         // Dibujar el suelo
-//         print_floor (gdata, mlx, &row, &column);
+        // Dibujar el cielo
+        print_sky (gdata, mlx, &row, &column);
 
-//         column++;
-//     }
-// }
+        // Texturizar la pared
+        print_texture_walls (gdata, ray, &row, &column);
+
+        // Dibujar el suelo
+        print_floor (gdata, mlx, &row, &column);
+
+        column++;
+    }
+}
 
 
 

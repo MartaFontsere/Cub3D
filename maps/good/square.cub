@@ -1,17 +1,16 @@
-   WE                            textures/wolfenstein/eagle.xpm 
-NO      textures/wolfenstein/grey_stone.xpm
-
-
-
-SO textures/wolfenstein/red_brick.xpm
+NO 		textures/map_walls/opcion2/Norte.xpm42			
+EA textures/map_walls/opcion2/Este.xpm42
 
 F   69,222,199
 
-EA textures/wolfenstein/mossy.xpm
-
-
+SO textures/map_walls/opcion2/Sur.xpm42
 
 C 235,198,52
+
+WE 			textures/map_walls/opcion2/Oeste.xpm42
+
+
+
 
 111111111111111111111111
 100000000000000000000001

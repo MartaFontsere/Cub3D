@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_player_vision_params.c                        :+:      :+:    :+:   */
+/*   init_player_and_vision_params.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:47:23 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/26 21:57:41 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/14 00:26:24 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int init_vision_parameters (t_game *gdata, t_vision *vision)
 	vision->FOV.rays = malloc (sizeof (t_ray) * vision->FOV.num_rays);
 	if (!vision->FOV.rays)
 	{
-		write_error("Unable to allocate memory for FOV rays");
+		msg_error("Unable to allocate memory for FOV rays\n", NULL);
 		//REVISAR TODO LO QUE HAY QUE LIBERAR
 		return (0);
 	}

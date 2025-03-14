@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 16:41:18 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:47:13 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void render_game (void *param) // todo lo que se tenga que checkear a cada vuelt
 	gdata = param;
 	target_x = gdata->player.x;
 	target_y = gdata->player.y;
-	gdata->vision.last_vision_angle = gdata->vision.vision_angle; // lo actualizo siempre, porque si solo lo actualizo al rotar, cuando solo se mueve no se actualiza el angulo anterior, que debe ser el mismoo que el actual
  	if (there_is_a_key_pressed(gdata))
 	{
+		printf ("#########vision angle: |%f|\n", gdata->vision.vision_angle * (180 / M_PI));
 		printf ("hay una tecla apretada\n");
 		printf ("la posicion del player es: |%f||%f|\n",gdata->player.x, gdata->player.y);
 		if (gdata->player.rotate_right == 1 || gdata->player.rotate_left == 1)
@@ -31,14 +31,9 @@ void render_game (void *param) // todo lo que se tenga que checkear a cada vuelt
 		if (gdata->player.mov_right == 1 || gdata->player.mov_left == 1 || gdata->player.mov_up == 1 || gdata->player.mov_down == 1)
 			move_player (gdata, gdata->vision, &target_x, &target_y);
 		printf ("el target a donde se va a mover es: |%f||%f|\n",target_x, target_y);
-		//minimapa
-		// print_player_FOV_in_motion(gdata, gdata->player, target_x, target_y);
-		// print_player_view_in_motion (gdata, gdata->player, target_x, target_y); // incluir tanto el fov como el point of view
-		// print_player_move(gdata, gdata->player, target_x, target_y);
-		print_minimap (gdata);
+		calculate_fov(gdata, gdata->player.x, gdata->player.y);
 		//mapa
 		print_map (gdata, gdata->mlx, gdata->map);
-		do_dragon_animation (gdata);
 		gdata->player.x = target_x;
 		gdata->player.y = target_y;
 	}

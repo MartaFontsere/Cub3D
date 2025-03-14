@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42barcel>       +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 13:16:14 by mfontser          #+#    #+#             */
-/*   Updated: 2024/02/07 02:07:44 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/13 22:34:14 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ char	**ft_split(char const *s, char del)
 	words = num_words (s, del);
 	res = malloc(sizeof(char *) * (words + 1));
 	if (!res)
+	{
+		words = 0;
 		return (NULL);
+	}
 	res = matrix_words(res, s, del);
 	return (res);
 }

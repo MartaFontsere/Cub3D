@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 22:41:01 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:39:52 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "../libs/get_next_line/get_next_line.h"
 # include "../libs/MLX42/include/MLX42/MLX42.h"
 # include "../libs/Libft/libft.h"
-//# include "sprites.h"
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
@@ -41,82 +40,35 @@
 # define BLACK 0x00000080
 # define DARK_GREY 0x3C3C3CFF
 # define MEDIUM_GREY 0X69696980
-//# define MEDIUM_GREY 0X575757FF
 # define SOFT_GREY 0x959595FF
-//# define LIGHT_GREY 0XD7D7D7FF
 # define RED1 0xFF0000FF
-//# define YELLOW1 0xFFFF00FF // el FF final es maxima opacidad
 # define YELLOW1 0xFFC006FF
 # define SOFT_YELLOW 0xFEF4D3FF
-//# define SOFT_YELLOW 0xFAFDC9FF
 # define BLUE1 0X9AC4FFFF
 
-/*TEXTURES*/ //LUEGO BORRAR PATHS, PARA MIENTRAS SIN PARSING
-#define NORTH_TEXTURE "textures/map_walls/opcion2/Norte1.xpm42"
-#define SOUTH_TEXTURE "textures/map_walls/opcion2/Sur.xpm42"
-#define WEST_TEXTURE "textures/map_walls/opcion2/Oeste.xpm42"
-#define EAST_TEXTURE "textures/map_walls/opcion2/Este.xpm42"
+			/*TEXTURES*/ //LUEGO BORRAR PATHS, PARA MIENTRAS SIN PARSING
+			#define NORTH_TEXTURE "textures/map_walls/opcion2/Norte1.xpm42"
+			#define SOUTH_TEXTURE "textures/map_walls/opcion2/Sur.xpm42"
+			#define WEST_TEXTURE "textures/map_walls/opcion2/Oeste.xpm42"
+			#define EAST_TEXTURE "textures/map_walls/opcion2/Este.xpm42"
 
-//esto no borrar:
-// #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
-#define SKY_TEXTURE "textures/sky/Sky_32.xpm42"
-#define FLOOR_TEXTURE "textures/floor/Floor_4.xpm42"
-#define DRAGON_1 "textures/flying_dragon/dragon1.xpm42"
-#define DRAGON_2 "textures/flying_dragon/dragon2.xpm42"
-#define DRAGON_3 "textures/flying_dragon/dragon3.xpm42"
-#define DRAGON_WIDTH 380
-#define DRAGON_HEIGHT 213
+			//esto no borrar:
+			// #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
+			#define SKY_TEXTURE "textures/sky/Sky_32.xpm42"
+			#define FLOOR_TEXTURE "textures/floor/Floor_4.xpm42"
+			#define DRAGON_1 "textures/flying_dragon/dragon1.xpm42"
+			#define DRAGON_2 "textures/flying_dragon/dragon2.xpm42"
+			#define DRAGON_3 "textures/flying_dragon/dragon3.xpm42"
+			#define DRAGON_WIDTH 380
+			#define DRAGON_HEIGHT 213
 
-
-	//opcion1
-// #define WIDTH_NORTH_TEXTURE 1500
-// #define HEIGHT_NORTH_TEXTURE 994
-// #define WIDTH_SOUTH_TEXTURE 360
-// #define HEIGHT_SOUTH_TEXTURE 240
-// #define WIDTH_WEST_TEXTURE 626
-// #define HEIGHT_WEST_TEXTURE 417
-// #define WIDTH_EAST_TEXTURE 626
-// #define HEIGHT_EAST_TEXTURE 414
-
-	//opcion2
-// #define WIDTH_NORTH_TEXTURE 1000
-// #define HEIGHT_NORTH_TEXTURE 1000
-// #define WIDTH_SOUTH_TEXTURE 1000
-// #define HEIGHT_SOUTH_TEXTURE 1000
-// #define WIDTH_WEST_TEXTURE 1000
-// #define HEIGHT_WEST_TEXTURE 1000
-// #define WIDTH_EAST_TEXTURE 1000
-// #define HEIGHT_EAST_TEXTURE 1000
-
-//cielo
-// #define WIDTH_SKY_TEXTURE 1920
-// #define HEIGHT_SKY_TEXTURE 960
-// #define WIDTH_SKY_TEXTURE 1800
-// #define HEIGHT_SKY_TEXTURE 1013
-// #define WIDTH_SKY_TEXTURE 1408
-// #define HEIGHT_SKY_TEXTURE 704
-// #define WIDTH_SKY_TEXTURE 2816
-// #define HEIGHT_SKY_TEXTURE 704
-
-//floor
-// #define WIDTH_FLOOR_TEXTURE 1024
-// #define HEIGHT_FLOOR_TEXTURE 1024
-// #define WIDTH_FLOOR_TEXTURE 2024
-// #define HEIGHT_FLOOR_TEXTURE 2024
 
 
 /*PLAYER ORIENTATION*/
-# define NORTH M_PI_2 //90 grados
-# define SOUTH 3 * M_PI_2 // 270 grados
-# define EAST 0 //0 grados
-# define WEST M_PI //180 grados
-
-
-
-
-// #define X 0
-// #define Y 1
-
+# define NORTH M_PI_2
+# define SOUTH 3 * M_PI_2
+# define EAST 0
+# define WEST M_PI
 
 
 
@@ -133,25 +85,16 @@
 /*MAP*/
 #define MAP_PX_WIDTH 2560
 #define MAP_PX_HEIGHT 1440
-// #define TILE_SIZE 64
-// #define NORTH_WALL_COLOR 0XFF9A9AFF
-// #define SOUTH_WALL_COLOR 0XFFD29AFF
-// #define EAST_WALL_COLOR 0XFFFF9AFF
-// #define WEST_WALL_COLOR 0XFF9AFBFF
-// #define SKY_COLOR 0X9AC4FFFF
-// #define FLOOR_COLOR 0X588650FF
-// #define FLOOR_COLOR0XA3FF9AFF
 
 
 
-//BORRAR, ESTARA EN EL PARSING
-#define CEELING_R 154
-#define CEELING_G 196
-#define CEELING_B 255
-#define FLOOR_R 88
-#define FLOOR_G 134
-#define FLOOR_B 80
-
+// //BORRAR, ESTARA EN EL PARSING
+// #define CEELING_R 154
+// #define CEELING_G 196
+// #define CEELING_B 255
+// #define FLOOR_R 88
+// #define FLOOR_G 134
+// #define FLOOR_B 80
 
 
 /*MINIMAP*/
@@ -161,15 +104,6 @@
 #define MINIMAP_PX_CELL_HEIGHT 24
 
 
-
-//DEFINIR TAMAÑO DE VENTANA DE LAS CASILLAS CORRESPONDIENTES * 64 PIXELES (encontrar el mapa maximo)
-//ALTURA DEL PLAYER DE 32 PIXELES
-//PROJECTION PLANE DE 320 DE ANCHO Y 200 DE ALTO
-/*
-Dimension of the Projection Plane = 320 x 200 units
-Center of the Projection Plane = (160,100)
-Distance to the Projection Plane = 277 units
-Angle between subsequent rays = 60/320 degrees*/
 
 typedef struct s_image
 {
@@ -287,7 +221,6 @@ typedef struct s_fov
 typedef struct s_vision 	
 {
 	double		vision_angle; // Orientacion Inicial en grados de la vision del personaje
-	double 		last_vision_angle; //CONFIRMAR SI LA USO
 	t_fov    	FOV;            // Datos del FOV y rayos
     double 		projection_factor; // Es como un factor de escala que convierte distancias del mundo 2D (minimapa) en una altura en la pantalla (3D), , asegurando que los objetos más lejanos sean más pequeños y los cercanos sean más grandes.
     double 		camera_height_scale; // Es una constante que se deriva de la altura de la cámara o jugador. Se trata de un valor utilizado para la proyección del mundo 3D sobre la pantalla 2D. Se utiliza como un factor de escala para ajustar las dimensiones en la proyección según la altura del jugador. 
@@ -432,21 +365,6 @@ void	clean_path(t_path *path);
 void	clean_data(t_game *gdata);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //MARTA
 
 
@@ -533,11 +451,9 @@ void	reset_mov_params(t_game *gdata);
 void	release_key(mlx_key_data_t keydata, t_game *gdata);
 
 //COLLISIONS
-//int	check_collision(t_game *gdata, double target_x, double target_y);
-int check_collision_x(t_game *gdata, double target_x);
-int check_collision_y(t_game *gdata, double target_y);
+int	check_collision(t_game *gdata, double target_x, double target_y);
+// int check_collision_x(t_game *gdata, double target_x);
+// int check_collision_y(t_game *gdata, double target_y);
 
-//ERROR
-void	write_error(const char *str);
 
 #endif

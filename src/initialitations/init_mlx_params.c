@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:09:51 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 05:53:19 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/14 00:59:59 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	init_mlx(t_mlx *mlx)
 	mlx->window_width = MAP_PX_WIDTH;
 	mlx->window_height = MAP_PX_HEIGHT;
 	mlx->init = mlx_init(mlx->window_width, mlx->window_height,
-			"The Game", true); // ESTO CAMBIARA, LAS MEDIDAS DE LA VENTANA
+			"The Game", false); 
 	if (!mlx->init)
 	{
-		write_error("It's not possible to initialize the mlx");
+		msg_error("It's not possible to initialize the mlx\n", NULL);
 		//free_raw_and_map(gdata); REVISAR 
 		return (0);
 	}
@@ -33,20 +33,11 @@ int	create_new_images(t_game *gdata, t_mlx *mlx)
 	printf ("window: %d, %d\n",  mlx->window_width,mlx->window_height);
 	if (!mlx->image)
 	{
-		write_error("It's not possible to generate new image");
+		msg_error("It's not possible to generate new image\n", NULL);
 		close_window(gdata);
 		//free_raw_and_map(gdata); REVISAR 
 		return (0);
 	}
-	mlx->mini_image = mlx_new_image(mlx->init, gdata->minimap.px_width, gdata->minimap.px_height);
-	if (!mlx->mini_image)
-	{
-		write_error("It's not possible to generate new mini_image");
-		close_window(gdata);
-		//free_raw_and_map(gdata); REVISAR 
-		return (0);
-	}
-	printf("llego\n");
 	return (1);
 }
 
@@ -54,18 +45,10 @@ int	put_image_to_window(t_game *gdata, t_mlx *mlx)
 {
 	if (mlx_image_to_window(mlx->init, mlx->image, 0, 0) == -1)
 	{
-		write_error("It's not possible to put new image to window");
+		msg_error("It's not possible to put new image to window\n", NULL);
 		//free_raw_and_map(gdata); REVISAR 
 		close_window(gdata);
 		return (0);
 	}
-	if (mlx_image_to_window(mlx->init, mlx->mini_image, 15, 15) == -1)
-	{
-		write_error("It's not possible to put new image to window");
-		//free_raw_and_map(gdata); REVISAR 
-		close_window(gdata);
-		return (0);
-	}
-
 	return (1);
 }

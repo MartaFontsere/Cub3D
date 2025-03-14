@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 01:44:14 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:35:22 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void calculate_fov(t_game *gdata, double x, double y) //Mandar las coordenadas d
     while (i < gdata->vision.FOV.num_rays) 
     {
         calculate_ray(gdata, &gdata->vision.FOV.rays[i], x, y);
-        gdata->vision.FOV.rays[i+1].current_angle = gdata->vision.FOV.rays[i].current_angle + angle_step;//current_angle = start_angle + (angle_step * i); // lo mismo que current angle = current angle + angle step
+        if (i + 1 <  gdata->vision.FOV.num_rays)
+            gdata->vision.FOV.rays[i+1].current_angle = gdata->vision.FOV.rays[i].current_angle + angle_step;//current_angle = start_angle + (angle_step * i); // lo mismo que current angle = current angle + angle step
         i++;
     }
 }

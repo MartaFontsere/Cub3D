@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/12 06:18:51 by mfontser         ###   ########.fr        #
+#    Updated: 2025/03/14 12:22:16 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,32 +27,47 @@ ORANGE = \e[1;38;2;255;128;0m
 
 #------------------------------------------------VARIABLES---------------------------------------------------#
 
-#DUDAS:
-	#Makefile con dependencias
-	#No tener que poner el nombre de la carpeta cada vez que ponga un archivo dentro de ella.
+# Directories
+INIT_DIR = initialitations/
+VISION_ANGLE_DIR = vision_angle/ 
+FOV_DIR = fov/
+MOVE_DIR = movements/
+PRINT_DIR = print_map/
+PARSE_DIR = parsing/
+READ_DIR = read/
+ERROR_DIR = error/
+GNL_DIR = ../libs/get_next_line/
 
-FILES = cub3D.c get_map.c render.c textures.c 
+# Files by directory
+BASE_FILES = cub3D.c get_map.c render.c textures.c 
+INIT_FILES = initialitations.c init_map_minimap_params.c init_player_and_vision_params.c init_print_params.c init_mlx_params.c
+VISION_ANGLE_FILES = calculate_vision_angle.c 
+FOV_FILES = calculate_fov.c calculate_ray.c utils_calculate_ray.c 
+MOVE_FILES = press_or_release_key.c move_player.c rotate_player.c check_collisions.c
+PRINT_FILES = print_map.c print_walls.c print_utils.c
+PARSE_FILES = parse_map.c parse_utils.c
+READ_FILES = read_fd.c read_fd_utils.c read_colors.c 
+ERROR_FILES = free_errors.c
+GNL_FILES = get_next_line.c get_next_line_utils.c
 
-FILES += initialitations/initialitations.c initialitations/init_map_minimap_params.c initialitations/init_player_and_vision_params.c initialitations/init_print_params.c initialitations/init_mlx_params.c
+INIT_SRCS = $(addprefix $(INIT_DIR), $(INIT_FILES))
+VISION_ANGLE_SRCS = $(addprefix $(VISION_ANGLE_DIR), $(VISION_ANGLE_FILES))
+FOV_SRCS = $(addprefix $(FOV_DIR), $(FOV_FILES))
+MOVE_SRCS = $(addprefix $(MOVE_DIR), $(MOVE_FILES))
+PRINT_SRCS = $(addprefix $(PRINT_DIR), $(PRINT_FILES))
+PRINT_MINI_SRCS = $(addprefix $(PRINT_MINI_DIR), $(PRINT_MINI_FILES))
+PARSE_SRCS = $(addprefix $(PARSE_DIR), $(PARSE_FILES))
+READ_SRCS = $(addprefix $(READ_DIR), $(READ_FILES))
+ERROR_SRCS = $(addprefix $(ERROR_DIR), $(ERROR_FILES))
+GNL_SRCS = $(addprefix $(GNL_DIR), $(GNL_FILES))
+BONUS_SRCS = $(addprefix $(BONUS_DIR), $(BONUS_FILES))
 
-FILES += read/read_fd.c read/read_fd_utils.c read/read_colors.c 
+#todos los files con su respectivo path
+FILES = $(BASE_FILES) $(INIT_SRCS) $(FOV_SRCS) $(MOVE_SRCS) $(PRINT_SRCS) \
+		$(PRINT_MINI_SRCS) $(PARSE_SRCS) $(READ_SRCS) $(ERROR_SRCS) $(GNL_SRCS) \
+		$(BONUS_SRCS)
 
-FILES += parsing/parse_map.c parsing/parse_utils.c
-
-FILES += fov/calculate_fov.c fov/calculate_ray.c fov/utils_calculate_ray.c 
-
-FILES += movements/press_or_release_key.c movements/move_player.c movements/rotate_player.c movements/check_collisions.c
-
-FILES += print_map/print_map.c print_map/print_walls.c print_map/print_utils.c
-
-FILES += print_minimap/print_minimap_skeleton.c print_minimap/print_fov_and_vision_angle.c print_minimap/print_items_in_motion.c
-
-FILES += error/error.c error/free_errors.c
-
-FILES += ../libs/get_next_line/get_next_line.c ../libs/get_next_line/get_next_line_utils.c
-
-FILES += bonus/floor_raycasting.c bonus/print_map.c bonus/print_dragon.c bonus/do_dragon_animation.c
-
+		
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))
 
@@ -66,7 +81,7 @@ NAME = cub3D
 HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -Ofast #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -Ofast
 
 MLXDIR = libs/MLX42
 LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm

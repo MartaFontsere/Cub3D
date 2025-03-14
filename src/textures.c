@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 17:39:22 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/14 00:30:09 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	load_image(t_game *gdata, t_image *image, char *path)
 
 	if (check_file_can_be_open(path) == 0)
 	{
-		write_error("There have been problems opening the textures");
+		msg_error("There have been problems opening the textures", NULL);
 		return (0);
 	}
 	image->xpm = mlx_load_xpm42(path);
