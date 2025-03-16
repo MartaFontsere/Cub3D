@@ -10,28 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "cub3D.h"
 
-// Calcula TODOS los rayos del FOV y los almacena en t_fov
-void calculate_fov(t_game *gdata, double x, double y) //Mandar las coordenadas del player (actuales)
+void	calculate_fov(t_game *gdata, double x, double y)
 {
-    double start_angle = gdata->vision.vision_angle + (gdata->vision.FOV.fov_rad / 2);
-    double end_angle = gdata->vision.vision_angle - (gdata->vision.FOV.fov_rad / 2);
-    double angle_step = (end_angle - start_angle) / gdata->vision.FOV.num_rays; // = FOV/ancho pantalla
-    printf ("start_angle %f\n", start_angle * (180 / M_PI));
-    printf ("end_angle %f\n", end_angle * (180 / M_PI));
+	double	start_angle;
+	double	end_angle;
+	double	angle_step;
+	int		i;
 
-    gdata->player.cell_player_x =  x / gdata->minimap.px_in_cell_width; //posición en casillas del player
-    gdata->player.cell_player_y =  y / gdata->minimap.px_in_cell_height;
-   
-    int i = 0; //indice de cada rayo
-    gdata->vision.FOV.rays[i].current_angle = start_angle;
-    while (i < gdata->vision.FOV.num_rays) 
-    {
-        calculate_ray(gdata, &gdata->vision.FOV.rays[i], x, y);
-        if (i + 1 <  gdata->vision.FOV.num_rays)
-            gdata->vision.FOV.rays[i+1].current_angle = gdata->vision.FOV.rays[i].current_angle + angle_step;//current_angle = start_angle + (angle_step * i); // lo mismo que current angle = current angle + angle step
-        i++;
-    }
+	start_angle = gdata->vision.vision_angle + (gdata->vision.FOV.fov_rad / 2);
+	end_angle = gdata->vision.vision_angle - (gdata->vision.FOV.fov_rad / 2);
+	angle_step = (end_angle - start_angle) / gdata->vision.FOV.num_rays;
+	gdata->player.cell_player_x = x / gdata->minimap.px_in_cell_width;
+	gdata->player.cell_player_y = y / gdata->minimap.px_in_cell_height;
+	i = 0;
+	gdata->vision.FOV.rays[i].current_angle = start_angle;
+	while (i < gdata->vision.FOV.num_rays)
+	{
+		calculate_ray(gdata, &gdata->vision.FOV.rays[i], x, y);
+		if (i + 1 < gdata->vision.FOV.num_rays)
+			gdata->vision.FOV.rays[i
+				+ 1].current_angle = gdata->vision.FOV.rays[i].current_angle
+				+ angle_step;
+		i++;
+	}
 }

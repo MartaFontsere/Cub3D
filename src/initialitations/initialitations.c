@@ -12,24 +12,29 @@
 
 #include "cub3D.h"
 
-
-
 int	init_gdata_values(t_game *gdata)
 {
 	init_minimap_params(gdata);
-	init_player_parameters(gdata, &gdata->player);
-	if (init_vision_parameters (gdata, &gdata->vision) == 0)
+	init_player_params(gdata, &gdata->player);
+	if (init_vision_params(gdata, &gdata->vision) == 0)
+	{
+		clean_data(gdata);
 		return (0);
-	// instalar la mlx, y lanzar una pantalla del tamaño, x y, para ver que funciona
-	//mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	if (init_mlx(&gdata->mlx) == 0)
+	}
+	if (init_mlx(gdata, &gdata->mlx) == 0)
+	{
+		clean_data(gdata);
 		return (0);
+	}
 	if (create_new_images(gdata, &gdata->mlx) == 0)
+	{
+		clean_data(gdata);
 		return (0);
+	}
 	if (put_image_to_window(gdata, &gdata->mlx) == 0)
+	{
+		clean_data(gdata);
 		return (0);
+	}
 	return (1);
-	//gdata->finish_game = 0;
 }
-
-

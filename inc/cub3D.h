@@ -157,6 +157,8 @@ typedef struct s_print
 	double 		draw_wall_start;
 	int 		draw_wall_end;
 	int 		color;
+	int 		tex_x;
+    double 		tex_start_offset;
 
 } t_print;
 
@@ -228,6 +230,15 @@ typedef struct s_vision
 } 				t_vision;
 
 
+typedef struct s_collision
+{
+	double	player_contour_x;
+	double	player_contour_y;
+	double	angle;
+	double	angle_step;
+
+} t_collision;
+
 
 typedef struct s_player
 {
@@ -289,6 +300,7 @@ typedef struct s_game
 	t_map			map;
 	t_minimap 		minimap;
 	t_vision 		vision;
+	t_collision 	collision;
 	t_print 		print_map;
 	t_mlx			mlx; 
 	int 			finish_game;
@@ -296,42 +308,37 @@ typedef struct s_game
 
 
 
-//YAJA
 
 //-------------------------------------------------
 //					MAIN
 //-------------------------------------------------
-
-
+void	close_window(t_game	*gdata);
+int		main(int ac, char **av);
 
 //-------------------------------------------------
-//					READ_FD
+//					READ
 //-------------------------------------------------
+
+/*READ_FD*/
 int		create_matrix(char *line, t_map *map);
 void	assign_path(char *line, t_path *path, int i);
 int		check_line(char *line, t_path *path, t_map *map, int i);
 int		fd_is_correct(t_game *gdata, t_map *map);
-int		read_file(int ac, char **av, t_game *gdata);
+int		read_file(int ac, char **av, t_game *gdata, t_map *map);
 
-//------------------------------------------------
-//					READ_FD_UTILS
-//------------------------------------------------
+/*READ_FD_UTILS*/
 int		check_name(char *map_path);
 char	*cpy_path(char *line, t_path *path, int pos);
 int		curr_char(int cur, char *line, t_path *path);
 int 	ft_max_size(char *line, int max);
 void	map_control(char *line, t_map *map, t_path *path);
 
-//------------------------------------------------
-//					READ_COLORS
-//------------------------------------------------
+/*READ_COLORS*/
 void	cpy_colors(char *rgb, t_color *color, int i);
 void	get_colors(char *line, t_path *path, int i, int init);
 void	assign_color(char *line, t_path *t_path, int i);
 
-//------------------------------------------------
-//						GET_MAP
-//------------------------------------------------
+/*GET_MAP*/
 char	*cub_strdup(char *s1, int len);
 char	**copy_map(char **map, int height);
 int		mix_matrix(char **src, t_map *map);
@@ -339,21 +346,119 @@ char	*fill_void(t_map *map);
 int		get_final_map(char **src, t_map *map);
 
 //------------------------------------------------
-//					PARSE_MAP
+//					INITIALITATIONS
 //------------------------------------------------
-int		check_borders(char **matrix, int i, t_map *map);
-int		is_close(char **matrix, t_map *map);
-int		min_chars(char **map, int i);
-int		parse_map(char **matrix, t_map *map);
+
+/*INITIALITATIONS*/
+int		init_gdata_values(t_game *gdata);
+
+/*INIT_MAP_MINIMAP_PARAMS*/
+void 	init_map_params (t_map *map);
+void	init_minimap_params(t_game *gdata);
+
+/*INIT_PLAYER_AND_VISION_PARAMS*/
+void 	init_player_params (t_game *gdata, t_player *player);
+void	init_player_orientation(t_map *map, t_vision *vision);
+void	define_vision_angle(t_vision *vision, char orientation);
+void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
+int 	init_vision_params (t_game *gdata, t_vision *vision);
+
+/*INIT_PRINT_PARAMS*/
+void	init_textures_and_colors_path(t_path *path);
+
+/*INIT_MLX_PARAMS*/
+int		init_mlx(t_game *gdata, t_mlx *mlx);
+int		create_new_images(t_game *gdata, t_mlx *mlx);
+int		put_image_to_window(t_game *gdata, t_mlx *mlx);
 
 //------------------------------------------------
-//					PARSE_MAP_UTILS
+//					PARSE
 //------------------------------------------------
+
+/*PARSE_MAP*/
+int		parse_map(t_game	*gdata, char **matrix, t_map *map);
+int		min_chars(char **map, int i);
+int		is_close(char **matrix, t_map *map);
+int		check_borders(char **matrix, int i, t_map *map);
+
+/*PARSE_UTILS*/
 void	check_n_line(char **src, t_map *map);
 int		check_esp(int x, int y, t_map *map);
 int		check_zero(int x, int y, t_map *map);
 int		check_player(int x, int y, t_map *map);
-//int		is_door(int x, int y, t_map *map); BONUS
+
+
+//------------------------------------------------
+//					FOV
+//------------------------------------------------
+
+/*CALCULATE_FOV*/
+void	calculate_fov(t_game *gdata, double x, double y);
+
+/*CALCULATE_RAY*/
+void 	calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
+void 	find_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, double x, double y);
+void 	traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map);
+void 	init_ray_direction (t_ray *ray, t_game *gdata, int check_ray_x_in_map,  int check_ray_y_in_map);
+
+/*CALCULATE_RAY_UTILS*/
+void 	prepare_vertical_collision_params (t_ray *ray, t_game *gdata, double x);
+void 	prepare_horizontal_collision_params (t_ray *ray, t_game *gdata, double y);
+void 	controll_x_limit_case (t_ray *ray, int check_ray_x_in_map, double cell_player_x);
+void 	controll_y_limit_case (t_ray *ray, int check_ray_y_in_map, double cell_player_y);
+double 	collision_coordinate(int check_ray_coord, int ray_sign, double px_in_cell_size);
+
+//------------------------------------------------
+//					PRINT_MAP
+//------------------------------------------------
+
+/*TEXTURES*/
+int		prepare_textures (t_game *gdata);
+int		load_image(t_game *gdata, t_image *image, char *path);
+int		check_file_can_be_open(char *path);
+
+/*PRINT_MAP*/
+void 	print_map (t_game *gdata, t_mlx mlx, t_map map);
+void	prepare_print_params(t_game *gdata, t_ray *ray, t_map map);
+void	print_sky(t_game *gdata, t_mlx mlx, int *row, int *column);
+void	print_floor(t_game *gdata, t_mlx mlx, int *row, int *column);
+
+/*PRINT_WALLS*/
+void 	print_texture_walls (t_game *gdata, t_ray *ray, int *row, int *column);
+void 	print_wall_column(t_game *gdata, int *row, int *column, t_image *texture);
+void 	get_texture_row(t_game *gdata, t_image *texture,  double *tex_start_offset);
+void 	get_texture_column(t_image *texture, double *wall_x, int *tex_x);
+void 	get_wall_column (t_game *gdata, t_ray *ray, double *wall_x);
+
+/*PRINT_UTILS*/
+int 	get_texture_pixel(t_image *texture, int tex_x, int tex_y);
+t_image *get_wall_texture(t_ray *ray, t_game *gdata);
+int 	rgb_to_hex(int r, int g, int b);
+
+//------------------------------------------------
+//					MOVEMENTS
+//------------------------------------------------
+
+/*PRESS_OR_RELEASE_KEY*/
+int		there_is_a_key_pressed(t_game *gdata);
+void	press_key(mlx_key_data_t keydata, void *param);
+void	release_key(mlx_key_data_t keydata, t_game *gdata);
+
+/*MOVE_PLAYER*/
+void	move_player(t_game *gdata, t_vision vision, double *target_x, double *target_y);
+void	prepare_next_position(t_game *gdata, t_vision vision, double *move_x, double *move_y);
+
+/*CHECK_COLLISION*/
+int		check_collision(t_game *gdata, double target_x, double target_y);
+
+/*ROTATE PLAYER*/
+void 	rotate_player(t_player *player, t_vision *vision);
+
+//------------------------------------------------
+//					RENDER
+//------------------------------------------------
+void	render_game(void *param);
+
 
 //-------------------------------------------------
 //				FREE/ERRORS
@@ -365,95 +470,7 @@ void	clean_path(t_path *path);
 void	clean_data(t_game *gdata);
 
 
-//MARTA
 
-
-
-//MAIN
-void	close_window(t_game	*gdata);
-
-//INITIALITATIONS
-int	init_gdata_values(t_game *gdata);
-void	init_minimap_params(t_game *gdata);
-void 	init_player_parameters (t_game *gdata, t_player *player);
-void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
-void	init_player_orientation(t_map *map, t_vision *vision);
-int init_vision_parameters (t_game *gdata, t_vision *vision);
-int		init_mlx(t_mlx *mlx);
-int	create_new_images(t_game *gdata, t_mlx *mlx);
-int	put_image_to_window(t_game *gdata, t_mlx *mlx);
-void init_map_background_params (t_texture *texture);
-void init_map_params (t_map *map);
-void	init_textures_and_colors_path(t_path *path);
-
-//PSEUDOPARSING
-char **parsing_pre_yajaira(t_game *gdata);
-
-//PRINT MAP
-void do_dragon_animation (t_game *gdata);
-void	print_dragon(t_game *gdata);
-int	prepare_animation (t_game *gdata);
-int	prepare_textures (t_game *gdata);
-void print_map (t_game *gdata, t_mlx mlx, t_map map);
-int get_texture_pixel(t_image *texture, int tex_x, int tex_y);
-int rgb_to_hex(int r, int g, int b);
-t_image *get_wall_texture(t_ray *ray, t_game *gdata);
-int get_texture_pixel(t_image *texture, int tex_x, int tex_y);
-void print_texture_walls (t_game *gdata, t_ray *ray, int *row, int *column);
-void print_wall_column(t_game *gdata, int *row, int *column, t_image *texture, int tex_x, double tex_start_offset);
-void get_texture_row(t_game *gdata, t_image *texture,  double *tex_start_offset);
-void get_texture_column(t_image *texture, double *wall_x, int *tex_x);
-void get_wall_column (t_game *gdata, t_ray *ray, double *wall_x);
-
-//void draw_floor(int x, int *y, t_game *gdata, t_ray *ray);
-void draw_floor(int column, int row, t_game *gdata, t_ray *ray);
-
-//PRINT MINIMAP
-void	print_minimap(t_game *gdata);
-void print_player(t_game *gdata, t_player player, int x, int y);
-
-void print_empty_space (t_mlx mlx, t_minimap minimap, t_map map);
-void print_walls (t_mlx mlx, t_minimap minimap, t_map map);
-void print_background (t_mlx mlx, t_minimap minimap);
-void    calculate_and_print_fov_and_vision_angle(t_game *gdata);
-void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision_angle, int color) ;
-void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, int color);
-void print_player_FOV_in_motion(t_game *gdata, t_player player, double target_x, double target_y);
-void	print_player_move(t_game *gdata, t_player player, double target_x, double target_y);
-void print_player_view_in_motion (t_game *gdata, t_player player, double target_x, double target_y);
-void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, int color);
-void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision_angle, int color);
-
-//RENDER
-void render_game (void *param);
-
-//FOV
-void calculate_fov(t_game *gdata, double x, double y);
-void calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
-void controll_x_limit_case (t_ray *ray, int check_ray_x_in_map, double cell_player_x);
-void controll_y_limit_case (t_ray *ray, int check_ray_y_in_map, double cell_player_y);
-void init_ray_direction (t_ray *ray, t_game *gdata, int check_ray_x_in_map,  int check_ray_y_in_map);
-void traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map);
-void find_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, double x, double y);
-double compute_collision_coordinate(int check_ray_coord, int ray_sign, double px_in_cell_size);
-
-//MOVE
-void	move_player(t_game *gdata, t_vision vision, double *target_x, double *target_y);
-void rotate_player(t_player *player, t_vision *vision);
-
-void calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
-
-//PRESS KEY
-int	there_is_a_key_pressed(t_game *gdata);
-void	press_key(mlx_key_data_t keydata, void *param);
-void	set_mov_params(t_game *gdata, int *move_direction);
-void	reset_mov_params(t_game *gdata);
-void	release_key(mlx_key_data_t keydata, t_game *gdata);
-
-//COLLISIONS
-int	check_collision(t_game *gdata, double target_x, double target_y);
-// int check_collision_x(t_game *gdata, double target_x);
-// int check_collision_y(t_game *gdata, double target_y);
 
 
 #endif

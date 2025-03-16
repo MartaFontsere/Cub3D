@@ -16,7 +16,7 @@ void	check_n_line(char **src, t_map *map)
 {
 	int	i;
 	int	j;
-	int		new_size;
+	int	new_size;
 
 	i = 0;
 	new_size = map->c_height - 1;
@@ -97,15 +97,15 @@ int	check_player(int i, int j, t_map *map)
 	return (1);
 }
 
-void	print_dirs(char **matrix, int i, int j, int end)
-{
-	if (i != 0)
-		printf(BLUE"   [%c]\n"END, matrix[i - 1][j]);
-	if (j != 0)
-		printf(BLUE"[%c]"END, matrix[i][j - 1]);
-	printf(PURPLE"[%c]"END, matrix[i][j]);
-	if (j != '\0')
-		printf(BLUE"[%c]\n"END, matrix[i][j + 1]);
-	if (i != end)
-		printf(BLUE"   [%c]\n"END, matrix[i + 1][j]);
-}
+// void	print_dirs(char **matrix, int i, int j, int end) //ESTOS PRINTF HAY QUE DEJARLOS????
+// {
+// 	if (i != 0)
+// 		printf(BLUE"   [%c]\n"END, matrix[i - 1][j]);
+// 	if (j != 0)
+// 		printf(BLUE"[%c]"END, matrix[i][j - 1]);
+// 	printf(PURPLE"[%c]"END, matrix[i][j]);
+// 	if (j != '\0')
+// 		printf(BLUE"[%c]\n"END, matrix[i][j + 1]);
+// 	if (i != end)
+// 		printf(BLUE"   [%c]\n"END, matrix[i + 1][j]);
+// }

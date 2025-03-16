@@ -15,8 +15,8 @@
 char	*cub_strdup(char *s1, int len)
 {
 	char	*str;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -34,7 +34,7 @@ char	*cub_strdup(char *s1, int len)
 char	**copy_map(char **map, int height)
 {
 	char	**map_tmp;
-	int	i;
+	int		i;
 
 	i = 0;
 	map_tmp = malloc(sizeof(char *) * (height + 1));
@@ -64,8 +64,8 @@ int	mix_matrix(char **src, t_map *map)
 		k = 0;
 		while (src[i][j] && src[i][j] != '\n')
 		{
-			if (src[i][j] == '1' || src[i][j] == '0' || src[i][j] == 'N'\
-			|| src[i][j] == 'S' || src[i][j] == 'E' || src[i][j] == 'W')
+			if (src[i][j] == '1' || src[i][j] == '0' || src[i][j] == 'N'
+				|| src[i][j] == 'S' || src[i][j] == 'E' || src[i][j] == 'W')
 				map->void_matrix[i][k] = src[i][j];
 			k++;
 			j++;
@@ -95,7 +95,7 @@ char	*fill_void(t_map *map)
 
 int	get_final_map(char **src, t_map *map)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	map->void_matrix = malloc(sizeof(char *) * (map->c_height + 1));

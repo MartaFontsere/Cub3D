@@ -19,21 +19,6 @@ void	exit_error(char *msg, int status)
 	exit(status);
 }
 
-void	msg_error(char *msg, char *msg2)
-{
-	ft_write (2, RED, ft_strlen(RED));
-	while (*msg)
-		ft_write(2, msg++, 1);
-	ft_write (2, END, ft_strlen(END));
-	if (msg2)
-	{
-		ft_write (2, BLUE, ft_strlen(BLUE));
-		while (*msg2)
-			ft_write(2, msg2++, 1);
-		ft_write (2, END, ft_strlen(END));
-	}
-}
-
 void	free_matrix(char **matrix)
 {
 	int	i;
@@ -58,6 +43,18 @@ void	clean_path(t_path *path)
 	free(path->WE);
 }
 
+void	free_map_sprites(t_game *gdata, t_texture *texture)
+{
+	mlx_delete_image(gdata->mlx.init, texture->north_wall_img.data);
+	mlx_delete_xpm42(texture->north_wall_img.xpm);
+	mlx_delete_image(gdata->mlx.init, texture->south_wall_img.data);
+	mlx_delete_xpm42(texture->south_wall_img.xpm);
+	mlx_delete_image(gdata->mlx.init, texture->west_wall_img.data);
+	mlx_delete_xpm42(texture->west_wall_img.xpm);
+	mlx_delete_image(gdata->mlx.init, texture->east_wall_img.data);
+	mlx_delete_xpm42(texture->east_wall_img.xpm);
+}
+
 void	clean_data(t_game *gdata)
 {
 	clean_path(&gdata->texture.path);
@@ -65,4 +62,5 @@ void	clean_data(t_game *gdata)
 	free_matrix(gdata->map.tmp_matrix);
 	free_matrix(gdata->map.void_matrix);
 	free(gdata->vision.FOV.rays); //REVISAR
+	free_map_sprites(gdata, &gdata->texture);
 }

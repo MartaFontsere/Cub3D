@@ -91,13 +91,18 @@ int	min_chars(char **map, int i)
 	return (1);
 }
 
-int	parse_map(char **matrix, t_map *map)
+int	parse_map(t_game	*gdata, char **matrix, t_map *map)
 {
 	if (!min_chars(matrix, 0))
+	{
+		clean_data(gdata);
 		return (0);
+	}
 	map->is_map = 0;
 	if (!is_close(matrix, map))
+	{
+		clean_data(gdata);
 		return (0);
-	printf("✅\n");
+	}
 	return (1);
 }

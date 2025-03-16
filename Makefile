@@ -39,15 +39,15 @@ ERROR_DIR = error/
 GNL_DIR = ../libs/get_next_line/
 
 # Files by directory
-BASE_FILES = cub3D.c get_map.c render.c textures.c 
+BASE_FILES = cub3D.c render.c 
 INIT_FILES = initialitations.c init_map_minimap_params.c init_player_and_vision_params.c init_print_params.c init_mlx_params.c
 VISION_ANGLE_FILES = calculate_vision_angle.c 
-FOV_FILES = calculate_fov.c calculate_ray.c utils_calculate_ray.c 
+FOV_FILES = calculate_fov.c calculate_ray.c calculate_ray_utils.c 
 MOVE_FILES = press_or_release_key.c move_player.c rotate_player.c check_collisions.c
-PRINT_FILES = print_map.c print_walls.c print_utils.c
+PRINT_FILES = print_map.c print_walls.c print_utils.c textures.c
 PARSE_FILES = parse_map.c parse_utils.c
-READ_FILES = read_fd.c read_fd_utils.c read_colors.c 
-ERROR_FILES = free_errors.c
+READ_FILES = read_fd.c read_fd_utils.c read_colors.c get_map.c
+ERROR_FILES = free_errors.c msg_errors.c
 GNL_FILES = get_next_line.c get_next_line_utils.c
 
 INIT_SRCS = $(addprefix $(INIT_DIR), $(INIT_FILES))
