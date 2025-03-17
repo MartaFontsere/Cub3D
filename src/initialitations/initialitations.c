@@ -22,6 +22,8 @@ int	init_gdata_values(t_game *gdata)
 		return (0);
 	// instalar la mlx, y lanzar una pantalla del tamaño, x y, para ver que funciona
 	//mlx_set_setting(MLX_STRETCH_IMAGE, true);
+	if (gdata->door.there_is_door == 1)
+		init_door_position (&gdata->map, &gdata->door);
 	if (init_mlx(&gdata->mlx) == 0)
 		return (0);
 	if (create_new_images(gdata, &gdata->mlx) == 0)

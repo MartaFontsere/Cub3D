@@ -61,6 +61,7 @@
 // #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
 #define SKY_TEXTURE "textures/sky/Sky_32.xpm42"
 #define FLOOR_TEXTURE "textures/floor/Floor_4.xpm42"
+#define DOOR_TEXTURE "textures/door/Door2.xpm42"
 #define DRAGON_1 "textures/flying_dragon/dragon1.xpm42"
 #define DRAGON_2 "textures/flying_dragon/dragon2.xpm42"
 #define DRAGON_3 "textures/flying_dragon/dragon3.xpm42"
@@ -214,6 +215,7 @@ typedef struct s_texture
 	//BONUS
 	t_image 	sky_img;
 	t_image 	floor_img;
+	t_image  	door_img;
 	t_image 	dragon_img[4];
 } 				t_texture;
 
@@ -258,8 +260,8 @@ typedef struct s_ray
     int 		line_crossing; //0 = choque en X, 1 = choque en Y (para texturas)// nos dice qué cara de una celda fue atravesada por el rayo en su último avance. Indica si el rayo choca contra una pared vertical (side = 0, osea se movió en X) o una horizontal (side = 1, osea se movió en Y). indica con qué tipo de línea de la celda el rayo acaba de chocar. No indica si chocó con una pared del mapa, sino si cruzó una línea vertical u horizontal dentro de la cuadrícula.
 
     	//CAMBIAR POR WALL HIT quizas mejor
-    double 		cell_collision_x; // Punto de colisión en X (en casillas)
-    double 		cell_collision_y; // Punto de colisión en Y (en casillas)
+    int 		cell_collision_x; // Punto de colisión en X (en casillas)
+    int 		cell_collision_y; // Punto de colisión en Y (en casillas)
     double 		px_collision_x; // Punto de colisión en X (en pixeles)
     double 		px_collision_y; // Punto de colisión en Y (en pixeles)
    	
@@ -315,6 +317,14 @@ typedef struct s_player
 
 }				t_player;
 
+typedef struct s_door
+{
+	int 	there_is_door;
+	int 	cell_x;
+	int 	cell_y;
+	
+} 			t_door;
+
 typedef struct s_minimap
 {
 	int 			c_width; // Número de casillas que caben en el eje X dentro de la ventana del minimapa
@@ -346,6 +356,8 @@ typedef struct s_map
 	int				c_width; // Valor máximo X del mapa (en casillas)
 	int				c_height; // Valor máximo Y del mapa (en casillas)
 	
+	char 			pos;
+
 }					t_map;
 
 
@@ -353,6 +365,7 @@ typedef struct s_game
 {
 	t_texture 		texture;
 	t_player		player;
+	t_door  		door;
 	t_map			map;
 	t_minimap 		minimap;
 	t_vision 		vision;
@@ -361,6 +374,10 @@ typedef struct s_game
 	int 			finish_game;
 }					t_game;
 
+
+void init_door_position (t_map *map, t_door *door) ;
+
+int	is_door(int i, int j, t_map *map, t_game *gdata);
 
 
 //YAJA
@@ -409,9 +426,9 @@ int		get_final_map(char **src, t_map *map);
 //					PARSE_MAP
 //------------------------------------------------
 int		check_borders(char **matrix, int i, t_map *map);
-int		is_close(char **matrix, t_map *map);
+int		is_close(char **matrix, t_map *map, t_game *gdata);
 int		min_chars(char **map, int i);
-int		parse_map(char **matrix, t_map *map);
+int		parse_map(char **matrix, t_map *map, t_game *gdata);
 
 //------------------------------------------------
 //					PARSE_MAP_UTILS

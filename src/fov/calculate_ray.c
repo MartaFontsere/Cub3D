@@ -49,7 +49,7 @@ void traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, 
         // Verificar colisión con paredes
         if (*check_ray_x_in_map < 0 || *check_ray_x_in_map >= gdata->map.c_width || *check_ray_y_in_map < 0 || *check_ray_y_in_map >= gdata->map.c_height) 
             break; //Si el rayo sale del mapa, se detiene.
-        if (gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == '1')
+        if (gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == '1' || gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == 'D')
         {
             wall_hit = 1; //Si el rayo encuentra una celda con 1 (pared), se detiene (hit = 1).
         }

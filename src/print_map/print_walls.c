@@ -93,17 +93,86 @@ void print_wall_column(t_game *gdata, int *row, int *column, t_image *texture, i
 }
 
 
-void print_texture_walls (t_game *gdata, t_ray *ray, int *row, int *column)
-{
-    double wall_x;  // Posición exacta donde el rayo impacta en la casilla, y por lo tanto su correspondencia en la pared, en que columna dentro de la unidad de la casilla.
-    int tex_x;
+// void print_door (t_game *gdata, t_ray *ray, int *row, int *column)
+// {
+//     double wall_x;  // Posición exacta donde el rayo impacta en la casilla, y por lo tanto su correspondencia en la pared, en que columna dentro de la unidad de la casilla.
+//     int tex_x;
 
+//     double tex_start_offset;
+//     t_image *texture;
+//     // double door_perp_dist;
+//     // int door_height, door_draw_start, door_draw_end;
+//     // double door_recess;
+
+//    // Usar la textura de la puerta
+//     texture = &gdata->texture.door_img;
+//     // Calcular la posición exacta de impacto en la casilla (wall_x)
+//     get_wall_column(gdata, ray, &wall_x);
+//     // Convertir wall_x a coordenada en la textura
+//     get_texture_column(texture, &wall_x, &tex_x);
+//     // Calcular el offset vertical en la textura para centrar la imagen
+//     get_texture_row(gdata, texture, &tex_start_offset);
+//     // Imprimir la columna de la puerta (la altura será la misma que la pared)
+//     print_wall_column(gdata, row, column, texture, tex_x, tex_start_offset);
+     
+// }
+
+// void print_texture_walls (t_game *gdata, t_ray *ray, int *row, int *column)
+// {
+//     double wall_x;  // Posición exacta donde el rayo impacta en la casilla, y por lo tanto su correspondencia en la pared, en que columna dentro de la unidad de la casilla.
+//     int tex_x;
+
+//     double tex_start_offset;
+//     t_image *texture;
+
+//     if (gdata->map.matrix[ray->cell_collision_y][ray->cell_collision_x] == 'D')
+//         print_door (gdata, ray, row, column);
+//     else
+//     {
+//         texture = get_wall_texture(ray, gdata);  // Obtener la textura correcta segun si el rayo impacta en una pared norte, sur, este u oeste, ya que la textura debe ser diferente.
+//         get_wall_column (gdata, ray, &wall_x);
+//         get_texture_column(texture, &wall_x, &tex_x);
+//         get_texture_row(gdata, texture, &tex_start_offset);
+//         print_wall_column(gdata, row, column, texture,tex_x, tex_start_offset);
+//     }
+// }
+
+
+
+void print_texture_walls(t_game *gdata, t_ray *ray, int *row, int *column)
+{
+    double wall_x;
+    int tex_x;
     double tex_start_offset;
     t_image *texture;
 
-    texture = get_wall_texture(ray, gdata);  // Obtener la textura correcta segun si el rayo impacta en una pared norte, sur, este u oeste, ya que la textura debe ser diferente.
-    get_wall_column (gdata, ray, &wall_x);
-    get_texture_column(texture, &wall_x, &tex_x);
-    get_texture_row(gdata, texture, &tex_start_offset);
-    print_wall_column(gdata, row, column, texture,tex_x, tex_start_offset);
+    if (gdata->map.matrix[ray->cell_collision_y][ray->cell_collision_x] == 'D')
+        {
+            double door_x;
+    get_wall_column(gdata, ray, &door_x);
+    
+    // Restar el offset para que la puerta se dibuje en el centro del hueco
+    if (ray->line_crossing == 1) // Puerta en pared horizontal
+        door_x -= (gdata->minimap.px_in_cell_width / 2.0);
+    else // Puerta en pared vertical
+        door_x -= (gdata->minimap.px_in_cell_height / 2.0);
+    
+    // Obtener la textura de la puerta
+    t_image *door_texture = &gdata->texture.door_img;
+    int tex_x;
+    get_texture_column(door_texture, &door_x, &tex_x);
+    double tex_start_offset;
+    get_texture_row(gdata, door_texture, &tex_start_offset);
+    
+    *row = gdata->print_map.draw_wall_start;
+    print_wall_column(gdata, row, column, door_texture, tex_x, tex_start_offset);
+        }
+    else
+    {
+        texture = get_wall_texture(ray, gdata);
+        get_wall_column(gdata, ray, &wall_x);
+        get_texture_column(texture, &wall_x, &tex_x);
+        get_texture_row(gdata, texture, &tex_start_offset);
+        print_wall_column(gdata, row, column, texture, tex_x, tex_start_offset);
+    }
 }

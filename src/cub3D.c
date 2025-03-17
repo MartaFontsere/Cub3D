@@ -41,12 +41,12 @@ int main(int ac, char **av)
 		clean_data(&gdata);
 		return (1);
 	}
-	if (init_gdata_values(&gdata) == 0)
+	if (!parse_map(gdata.map.matrix, &gdata.map, &gdata))
 	{
 		clean_data(&gdata);
 		return (1);
 	}
-	if (!parse_map(gdata.map.matrix, &gdata.map))
+	if (init_gdata_values(&gdata) == 0)
 	{
 		clean_data(&gdata);
 		return (1);

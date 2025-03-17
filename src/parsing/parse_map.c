@@ -29,14 +29,14 @@ int	check_borders(char **matrix, int i, t_map *map)
 		return (1);
 	else if (matrix[i][j] != '1' || matrix[i][end] != '1')
 	{
-		if (matrix[i][j] != '0')
+		if (matrix[i][j] != '0' || matrix[i][j] == 'D')
 			return (msg_error("Player must be inside map\n", NULL), 0);
 		return (msg_error("Map must be close with walls\n", NULL), 0);
 	}
 	return (1);
 }
 
-int	is_close(char **matrix, t_map *map)
+int	is_close(char **matrix, t_map *map, t_game *gdata)
 {
 	int	i;
 	int	j;
@@ -55,7 +55,7 @@ int	is_close(char **matrix, t_map *map)
 				;
 			else if (!check_esp(i, j, map) || !check_zero(i, j, map))
 				return (0);
-			else if (!check_player(i, j, map))
+			else if (!check_player(i, j, map) || !is_door(i, j, map, gdata))
 				return (0);
 			j++;
 		}
@@ -77,7 +77,8 @@ int	min_chars(char **map, int i)
 		{
 			if (map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' \
 			&& map[i][j] != 'W' && map[i][j] != '1' && map[i][j] != '0' \
-			&& map[i][j] != '\n' && map[i][j] != ' ' && map[i][j] != '*')
+			&& map[i][j] != '\n' && map[i][j] != ' ' && map[i][j] != '*' \
+			&& map[i][j] != 'D')
 				return (0);
 			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E' \
 			|| map[i][j] == 'W')
@@ -91,12 +92,12 @@ int	min_chars(char **map, int i)
 	return (1);
 }
 
-int	parse_map(char **matrix, t_map *map)
+int	parse_map(char **matrix, t_map *map, t_game *gdata)
 {
 	if (!min_chars(matrix, 0))
 		return (0);
 	map->is_map = 0;
-	if (!is_close(matrix, map))
+	if (!is_close(matrix, map, gdata))
 		return (0);
 	printf("✅\n");
 	return (1);

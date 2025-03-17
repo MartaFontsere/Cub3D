@@ -68,6 +68,9 @@ int	prepare_textures (t_game *gdata)
 		//return error; //MIRAR LA FUNCION DE FREE PERTINENTE y escribir error
 	if (!load_image(gdata, &gdata->texture.floor_img, FLOOR_TEXTURE))
 		printf ("hola"); //BORRAR
+	if (!load_image(gdata, &gdata->texture.door_img, DOOR_TEXTURE))
+			printf ("hola"); //BORRAR
+
 	return (1);
 }
 

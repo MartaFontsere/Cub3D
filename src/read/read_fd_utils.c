@@ -105,7 +105,8 @@ void	map_control(char *line, t_map *map, t_path *path)
 	{
 		if (map->is_map == 1 && (line[i] != 'N' && line[i] != 'S' \
 		&& line[i] != 'W' && line[i] != 'E' && line[i] != '1' \
-		&& line[i] != '0' && line[i] != ' ' && line[i] != '\n'))
+		&& line[i] != '0' && line[i] != ' ' && line[i] != '\n' \
+		&& line[i] != 'D'))
 		{
 			ft_write(2, &line[i], 1);
 			path->err_flag = 1;

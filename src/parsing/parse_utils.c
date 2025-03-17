@@ -65,17 +65,23 @@ int	check_zero(int i, int j, t_map *map)
 	{
 		if ((map->matrix[i][j + 1] != 'N' && map->matrix[i][j + 1] != 'S' \
 		&& map->matrix[i][j + 1] != 'W' && map->matrix[i][j + 1] != 'E' \
-		&& map->matrix[i][j + 1] != '0' && map->matrix[i][j + 1] != '1')
+		&& map->matrix[i][j + 1] != 'D' && map->matrix[i][j + 1] != '0' && map->matrix[i][j + 1] != '1')
 		|| (map->matrix[i + 1][j] != 'N' && map->matrix[i + 1][j] != 'S' \
 		&& map->matrix[i + 1][j] != 'W' && map->matrix[i + 1][j] != 'E' \
-		&& map->matrix[i + 1][j] != '0' && map->matrix[i + 1][j] != '1'))
+		&& map->matrix[i + 1][j] != 'D' && map->matrix[i + 1][j] != '0' && map->matrix[i + 1][j] != '1'))
 		{
 			msg_error("'0' must be followed by '1', '0' or player\n", NULL);
+			printf ("map->matrix[i + 1][j] = %c\n", map->matrix[i + 1][j]);
+			printf ("map->matrix[i][j + 1] = %c\n", map->matrix[i][j + 1]);
+			printf ("i |%d|, j |%d|\n", i, j);
 			return (0);
 		}
 	}
 	return (1);
 }
+
+
+
 
 int	check_player(int i, int j, t_map *map)
 {
@@ -87,10 +93,11 @@ int	check_player(int i, int j, t_map *map)
 			msg_error("camera must be inside the map", "\n");
 			return (0);
 		}
-		if ((map->matrix[i][j + 1] != '1' && map->matrix[i][j + 1] != '0') \
-		|| (map->matrix[i + 1][j] != '1' && map->matrix[i + 1][j] != '0'))
+		if ((map->matrix[i][j + 1] != '1' && map->matrix[i][j + 1] != '0' \
+		&& map->matrix[i][j + 1] != 'D') || (map->matrix[i + 1][j] != '1' \
+		&& map->matrix[i + 1][j] != '0' && map->matrix[i + 1][j] != 'D'))
 		{
-			msg_error("Player must be next to '1' or '0'\n", NULL);
+			msg_error("Player must be next to '1' or '0' or Door\n", NULL);
 			return (0);
 		}
 	}

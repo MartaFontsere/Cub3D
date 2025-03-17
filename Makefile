@@ -33,7 +33,7 @@ ORANGE = \e[1;38;2;255;128;0m
 
 FILES = cub3D.c get_map.c render.c textures.c 
 
-FILES += initialitations/initialitations.c initialitations/init_map_minimap_params.c initialitations/init_player_and_vision_params.c initialitations/init_print_params.c initialitations/init_mlx_params.c
+FILES += initialitations/init_door_params.c initialitations/initialitations.c initialitations/init_map_minimap_params.c initialitations/init_player_and_vision_params.c initialitations/init_print_params.c initialitations/init_mlx_params.c
 
 FILES += read/read_fd.c read/read_fd_utils.c read/read_colors.c 
 
@@ -51,7 +51,7 @@ FILES += error/error.c error/free_errors.c
 
 FILES += ../libs/get_next_line/get_next_line.c ../libs/get_next_line/get_next_line_utils.c
 
-FILES += bonus/floor_raycasting.c bonus/print_map.c bonus/print_dragon.c bonus/do_dragon_animation.c
+FILES += bonus/parse_door.c bonus/floor_raycasting.c bonus/print_map.c bonus/print_dragon.c bonus/do_dragon_animation.c
 
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))
