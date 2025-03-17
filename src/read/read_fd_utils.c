@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/13 23:37:51 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:30:48 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,22 @@ int	check_name(char *map_path)
 	return (1);
 }
 
-char	*cpy_path(char *line, t_path *path, int pos)
+char	*clean_str(char *src, int end, t_path *path)
+{
+	char	*str;
+	
+	path->p_count++;
+	str = ft_substr(src, 0, end);
+	free(src);
+	return (str);
+}
+
+char	*cpy_path(char *line, t_path *path, int pos)//podemos pasar i por param
 {
 	char	*tmp;
 	int		i;
+	int		end;
 
-	i = 0;
 	while (ft_isspace(line[pos]))
 		pos++;
 	if (line[pos] == '\0')
@@ -40,16 +50,19 @@ char	*cpy_path(char *line, t_path *path, int pos)
 	}
 	else
 		tmp = ft_strdup(ft_strchr(line, line[pos]));
+	i = 0;
 	while (tmp[i] && !ft_isspace(tmp[i]))
 		i++;
+	end = i;
 	while (ft_isspace(tmp[i]))
 		i++;
-	if (tmp[i] != '\0')
+	if (tmp[i] != '\0' && tmp[i] != '\n')
 	{
 		msg_error(tmp, ": is not a valid path");
+		free(tmp);
 		return ((path->err_flag = 1), NULL);
 	}
-	path->p_count++;
+	tmp = clean_str(tmp, end, path);
 	return (tmp);
 }
 

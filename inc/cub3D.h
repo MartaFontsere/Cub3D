@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/17 11:37:16 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/17 12:31:15 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define BLUE1 0X9AC4FFFF
 
 			/*TEXTURES*/ //LUEGO BORRAR PATHS, PARA MIENTRAS SIN PARSING
-			#define NORTH_TEXTURE "textures/map_walls/opcion2/Norte1.xpm42"
+			#define NORTH_TEXTURE "textures/map_walls/opcion2/Norte.xpm42"
 			#define SOUTH_TEXTURE "textures/map_walls/opcion2/Sur.xpm42"
 			#define WEST_TEXTURE "textures/map_walls/opcion2/Oeste.xpm42"
 			#define EAST_TEXTURE "textures/map_walls/opcion2/Este.xpm42"
