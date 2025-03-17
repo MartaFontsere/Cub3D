@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/14 12:39:52 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/17 11:37:16 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,7 +364,7 @@ void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
 int 	init_vision_params (t_game *gdata, t_vision *vision);
 
 /*INIT_PRINT_PARAMS*/
-void	init_textures_and_colors_path(t_path *path);
+void	init_textures_and_colors_path(t_texture *texture, t_path *path);
 
 /*INIT_MLX_PARAMS*/
 int		init_mlx(t_game *gdata, t_mlx *mlx);

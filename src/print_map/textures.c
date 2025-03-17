@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/14 00:30:09 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/17 11:30:08 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ int	load_image(t_game *gdata, t_image *image, char *path)
 
 int	prepare_textures (t_game *gdata) //REVISAR TEXTURAS PARSEADAS, NO FUNCIONA
 {
-	//if (!load_image(gdata, &gdata->texture.north_wall_img, gdata->texture.path.NO)) --> LO CORRECTO CUANDO TENGA LAS TEXTURAS GUARDADAS DEL PARSING
-	if (!load_image(gdata, &gdata->texture.north_wall_img, NORTH_TEXTURE))
+	//printf ("gdata->texture.path.NO: %s\n ",gdata->texture.path.NO);
+	//printf ("path hardcodeado: %s\n ", NORTH_TEXTURE);
+	//if (!load_image(gdata, &gdata->texture.north_wall_img, NORTH_TEXTURE))
+	if (!load_image(gdata, &gdata->texture.north_wall_img, NULL))// --> LO CORRECTO CUANDO TENGA LAS TEXTURAS GUARDADAS DEL PARSING
 	{
 		clean_data(gdata);
 		return (0);

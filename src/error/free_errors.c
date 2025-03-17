@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/13 23:18:20 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/17 11:41:24 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,26 @@ void	clean_path(t_path *path)
 
 void	free_map_sprites(t_game *gdata, t_texture *texture)
 {
-	mlx_delete_image(gdata->mlx.init, texture->north_wall_img.data);
-	mlx_delete_xpm42(texture->north_wall_img.xpm);
-	mlx_delete_image(gdata->mlx.init, texture->south_wall_img.data);
-	mlx_delete_xpm42(texture->south_wall_img.xpm);
-	mlx_delete_image(gdata->mlx.init, texture->west_wall_img.data);
-	mlx_delete_xpm42(texture->west_wall_img.xpm);
-	mlx_delete_image(gdata->mlx.init, texture->east_wall_img.data);
-	mlx_delete_xpm42(texture->east_wall_img.xpm);
+	if (texture->north_wall_img.data)
+	{
+		mlx_delete_image(gdata->mlx.init, texture->north_wall_img.data);
+		mlx_delete_xpm42(texture->north_wall_img.xpm);
+	}
+	if (texture->south_wall_img.data)
+	{
+		mlx_delete_image(gdata->mlx.init, texture->south_wall_img.data);
+		mlx_delete_xpm42(texture->south_wall_img.xpm);
+	}
+	if (texture->west_wall_img.data)
+	{
+		mlx_delete_image(gdata->mlx.init, texture->west_wall_img.data);
+		mlx_delete_xpm42(texture->west_wall_img.xpm);
+	}
+	if (texture->east_wall_img.data)
+	{
+		mlx_delete_image(gdata->mlx.init, texture->east_wall_img.data);
+		mlx_delete_xpm42(texture->east_wall_img.xpm);
+	}
 }
 
 void	clean_data(t_game *gdata)
@@ -61,6 +73,7 @@ void	clean_data(t_game *gdata)
 	free_matrix(gdata->map.matrix);
 	free_matrix(gdata->map.tmp_matrix);
 	free_matrix(gdata->map.void_matrix);
-	free(gdata->vision.FOV.rays); //REVISAR
+	if (gdata->vision.FOV.rays)
+		free(gdata->vision.FOV.rays); //REVISAR
 	free_map_sprites(gdata, &gdata->texture);
 }

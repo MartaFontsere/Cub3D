@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_print_params.c                        :+:      :+:    :+:   */
+/*   init_print_params.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:47:23 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/26 21:57:41 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/17 11:41:17 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include  "cub3D.h"
 
-void	init_textures_and_colors_path(t_path *path)
+void	init_textures_and_colors_path(t_texture *texture, t_path *path)
 {
+	texture->north_wall_img.data = NULL;
+	texture->south_wall_img.data = NULL;
+	texture->west_wall_img.data = NULL;
+	texture->east_wall_img.data = NULL;
 	path->NO = NULL;
 	path->SO = NULL;
 	path->EA = NULL;
