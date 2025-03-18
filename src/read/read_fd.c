@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/13 23:37:08 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:54:21 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ int	read_file(int ac, char **av, t_game *gdata, t_map *map)
 		clean_data(gdata);
 		return (0);
 	}
-	printf(RED "%u\n" END, map->c_height);
 	if (!get_final_map(map->tmp_matrix, map))
 	{
 		clean_data(gdata);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/17 11:43:38 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:27:26 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int ac, char **av)
 {
 	t_game	gdata;
 
+	gdata.vision.FOV.rays = NULL;
 	init_map_params(&gdata.map);
 	init_textures_and_colors_path(&gdata.texture, &gdata.texture.path);
 	if (!read_file(ac, av, &gdata, &gdata.map))

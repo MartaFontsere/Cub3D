@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaja <yaja@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:37:00 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/07 06:39:09 by yaja             ###   ########.fr       */
+/*   Updated: 2025/03/18 13:52:21 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	check_player(int i, int j, t_map *map)
 	{
 		if (i == 0 || i == map->c_height - 1 || j == 0 || j == map->c_width - 2)
 		{
-			msg_error("camera must be inside the map", "\n");
+			msg_error("Player must be inside map\n", NULL);
 			return (0);
 		}
 		if ((map->matrix[i][j + 1] != '1' && map->matrix[i][j + 1] != '0') \

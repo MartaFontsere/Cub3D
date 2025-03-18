@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialitations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 01:46:16 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:18:10 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	init_gdata_values(t_game *gdata)
 {
+	gdata->finish_game = 0;
 	init_minimap_params(gdata);
 	init_player_params(gdata, &gdata->player);
 	if (init_vision_params(gdata, &gdata->vision) == 0)

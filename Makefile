@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
+#    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/17 13:40:31 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/03/18 14:08:20 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,8 @@ NAME = cub3D
 HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -g -Ofast #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS += #-Ofast
 
 MLXDIR = libs/MLX42
 LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
@@ -144,6 +145,8 @@ ${NAME}: ${OBJS}
 clean:
 	@${RM} ${OBJDIR}
 	@make -C libs/Libft clean
+#	@make -C libs/get_next_line clean
+	@${RM} ${GNL_DIR}*.o
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)$(NC)$(END)"
 
 fclean:
@@ -151,6 +154,8 @@ fclean:
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)"
 	@${RM} ${NAME}
 	@make -C libs/Libft fclean
+#	@make -C libs/get_next_line clean
+	@${RM} ${GNL_DIR}*.o
 	@echo "$(RED)CUB3D EXEC DELETED$(END)$(END)"
 	@echo "$(ORANGE)"
 	@echo "	⠀⠀⠀⠀⠀⠀⢱⣆⠀⠀"

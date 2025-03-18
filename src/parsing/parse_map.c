@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:45:21 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/26 13:59:56 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:52:54 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	check_borders(char **matrix, int i, t_map *map)
 		return (1);
 	else if (matrix[i][j] != '1' || matrix[i][end] != '1')
 	{
-		if (matrix[i][j] != '0')
+		if (matrix[i][j] != '0' && matrix[i][end] != '0')
 			return (msg_error("Player must be inside map\n", NULL), 0);
 		return (msg_error("Map must be close with walls\n", NULL), 0);
 	}
