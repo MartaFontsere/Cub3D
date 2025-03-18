@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/17 13:22:32 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:05:52 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,24 @@ int	load_image(t_game *gdata, t_image *image, char *path)
 	return (1);
 }
 
-int	prepare_textures (t_game *gdata) //REVISAR TEXTURAS PARSEADAS, NO FUNCIONA
+int	prepare_textures (t_game *gdata)
 {
-	//printf(BLUE"path parseado: %s\n"END,gdata->texture.path.NO);
-	//printf(RED"path hardcodeado: %s\n"END, NORTH_TEXTURE);
-	//if (!load_image(gdata, &gdata->texture.north_wall_img, NORTH_TEXTURE))
-	if (!load_image(gdata, &gdata->texture.north_wall_img, gdata->texture.path.NO))// --> LO CORRECTO CUANDO TENGA LAS TEXTURAS GUARDADAS DEL PARSING
+	if (!load_image(gdata, &gdata->texture.north_wall_img, gdata->texture.path.NO))
 	{
 		clean_data(gdata);
 		return (0);
 	}
-	//if (!load_image(gdata, &gdata->texture.south_wall_img, SOUTH_TEXTURE))
-	if (!load_image(gdata, &gdata->texture.south_wall_img, gdata->texture.path.SO)) //--> LO CORRECTO CUANDO TENGA LAS TEXTURAS GUARDADAS DEL PARSING
+	if (!load_image(gdata, &gdata->texture.south_wall_img, gdata->texture.path.SO))
 	{
 		clean_data(gdata);
 		return (0);
 	}
-	//if (!load_image(gdata, &gdata->texture.east_wall_img, EAST_TEXTURE))
-	if (!load_image(gdata, &gdata->texture.east_wall_img, gdata->texture.path.EA)) //--> LO CORRECTO CUANDO TENGA LAS TEXTURAS GUARDADAS DEL PARSING
+	if (!load_image(gdata, &gdata->texture.east_wall_img, gdata->texture.path.EA))
 	{
 		clean_data(gdata);
 		return (0);
 	}
-	//if (!load_image(gdata, &gdata->texture.west_wall_img, WEST_TEXTURE))
-	if (!load_image(gdata, &gdata->texture.west_wall_img, gdata->texture.path.WE)) //--> LO CORRECTO CUANDO TENGA LAS TEXTURAS GUARDADAS DEL PARSING
+	if (!load_image(gdata, &gdata->texture.west_wall_img, gdata->texture.path.WE))
 	{
 		clean_data(gdata);
 		return (0);

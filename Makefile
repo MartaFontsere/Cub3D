@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/18 14:08:20 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/03/18 16:03:19 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,8 +81,8 @@ NAME = cub3D
 HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
-CFLAGS += #-Ofast
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS += -Ofast
 
 MLXDIR = libs/MLX42
 LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
@@ -101,11 +101,18 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile libs/Libft/libft.a $(MLXDIR)/build
 all: make_libs ${NAME}
 
 make_libs:
-	@make -C libs/Libft all
-	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4
+	@make -C libs/Libft all --no-print-directory
+	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4 --no-print-directory
 
-${NAME}: ${OBJS}
+ifndef BONUS
+${NAME}: ${OBJS} dragon
 	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)
+else
+${NAME}: ${OBJS_BONUS} dragon
+	@$(CC) $(CFLAGS) ${OBJS_BONUS} $(LIBS) -o $(NAME)
+endif
+
+dragon :
 	@echo "	⠀⠀⠀⠀⠀⠀⠀"⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⣰⠂⠀$(BLUE)⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠀⠀⠀⠀⠀"⠀⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⡟⢆$(BLUE)⢠⢣⠀$(YELLOW)  ⣔⡀⠀⠀ ⠀$(BLUE)⠀⡘⡇⠀⠀⠀⠀⠀⠀"⠀⠀
@@ -142,20 +149,19 @@ ${NAME}: ${OBJS}
 	@echo "				    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ $(RED)⠈⠛⠁⠀⠀⠀⠀$(END)⠀⠀"
 	@echo ""
 
+bonus: 
+	@$(MAKE) BONUS=42
+
 clean:
 	@${RM} ${OBJDIR}
 	@make -C libs/Libft clean
-#	@make -C libs/get_next_line clean
-	@${RM} ${GNL_DIR}*.o
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)$(NC)$(END)"
 
-fclean:
+fclean: clean
 	@${RM} ${OBJDIR}
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)"
 	@${RM} ${NAME}
-	@make -C libs/Libft fclean
-#	@make -C libs/get_next_line clean
-	@${RM} ${GNL_DIR}*.o
+	@make -C libs/Libft fclean --no-print-directory
 	@echo "$(RED)CUB3D EXEC DELETED$(END)$(END)"
 	@echo "$(ORANGE)"
 	@echo "	⠀⠀⠀⠀⠀⠀⢱⣆⠀⠀"

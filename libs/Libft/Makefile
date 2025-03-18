@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
+#    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 03:53:26 by mfontser          #+#    #+#              #
-#    Updated: 2024/11/20 00:55:14 by mfontser         ###   ########.fr        #
+#    Updated: 2025/03/18 15:40:24 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRCS =  ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strl
 		ft_putendl_fd.c ft_putnbr_fd.c ft_putnbr.c ft_write.c
 
 
-SRCS +=	ft_adapted_strjoin.c ft_strjoinchar.c ft_isspace.c
+SRCS +=	ft_adapted_strjoin.c ft_strjoinchar.c ft_isspace.c ../get_next_line/get_next_line.c ../get_next_line/get_next_line_utils.c
 
 SRCSBONUS = ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c ft_lstlast_bonus.c ft_lstadd_back_bonus.c \
 			ft_lstdelone_bonus.c ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c 
@@ -37,7 +37,7 @@ OBJS = ${SRCS:.c=.o}
 OBJSBONUS = ${SRCSBONUS:.c=.o}
 	#se crearan los object bonus files a partir de los source bonus files cambiando el .c por .o
 NAME = libft.a
-HEADER = libft.h
+HEADER = libft.h get_next_line.h
 
 CC = cc
 RM = rm -f
