@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/28 10:13:03 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:39:54 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	map_control(char *line, t_map *map)
 		&& line[i] != '0' && line[i] != ' ' && line[i] != '\n' \
 		&& line[i] != 'D'))
 		{
-			write(2, &line[i], 1);
+			ft_write(2, &line[i], 1);
 			map->path.err_flag = 1;
 			return (msg_error(": NOT invalid char\n", NULL));
 		}

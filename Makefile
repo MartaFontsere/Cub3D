@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/13 17:06:35 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/03/18 16:46:28 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,9 @@ ERROR_FILES = free_errors.c
 GNL_FILES = get_next_line.c get_next_line_utils.c
 BONUS_FILES = floor_raycasting.c print_map.c
 
+BONUS_FILES2 = cub3D_bonus.c free_errors_bonus.c get_map_bonus.c parse_map_bonus.c parse_utils_bonus.c parse_utils2_bonus.c
+BONUS_FILES2 += read_colors_bonus.c read_fd_bonus.c read_fd_utils_bonus.c
+
 # Directories
 INIT_DIR = initialitations/
 FOV_DIR = fov/
@@ -56,6 +59,7 @@ READ_DIR = read/
 ERROR_DIR = error/
 GNL_DIR = ../libs/get_next_line/
 BONUS_DIR = bonus/
+BONUS_DIR2 = bonus/src_bonus/
 
 INIT_SRCS = $(addprefix $(INIT_DIR), $(INIT_FILES))
 FOV_SRCS = $(addprefix $(FOV_DIR), $(FOV_FILES))
@@ -67,6 +71,7 @@ READ_SRCS = $(addprefix $(READ_DIR), $(READ_FILES))
 ERROR_SRCS = $(addprefix $(ERROR_DIR), $(ERROR_FILES))
 GNL_SRCS = $(addprefix $(GNL_DIR), $(GNL_FILES))
 BONUS_SRCS = $(addprefix $(BONUS_DIR), $(BONUS_FILES))
+BONUS_SRCS2 = $(addprefix $(BONUS_DIR2), $(BONUS_FILES2))
 
 #todos los files con su respectivo path
 FILES = $(BASE_FILES) $(INIT_SRCS) $(FOV_SRCS) $(MOVE_SRCS) $(PRINT_SRCS) \
@@ -79,14 +84,22 @@ SRCS = 	$(addprefix $(SRCDIR), $(FILES))
 OBJDIR = obj/
 OBJS = $(patsubst $(SRCDIR)%.c, $(OBJDIR)%.o, $(SRCS))
 
+FILES_BONUS = $(BONUS_SRCS2) $(GNL_SRCS) #de momento asi porque no esta separado por carpetas
+
+SRCDIR_BONUS = src/
+SRCS_BONUS = $(addprefix $(SRCDIR_BONUS), $(FILES_BONUS))
+
+OBJDIR_BONUS = obj_bonus/
+OBJS_BONUS = $(patsubst $(SRCDIR_BONUS)%.c, $(OBJDIR_BONUS)%.o, $(SRCS_BONUS))
+
 INCLUDES = -I ./libs/Libft -I ./inc -I ./libs/get_next_line/
 
 NAME = cub3D
 
-HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h #inc/cub3D_bonus.h
+HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h inc/cub3D_bonus.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -Ofast #-g -fsanitize=address #-Ofast
+CFLAGS = -Wall -Wextra -Werror -Ofast -g -fsanitize=address #-Ofast
 
 MLXDIR = libs/MLX42
 LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
@@ -100,6 +113,10 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile libs/Libft/libft.a $(MLXDIR)/build
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
 # aqui reglas de BONUS
+$(OBJDIR_BONUS)%.o: $(SRCDIR_BONUS)%.c $(HEADER) Makefile libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a 
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
 
 # Mis metodos
 
