@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:55:35 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 18:05:34 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:31:15 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void prepare_print_params (t_game *gdata, t_ray *ray, t_map map)
 
 
 //VERSION 1, TEXTURAS EN PAREDES Y COLORES EN CIELO Y SUELO
-void print_map (t_game *gdata, t_mlx mlx, t_map map)
+void print_map(t_game *gdata, t_mlx mlx, t_map map)
 {
-    int column; 
+    int column;
     int row;
 
     column = 0;
@@ -70,20 +70,20 @@ void print_map (t_game *gdata, t_mlx mlx, t_map map)
     {
         row = 0;
 
-        // igualar el rayo actual a una variable local para simplificar
+        // Igualar el rayo actual a una variable local para simplificar
         t_ray *ray = &gdata->vision.FOV.rays[column];
 
-        //Preparacion para printar paredes
-        prepare_print_params (gdata, ray, map);
+        // Preparación para printar paredes
+        prepare_print_params(gdata, ray, map);
 
         // Dibujar el cielo
-        print_sky (gdata, mlx, &row, &column);
+        print_sky(gdata, mlx, &row, &column);
 
-        // Texturizar la pared
-        print_texture_walls (gdata, ray, &row, &column);
+        // Texturizar la pared (o la pared adyacente y la puerta)
+        print_texture_walls(gdata, ray, &row, &column);
 
         // Dibujar el suelo
-        print_floor (gdata, mlx, &row, &column);
+        print_floor(gdata, mlx, &row, &column);
 
         column++;
     }

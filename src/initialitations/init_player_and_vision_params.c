@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_player_vision_params.c                        :+:      :+:    :+:   */
+/*   init_player_and_vision_params.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:47:23 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/26 21:57:41 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:38:21 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	init_player_position(t_game *gdata, t_map *map, t_player *player)
 	// player->midle_y = player->y + (gdata->minimap.px_in_cell_height / 2);
 }
 
-void	init_player_orientation(t_map *map, t_vision *vision)
+void	init_player_orientation(t_map *map, t_vision *vision, t_player *player)
 {
 	int	i;
 	int	j;
@@ -58,27 +58,32 @@ void	init_player_orientation(t_map *map, t_vision *vision)
 			if (map->matrix[i][j] == 'N')
 			{
 				vision->vision_angle = NORTH;
+				player->first_dir = map->matrix[i][j];
 				break;
 			}
 			if (map->matrix[i][j] == 'S')
 			{
 				vision->vision_angle = SOUTH;
+				player->first_dir = map->matrix[i][j];
 				break;
 			}
 			if (map->matrix[i][j] == 'E')
 			{
 				vision->vision_angle = EAST;
+				player->first_dir = map->matrix[i][j];
 				break;
 			}
 			if (map->matrix[i][j] == 'W')
 			{
 				vision->vision_angle = WEST;
+				player->first_dir = map->matrix[i][j];
 				break;
 			}
 			j++;
 		}
 		i++;
-	}	
+	}
+	
 }
 
 void init_player_parameters (t_game *gdata, t_player *player)
@@ -94,7 +99,7 @@ void init_player_parameters (t_game *gdata, t_player *player)
 	player->height = gdata->minimap.px_height / 2;
 	player->radius = gdata->minimap.px_in_cell_width / 4;	
 	init_player_position(gdata, &gdata->map, player); // TENGO QUE MANDARLO COMO PUNTERO O NO CAL PORQUE GDATA YA LO ES?
-	init_player_orientation(&gdata->map, &gdata->vision);
+	init_player_orientation(&gdata->map, &gdata->vision, &gdata->player);
 }
 
 int init_vision_parameters (t_game *gdata, t_vision *vision)

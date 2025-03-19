@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 17:43:07 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/18 20:07:20 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int main(int ac, char **av)
 	}
 	// printf ("letra del player |%c|\n", gdata.player)
 	printf ("image pointer %p, mini pointer %p\n",gdata.mlx.image, gdata.mlx.mini_image);
-	calculate_fov(&gdata, gdata.player.x, gdata.player.y);
+	if (calculate_fov(&gdata, gdata.player.x, gdata.player.y) == 0)
+		return (1);
 	if (prepare_textures (&gdata) == 0)
 		return (1); //LIBERAR COSAS
 	if (prepare_animation (&gdata) == 0)

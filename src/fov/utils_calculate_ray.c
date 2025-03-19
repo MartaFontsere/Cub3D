@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 22:24:02 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/26 22:25:43 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/19 02:05:18 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ double compute_collision_coordinate(int check_ray_coord, int ray_sign, double px
         return check_ray_coord * px_in_cell_size;
     else // Rayo venía desde el lado positivo (derecha o abajo)→ colisión en el final de la celda
         return (check_ray_coord + 1) * px_in_cell_size;
+        
 }
 
 

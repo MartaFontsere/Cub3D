@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 22:41:01 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/19 21:23:03 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ typedef struct s_texture
 typedef struct s_print
 {
 	double 		wall_height;
+	double 		door_height;
 	double 		draw_wall_start;
 	int 		draw_wall_end;
 	int 		color;
@@ -238,6 +239,20 @@ typedef struct s_mlx
 
 }				t_mlx;
 
+typedef struct s_door
+{
+	// int 	cell_x;
+	// int 	cell_y;
+	int 		cell_collision_x; // Punto de colisión en X (en casillas)
+    int 		cell_collision_y; // Punto de colisión en Y (en casillas)
+    double 		px_collision_x; // Punto de colisión en X (en pixeles)
+    double 		px_collision_y; // Punto de colisión en Y (en pixeles)
+   	
+   	double 		diagonal_distance;    // El largo del rayo. Distancia del origen del rayo a la pared en casillas (para 3D)
+   	double 		perpendicular_distance;
+   	double 	hit_x;
+   	struct s_door *next; // Puntero al siguiente nodo de la lista enlazada
+} 			t_door;
 
 typedef struct s_ray 
 {
@@ -268,6 +283,9 @@ typedef struct s_ray
    	double 		diagonal_distance;    // El largo del rayo. Distancia del origen del rayo a la pared en casillas (para 3D)
    	double 		perpendicular_distance;
 
+   	//Door
+   	int 		hit_door; // Con cuantas puertas choca el rayo
+   	t_door 		*door_list;
    	//Floor
    	double 		pixel_distance_to_floor; // distancia del player al pixel de suelo que queremos dibujar en casillas
 	// double floor_x; //posicion del pixel en x
@@ -300,6 +318,7 @@ typedef struct s_vision
 
 typedef struct s_player
 {
+	char 		first_dir;
 	int 		height; // Altura del player en el mundo 3D
 	int			raw_x; // Posición Inicial del Personaje en X (en casillas)
 	int			raw_y; // Posición Inicial del Personaje en Y (en casillas)
@@ -316,14 +335,6 @@ typedef struct s_player
 	int 		rotate_left;
 
 }				t_player;
-
-typedef struct s_door
-{
-	int 	there_is_door;
-	int 	cell_x;
-	int 	cell_y;
-	
-} 			t_door;
 
 typedef struct s_minimap
 {
@@ -355,8 +366,7 @@ typedef struct s_map
 	int				px_height; // Valor máximo Y del mapa (en pixels)
 	int				c_width; // Valor máximo X del mapa (en casillas)
 	int				c_height; // Valor máximo Y del mapa (en casillas)
-	
-	char 			pos;
+	int 			there_is_door;
 
 }					t_map;
 
@@ -476,7 +486,7 @@ int	init_gdata_values(t_game *gdata);
 void	init_minimap_params(t_game *gdata);
 void 	init_player_parameters (t_game *gdata, t_player *player);
 void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
-void	init_player_orientation(t_map *map, t_vision *vision);
+void	init_player_orientation(t_map *map, t_vision *vision, t_player *player);
 int init_vision_parameters (t_game *gdata, t_vision *vision);
 int		init_mlx(t_mlx *mlx);
 int	create_new_images(t_game *gdata, t_mlx *mlx);
@@ -527,12 +537,12 @@ void print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision
 void render_game (void *param);
 
 //FOV
-void calculate_fov(t_game *gdata, double x, double y);
-void calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
+int calculate_fov(t_game *gdata, double x, double y);
+int calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
 void controll_x_limit_case (t_ray *ray, int check_ray_x_in_map, double cell_player_x);
 void controll_y_limit_case (t_ray *ray, int check_ray_y_in_map, double cell_player_y);
 void init_ray_direction (t_ray *ray, t_game *gdata, int check_ray_x_in_map,  int check_ray_y_in_map);
-void traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map);
+int traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map);
 void find_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, double x, double y);
 double compute_collision_coordinate(int check_ray_coord, int ray_sign, double px_in_cell_size);
 
@@ -540,7 +550,7 @@ double compute_collision_coordinate(int check_ray_coord, int ray_sign, double px
 void	move_player(t_game *gdata, t_vision vision, double *target_x, double *target_y);
 void rotate_player(t_player *player, t_vision *vision);
 
-void calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
+
 
 //PRESS KEY
 int	there_is_a_key_pressed(t_game *gdata);
@@ -556,5 +566,14 @@ int check_collision_y(t_game *gdata, double target_y);
 
 //ERROR
 void	write_error(const char *str);
+
+typedef struct s_ray_hit 
+{
+	int line_crossing;
+	int check_ray_x_in_map;
+	int check_ray_y_in_map;
+	double first_dist_x;
+	double first_dist_y;
+}	t_ray_hit;
 
 #endif

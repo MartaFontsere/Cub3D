@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils2_bonus.c                               :+:      :+:    :+:   */
+/*   parse_door.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaja <yaja@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:56:10 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/07 06:59:43 by yaja             ###   ########.fr       */
+/*   Updated: 2025/03/18 21:17:54 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	check_y_pos(int i, int j, t_map *map)
+int	check_y_pos(int i, int j, t_map *map, t_game *gdata)
 {
 	if (map->matrix[i][j - 1] == '0')
 	{
-		if (map->matrix[i][j + 1] != '0' && map->matrix[i][j + 1] != map->pos)
+		if (map->matrix[i][j + 1] != '0' && map->matrix[i][j + 1] != gdata->player.first_dir)
 			return (msg_error("Player must be able to move on X", "\n"), 0);
 		if (map->matrix[i - 1][j] != '1' || map->matrix[i + 1][j] != '1')
 			return (msg_error("Door should be between walls on Y\n", NULL), 0);
 	}
-	else if (map->matrix[i][j - 1] == map->pos)
+	else if (map->matrix[i][j - 1] == gdata->player.first_dir)
 	{
 		if (map->matrix[i][j + 1] != '0')
 			return (msg_error("A door does not have an exit\n", NULL), 0);
@@ -31,36 +31,35 @@ int	check_y_pos(int i, int j, t_map *map)
 	return (1);
 }
 
-int	check_x_pos(int i, int j, t_map *map)
+int	check_x_pos(int i, int j, t_map *map, t_game *gdata)
 {
 	if (map->matrix[i][j + 1] != '1')
 		return (msg_error("Door should be between walls\n", NULL), 0);
-	if (map->matrix[i - 1][j] != '0' && map->matrix[i - 1][j] != map->pos)
+	if (map->matrix[i - 1][j] != '0' && map->matrix[i - 1][j] != gdata->player.first_dir)
 		return (msg_error("Player must be able to move on Y or X", "\n"), 0);
-	if (map->matrix[i + 1][j] != '0' && map->matrix[i + 1][j] != map->pos)
+	if (map->matrix[i + 1][j] != '0' && map->matrix[i + 1][j] != gdata->player.first_dir)
 		return (msg_error("Player must be able to move on Y\n", NULL), 0);
 	return (1);
 }
 
-int	is_door(int i, int j, t_map *map,t_game *gdata)
+int	is_door(int i, int j, t_map *map, t_game *gdata)
 {
-	map->pos = '\0';
-	gdata->door.there_is_door = 0;
+	gdata->map.there_is_door = 0;
 	if (map->matrix[i][j] == 'D')
 	{
 		if (i == 0 || i == map->c_height - 1 || j == 0 || j == map->c_width - 2)
 			return (msg_error("Door never should be on borders", "\n"), 0);
-		if (map->matrix[i][j - 1] == '0' || map->matrix[i][j - 1] == map->pos)
+		if (map->matrix[i][j - 1] == '0' || map->matrix[i][j - 1] == gdata->player.first_dir) // CARACTER  PLAYER
 		{
-			if (!check_y_pos(i, j, map))
+			if (!check_y_pos(i, j, map, gdata))
 				return (0);
 		}
 		else if (map->matrix[i][j - 1] == '1')
 		{
-			if (!check_x_pos(i, j, map))
+			if (!check_x_pos(i, j, map, gdata))
 				return (0);
 		}
-		gdata->door.there_is_door = 1;
+		gdata->map.there_is_door = 1;
 	}
 	return (1);
 }
