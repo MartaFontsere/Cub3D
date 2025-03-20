@@ -49,7 +49,7 @@ void controll_y_limit_case (t_ray *ray, int check_ray_y_in_map, double cell_play
             ray->first_dist_y = ((check_ray_y_in_map + 1) - cell_player_y) * ray->other_dist_y;
         }
     }
-    //printf ("ray dir x: |%f|\n", ray->dir_x);
+    printf ("ray dir x: |%f|\n", ray->dir_x);
 }
 
 void controll_x_limit_case (t_ray *ray, int check_ray_x_in_map, double cell_player_x)

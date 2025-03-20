@@ -39,7 +39,7 @@ FILES += read/read_fd.c read/read_fd_utils.c read/read_colors.c
 
 FILES += parsing/parse_map.c parsing/parse_utils.c
 
-FILES += fov/calculate_fov.c fov/calculate_ray.c fov/utils_calculate_ray.c 
+FILES += fov/calculate_fov.c fov/calculate_ray_yo.c fov/utils_calculate_ray.c 
 
 FILES += movements/press_or_release_key.c movements/move_player.c movements/rotate_player.c movements/check_collisions.c
 
