@@ -1,0 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialitations.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
+/*   Updated: 2025/03/13 12:19:02 by yanaranj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3D.h"
+
+int	init_gdata_values(t_game *gdata)
+{
+	init_minimap_params(gdata);
+	init_player_parameters(gdata, &gdata->player);
+	if (init_vision_parameters (gdata, &gdata->vision) == 0)
+		return (0);
+	// instalar la mlx, y lanzar una pantalla del tamaño, x y, para ver que funciona
+	//mlx_set_setting(MLX_STRETCH_IMAGE, true);
+	if (init_mlx(&gdata->mlx) == 0)
+		return (0);
+	if (create_new_images(gdata, &gdata->mlx) == 0)
+		return (0);
+	if (put_image_to_window(gdata, &gdata->mlx) == 0)
+		return (0);
+	return (1);
+	//gdata->finish_game = 0;
+}
