@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:45:21 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/28 10:12:18 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:28:16 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ int	check_borders(char **matrix, int i, t_map *map)
 		return (1);
 	else if (matrix[i][j] != '1' || matrix[i][end] != '1')
 	{
-		if (matrix[i][j] != '0' || matrix[i][j] == 'D')
-			return (msg_error("Player/Door must be inside map\n", NULL), 0);
+		if (matrix[i][j] != '0')
+			return (msg_error("Player must be inside map\n", NULL), 0);
+		else if ( matrix[i][j] == 'D')
+			return (msg_error("Door must be inside map\n", NULL), 0);
 		return (msg_error("Map must be close with walls\n", NULL), 0);
 	}
 	return (1);
@@ -112,6 +114,6 @@ int	parse_map(char **matrix, t_map *map)
 	map->is_map = 0;
 	if (!is_close(matrix, map))
 		return (0);
-	printf("✅\n");
+	printf("MAP IS GOOD ✅\n");
 	return (1);
 }

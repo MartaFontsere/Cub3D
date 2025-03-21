@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/26 14:28:33 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:58:35 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	assign_color(char *line, t_path *path, int i)
 		i++;
 	if (!ft_isdigit(line[i]))
 	{
-		msg_error("Invalid line: ", line);
+		msg_error("A path for floor or celing is forbidden: ", line);
 		path->err_flag = 1;
 		return ;
 	}

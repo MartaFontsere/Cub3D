@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/28 10:15:39 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:08:42 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_color
 	int			b;
 	char		**split;
 	int			assigned;
+	int			is_path;//decimos que C || F tienen path en lugar del RGB
+	char		*color_path;//guardamos el path de la textura
 	t_path		*path;
 }				t_color;
 
@@ -110,14 +112,25 @@ int		check_name(char *map_path);
 char	*cpy_path(char *line, t_map *map, int pos);
 int		curr_char(int cur, char *line, t_map *map);
 size_t	ft_max_size(char *line, size_t max);
-void	map_control(char *line, t_map *map);
+void	map_control(char *line, t_map *map, int i);
 
 //------------------------------------------------
 //					READ_COLORS
 //------------------------------------------------
+//void	cpy_colors(char *rgb, t_color *color, int i);
+//void	get_colors(char *line, t_path *path, int i, int init);
+//void	assign_color(char *line, t_path *t_path, int i);
+void	assign_color(char *line, t_path *path, int i);
+void	control_c_values(char *line, t_path *path, int init_val, char c);
+void	control_f_values(char *line, t_path *path, int init_val, char c);
+void	get_color_path(char *line, t_color *color, int i);
+void	get_colors(char *line, t_path *path, int i, char c);
+
+	//UTILS READ
 void	cpy_colors(char *rgb, t_color *color, int i);
-void	get_colors(char *line, t_path *path, int i, int init);
-void	assign_color(char *line, t_path *t_path, int i);
+char	*clean_str(char *src, int start, int end, t_path *path);
+
+
 
 //------------------------------------------------
 //						GET_MAP

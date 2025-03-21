@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/27 11:07:41 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/20 19:05:42 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	check_line(char *line, t_map *map, int i)
 {
 	while (ft_isspace(line[i]))
 		i++;
-	curr_char(line[i], line, map);
+	if (!curr_char(line[i], line, map))
+		return (0);
 	if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W') \
 	&& map->path.err_flag == 0 && (map->path.c_count + map->path.p_count) != 6)
 		assign_path(line, map, i);
@@ -73,11 +74,10 @@ int	check_line(char *line, t_map *map, int i)
 	|| line[i] == 'S' || line[i] == 'W' || line[i] == 'E' || line[i] == 'D' \
 	|| (line[i] == '\0' && map->is_map))
 	{
-		map->is_map = 1;
-		map_control(line, map);
+		map_control(line, map, 0);
 		map->c_height++;
 	}
-	if (map->path.err_flag == 1)
+	if (map->path.err_flag == 1 || map->path.err_flag == 2)
 		return (0);
 	if (map->is_map == 1 && (map->path.c_count + map->path.p_count) == 6)
 	{
@@ -125,6 +125,24 @@ int	read_file(int ac, char **av, t_map *map)
 		map->fd_path = NULL;
 		return (0);
 	}
+	printf("-------------\n");
+	if (map->path.c.is_path != 0)
+		printf("✅ %s\n", map->path.c.color_path);
+	else
+	{
+		printf(RED"%d\n"END, map->path.c.r);
+		printf(GREEN"%d\n"END, map->path.c.g);
+		printf(BLUE"%d\n"END, map->path.c.b);
+	}
+	if (map->path.f.is_path == 1)
+		printf("✅ %s\n", map->path.f.color_path);
+	else
+	{
+		printf(RED"%d\n"END, map->path.f.r);
+		printf(GREEN"%d\n"END, map->path.f.g);
+		printf(BLUE"%d\n"END, map->path.f.b);
+	}
+	printf("-------------\n");
 	if (!get_final_map(map->tmp_matrix, map))
 		return (0);
 	return (1);

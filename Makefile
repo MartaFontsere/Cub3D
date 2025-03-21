@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/18 16:46:28 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/03/20 18:53:06 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ GNL_FILES = get_next_line.c get_next_line_utils.c
 BONUS_FILES = floor_raycasting.c print_map.c
 
 BONUS_FILES2 = cub3D_bonus.c free_errors_bonus.c get_map_bonus.c parse_map_bonus.c parse_utils_bonus.c parse_utils2_bonus.c
-BONUS_FILES2 += read_colors_bonus.c read_fd_bonus.c read_fd_utils_bonus.c
+BONUS_FILES2 += read_colors_bonus.c read_colors_utils_bonus.c read_fd_bonus.c read_fd_utils_bonus.c
 
 # Directories
 INIT_DIR = initialitations/
@@ -108,12 +108,12 @@ LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
 
 #Metodo implicito
 
-$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a
+$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile #libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
 # aqui reglas de BONUS
-$(OBJDIR_BONUS)%.o: $(SRCDIR_BONUS)%.c $(HEADER) Makefile libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a 
+$(OBJDIR_BONUS)%.o: $(SRCDIR_BONUS)%.c $(HEADER) Makefile #libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a 
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
@@ -127,10 +127,10 @@ make_libs:
 	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4 --no-print-directory
 
 ifndef BONUS
-${NAME}: ${OBJS} dragon
+${NAME}: ${OBJS} ${LIBS} dragon
 	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)
 else
-${NAME}: ${OBJS_BONUS} dragon
+${NAME}: ${OBJS_BONUS} ${LIBS} dragon
 	@$(CC) $(CFLAGS) ${OBJS_BONUS} $(LIBS) -o $(NAME)
 endif
 dragon:

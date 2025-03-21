@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/28 09:09:28 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:13:35 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	init_path(t_path *path)
 	path->c.b = 0;
 	path->c.path = path;
 	path->c.assigned = 0;
+	path->c.is_path = 0;
+	path->c.color_path = NULL;
 	path->f.r = 0;
 	path->f.g = 0;
 	path->f.b = 0;

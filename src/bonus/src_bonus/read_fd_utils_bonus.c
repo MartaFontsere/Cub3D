@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/18 16:39:54 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:09:01 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,38 +24,46 @@ int	check_name(char *map_path)
 	}
 	return (1);
 }
-
-char	*cpy_path(char *line, t_map *map, int pos)
+//revisar si es correcto pasar la pos 0 en clean_str
+char	*cpy_path(char *line, t_path *path, int pos)//podemos pasar i por param
 {
-	char	*path;
+	char	*tmp;
 	int		i;
+	int		end;
 
-	i = 0;
 	while (ft_isspace(line[pos]))
 		pos++;
 	if (line[pos] == '\0')
 	{
 		msg_error("Path is not found: ", line);
-		return ((map->path.err_flag = 1), NULL);
+		return ((path->err_flag = 1), NULL);
 	}
 	else
-		path = ft_strdup(ft_strchr(line, line[pos]));
-	while (path[i] && !ft_isspace(path[i]))
+		tmp = ft_strdup(ft_strchr(line, line[pos]));
+	i = 0;
+	while (tmp[i] && !ft_isspace(tmp[i]))
 		i++;
-	while (ft_isspace(path[i]))
+	end = i;
+	while (ft_isspace(tmp[i]))
 		i++;
-	if (path[i] != '\0')
+	if (tmp[i] != '\0' && tmp[i] != '\n')
 	{
-		msg_error(path, ": is not a valid path");
-		return ((map->path.err_flag = 1), NULL);
+		msg_error(tmp, ": is not a valid path");
+		free(tmp);
+		return ((path->err_flag = 1), NULL);
 	}
-	map->path.p_count++;
-	return (path);
+	tmp = clean_str(tmp, 0, end, path);
+	path->p_count++;
+	return (tmp);
 }
 
 int	curr_char(int cur, char *line, t_map *map)
 {
 	int	counter;
+
+	//porque sera una linea comentada
+	if (cur == '#' || cur == '/')
+		return (1);
 
 	counter = map->path.c_count + map->path.p_count;
 	if (cur != 'N' && cur != 'S' && cur != 'E' && cur != 'W' && cur != 'C' \
@@ -90,16 +98,18 @@ size_t	ft_max_size(char *line, size_t max)
 	return (max);
 }
 
-void	map_control(char *line, t_map *map)
+void	map_control(char *line, t_map *map, t_path *path)
 {
 	int	i;
 
 	i = 0;
+	map->is_map = 1;
 	map->c_width = ft_max_size(line, map->c_width);
-	if (!map->c_width)
+	if (!map->c_width || map->c_width > 120)
 	{
-		map->path.err_flag = 1;
-		return ;
+		path->err_flag = 1;
+		return (msg_error("Max width is 120. If you follow this rule\n", \
+		"		DrackyTeam will thank you🔥\n"));
 	}
 	while (line[i])
 	{
@@ -108,10 +118,11 @@ void	map_control(char *line, t_map *map)
 		&& line[i] != '0' && line[i] != ' ' && line[i] != '\n' \
 		&& line[i] != 'D'))
 		{
+			path->err_flag = 1;
 			ft_write(2, &line[i], 1);
-			map->path.err_flag = 1;
-			return (msg_error(": NOT invalid char\n", NULL));
+			return (msg_error(": is an invalid char\n", NULL));
 		}
+		//esta ultima parte puede eliminarse
 		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' \
 		|| line[i] == 'E')
 			map->pos = line[i];
