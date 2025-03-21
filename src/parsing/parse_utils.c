@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:37:00 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/18 13:52:21 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:36:30 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,3 @@ int	check_player(int i, int j, t_map *map)
 	}
 	return (1);
 }
-
-// void	print_dirs(char **matrix, int i, int j, int end) //ESTOS PRINTF HAY QUE DEJARLOS????
-// {
-// 	if (i != 0)
-// 		printf(BLUE"   [%c]\n"END, matrix[i - 1][j]);
-// 	if (j != 0)
-// 		printf(BLUE"[%c]"END, matrix[i][j - 1]);
-// 	printf(PURPLE"[%c]"END, matrix[i][j]);
-// 	if (j != '\0')
-// 		printf(BLUE"[%c]\n"END, matrix[i][j + 1]);
-// 	if (i != end)
-// 		printf(BLUE"   [%c]\n"END, matrix[i + 1][j]);
-// }

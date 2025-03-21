@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/18 12:42:16 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:33:19 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ void	clean_data(t_game *gdata)
 	free_matrix(gdata->map.tmp_matrix);
 	free_matrix(gdata->map.void_matrix);
 	if (gdata && gdata->vision.FOV.rays)
-		free(gdata->vision.FOV.rays); //REVISAR
+		free(gdata->vision.FOV.rays);//REVISAR
 	free_map_sprites(gdata, &gdata->texture);
 }

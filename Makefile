@@ -6,7 +6,7 @@
 #    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/18 16:03:19 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/03/21 13:42:07 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ FOV_FILES = calculate_fov.c calculate_ray.c calculate_ray_utils.c
 MOVE_FILES = press_or_release_key.c move_player.c rotate_player.c check_collisions.c
 PRINT_FILES = print_map.c print_walls.c print_utils.c textures.c
 PARSE_FILES = parse_map.c parse_utils.c
-READ_FILES = read_fd.c read_fd_utils.c read_colors.c get_map.c
+READ_FILES = read_fd.c read_fd_utils.c read_fd_utils2.c read_colors.c get_map.c
 ERROR_FILES = free_errors.c msg_errors.c
 GNL_FILES = get_next_line.c get_next_line_utils.c
 
@@ -81,8 +81,8 @@ NAME = cub3D
 HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
-CFLAGS += -Ofast
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS += #-Ofast
 
 MLXDIR = libs/MLX42
 LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
@@ -105,7 +105,7 @@ make_libs:
 	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4 --no-print-directory
 
 ifndef BONUS
-${NAME}: ${OBJS} dragon
+${NAME}: ${OBJS} $(LIBS) dragon
 	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)
 else
 ${NAME}: ${OBJS_BONUS} dragon

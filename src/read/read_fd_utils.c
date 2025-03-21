@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/17 13:30:48 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:38:45 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,7 @@ int	check_name(char *map_path)
 	return (1);
 }
 
-char	*clean_str(char *src, int end, t_path *path)
-{
-	char	*str;
-	
-	path->p_count++;
-	str = ft_substr(src, 0, end);
-	free(src);
-	return (str);
-}
-
-char	*cpy_path(char *line, t_path *path, int pos)//podemos pasar i por param
+char	*cpy_path(char *line, t_path *path, int pos)
 {
 	char	*tmp;
 	int		i;
@@ -70,6 +60,8 @@ int	curr_char(int cur, char *line, t_path *path)
 {
 	int	counter;
 
+	if (cur == '#' || cur == '/')
+		return (1);
 	counter = path->c_count + path->p_count;
 	if (cur != 'N' && cur != 'S' && cur != 'E' && cur != 'W' && cur != 'C' \
 	&& cur != 'F' && cur != '1' && cur != '0' && cur != '\0' && cur != '\n')
@@ -108,11 +100,12 @@ void	map_control(char *line, t_map *map, t_path *path)
 	int	i;
 
 	i = 0;
+	map->is_map = 1;
 	map->c_width = ft_max_size(line, map->c_width);
 	if (!map->c_width || map->c_width > 120)
 	{
 		msg_error("Max width is 120. If you follow this rule\n", \
-		"Dracarys will thank you🔥\n");
+		"		DrackyTeam will thank you🔥\n");
 		path->err_flag = 1;
 		return ;
 	}
@@ -122,8 +115,8 @@ void	map_control(char *line, t_map *map, t_path *path)
 		&& line[i] != 'W' && line[i] != 'E' && line[i] != '1' \
 		&& line[i] != '0' && line[i] != ' ' && line[i] != '\n'))
 		{
-			ft_write(2, &line[i], 1);
 			path->err_flag = 1;
+			ft_write(2, &line[i], 1);
 			return (msg_error(": is an invalid char\n", NULL));
 		}
 		i++;

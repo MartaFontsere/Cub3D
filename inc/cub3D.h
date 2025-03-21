@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/17 12:31:15 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:39:57 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,6 +332,9 @@ char	*cpy_path(char *line, t_path *path, int pos);
 int		curr_char(int cur, char *line, t_path *path);
 int 	ft_max_size(char *line, int max);
 void	map_control(char *line, t_map *map, t_path *path);
+
+/*READ_FD-UTILS2*/
+char	*clean_str(char *src, int end, t_path *path);
 
 /*READ_COLORS*/
 void	cpy_colors(char *rgb, t_color *color, int i);

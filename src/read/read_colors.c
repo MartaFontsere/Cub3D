@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/26 14:28:33 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:35:02 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,22 +77,24 @@ void	assign_color(char *line, t_path *path, int i)
 	init = i;
 	if ((line[i] == 'C' || line[i] == 'F') && ft_isspace(line[i + 1]))
 		i++;
+	else
+	{
+		path->err_flag = 1;
+		return (msg_error(line, "This format of line is incorrect"));
+	}
 	while (ft_isspace(line[i]))
 		i++;
 	if (!ft_isdigit(line[i]))
 	{
-		msg_error("Invalid line: ", line);
 		path->err_flag = 1;
-		return ;
+		return (msg_error("A path for floor or celing is forbidden: ", line));
 	}
 	if (path->c_count < 2)
 		get_colors(line, path, i - 1, init);
 	if (path->c_count == 2 && (!path->C.assigned || !path->F.assigned))
 	{
 		path->err_flag = 1;
-		if (!path->F.assigned)
-			return (msg_error("Floor colors are missing", "\n"));
-		else if (!path->C.assigned)
-			return (msg_error("Celing colors are missing", "\n"));
+		if (!path->F.assigned || !path->C.assigned)
+			return (msg_error("Some colors are missing", "\n"));
 	}
 }

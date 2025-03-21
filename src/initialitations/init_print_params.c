@@ -6,11 +6,11 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:47:23 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/18 13:03:05 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:34:03 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "cub3D.h"
+#include "cub3D.h"
 
 void	init_textures_and_colors_path(t_texture *texture, t_path *path)
 {
@@ -35,5 +35,4 @@ void	init_textures_and_colors_path(t_texture *texture, t_path *path)
 	path->F.B = 0;
 	path->F.path = path;
 	path->F.assigned = 0;
-	
 }

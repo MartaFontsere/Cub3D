@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/18 13:54:21 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:56:21 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	check_line(char *line, t_path *path, t_map *map, int i)
 {
 	while (ft_isspace(line[i]))
 		i++;
-	curr_char(line[i], line, path);
+	if (!curr_char(line[i], line, path))
+		return (0);
 	if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
 		&& path->err_flag == 0 && (path->c_count + path->p_count) != 6)
 		assign_path(line, path, i);
@@ -76,7 +77,6 @@ int	check_line(char *line, t_path *path, t_map *map, int i)
 		|| line[i] == 'S' || line[i] == 'W' || line[i] == 'E'
 		|| (line[i] == '\0' && map->is_map))
 	{
-		map->is_map = 1;
 		map_control(line, map, path);
 		map->c_height++;
 	}
