@@ -21,7 +21,7 @@ void print_vision_angle(t_game *gdata, double x, double y, double vision_angle, 
     double ray_dir_x = cos(vision_angle);
     double ray_dir_y = -sin(vision_angle); 
     int thickness = 4;  // Grosor del rayo
-printf ("vision angle: |%f|\n", vision_angle * (180 / M_PI));
+
    
     while (1)
     {

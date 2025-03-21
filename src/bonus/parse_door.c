@@ -44,7 +44,7 @@ int	check_x_pos(int i, int j, t_map *map, t_game *gdata)
 
 int	is_door(int i, int j, t_map *map, t_game *gdata)
 {
-	gdata->map.there_is_door = 0;
+
 	if (map->matrix[i][j] == 'D')
 	{
 		if (i == 0 || i == map->c_height - 1 || j == 0 || j == map->c_width - 2)
@@ -59,7 +59,7 @@ int	is_door(int i, int j, t_map *map, t_game *gdata)
 			if (!check_x_pos(i, j, map, gdata))
 				return (0);
 		}
-		gdata->map.there_is_door = 1;
+
 	}
 	return (1);
 }

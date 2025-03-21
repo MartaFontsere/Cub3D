@@ -51,7 +51,7 @@ FILES += error/error.c error/free_errors.c
 
 FILES += ../libs/get_next_line/get_next_line.c ../libs/get_next_line/get_next_line_utils.c
 
-FILES += bonus/parse_door.c bonus/floor_raycasting.c bonus/print_map.c bonus/print_dragon.c bonus/do_dragon_animation.c
+FILES += bonus/door.c bonus/parse_door.c bonus/floor_raycasting.c bonus/print_map.c bonus/print_dragon.c bonus/do_dragon_animation.c
 
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))

@@ -179,18 +179,11 @@ void	print_minimap(t_game *gdata)
 
 	start_x = gdata->player.x - gdata->minimap.center_x;   // Establece la columna de pixels inicial para dibujar del minimapa, centrado en el jugador
 	start_y = gdata->player.y - gdata->minimap.center_y;   // Establece la fila de pixels inicial para dibujar del minimapa, centrado en el jugador
-	printf ("start_x = %d\n", start_x);
-	printf ("start_y = %d\n", start_y);
-    
-printf ("gdata->map.c_height * gdata->minimap.px_in_cell_height = %d\n", gdata->map.c_height * gdata->minimap.px_in_cell_height);
-printf ("gdata->minimap.px_height = %d\n", gdata->minimap.px_height);
-printf ("Despues de ajustar: start_x = %d\n", start_x);
-printf ("Despues de ajustar: start_y = %d\n", start_y);
+	
 //se usan para determinar dónde dibujar en el minimapa
 	int pixel_x = 0;
     int pixel_y = 0;
-printf ("start_x + pixel_x = %d\n", start_x + pixel_x);
-printf ("start_y + pixel_y = %d\n", start_y + pixel_y);
+
 
 // Dibuja cada pixel en el minimapa
     while (pixel_y < gdata->minimap.px_height) 

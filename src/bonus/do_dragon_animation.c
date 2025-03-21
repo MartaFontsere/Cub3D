@@ -41,8 +41,8 @@
 
 void do_dragon_animation(t_game *gdata)
 {
-    if (gdata->texture.dragon_img[0].data == NULL) 
-        printf ("***************\n");
+    
+        
 
     int animation_speed = 2; // Intervalo de tiempo entre cambios de frame
     static int fly_clock = 0; // Temporizador para controlar el cambio de frame
@@ -54,8 +54,6 @@ void do_dragon_animation(t_game *gdata)
         fly_clock = 0;
 
     current_index = fly_clock / animation_speed; // Determinar qué imagen mostrar basado en el reloj de vuelo
-printf ("current_index = %d\n", current_index);
-printf ("last_index = %d\n", last_index);
 
     if (last_index != -1 && last_index != current_index) {
         // Solo eliminar la imagen anterior si no es la primera vez y si el índice ha cambiado
@@ -66,7 +64,7 @@ printf ("last_index = %d\n", last_index);
     // Cargar la nueva imagen (si no está ya cargada)
     if (gdata->texture.dragon_img[current_index].data == NULL) 
     {
-        printf ("cargo imagen num %d\n", current_index);
+        
         gdata->texture.dragon_img[current_index].data = mlx_texture_to_image(gdata->mlx.init, &gdata->texture.dragon_img[current_index].xpm->texture);
     }
     // Mostrar la nueva imagen

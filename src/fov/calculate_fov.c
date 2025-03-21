@@ -19,8 +19,6 @@ int calculate_fov(t_game *gdata, double x, double y) //Mandar las coordenadas de
     double start_angle = gdata->vision.vision_angle + (gdata->vision.FOV.fov_rad / 2);
     double end_angle = gdata->vision.vision_angle - (gdata->vision.FOV.fov_rad / 2);
     double angle_step = (end_angle - start_angle) / gdata->vision.FOV.num_rays; // = FOV/ancho pantalla
-    printf ("start_angle %f\n", start_angle * (180 / M_PI));
-    printf ("end_angle %f\n", end_angle * (180 / M_PI));
 
     gdata->player.cell_player_x =  x / gdata->minimap.px_in_cell_width; //posición en casillas del player
     gdata->player.cell_player_y =  y / gdata->minimap.px_in_cell_height;

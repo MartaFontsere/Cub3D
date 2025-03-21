@@ -36,9 +36,7 @@ void find_wall_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, doubl
     {
         ray->cell_collision_x = ray->check_ray_x_in_map;  // Guarda el punto exacto donde choca el rayo (collision_x)
         ray->cell_collision_y = ray->check_ray_y_in_map; // Guarda el punto exacto donde choca el rayo (collision_y)
-        printf ("* vertical ray->cell_collision_x %d\n", ray->cell_collision_x);
-        printf ("* vertical ray->cell_collision_y %d\n", ray->cell_collision_y);
-        if (gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'D')
+        if (gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'D' || gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'd')
         {
             if (ray->x_sign > 0)
                 ray->px_collision_x = compute_collision_coordinate(ray->check_ray_x_in_map, ray->x_sign, gdata->minimap.px_in_cell_width) + (gdata->minimap.px_in_cell_width / 2);
@@ -47,19 +45,17 @@ void find_wall_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, doubl
         }
         else 
             ray->px_collision_x = compute_collision_coordinate(ray->check_ray_x_in_map, ray->x_sign, gdata->minimap.px_in_cell_width);
-        printf ("* vertical ray->px_collision_x %f\n", ray->px_collision_x);
+
         ray->diagonal_distance = ((ray->px_collision_x / gdata->minimap.px_in_cell_width) - gdata->player.cell_player_x) / ray->dir_x;
         ray->px_collision_y = y + (ray->diagonal_distance * gdata->minimap.px_in_cell_height) * ray->dir_y;  
-        printf ("* vertical ray->px_collision_y %f\n\n", ray->px_collision_y);
+
     } 
 
     else 
     {
         ray->cell_collision_x = ray->check_ray_x_in_map;  // Guarda el punto exacto donde choca el rayo (collision_x)
         ray->cell_collision_y = ray->check_ray_y_in_map; // Guarda el punto exacto donde choca el rayo (collision_y)
-        printf ("* horizontal ray->cell_collision_x %d\n", ray->cell_collision_x);
-        printf ("* horizontal ray->cell_collision_y %d\n", ray->cell_collision_y);
-        if (gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'D')
+        if (gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'D' || gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'd')
         {
             if (ray->y_sign > 0)
                 ray->px_collision_y = compute_collision_coordinate(ray->check_ray_y_in_map, ray->y_sign, gdata->minimap.px_in_cell_height) + (gdata->minimap.px_in_cell_height / 2);
@@ -68,14 +64,14 @@ void find_wall_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, doubl
         }
         else
             ray->px_collision_y = compute_collision_coordinate(ray->check_ray_y_in_map, ray->y_sign, gdata->minimap.px_in_cell_height);
-        printf ("* ray->px_collision_y %f\n", ray->px_collision_y);
+
         ray->diagonal_distance = ((ray->px_collision_y / gdata->minimap.px_in_cell_height) - gdata->player.cell_player_y) / ray->dir_y;
         ray->px_collision_x = x + (ray->diagonal_distance * gdata->minimap.px_in_cell_width) * ray->dir_x;
-        printf ("* ray->px_collision_x %f\n\n", ray->px_collision_x);
+
 
     }
     ray->perpendicular_distance = ray->diagonal_distance * cos(ray->current_angle - gdata->vision.vision_angle);
-     printf ("****** ray->perpendicular_distance %f\n\n", ray->perpendicular_distance);
+     
 
     // ray->line_crossing = line_crossing;
 }
@@ -99,7 +95,7 @@ double door_midpoint = 0;
     while (wall_hit == 0) 
     {
 
-        if (gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == 'D')
+        if (gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == 'D' || gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == 'd')
         {
             line_crossing_tmp = ray->line_crossing;
             check_ray_y_in_map_tmp = *check_ray_y_in_map;
@@ -189,14 +185,9 @@ double door_midpoint = 0;
                         *check_ray_y_in_map = check_ray_y_in_map_tmp;
                         ray->line_crossing = 0;
                     }
-                }
-
-
-
-
-
-                
+                }  
             }
+            
             break;
         }
 
@@ -206,21 +197,13 @@ double door_midpoint = 0;
             ray->first_dist_x += ray->other_dist_x; // Como acabamos de cruzar una línea vertical, nos preparamos para el siguiente cruce. Sumamos other_dist_x porque nos dice cuánto hay que avanzar en X para llegar a la siguiente línea vertical
             *check_ray_x_in_map += ray->x_sign; // check_ray_x_in_map es la celda en la cuadrícula donde está el rayo. x_sign vale +1 si el rayo va a la derecha o -1 si va a la izquierda. Esto actualiza check_ray_x_in_map para reflejar que hemos cambiado de celda en la cuadrícula.
             ray->line_crossing = 0; // Indica que hemos chocado contra una linea vertical dde la celda (linea en X)
-            
-            
-         //        printf ("$$$$ ray->first_dist_y %f\n", ray->first_dist_y);
-         //        printf ("$$$$ ray->first_dist_x %f\n", ray->first_dist_x);
-         //        printf ("$$$$ *check_ray_x_in_map %d\n", *check_ray_x_in_map);
+
             } 
         else // El rayo toca antes una línea horizontal → Avanza en y
         {
             ray->first_dist_y += ray->other_dist_y;
             *check_ray_y_in_map += ray->y_sign;
             ray->line_crossing = 1;
-         // printf ("#### extra_coord_x %f\n", extra_coord_x);
-         //        printf ("#### ray->first_dist_y %f\n", ray->first_dist_y);
-         //        printf ("#### ray->first_dist_x %f\n", ray->first_dist_x);
-         //        printf ("#### *check_ray_y_in_map %d\n", *check_ray_x_in_map);
         }
 
         // Verificar colisión con paredes

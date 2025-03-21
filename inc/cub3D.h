@@ -162,7 +162,7 @@
 #define MINIMAP_PX_CELL_HEIGHT 24
 
 
-
+#define DOOR_DISTANCE 2.4  // Distancia en casillas 
 //DEFINIR TAMAÑO DE VENTANA DE LAS CASILLAS CORRESPONDIENTES * 64 PIXELES (encontrar el mapa maximo)
 //ALTURA DEL PLAYER DE 32 PIXELES
 //PROJECTION PLANE DE 320 DE ANCHO Y 200 DE ALTO
@@ -285,7 +285,7 @@ typedef struct s_ray
 
    	//Door
    	int 		hit_door; // Con cuantas puertas choca el rayo
-   	t_door 		*door_list;
+
    	//Floor
    	double 		pixel_distance_to_floor; // distancia del player al pixel de suelo que queremos dibujar en casillas
 	// double floor_x; //posicion del pixel en x
@@ -366,7 +366,7 @@ typedef struct s_map
 	int				px_height; // Valor máximo Y del mapa (en pixels)
 	int				c_width; // Valor máximo X del mapa (en casillas)
 	int				c_height; // Valor máximo Y del mapa (en casillas)
-	int 			there_is_door;
+	
 
 }					t_map;
 
@@ -475,8 +475,8 @@ void	clean_data(t_game *gdata);
 
 
 //MARTA
-
-
+void update_doors(t_game *gdata);
+double get_distance_to_door(t_game *gdata, int door_x, int door_y); 
 
 //MAIN
 void	close_window(t_game	*gdata);

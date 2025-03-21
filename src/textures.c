@@ -35,7 +35,6 @@ int	load_image(t_game *gdata, t_image *image, char *path)
 		return (0);
 	}
 	image->xpm = mlx_load_xpm42(path);
-	printf ("**************|%d|\n", image->xpm->texture.height);
 	image->data = mlx_texture_to_image(gdata->mlx.init, &image->xpm->texture);
 	// index = mlx_image_to_window(gdata->mlx.init, image->data, -100, -100);
 	// mlx_set_instance_depth(&image->data->instances[index], 8);
