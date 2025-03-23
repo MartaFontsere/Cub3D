@@ -12,7 +12,7 @@
 
 #include "cub3D.h"
 
-void	init_map_params(t_map *map)
+void	init_map_params(t_game *gdata, t_map *map)
 {
 	map->matrix = NULL;
 	map->tmp_matrix = NULL;
@@ -23,6 +23,7 @@ void	init_map_params(t_map *map)
 	map->c_height = 0;
 	map->px_width = MAP_PX_WIDTH;
 	map->px_height = MAP_PX_HEIGHT;
+	gdata->vision.FOV.rays = NULL;
 }
 
 void	init_minimap_params(t_game *gdata)

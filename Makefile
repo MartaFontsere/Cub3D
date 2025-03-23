@@ -60,12 +60,10 @@ PARSE_SRCS = $(addprefix $(PARSE_DIR), $(PARSE_FILES))
 READ_SRCS = $(addprefix $(READ_DIR), $(READ_FILES))
 ERROR_SRCS = $(addprefix $(ERROR_DIR), $(ERROR_FILES))
 GNL_SRCS = $(addprefix $(GNL_DIR), $(GNL_FILES))
-BONUS_SRCS = $(addprefix $(BONUS_DIR), $(BONUS_FILES))
 
-#todos los files con su respectivo path
+# Todos los files con su respectivo path
 FILES = $(BASE_FILES) $(INIT_SRCS) $(FOV_SRCS) $(MOVE_SRCS) $(PRINT_SRCS) \
-		$(PRINT_MINI_SRCS) $(PARSE_SRCS) $(READ_SRCS) $(ERROR_SRCS) $(GNL_SRCS) \
-		$(BONUS_SRCS)
+		$(PRINT_MINI_SRCS) $(PARSE_SRCS) $(READ_SRCS) $(ERROR_SRCS) $(GNL_SRCS)	
 
 		
 SRCDIR = src/
@@ -81,8 +79,8 @@ NAME = cub3D
 HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
-CFLAGS += #-Ofast
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address #-Ofast
+
 
 MLXDIR = libs/MLX42
 LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
@@ -104,15 +102,8 @@ make_libs:
 	@make -C libs/Libft all --no-print-directory
 	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4 --no-print-directory
 
-ifndef BONUS
-${NAME}: ${OBJS} $(LIBS) dragon
+${NAME}: ${OBJS}
 	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)
-else
-${NAME}: ${OBJS_BONUS} dragon
-	@$(CC) $(CFLAGS) ${OBJS_BONUS} $(LIBS) -o $(NAME)
-endif
-
-dragon :
 	@echo "	⠀⠀⠀⠀⠀⠀⠀"⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⣰⠂⠀$(BLUE)⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠀⠀⠀⠀⠀"⠀⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⡟⢆$(BLUE)⢠⢣⠀$(YELLOW)  ⣔⡀⠀⠀ ⠀$(BLUE)⠀⡘⡇⠀⠀⠀⠀⠀⠀"⠀⠀
@@ -149,15 +140,12 @@ dragon :
 	@echo "				    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ $(RED)⠈⠛⠁⠀⠀⠀⠀$(END)⠀⠀"
 	@echo ""
 
-bonus: 
-	@$(MAKE) BONUS=42
-
 clean:
 	@${RM} ${OBJDIR}
 	@make -C libs/Libft clean
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)$(NC)$(END)"
 
-fclean: clean
+fclean: #clean 
 	@${RM} ${OBJDIR}
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)"
 	@${RM} ${NAME}

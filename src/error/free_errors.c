@@ -73,7 +73,7 @@ void	clean_data(t_game *gdata)
 	free_matrix(gdata->map.matrix);
 	free_matrix(gdata->map.tmp_matrix);
 	free_matrix(gdata->map.void_matrix);
-	if (gdata && gdata->vision.FOV.rays)
-		free(gdata->vision.FOV.rays);//REVISAR
+	if (/*gdata && */gdata->vision.FOV.rays) 
+		free(gdata->vision.FOV.rays);
 	free_map_sprites(gdata, &gdata->texture);
 }

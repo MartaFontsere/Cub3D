@@ -356,7 +356,7 @@ int		get_final_map(char **src, t_map *map);
 int		init_gdata_values(t_game *gdata);
 
 /*INIT_MAP_MINIMAP_PARAMS*/
-void 	init_map_params (t_map *map);
+void 	init_map_params (t_game *gdata, t_map *map);
 void	init_minimap_params(t_game *gdata);
 
 /*INIT_PLAYER_AND_VISION_PARAMS*/

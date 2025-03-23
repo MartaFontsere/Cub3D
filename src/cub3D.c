@@ -28,8 +28,7 @@ int	main(int ac, char **av)
 {
 	t_game	gdata;
 
-	gdata.vision.FOV.rays = NULL;
-	init_map_params(&gdata.map);
+	init_map_params(&gdata, &gdata.map);
 	init_textures_and_colors_path(&gdata.texture, &gdata.texture.path);
 	if (!read_file(ac, av, &gdata, &gdata.map))
 		return (1);
