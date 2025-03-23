@@ -92,46 +92,90 @@ void print_wall_column(t_game *gdata, int *row, int *column, t_image *texture, i
 }
 
 
-void print_door_column(t_game *gdata, int *row, int *column, t_image *texture, int tex_x, double tex_start_offset, double door_distance, double open_ratio)
+// void print_door_column(t_game *gdata, int *row, int *column, t_image *texture, int tex_x, double tex_start_offset, double door_distance, double open_ratio)
+// {
+//     double tex_y_ratio;
+//     int tex_y;
+//     int door_height;
+//     int draw_start;
+//     int draw_end;
+
+//     door_height = gdata->map.px_height / door_distance;
+//     draw_start = (gdata->map.px_height / 2) - (door_height / 2);
+//     draw_end = (gdata->map.px_height / 2) + (door_height / 2);
+
+//     if (draw_start < 0) draw_start = 0;
+//     if (draw_end >= gdata->map.px_height) draw_end = gdata->map.px_height - 1;
+
+//     tex_y_ratio = (double)texture->xpm->texture.height / door_height;
+//     *row = draw_start;
+
+//     // 📌 Desplazamos tex_x para simular que se abre deslizándose
+//     int max_shift = texture->xpm->texture.width; // En píxeles
+//     int shift = (int)(open_ratio * max_shift);
+//     int shifted_tex_x = tex_x - shift;
+//     if (shifted_tex_x >= (int)texture->xpm->texture.width)
+//         return; // 🔒 Puerta abierta completamente → no pintamos nada
+
+//     while (*row <= draw_end)
+//     {
+//         tex_y = (int)((*row - draw_start) * tex_y_ratio + tex_start_offset);
+
+//         if (tex_y < 0) tex_y = 0;
+//         if ((uint32_t)tex_y >= texture->xpm->texture.height)
+//             tex_y = texture->xpm->texture.height - 1;
+
+//         gdata->print_map.color = get_texture_pixel(texture, shifted_tex_x, tex_y);
+//         mlx_put_pixel(gdata->mlx.image, *column, *row, gdata->print_map.color);
+//         (*row)++;
+//     }
+// }
+
+
+void print_door_column(t_game *gdata, int *row, int *column, t_image *texture, int tex_x, double tex_start_offset, double door_distance)
 {
-    double tex_y_ratio;
-    int tex_y;
-    int door_height;
-    int draw_start;
-    int draw_end;
+     double tex_y_ratio;
+     int tex_y;
+     int door_height;
+     int draw_start;
+     int draw_end;
+ 
+     // 📌 La altura de la puerta debe calcularse con su propia distancia, no la de la pared
+     door_height = gdata->map.px_height / door_distance;
+ 
+     // 📌 Ajustar el punto donde empieza y termina la puerta en pantalla
+     draw_start = (gdata->map.px_height / 2) - (door_height / 2);
+     draw_end = (gdata->map.px_height / 2) + (door_height / 2);
+ 
+     // 📌 Limitar valores dentro de la pantalla
+     if (draw_start < 0)
+         draw_start = 0;
+     if (draw_end >= gdata->map.px_height)
+         draw_end = gdata->map.px_height - 1;
 
-    door_height = gdata->map.px_height / door_distance;
-    draw_start = (gdata->map.px_height / 2) - (door_height / 2);
-    draw_end = (gdata->map.px_height / 2) + (door_height / 2);
+     tex_y_ratio = (double)texture->xpm->texture.height / door_height;
+ 
+     // 📌 Ajustamos `row` para comenzar en el punto correcto
+     *row = draw_start;
 
-    if (draw_start < 0) draw_start = 0;
-    if (draw_end >= gdata->map.px_height) draw_end = gdata->map.px_height - 1;
-
-    tex_y_ratio = (double)texture->xpm->texture.height / door_height;
-    *row = draw_start;
-
-    // 📌 Desplazamos tex_x para simular que se abre deslizándose
-    int max_shift = texture->xpm->texture.width; // En píxeles
-    int shift = (int)(open_ratio * max_shift);
-    int shifted_tex_x = tex_x - shift;
-    if (shifted_tex_x >= (int)texture->xpm->texture.width)
-        return; // 🔒 Puerta abierta completamente → no pintamos nada
-
-    while (*row <= draw_end)
-    {
-        tex_y = (int)((*row - draw_start) * tex_y_ratio + tex_start_offset);
-
-        if (tex_y < 0) tex_y = 0;
-        if ((uint32_t)tex_y >= texture->xpm->texture.height)
-            tex_y = texture->xpm->texture.height - 1;
-
-        gdata->print_map.color = get_texture_pixel(texture, shifted_tex_x, tex_y);
-        mlx_put_pixel(gdata->mlx.image, *column, *row, gdata->print_map.color);
-        (*row)++;
+      while (*row <= draw_end)
+     {
+         tex_y = (int)((*row - draw_start) * tex_y_ratio + tex_start_offset);
+ 
+         if (tex_y < 0)
+             tex_y = 0;
+         if ((uint32_t)tex_y >= texture->xpm->texture.height)
+             tex_y = texture->xpm->texture.height - 1;
+ 
+         // 📌 Obtener el color de la textura de la puerta
+         gdata->print_map.color = get_texture_pixel(texture, tex_x, tex_y);
+ 
+         // 📌 Dibujar el píxel de la puerta con la altura correcta
+         mlx_put_pixel(gdata->mlx.image, *column, *row, gdata->print_map.color);
+         (*row)++;
     }
+
 }
-
-
 
 
 void print_door (t_game *gdata, t_ray *ray, int *row, int *column)
@@ -146,10 +190,15 @@ void print_door (t_game *gdata, t_ray *ray, int *row, int *column)
     // int door_height, door_draw_start, door_draw_end;
     // double door_recess;
 
-double distance = get_distance_to_door(gdata, ray->cell_collision_x, ray->cell_collision_y);
-    // 📌 Ratio de apertura (0 = cerrada, 1 = abierta completamente)
-double adjusted_distance = fmax(0.0, distance - 1.2); // No empieza a abrir hasta que estás a menos de 1.0
-    double open_ratio = 1.0 - fmin(adjusted_distance / 1.2, 1.0); // Completamente abierta cuando estás a 0.5 o menos
+// double distance = get_distance_to_door(gdata, ray->cell_collision_x, ray->cell_collision_y);
+//     // 📌 Ratio de apertura (0 = cerrada, 1 = abierta completamente)
+// double adjusted_distance = fmax(0.0, distance - DOOR_END_OPEN_DISTANCE); // No empieza a abrir hasta que estás a menos de 1.0
+// double max_open_range = DOOR_START_OPEN_DISTANCE - DOOR_END_OPEN_DISTANCE;
+//     double open_ratio = 1.0 - fmin(adjusted_distance /max_open_range, 1.0); // Completamente abierta cuando estás a 0.5 o menos
+
+
+
+
 
    // Usar la textura de la puerta
     texture = &gdata->texture.door_img;
@@ -161,7 +210,7 @@ double adjusted_distance = fmax(0.0, distance - 1.2); // No empieza a abrir hast
     // Calcular el offset vertical en la textura para centrar la imagen
     get_texture_row(gdata, texture, &tex_start_offset);
     // Imprimir la columna de la puerta (la altura será la misma que la pared)
-    print_door_column(gdata, row, column, texture, tex_x, tex_start_offset, door_distance, open_ratio);
+    print_door_column(gdata, row, column, texture, tex_x, tex_start_offset, door_distance/*, open_ratio*/);
      
 }
 
@@ -177,11 +226,17 @@ void print_texture_walls (t_game *gdata, t_ray *ray, int *row, int *column)
         print_door (gdata, ray, row, column);
     else
     {
+       // printf ("1111111111111111111\n");
         texture = get_wall_texture(ray, gdata);  // Obtener la textura correcta segun si el rayo impacta en una pared norte, sur, este u oeste, ya que la textura debe ser diferente.
+       // printf ("22222222222222222222222\n");
         get_wall_column (gdata, ray, &wall_x);
+       // printf ("33333333333333333333333333333\n");
         get_texture_column(texture, &wall_x, &tex_x);
+      //  printf ("444444444444444444444444444444444\n");
         get_texture_row(gdata, texture, &tex_start_offset);
+      //  printf ("555555555555555555555555555555555555\n");
         print_wall_column(gdata, row, column, texture,tex_x, tex_start_offset);
+      //  printf ("6666666666666666666666666666666666666666666\n");
     }
 }
 

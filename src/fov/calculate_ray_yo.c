@@ -76,6 +76,66 @@ void find_wall_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, doubl
     // ray->line_crossing = line_crossing;
 }
 
+int should_block_ray(t_ray *ray, t_game *gdata, int map_x, int map_y)
+{
+    //Calcular distancia jugador-puerta
+
+    double distance = get_distance_to_door(gdata, map_x, map_y);
+
+    double adjusted_distance = fmax(0.0, distance - DOOR_END_OPEN_DISTANCE);
+    double max_open_range = DOOR_START_OPEN_DISTANCE - DOOR_END_OPEN_DISTANCE;
+    double open_ratio = 1.0 - fmin(adjusted_distance / max_open_range, 1.0);
+
+    if (map_x < 0 || map_x >= gdata->map.c_width || map_y < 0 || map_y >= gdata->map.c_height)
+        return 0; // Permitir paso (no bloquear), para evitar segfault
+
+    //Calcular wall_x (posición de colisión dentro de la celda)
+    double wall_x;
+    if (ray->line_crossing == 0)
+    {
+        ray->px_collision_x = compute_collision_coordinate(ray->check_ray_x_in_map, ray->x_sign, gdata->minimap.px_in_cell_width);
+        ray->diagonal_distance = ((ray->px_collision_x / gdata->minimap.px_in_cell_width) - gdata->player.cell_player_x) / ray->dir_x;
+        ray->px_collision_y = gdata->player.y + (ray->diagonal_distance * gdata->minimap.px_in_cell_height) * ray->dir_y;
+        wall_x = fmod(ray->px_collision_y, gdata->minimap.px_in_cell_height) / gdata->minimap.px_in_cell_height;
+    
+        // Invertimos solo si mira al ESTE
+        if (ray->x_sign > 0)
+            wall_x = 1.0 - wall_x;
+    }
+    else
+    {
+        ray->px_collision_y = compute_collision_coordinate(ray->check_ray_y_in_map, ray->y_sign, gdata->minimap.px_in_cell_height);
+        ray->diagonal_distance = ((ray->px_collision_y / gdata->minimap.px_in_cell_height) - gdata->player.cell_player_y) / ray->dir_y;
+        ray->px_collision_x = gdata->player.x + (ray->diagonal_distance * gdata->minimap.px_in_cell_width) * ray->dir_x; 
+         wall_x = fmod(ray->px_collision_x, gdata->minimap.px_in_cell_width) / gdata->minimap.px_in_cell_width;
+    
+        // Invertir solo si mira al NORTE
+        if (ray->y_sign < 0)
+            wall_x = 1.0 - wall_x;
+    }
+
+    //Convertir a coordenada de textura
+    int tex_width = gdata->texture.door_img.xpm->texture.width;
+    int tex_x = (int)(wall_x * tex_width);
+
+
+if (tex_x < 0) tex_x = 0;
+if (tex_x >= tex_width) tex_x = tex_width - 1;
+
+    //Simular apertura deslizante de derecha a izquierda
+    int shift = (int)(open_ratio * tex_width);
+    
+
+    int shifted_tex_x;
+        shifted_tex_x = tex_x - shift;
+    //Si shifted_tex_x >= 0 → todavía hay puerta visible ahí → BLOQUEAMOS el rayo
+    //Si shifted_tex_x < 0 → esa parte ya está "abierta" → dejamos pasar el rayo
+    return (shifted_tex_x >= 0);
+}
+
+
+
+
 
 
 int traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map)
@@ -88,15 +148,17 @@ int traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, i
     int  check_ray_y_in_map_tmp;
     double first_dist_x_tmp = 0;
     double first_dist_y_tmp = 0;
+    double door_midpoint = 0; 
 
-double door_midpoint = 0; 
+    ray->hit_door = 0; // Resetear por si quedó de un rayo anterior
 
      // Algoritmo DDA
     while (wall_hit == 0) 
     {
 
-        if (gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == 'D' || gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == 'd')
+        if (gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == 'D' || (gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == 'd'&& should_block_ray(ray, gdata, *check_ray_x_in_map, *check_ray_y_in_map)))
         {
+
             line_crossing_tmp = ray->line_crossing;
             check_ray_y_in_map_tmp = *check_ray_y_in_map;
             check_ray_x_in_map_tmp = *check_ray_x_in_map;
@@ -187,7 +249,6 @@ double door_midpoint = 0;
                     }
                 }  
             }
-            
             break;
         }
 

@@ -26,14 +26,26 @@ void print_floor (t_game *gdata, t_mlx mlx, int *row, int *column)
 
 void print_sky (t_game *gdata, t_mlx mlx, int *row, int *column)
 {
-    
+    //printf ("^^^^^^^^^\n");
     gdata->texture.C_hex_color = rgb_to_hex(gdata->texture.path.C.R, gdata->texture.path.C.G, gdata->texture.path.C.B);
-    while (*row < gdata->print_map.draw_wall_start)
+    //printf ("##########\n");
+    if (gdata->print_map.draw_wall_start < 0 || gdata->print_map.draw_wall_start > (int)mlx.image->height)
+{
+    printf("⚠️  draw_wall_start inválido: %f\n", gdata->print_map.draw_wall_start);
+printf("row = %d | draw_wall_start = %f\n", *row, gdata->print_map.draw_wall_start);
+    return;
+}
+
+while (*row < gdata->print_map.draw_wall_start)
     {
-        mlx_put_pixel(mlx.image, *column, *row, gdata->texture.C_hex_color);
+    
+        if (*column >= 0 && *column < (int)mlx.image->width && *row >= 0 && *row < (int)mlx.image->height)
+            mlx_put_pixel(mlx.image, *column, *row, gdata->texture.C_hex_color);
+        //printf ("ggggg\n");
         (*row)++;
     } 
 }
+
 
 void prepare_print_params (t_game *gdata, t_ray *ray, t_map map)
 {
@@ -74,11 +86,12 @@ void print_map(t_game *gdata, t_mlx mlx, t_map map)
         t_ray *ray = &gdata->vision.FOV.rays[column];
 
         // Preparación para printar paredes
+        //printf ("*******\n");
         prepare_print_params(gdata, ray, map);
-
+//printf ("$$$$$$$$$$$$\n");
         // Dibujar el cielo
         print_sky(gdata, mlx, &row, &column);
-
+//printf ("&&&&&&&&&&&&&&\n");
         // Texturizar la pared (o la pared adyacente y la puerta)
         print_texture_walls(gdata, ray, &row, &column);
 

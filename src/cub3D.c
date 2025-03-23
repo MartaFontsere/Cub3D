@@ -59,6 +59,7 @@ int main(int ac, char **av)
 		return (1); //LIBERAR COSAS
 	if (prepare_animation (&gdata) == 0)
 		return (1); //LIBERAR COSAS
+	update_doors(&gdata);
 	print_map (&gdata, gdata.mlx, gdata.map);
 
  	// printf("The matrix is:\n");

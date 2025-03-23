@@ -61,5 +61,5 @@ void	move_player (t_game *gdata, t_vision vision, double *target_x, double *targ
         *target_y += move_y;  // Actualizar Y si no hay colisión
     }
 	// Verificar los movimientos
-    
+    printf("movimiento | X: %f, Y: %f\n", move_x, move_y);
 }

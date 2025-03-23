@@ -35,7 +35,9 @@ void render_game (void *param) // todo lo que se tenga que checkear a cada vuelt
 		// print_player_move(gdata, gdata->player, target_x, target_y);
 		print_minimap (gdata);
 		//mapa
+		//printf ("rrrrrrrrrrrrrrrrrrrrr\n");
 		print_map (gdata, gdata->mlx, gdata->map);
+		//printf ("holiiii\n");
 		do_dragon_animation (gdata);
 		gdata->player.x = target_x;
 		gdata->player.y = target_y;

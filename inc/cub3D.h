@@ -162,7 +162,9 @@
 #define MINIMAP_PX_CELL_HEIGHT 24
 
 
-#define DOOR_DISTANCE 2.4  // Distancia en casillas 
+#define DOOR_START_OPEN_DISTANCE 2.2 // distancia en casillas
+#define DOOR_END_OPEN_DISTANCE 1.4
+
 //DEFINIR TAMAÑO DE VENTANA DE LAS CASILLAS CORRESPONDIENTES * 64 PIXELES (encontrar el mapa maximo)
 //ALTURA DEL PLAYER DE 32 PIXELES
 //PROJECTION PLANE DE 320 DE ANCHO Y 200 DE ALTO
@@ -274,7 +276,7 @@ typedef struct s_ray
    			 //Ej: Si el rayo va a la izquierda (dir_x < 0), x_sign = -1. Si el rayo va a la derecha (dir_x > 0), x_sign = 1.
     int 		line_crossing; //0 = choque en X, 1 = choque en Y (para texturas)// nos dice qué cara de una celda fue atravesada por el rayo en su último avance. Indica si el rayo choca contra una pared vertical (side = 0, osea se movió en X) o una horizontal (side = 1, osea se movió en Y). indica con qué tipo de línea de la celda el rayo acaba de chocar. No indica si chocó con una pared del mapa, sino si cruzó una línea vertical u horizontal dentro de la cuadrícula.
 
-    	//CAMBIAR POR WALL HIT quizas mejor
+
     int 		cell_collision_x; // Punto de colisión en X (en casillas)
     int 		cell_collision_y; // Punto de colisión en Y (en casillas)
     double 		px_collision_x; // Punto de colisión en X (en pixeles)
@@ -284,7 +286,10 @@ typedef struct s_ray
    	double 		perpendicular_distance;
 
    	//Door
-   	int 		hit_door; // Con cuantas puertas choca el rayo
+   	int hit_door;              // Flag que indica si el rayo tocó una puerta cerrada
+	int hit_door_x;            // Coordenada X de la puerta
+	int hit_door_y;            // Coordenada Y de la puerta
+	double hit_door_dist;      // Distancia perpendicular a la puerta
 
    	//Floor
    	double 		pixel_distance_to_floor; // distancia del player al pixel de suelo que queremos dibujar en casillas
@@ -477,6 +482,8 @@ void	clean_data(t_game *gdata);
 //MARTA
 void update_doors(t_game *gdata);
 double get_distance_to_door(t_game *gdata, int door_x, int door_y); 
+int	check_collision(t_game *gdata, double target_x, double target_y);
+
 
 //MAIN
 void	close_window(t_game	*gdata);
