@@ -1,0 +1,75 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   calculate_ray.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 22:22:08 by mfontser          #+#    #+#             */
+/*   Updated: 2025/03/12 01:33:29 by mfontser         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3D.h"
+
+void	init_ray_direction(t_ray *ray, t_game *gdata, int check_ray_x_in_map,
+		int check_ray_y_in_map)
+{
+	ray->dir_x = cos(ray->current_angle);
+	ray->dir_y = -sin(ray->current_angle);
+	controll_x_limit_case(ray, check_ray_x_in_map, gdata->player.cell_player_x);
+	controll_y_limit_case(ray, check_ray_y_in_map, gdata->player.cell_player_y);
+}
+
+void	traverse_ray_until_hit(t_ray *ray, t_game *gdata,
+		int *check_ray_x_in_map, int *check_ray_y_in_map)
+{
+	int	wall_hit;
+
+	wall_hit = 0;
+	while (wall_hit == 0)
+	{
+		if (ray->first_dist_x < ray->first_dist_y)
+		{
+			ray->first_dist_x += ray->other_dist_x;
+			*check_ray_x_in_map += ray->x_sign;
+			ray->line_crossing = 0;
+		}
+		else
+		{
+			ray->first_dist_y += ray->other_dist_y;
+			*check_ray_y_in_map += ray->y_sign;
+			ray->line_crossing = 1;
+		}
+		if (*check_ray_x_in_map < 0 || *check_ray_x_in_map >= gdata->map.c_width
+			|| *check_ray_y_in_map < 0
+			|| *check_ray_y_in_map >= gdata->map.c_height)
+			break ;
+		if (gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == '1')
+			wall_hit = 1;
+	}
+}
+
+void	find_ray_distance_and_collision_point(t_ray *ray, t_game *gdata,
+		double x, double y)
+{
+	if (ray->line_crossing == 0)
+		prepare_horizontal_collision_params (ray, gdata, y);
+	else
+	{
+		prepare_vertical_collision_params (ray, gdata, x);
+	}
+	ray->perpendicular_distance = ray->diagonal_distance
+		* cos(ray->current_angle - gdata->vision.vision_angle);
+}
+
+void	calculate_ray(t_game *gdata, t_ray *ray, double x, double y)
+{
+	ray->check_ray_x_in_map = (int)(x / gdata->minimap.px_in_cell_width);
+	ray->check_ray_y_in_map = (int)(y / gdata->minimap.px_in_cell_height);
+	init_ray_direction(ray, gdata, ray->check_ray_x_in_map,
+		ray->check_ray_y_in_map);
+	traverse_ray_until_hit(ray, gdata, &ray->check_ray_x_in_map,
+		&ray->check_ray_y_in_map);
+	find_ray_distance_and_collision_point(ray, gdata, x, y);
+}
