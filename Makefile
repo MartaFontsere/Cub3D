@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/25 18:41:01 by mfontser         ###   ########.fr        #
+#    Updated: 2025/03/25 18:52:05 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ ORANGE = \e[1;38;2;255;128;0m
 # Directories
 INIT_DIR = initialitations/
 VISION_ANGLE_DIR = vision_angle/ 
-RAYCAST_DIR = raycast/
+RAYCAST_DIR = raycasting/
 MOVE_DIR = movements/
 PRINT_DIR = print_map/
 PARSE_DIR = parsing/
@@ -54,7 +54,7 @@ GNL_FILES = get_next_line.c get_next_line_utils.c
 # Relacion de los directories con sus respectivos files
 INIT_SRCS = $(addprefix $(INIT_DIR), $(INIT_FILES))
 VISION_ANGLE_SRCS = $(addprefix $(VISION_ANGLE_DIR), $(VISION_ANGLE_FILES))
-RAYCAST_SRCS = $(addprefix $(FOV_DIR), $(FOV_FILES))
+RAYCAST_SRCS = $(addprefix $(RAYCAST_DIR), $(RAYCAST_FILES))
 MOVE_SRCS = $(addprefix $(MOVE_DIR), $(MOVE_FILES))
 PRINT_SRCS = $(addprefix $(PRINT_DIR), $(PRINT_FILES))
 PRINT_MINI_SRCS = $(addprefix $(PRINT_MINI_DIR), $(PRINT_MINI_FILES))
@@ -72,7 +72,7 @@ FILES = $(BASE_FILES) $(INIT_SRCS) $(RAYCAST_SRCS) $(MOVE_SRCS) $(PRINT_SRCS) \
 # Directories
 B_INIT_DIR = initialitations/
 B_VISION_ANGLE_DIR = vision_angle/ 
-B_RAYCAST_DIR = raycast/
+B_RAYCAST_DIR = raycasting/
 B_MOVE_DIR = movements/
 B_PRINT_DIR = print_map/
 B_PARSE_DIR = parsing/
@@ -125,6 +125,7 @@ OBJS_BONUS = $(patsubst $(SRCDIR_BONUS)%.c, $(OBJDIR_BONUS)%.o, $(SRCS_BONUS))
 INCLUDES = -I ./libs/Libft -I ./inc -I ./libs/get_next_line/
 
 NAME = cub3D
+NAME = cub3D_bonus
 
 HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h
 CC = cc 
@@ -224,5 +225,8 @@ fclean: #clean
 
 re: fclean all
 	@echo "CUB3D RE DONE"
+
+re_bonus: fclean bonus
+	@echo "CUB3D_BONUS RE DONE"
 
 .PHONY: all clean fclean re⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
