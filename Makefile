@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
+#    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/21 13:42:07 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/03/25 18:41:01 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,11 @@ ORANGE = \e[1;38;2;255;128;0m
 
 #------------------------------------------------VARIABLES---------------------------------------------------#
 
+# MANDATORY
 # Directories
 INIT_DIR = initialitations/
 VISION_ANGLE_DIR = vision_angle/ 
-FOV_DIR = fov/
+RAYCAST_DIR = raycast/
 MOVE_DIR = movements/
 PRINT_DIR = print_map/
 PARSE_DIR = parsing/
@@ -42,7 +43,7 @@ GNL_DIR = ../libs/get_next_line/
 BASE_FILES = cub3D.c render.c 
 INIT_FILES = initialitations.c init_map_minimap_params.c init_player_and_vision_params.c init_print_params.c init_mlx_params.c
 VISION_ANGLE_FILES = calculate_vision_angle.c 
-FOV_FILES = calculate_fov.c calculate_ray.c calculate_ray_utils.c 
+RAYCAST_FILES = calculate_fov.c calculate_ray.c calculate_ray_utils.c 
 MOVE_FILES = press_or_release_key.c move_player.c rotate_player.c check_collisions.c
 PRINT_FILES = print_map.c print_walls.c print_utils.c textures.c
 PARSE_FILES = parse_map.c parse_utils.c
@@ -53,7 +54,7 @@ GNL_FILES = get_next_line.c get_next_line_utils.c
 # Relacion de los directories con sus respectivos files
 INIT_SRCS = $(addprefix $(INIT_DIR), $(INIT_FILES))
 VISION_ANGLE_SRCS = $(addprefix $(VISION_ANGLE_DIR), $(VISION_ANGLE_FILES))
-FOV_SRCS = $(addprefix $(FOV_DIR), $(FOV_FILES))
+RAYCAST_SRCS = $(addprefix $(FOV_DIR), $(FOV_FILES))
 MOVE_SRCS = $(addprefix $(MOVE_DIR), $(MOVE_FILES))
 PRINT_SRCS = $(addprefix $(PRINT_DIR), $(PRINT_FILES))
 PRINT_MINI_SRCS = $(addprefix $(PRINT_MINI_DIR), $(PRINT_MINI_FILES))
@@ -63,15 +64,63 @@ ERROR_SRCS = $(addprefix $(ERROR_DIR), $(ERROR_FILES))
 GNL_SRCS = $(addprefix $(GNL_DIR), $(GNL_FILES))
 
 # Todos los files con su respectivo path
-FILES = $(BASE_FILES) $(INIT_SRCS) $(FOV_SRCS) $(MOVE_SRCS) $(PRINT_SRCS) \
+FILES = $(BASE_FILES) $(INIT_SRCS) $(RAYCAST_SRCS) $(MOVE_SRCS) $(PRINT_SRCS) \
 		$(PRINT_MINI_SRCS) $(PARSE_SRCS) $(READ_SRCS) $(ERROR_SRCS) $(GNL_SRCS)	
+
+
+# BONUS
+# Directories
+B_INIT_DIR = initialitations/
+B_VISION_ANGLE_DIR = vision_angle/ 
+B_RAYCAST_DIR = raycast/
+B_MOVE_DIR = movements/
+B_PRINT_DIR = print_map/
+B_PARSE_DIR = parsing/
+B_READ_DIR = read/
+B_ERROR_DIR = error/
+B_GNL_DIR = ../libs/get_next_line/
+
+# Files by directory
+B_BASE_FILES = cub3D.c render.c 
+B_INIT_FILES = initialitations.c init_map_minimap_params.c init_player_and_vision_params.c init_print_params.c init_mlx_params.c
+B_VISION_ANGLE_FILES = calculate_vision_angle.c 
+B_RAYCAST_FILES = calculate_fov.c calculate_ray.c calculate_ray_utils.c 
+B_MOVE_FILES = press_or_release_key.c move_player.c rotate_player.c check_collisions.c
+B_PRINT_FILES = print_map.c print_walls.c print_utils.c textures.c
+B_PARSE_FILES = parse_map.c parse_utils.c
+B_READ_FILES = read_fd.c read_fd_utils.c read_fd_utils2.c read_colors.c get_map.c
+B_ERROR_FILES = free_errors.c msg_errors.c
+B_GNL_FILES = get_next_line.c get_next_line_utils.c
+
+# Relacion de los directories con sus respectivos files
+B_INIT_SRCS = $(addprefix $(B_INIT_DIR), $(B_INIT_FILES))
+B_VISION_ANGLE_SRCS = $(addprefix $(B_VISION_ANGLE_DIR), $(B_VISION_ANGLE_FILES))
+B_RAYCAST_SRCS = $(addprefix $(B_RAYCAST_DIR), $(B_RAYCAST_FILES))
+B_MOVE_SRCS = $(addprefix $(B_MOVE_DIR), $(B_MOVE_FILES))
+B_PRINT_SRCS = $(addprefix $(B_PRINT_DIR), $(B_PRINT_FILES))
+B_PRINT_MINI_SRCS = $(addprefix $(B_PRINT_MINI_DIR), $(B_PRINT_MINI_FILES))
+B_PARSE_SRCS = $(addprefix $(B_PARSE_DIR), $(B_PARSE_FILES))
+B_READ_SRCS = $(addprefix $(B_READ_DIR), $(B_READ_FILES))
+B_ERROR_SRCS = $(addprefix $(B_ERROR_DIR), $(B_ERROR_FILES))
+B_GNL_SRCS = $(addprefix $(B_GNL_DIR), $(B_GNL_FILES))
+
+# Todos los files con su respectivo path
+FILES_BONUS = $(B_BASE_FILES) $(B_INIT_SRCS) $(B_RAYCAST_SRCS) $(B_MOVE_SRCS) $(B_PRINT_SRCS) \
+		$(B_PRINT_MINI_SRCS) $(B_PARSE_SRCS) $(B_READ_SRCS) $(B_ERROR_SRCS) $(B_GNL_SRCS)	
+
 
 		
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))
 
+SRCDIR_BONUS = src_bonus/
+SRCS_BONUS = $(addprefix $(SRCDIR_BONUS), $(FILES_BONUS))
+
 OBJDIR = obj/
 OBJS = $(patsubst $(SRCDIR)%.c, $(OBJDIR)%.o, $(SRCS))
+
+OBJDIR_BONUS = obj_bonus/
+OBJS_BONUS = $(patsubst $(SRCDIR_BONUS)%.c, $(OBJDIR_BONUS)%.o, $(SRCS_BONUS))
 
 INCLUDES = -I ./libs/Libft -I ./inc -I ./libs/get_next_line/
 
@@ -140,6 +189,12 @@ ${NAME}: ${OBJS}
 	@echo "				    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ $(RED)⠐⠆⢀⡀⠀⠀⠀$(END)"
 	@echo "				    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ $(RED)⠈⠛⠁⠀⠀⠀⠀$(END)⠀⠀"
 	@echo ""
+
+
+bonus: make_libs ${NAME_BONUS}
+
+$(NAME_BONUS): ${OBJS_BONUS}
+	$(CC) $(CFLAGS) ${OBJS_BONUS} $(LIBS) -o $(NAME_BONUS)
 
 clean:
 	@${RM} ${OBJDIR}
