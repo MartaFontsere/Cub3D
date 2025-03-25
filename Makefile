@@ -50,6 +50,7 @@ READ_FILES = read_fd.c read_fd_utils.c read_fd_utils2.c read_colors.c get_map.c
 ERROR_FILES = free_errors.c msg_errors.c
 GNL_FILES = get_next_line.c get_next_line_utils.c
 
+# Relacion de los directories con sus respectivos files
 INIT_SRCS = $(addprefix $(INIT_DIR), $(INIT_FILES))
 VISION_ANGLE_SRCS = $(addprefix $(VISION_ANGLE_DIR), $(VISION_ANGLE_FILES))
 FOV_SRCS = $(addprefix $(FOV_DIR), $(FOV_FILES))

@@ -172,6 +172,15 @@ typedef struct s_mlx
 
 }				t_mlx;
 
+typedef struct s_door
+{
+	int line_crossing_tmp;
+	int  check_ray_x_in_map_tmp;
+	int  check_ray_y_in_map_tmp;
+	double first_dist_x_tmp;
+	double first_dist_y_tmp;
+}		t_door;
+
 
 typedef struct s_ray 
 {
@@ -193,7 +202,6 @@ typedef struct s_ray
    			 //Ej: Si el rayo va a la izquierda (dir_x < 0), x_sign = -1. Si el rayo va a la derecha (dir_x > 0), x_sign = 1.
     int 		line_crossing; //0 = choque en X, 1 = choque en Y (para texturas)// nos dice qué cara de una celda fue atravesada por el rayo en su último avance. Indica si el rayo choca contra una pared vertical (side = 0, osea se movió en X) o una horizontal (side = 1, osea se movió en Y). indica con qué tipo de línea de la celda el rayo acaba de chocar. No indica si chocó con una pared del mapa, sino si cruzó una línea vertical u horizontal dentro de la cuadrícula.
 
-    	//CAMBIAR POR WALL HIT quizas mejor
     double 		cell_collision_x; // Punto de colisión en X (en casillas)
     double 		cell_collision_y; // Punto de colisión en Y (en casillas)
     double 		px_collision_x; // Punto de colisión en X (en pixeles)
@@ -201,6 +209,9 @@ typedef struct s_ray
    	
    	double 		diagonal_distance;    // El largo del rayo. Distancia del origen del rayo a la pared en casillas (para 3D)
    	double 		perpendicular_distance;
+//Door
+
+   	t_door 		door_ray;
 
    	//Floor
    	double 		pixel_distance_to_floor; // distancia del player al pixel de suelo que queremos dibujar en casillas
