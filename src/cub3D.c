@@ -5,101 +5,73 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 16:49:06 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/26 13:06:36 by yanaranj         ###   ########.fr       */
+/*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
+/*   Updated: 2025/03/19 16:43:22 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-//TEMPORAL
-void	print_matrix(char **matrix, int flag)
+void	close_window(t_game	*gdata)
 {
-	int	i = 0;
-
-	while (*matrix && matrix[i])
+	if (gdata->finish_game == 0)
 	{
-		if (flag == 1)
-			printf(YELLOW"%s"END, matrix[i]);
-		else if (flag == 2)
-			printf(BLUE"%s"END, matrix[i]);
-		else if (flag == 3)
-			printf(ORANGE"%s"END, matrix[i]);
-		i++;
+		ft_write(1, "\nYou've left The Game... but The Game will never leave you 👀\n", 64);
+		ft_write(1, "    See you soon 😈🔥\n", 26);
 	}
-}
-void	prints_check(t_map *map)
-{
-	printf(YELLOW"%s\n"END, map->path.NO);
-	printf(YELLOW"%s\n"END, map->path.SO);
-	printf(YELLOW"%s\n"END, map->path.WE);
-	printf(YELLOW"%s\n"END, map->path.EA);
-	//colors
-	printf(RED"%d,"END, map->path.C.R);
-	printf(GREEN"%d,"END, map->path.C.G);
-	printf(BLUE"%d\n"END, map->path.C.B);
-	printf(RED"[%d],"END, map->path.F.R);
-	printf(GREEN"[%d],"END, map->path.F.G);
-	printf(BLUE"[%d]\n"END, map->path.F.B);
-	printf(PURPLE"m_h %zu\t"END, map->c_height);
-	printf(PURPLE"m_w %zu\n"END, map->c_width);
-	//print_matrix(map->tmp_matrix, 1);
-	//printf("\n");
-	print_matrix(map->matrix, 3);
-	printf("\n");
-}
-//END TEMPORAL
-
-void    init_structs(t_map *map)
-{	
-	map->rawmap = NULL;
-    map->matrix = NULL;
-    map->tmp_matrix = NULL;
-	map->void_matrix = NULL;
-	map->is_map = 0;
-	map->c_width = 0;
-	map->c_height = 0;
-	map->j = 0;
-	init_path(&map->path);
+	mlx_close_window(gdata->mlx.init);
 }
 
-void	init_path(t_path *path)
+int main(int ac, char **av)
 {
-	path->NO = NULL;
-	path->SO = NULL;
-	path->EA = NULL;
-	path->WE = NULL;
-	path->p_count = 0;
-	path->c_count = 0;
-	path->err_flag = 0;
-	path->C.R = 0;
-	path->C.G = 0;
-	path->C.B = 0;
-	path->C.path = path;
-	path->C.assigned = 0;
-	path->F.R = 0;
-	path->F.G = 0;
-	path->F.B = 0;
-	path->F.path = path;
-	path->F.assigned = 0;
-}
+	t_game	gdata;
 
-int main (int ac, char **av)
-{
-    t_map		map;
-	
-	init_structs(&map);
-	if (!read_file(ac, av, &map))
+	init_map_params (&gdata.map);
+	init_textures_and_colors_path(&gdata.texture.path);
+	if (!read_file(ac, av, &gdata))
 	{
-		clean_data(&map);
-		return (0);
+		clean_data(&gdata);
+		return (1);
 	}
-	if (!parse_map(map.matrix, &map))
+	//if (init_gdata_values(&gdata) == 0)// no deberiamos hacer el parseo antes de esto?
+	//{
+	//	clean_data(&gdata);
+	//	return (1);
+	//}
+	if (!parse_map(gdata.map.matrix, &gdata.map))
 	{
-		clean_data(&map);
-		return (0);
+		clean_data(&gdata);
+		return (1);
 	}
-	//prints_check(&map);
-	clean_data(&map);
-    return (1);
+	//printf ("image pointer %p, mini pointer %p\n",gdata.mlx.image, gdata.mlx.mini_image);
+	//calculate_fov(&gdata, gdata.player.x, gdata.player.y);
+	//if (prepare_textures (&gdata) == 0)
+	//	return (1);
+	//print_map (&gdata, gdata.mlx, gdata.map);
+//
+ 	//printf("The matrix is:\n");
+ 	//int i = 0;
+ 	//while (gdata.map.matrix[i])
+ 	//{
+ 	//	int j = 0;
+ 	//	while (gdata.map.matrix[i][j])
+ 	//	{
+ 	//		printf ("%c", gdata.map.matrix[i][j]);
+ 	//		j++;
+ 	//	}
+ 	//	printf("\n");
+ 	//	i++;
+ 	//}
+//
+//
+	//print_minimap(&gdata);
+	//	
+//
+	//mlx_key_hook(gdata.mlx.init, press_key, &gdata);
+	//mlx_loop_hook(gdata.mlx.init, render_game, &gdata);
+	//mlx_loop(gdata.mlx.init); 
+	//
+	clean_data(&gdata); //añadir el free de vision->rays
+	return (0);
+
 }

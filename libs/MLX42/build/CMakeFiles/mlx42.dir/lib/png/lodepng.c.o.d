@@ -1,7 +1,7 @@
 CMakeFiles/mlx42.dir/lib/png/lodepng.c.o: \
- /home/yanaranj/Desktop/merge_again/libs/MLX42/lib/png/lodepng.c \
+ /home/yanaranj/Desktop/cubsito/libs/MLX42/lib/png/lodepng.c \
  /usr/include/stdc-predef.h \
- /home/yanaranj/Desktop/merge_again/libs/MLX42/include/lodepng/lodepng.h \
+ /home/yanaranj/Desktop/cubsito/libs/MLX42/include/lodepng/lodepng.h \
  /usr/include/string.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \

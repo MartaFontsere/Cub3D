@@ -1,7 +1,7 @@
-NO textures/simonkraft/respawn_anchor_side0.xpm
-EA textures/simonkraft/respawn_anchor_side2.xpm
-SO textures/simonkraft/respawn_anchor_side4.xpm
-WE textures/simonkraft/respawn_anchor_side3.xpm
+NO textures/map_walls/opcion2/Norte.xpm42
+SO textures/map_walls/opcion2/Sur.xpm42
+EA textures/map_walls/opcion2/Este.xpm42
+WE textures/map_walls/opcion2/Oeste.xpm42
 
 C 35,19,73
 F 15,6,40

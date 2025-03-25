@@ -1,5 +1,5 @@
 CMakeFiles/mlx42.dir/lib/glad/glad.c.o: \
- /home/yanaranj/Desktop/merge_again/libs/MLX42/lib/glad/glad.c \
+ /home/yanaranj/Desktop/cubsito/libs/MLX42/lib/glad/glad.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -24,8 +24,8 @@ CMakeFiles/mlx42.dir/lib/glad/glad.c.o: \
  /usr/include/x86_64-linux-gnu/bits/floatn.h \
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h /usr/include/stdlib.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h /usr/include/string.h \
- /home/yanaranj/Desktop/merge_again/libs/MLX42/include/glad/glad.h \
- /home/yanaranj/Desktop/merge_again/libs/MLX42/include/KHR/khrplatform.h \
+ /home/yanaranj/Desktop/cubsito/libs/MLX42/include/glad/glad.h \
+ /home/yanaranj/Desktop/cubsito/libs/MLX42/include/KHR/khrplatform.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \

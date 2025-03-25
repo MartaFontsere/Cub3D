@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 13:16:14 by mfontser          #+#    #+#             */
-/*   Updated: 2025/01/27 13:33:20 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:34:00 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	**ft_split(char const *s, char del)
 	res = malloc(sizeof(char *) * (words + 1));
 	if (!res)
 	{
-		words = 0;	
+		words = 0;
 		return (NULL);
 	}
 	res = matrix_words(res, s, del);

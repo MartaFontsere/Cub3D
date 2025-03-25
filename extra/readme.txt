@@ -82,7 +82,40 @@
 		->check_player()
 			tengo que poner la comprobacion de NSWE para que funcione bien. El
 			resto queda como el esp y zero
-26/02 -	Esta version esta comentada y todavia no esta normineteada. Tiene
-		funciones que son temporales.
-		En la rama Yaja subo la verion normineteada y  a raiz de esta trabajo en
-		el bonus
+26/02 -	Esta version esta con norminette, por lo que a partir de esta fecha, todo
+		lo que genere sera pensado para el bonus
+		-> El  Makefile actual compila los archivos *_bonus pero hay que cambiar por
+		completo la forma de compilacion
+		-> Estoy haciendo la puerta, mirar porque lo toma como char invalido en
+		map_control. Creo que el error viene dado por el Makefile, que no lo compila
+		bien. Asi que primero he de asegurarme que este funcine perfecto para continuar
+		con el parsing de la puerta
+27/02 -	Al hacer el "make bonus" no genera un nuevo ejecutable. QUIZA HACER UNA
+		EJECUTABLE PARA EL BONUS
+
+		-HABEMUS BONUUUUUUUUSS!!!! El gnl lo he movido a libs, asi no tenemos que
+		duplicarlo en los *_bonus. Aunque podemoos crear otro dir solo para resources
+07/03 -	No recuerdo porque tenia que cambiar la X && Y de mi parseo, cuando la
+		info que nos interesa esta correctamente guardada en la struct y Marta
+		puede trabajar sin problema desde esa info. No puedo trabajar desde aqui
+		por el SO, que la minilibx no es compatible.
+13/03 -	Los rays ya estan liberados, asi como tambien ya esta unificado los mensaje
+		de error. El max height es 100 y width es 120. Y mis funciones del libft
+		que he tocado ya estan sustituidas.
+		No puedo tocar mas porque Marta ha de pasarme su ultima version y asi
+		podre trabajar con los nuevos cambios.
+19/03 -	En esta rama no elimina los .o del GNL, porque en la rama mandatory lo he
+		incluido en el Makefile del libft.
+		He cambiado unos mensajes en assign_color del mandatory, hay que revisar
+		para evitar errores,
+		Tal como esta, deberia funcionar correctamente la asignacion de colores o
+		paths en el floor or cealing. Debo simplificar la funcion get_color_path y
+		en general todo el archivo, para poder pasar norminette.
+		Me quedaria limpiar el strdup que hago para que se pueda abrir bien la
+		textura en el juego
+20/03 -	A priori ya tendria toda la estructura del path o RGB de F y C, me queda
+		limpiar la linea para que se lea correctamente. Y limpiar todo el codigo
+		y unificarlo lo que he cambiado del mandatory en su rama correspondiente.
+21/03 -	el dir 'cubsito' es un backup que contiene la info de la ultima parte del
+		bonus. Ahora hare una copia del mandatory en mi rama y empezare a integrar
+		el bonus correctamente

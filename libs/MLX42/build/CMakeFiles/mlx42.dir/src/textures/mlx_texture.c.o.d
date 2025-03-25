@@ -1,8 +1,8 @@
 CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o: \
- /home/yanaranj/Desktop/merge_again/libs/MLX42/src/textures/mlx_texture.c \
+ /home/yanaranj/Desktop/cubsito/libs/MLX42/src/textures/mlx_texture.c \
  /usr/include/stdc-predef.h \
- /home/yanaranj/Desktop/merge_again/libs/MLX42/include/MLX42/MLX42_Int.h \
- /home/yanaranj/Desktop/merge_again/libs/MLX42/include/MLX42/MLX42.h \
+ /home/yanaranj/Desktop/cubsito/libs/MLX42/include/MLX42/MLX42_Int.h \
+ /home/yanaranj/Desktop/cubsito/libs/MLX42/include/MLX42/MLX42.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
@@ -20,10 +20,10 @@ CMakeFiles/mlx42.dir/src/textures/mlx_texture.c.o: \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
- /home/yanaranj/Desktop/merge_again/libs/MLX42/include/lodepng/lodepng.h \
+ /home/yanaranj/Desktop/cubsito/libs/MLX42/include/lodepng/lodepng.h \
  /usr/include/string.h \
- /home/yanaranj/Desktop/merge_again/libs/MLX42/include/glad/glad.h \
- /home/yanaranj/Desktop/merge_again/libs/MLX42/include/KHR/khrplatform.h \
+ /home/yanaranj/Desktop/cubsito/libs/MLX42/include/glad/glad.h \
+ /home/yanaranj/Desktop/cubsito/libs/MLX42/include/KHR/khrplatform.h \
  /usr/include/GLFW/glfw3.h /usr/include/stdlib.h \
  /usr/include/x86_64-linux-gnu/bits/floatn.h \
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
