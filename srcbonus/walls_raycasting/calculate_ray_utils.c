@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_calculate_ray.c                              :+:      :+:    :+:   */
+/*   calculate_ray_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 22:24:02 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/26 22:25:43 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/27 02:48:45 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void check_matrix_lines (t_ray *ray, int *check_ray_x_in_map, int *check_ray_y_in_map)
 {
-if (ray->first_dist_x < ray->first_dist_y)
+	if (ray->first_dist_x < ray->first_dist_y)
 		{
 			ray->first_dist_x += ray->other_dist_x;
 			*check_ray_x_in_map += ray->x_sign;

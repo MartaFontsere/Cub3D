@@ -6,13 +6,13 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/13 17:35:22 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/27 02:39:44 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	calculate_fov(t_game *gdata, double x, double y)
+void	calculate_fov(t_game *gdata, double x, double y)
 {
 	double	start_angle;
 	double	end_angle;
@@ -28,13 +28,11 @@ int	calculate_fov(t_game *gdata, double x, double y)
 	gdata->vision.FOV.rays[i].current_angle = start_angle;
 	while (i < gdata->vision.FOV.num_rays)
 	{
-		if (calculate_ray(gdata, &gdata->vision.FOV.rays[i], x, y) == 0)
-            return (0);
+		calculate_ray(gdata, &gdata->vision.FOV.rays[i], x, y);
 		if (i + 1 < gdata->vision.FOV.num_rays)
 			gdata->vision.FOV.rays[i
 				+ 1].current_angle = gdata->vision.FOV.rays[i].current_angle
 				+ angle_step;
 		i++;
 	}
-	return (1);
 }

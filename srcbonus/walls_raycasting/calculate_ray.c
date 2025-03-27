@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 22:22:08 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 01:33:29 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/27 23:12:06 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	traverse_ray_until_hit(t_ray *ray, t_game *gdata,
 
         if (gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == 'D' || (gdata->map.matrix[*check_ray_y_in_map][*check_ray_x_in_map] == 'd' && should_block_ray(ray, gdata, *check_ray_x_in_map, *check_ray_y_in_map)))
         {
-        	door_raycast();
+        	door_raycast(ray, gdata, check_ray_x_in_map, check_ray_y_in_map);
         	break;
         }
 		check_matrix_lines (ray, check_ray_x_in_map, check_ray_y_in_map);

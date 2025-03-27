@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player_and_vision_params.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:47:23 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/18 13:00:05 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/27 04:00:31 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	define_vision_angle(t_vision *vision, char orientation)
 		vision->vision_angle = WEST;
 }
 
-void	init_player_orientation(t_map *map, t_vision *vision)
+void	init_player_orientation(t_map *map, t_vision *vision, t_player *player)
 {
 	int	i;
 	int	j;
@@ -80,6 +80,7 @@ void	init_player_orientation(t_map *map, t_vision *vision)
 				|| map->matrix[i][j] == 'E' || map->matrix[i][j] == 'W')
 			{
 				define_vision_angle(vision, map->matrix[i][j]);
+				player->orientation = map->matrix[i][j];
 				break ;
 			}
 			j++;
@@ -101,5 +102,5 @@ void	init_player_params(t_game *gdata, t_player *player)
 	player->height = gdata->minimap.px_height / 2;
 	player->radius = gdata->minimap.px_in_cell_width / 4;
 	init_player_position(gdata, &gdata->map, player);
-	init_player_orientation(&gdata->map, &gdata->vision);
+	init_player_orientation(&gdata->map, &gdata->vision, &gdata->player);
 }

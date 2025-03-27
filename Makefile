@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/25 18:52:05 by mfontser         ###   ########.fr        #
+#    Updated: 2025/03/27 16:46:29 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,9 @@ B_INIT_DIR = initialitations/
 B_WALLS_RAYCAST_DIR = walls_raycasting/
 B_DOORS_RAYCAST_DIR = doors_raycasting/
 B_MOVE_DIR = movements/
-B_PRINT_DIR = print_map/
+B_PRINT_MAP_DIR = print_map/
+B_PRINT_MINI_DIR = print_minimap/
+B_DRAGON_DIR = dragon/
 B_PARSE_DIR = parsing/
 B_READ_DIR = read/
 B_ERROR_DIR = error/
@@ -81,9 +83,11 @@ B_GNL_DIR = ../libs/get_next_line/
 B_BASE_FILES = cub3D.c render.c 
 B_INIT_FILES = initialitations.c init_map_minimap_params.c init_player_and_vision_params.c init_print_params.c init_mlx_params.c
 B_WALLS_RAYCAST_FILES = calculate_fov.c calculate_ray.c calculate_ray_utils.c 
-B_DOORS_RAYCAST_FILES = 
+B_DOORS_RAYCAST_FILES = check_ray_opened_door.c door_raycasting.c door_raycasting_utils.c update_doors_status.c
 B_MOVE_FILES = press_or_release_key.c move_player.c rotate_player.c check_collisions.c
-B_PRINT_FILES = print_map.c print_walls.c print_utils.c textures.c
+B_PRINT_MAP_FILES = print_map.c print_walls.c print_utils.c textures.c
+B_PRINT_MINI_FILES = print_fov_and_vision_angle.c print_minimap_skeleton.c
+B_DRAGON_FILES = do_dragon_animation.c print_dragon.c
 B_PARSE_FILES = parse_map.c parse_utils.c
 B_READ_FILES = read_fd.c read_fd_utils.c read_fd_utils2.c read_colors.c get_map.c
 B_ERROR_FILES = free_errors.c msg_errors.c
@@ -92,18 +96,19 @@ B_GNL_FILES = get_next_line.c get_next_line_utils.c
 # Relacion de los directories con sus respectivos files
 B_INIT_SRCS = $(addprefix $(B_INIT_DIR), $(B_INIT_FILES))
 B_WALLS_RAYCAST_SRCS = $(addprefix $(B_WALLS_RAYCAST_DIR), $(B_WALLS_RAYCAST_FILES))
-B_DOORS_RAYCAST_SRCS = 
+B_DOORS_RAYCAST_SRCS = $(addprefix $(B_DOORS_RAYCAST_DIR), $(B_DOORS_RAYCAST_FILES))
 B_MOVE_SRCS = $(addprefix $(B_MOVE_DIR), $(B_MOVE_FILES))
-B_PRINT_SRCS = $(addprefix $(B_PRINT_DIR), $(B_PRINT_FILES))
+B_PRINT_MAP_SRCS = $(addprefix $(B_PRINT_MAP_DIR), $(B_PRINT_MAP_FILES))
 B_PRINT_MINI_SRCS = $(addprefix $(B_PRINT_MINI_DIR), $(B_PRINT_MINI_FILES))
+B_DRAGON_SRCS = $(addprefix $(B_DRAGON_DIR), $(B_DRAGON_FILES))
 B_PARSE_SRCS = $(addprefix $(B_PARSE_DIR), $(B_PARSE_FILES))
 B_READ_SRCS = $(addprefix $(B_READ_DIR), $(B_READ_FILES))
 B_ERROR_SRCS = $(addprefix $(B_ERROR_DIR), $(B_ERROR_FILES))
 B_GNL_SRCS = $(addprefix $(B_GNL_DIR), $(B_GNL_FILES))
 
 # Todos los files con su respectivo path
-FILES_BONUS = $(B_BASE_FILES) $(B_INIT_SRCS) $(B_WALLS_RAYCAST_SRCS) $(B_MOVE_SRCS) $(B_PRINT_SRCS) \
-		$(B_PRINT_MINI_SRCS) $(B_PARSE_SRCS) $(B_READ_SRCS) $(B_ERROR_SRCS) $(B_GNL_SRCS)	
+FILES_BONUS = $(B_BASE_FILES) $(B_INIT_SRCS) $(B_WALLS_RAYCAST_SRCS) $(B_DOORS_RAYCAST_SRCS) $(B_MOVE_SRCS) $(B_PRINT_MAP_SRCS) \
+		$(B_PRINT_MINI_SRCS) $(B_DRAGON_SRCS) $(B_PARSE_SRCS) $(B_READ_SRCS) $(B_ERROR_SRCS) $(B_GNL_SRCS)	
 
 
 		
@@ -127,7 +132,7 @@ NAME_BONUS = cub3Dbonus
 HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address #-Ofast
+CFLAGS = -Wall -Wextra -Werror -Ofast #-g -fsanitize=address #
 
 
 MLXDIR = libs/MLX42
@@ -158,22 +163,22 @@ make_libs:
 ${NAME}: ${OBJS}
 	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)
 	@echo ""⠀⠀
-	@echo "                $(RED) ⢦⡀⠀⠀⠀         ⠀⠀$(YELLOW)⢀⣶⠀⠀$(PINK)⢀⣄ ⠀⠀⣠⣶⣾⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo " 	         $(RED)⢸⡇⠀⠀⠀⠀⠀⠀  $(PINK)⢀⣼⡛$(YELLOW)⣆⣰⣿⣿$(PINK)⣠⠞⣓⣿⣿⠶⠞⠛⣫⣿⣷⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo " $(RED)⠈⣇              ⣾⢣       $(PINK)⣸⣿⡥⣿⡏⣸⡿⠛⠉⠉⠉⠉⠉⠓⢲$(YELLOW)⣠⠼⢱$(PINK)⣿⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀  $(RED)⢻⡆            ⡇⠈⡇   $(BLUE)⢀⡴⠶⢿⡋⠀$(PINK)⠟⠛⠁$(BLUE)⣀⣀⣀⠀⠀⠀$(YELLOW)⠺⡷⠚⠉⢀⣾$(PINK)⣿⣶⣿⠗⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀  $(RED)⢸⡿⣆⠀⠀ ⠀ ⡼⡄⠀   ⣷⠀⡇⠀  $(NC)⢸⡿⣷⣄$(BLUE)⠙⠀⠀$(BLUE)⢠⠞⢛⣿⣭⣙⠛⣦⡀$(YELLOW)⠹⣄⣀⡼⣻$(PINK)⣿⣯⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "   $(RED)⡬⠃⠸⡆	    ⠀    ⠈⠛    $(NC)⢸⣧⡏⣿⠀⠀⠀$(NC)⢠⡞⠋⢹⡟⠟⢳$(BLUE)⠈⢧⠀$(BLUE)⠈⠙⠿⢻⠃$(PINK)⣷⠈⢻⣄⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀$(RED) ⢸⠖⠀⠀⣿⠀ 	⠀⠀⠀  ⠀$(BLUE)⣀$(NC)⣘⡦⠿⠟$(BLUE)⠲⠶⢤$(NC)⣼⠀⢹⣿⠁⠀⢨⡇$(PINK)⠀⠀⠀⠀⠀$(BLUE)⠉⠀$(PINK)⢿⣷⡾⣿⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀$(RED) ⣮⠅⠀⠀⢠⡏    ⢠⡧	   ⠀$(BLUE)⠀⡾$(CYAN)⠹⠆$(BLUE)⠀⠀⠀⠀⠀⠀$(NC)⠈⠳⣼⣿⣷⣤⡾⠁$(PINK)⠀⠀⠀⠀⠀⠀⠀⣿⣏⠻⠟⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀$(RED)⢸⡟⠀⠀⣠⠟⠀   ⢠$(ORANGE)⣟$(RED)⣇       $(BLUE)⠘⣧⣀⡀⠀⠀$(CYAN)⠐⠓⠀$(BLUE)⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀$(PINK)⠀⠀⠀⠀⠀⣰⠃⠘⣧⠀⠀⠀⠀$(CYAN)⢠⣄⠀⠀⠀"
-	@echo "⠀$(RED)⠸⣇⠂⢰⡏⠀⠀   ⡾$(YELLOW)⡏$(RED)⠙⣦⡀      $(BLUE)⠈⢯⡉⠙⢦⣀⠀⠀⠀⠀⠀⢀⣰⠏⠀⠀⠀⠀⠀⠀⠀$(PINK)⣶⣯⣤⢄⡿⠀⠀$(CYAN)⢀⣀⣠⣾⣏⠳⣄⠀⠀⠀"
-	@echo "⠀$(RED) ⠙⢧⣘⣧    ⢸⠃$(YELLOW)⠃⠀⠈$(RED)⢷    ⠀  $(BLUE)⠈⠹⢦⣀⣉⠒⠶⠶⠶⢶⣊⣡⣄⣀⣀⣀⣀⡤⠀⠀⠀$(PINK)⡿⠙⣯⣹$(CYAN)⠷⣚⣋⣉⣡⡴⠟⢦⠈⣷⠀⠀⠀"
-	@echo "⠀$(RED)   ⠉⠛⠆   ⠘⠀⠀⠀⠀⣸         $(BLUE)⠀⠀⠉⠙⠛⠛⠛⠛⠉⠀⠀⢹⣯⠉⠁$(CYAN)⢠⣄⡀⠀$(PINK)⢤⣤⣬⣿$(CYAN)⣟⠉⠉⠁⢠⠀⠀⠀⢳⡸⡆⠀⠀"
-	@echo "⠀        $(RED)⠀⠀⢠$(ORANGE)⣴⡀$(RED)⢠⡏⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀  ⠀$(BLUE)⠀⠀⠀⢀⡾⠋⠀⠀⠀$(CYAN)⢺⡇⠙⢷$(PINK)⣽⣧⣠⣿⠿$(CYAN)⢿⡉⠻⣾⣤⢤⣄⠀⣧⡇⠀⠀"
-	@echo "	⠀   $(RED)⠻⣯⠟⠀⠀   ⠀          $(BLUE)⠀⠀⢠⡟⢀⡼⠁⠀⠀$(CYAN)⠸⣇⢠⠘⢿$(PINK)⠙⢿⡏⠀$(BLUE)⠈⠹⣄⠀⠀$(CYAN)⠀⠈⢻⣿⠁⠀⠀"
+	@echo "                   ⠀⠀         ⠀⠀$(YELLOW)⢀⣶⠀⠀$(PINK)⢀⣄ ⠀⠀⣠⣶⣾⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+	@echo " 	             ⠀⠀⠀⠀  $(PINK)⢀⣼⡛$(YELLOW)⣆⣰⣿⣿$(PINK)⣠⠞⣓⣿⣿⠶⠞⠛⣫⣿⣷⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+	@echo " $(RED) ⠈⣇      $(CYAN)DRACARYS        $(PINK)⣸⣿⡥⣿⡏⣸⡿⠛⠉⠉⠉⠉⠉⠓⢲$(YELLOW)⣠⠼⢱$(PINK)⣿⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+	@echo "⠀ $(RED) ⣄⢻⡆                 $(BLUE)⢀⡴⠶⢿⡋⠀$(PINK)⠟⠛⠁$(BLUE)⣀⣀⣀⠀⠀⠀$(YELLOW)⠺⡷⠚⠉⢀⣾$(PINK)⣿⣶⣿⠗⠀⠀⠀⠀⠀⠀⠀⠀"
+	@echo "⠀ $(RED) ⡽⢸$(ORANGE)⡿$(RED)⣆⠀⠀     $(RED)⠀$(CYAN)TEAM  ⠀ $(NC)⢸⡿⣷⣄$(BLUE)⠙⠀⠀$(BLUE)⢠⠞⢛⣿⣭⣙⠛⣦⡀$(YELLOW)⠹⣄⣀⡼⣻$(PINK)⣿⣯⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+	@echo "  $(RED)⠈⠀⡬$(ORANGE)⠃⠸$(RED)⡆  $(ORANGE)⡼⡄           $(NC)⢸⣧⡏⣿⠀⠀⠀$(NC)⢠⡞⠋⢹⡟⠟⢳$(BLUE)⠈⢧⠀$(BLUE)⠈⠙⠿⢻⠃$(PINK)⣷⠈⢻⣄⠀⠀⠀⠀⠀⠀⠀"
+	@echo "⠀$(RED)  ⢸$(ORANGE)⠖$(YELLOW)⣸⡆$(RED)⣿⠀ 	⠀⠀⠀  ⠀$(BLUE)⣀$(NC)⣘⡦⠿⠟$(BLUE)⠲⠶⢤$(NC)⣼⠀⢹⣿⠁⠀⢨⡇$(PINK)⠀⠀⠀⠀⠀$(BLUE)⠉⠀$(PINK)⢿⣷⡾⣿⠀⠀⠀⠀⠀⠀⠀"
+	@echo "⠀$(RED) ⣮$(ORANGE)⠅$(YELLOW)⡼⠋$(ORANGE)⢠$(RED)⡏    ⢠⡧	   ⠀$(BLUE)⠀⡾$(CYAN)⠹⠆$(BLUE)⠀⠀⠀⠀⠀⠀$(NC)⠈⠳⣼⣿⣷⣤⡾⠁$(PINK)⠀⠀⠀⠀⠀⠀⠀⣿⣏⠻⠟⠀⠀⠀⠀⠀⠀⠀"
+	@echo "⠀$(RED)⢸$(ORANGE)⡟$(YELLOW)⢀⡄$(ORANGE)⣠$(RED)⠟⠀   ⢠$(ORANGE)⣟$(RED)⣇       $(BLUE)⠘⣧⣀⡀⠀⠀$(CYAN)⠐⠓⠀$(BLUE)⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀$(PINK)⠀⠀⠀⠀⠀⣰⠃⠘⣧⠀⠀⠀⠀$(CYAN)⢠⣄⠀⠀⠀"
+	@echo "⠀$(RED)⠸$(ORANGE)⣇$(YELLOW)⠛$(ORANGE)⢰$(RED)⡏⠀⠀   ⡾$(ORANGE)⡏⠙$(RED)⣦⡀      $(BLUE)⠈⢯⡉⠙⢦⣀⠀⠀⠀⠀⠀⢀⣰⠏⠀⠀⠀⠀⠀⠀⠀$(PINK)⣶⣯⣤⢄⡿⠀⠀$(CYAN)⢀⣀⣠⣾⣏⠳⣄⠀⠀⠀"
+	@echo "⠀$(RED) ⠙⢧$(ORANGE)⣘$(RED)⣧    ⢸$(ORANGE)⠃⠃$(YELLOW)⢠⡈$(RED)⢷    ⠀  $(BLUE)⠈⠹⢦⣀⣉⠒⠶⠶⠶⢶⣊⣡⣄⣀⣀⣀⣀⡤⠀⠀⠀$(PINK)⡿⠙⣯⣹$(CYAN)⠷⣚⣋⣉⣡⡴⠟⢦⠈⣷⠀⠀⠀"
+	@echo "⠀$(RED)   ⠉⠛⠆   ⠘⠀⠀$(YELLOW)⠙⡃$(RED)⣸         $(BLUE)⠀⠀⠉⠙⠛⠛⠛⠛⠉⠀⠀⢹⣯⠉⠁$(CYAN)⢠⣄⡀⠀$(PINK)⢤⣤⣬⣿$(CYAN)⣟⠉⠉⠁⢠⠀⠀⠀⢳⡸⡆⠀⠀"
+	@echo "⠀  $(RED)      ⠀⠀⢠$(ORANGE)⣴⡀$(RED)⢠⡏⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀  ⠀$(BLUE)⠀⠀⠀⢀⡾⠋⠀⠀⠀$(CYAN)⢺⡇⠙⢷$(PINK)⣽⣧⣠⣿⠿$(CYAN)⢿⡉⠻⣾⣤⢤⣄⠀⣧⡇⠀⠀"
+	@echo "     $(CYAN)IS     $(RED)⠻$(ORANGE)⣯$(RED)⠟⠀⠀   ⠀          $(BLUE)⠀⠀⢠⡟⢀⡼⠁⠀⠀$(CYAN)⠸⣇⢠⠘⢿$(PINK)⠙⢿⡏⠀$(BLUE)⠈⠹⣄⠀⠀$(CYAN)⠀⠈⢻⣿⠁⠀⠀"
 	@echo "⠀		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀$(BLUE)⠀⠀⢸⣷⠞⠀⠀⠀⠀⠀$(CYAN)⡇⢸⣿⢸⠀$(PINK)⠘⣏⠉⠳⢤$(BLUE)⣘⣆⠀⠀$(CYAN)⠀⠘⠁⠀⠀"
-	@echo "⠀		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀$(BLUE)⠀⠀⠀⣸⠇⠀⠀⠀⠀⠀⠀$(CYAN)⣧⣾⣾⡟⠀⠀$(PINK)⠙⣶⣶⡦⠿⠛$(BLUE)⣧⠀⠀⠀⠀⠀"
+	@echo "       $(CYAN) BACK⠀⠀⠀⠀    ⠀⠀⠀⠀⠀⠀⠀  ⠀$(BLUE)⠀⠀⠀⣸⠇⠀⠀⠀⠀⠀⠀$(CYAN)⣧⣾⣾⡟⠀⠀$(PINK)⠙⣶⣶⡦⠿⠛$(BLUE)⣧⠀⠀⠀⠀⠀"
 	@echo "⠀		⠀ $(YELLOW)⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(BLUE)⢀⣀⣤⣄⣤⡏⠀⠀⠀⠀⠀⠀$(CYAN)⢰⣿⠟⠁⠀⠀⠀$(PINK)⠀⠛⣧⣀⡀$(BLUE)⠀⠸⣆⠀⠀⠀"
 	@echo "⠀		 $(YELLOW)⣾⠛⢦⡀⠀⠀⠀⠀⠀$(BLUE)⣠⠞⠋⠉⠀⠈⣹⠃⠀⠀⠀⠀⠀$(CYAN)⢠⡿⠋⠀⠀⠀⠀⠀$(PINK)⠀⠀⢻⣌⣙⢦⠀$(BLUE)⠛⢷⡀⠀⠀"
 	@echo "⠀	        $(YELLOW)⣸⡇⠀⠀⠙⢦⠀⠀⠀$(BLUE)⣼⠇⠀⠀⠀⠀⠀⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(PINK)⠀⠀⠀⠈⣿⠋⠉⠁⠀$(BLUE)⠈⣷⠀⠀⠀"
@@ -184,25 +189,9 @@ ${NAME}: ${OBJS}
 	@echo "⠀		⠀⠀  ⠈⢷⡀$(PINK)⠈⠳⣷⣴⣤$(BLUE)⠉⠛⠛⠒⠲⠶⠚⠛⠋⠀⠀$(PINK)⢸⣿⠓⢤⡀⢸⣿⡴⠛⠀⠀$(BLUE)⠀⠀⢠⡾⠁⠀⠀⠀"
 	@echo "⠀		⠀⠀⠀  ⠀⠹⣦⠀$(PINK)⠈⠛⠮⡇⣠⡟⠓⣆⠀⢸⠏⠛⢶⠀⣾⣿⡤⠼⠃⠀$(BLUE)⠀⠀⠀⠀⠀⠀⣴⡟⠁⠀⠀⠀ "
 	@echo "⠀	⠀	⠀⠀⠀⠀   ⠈⠳⣤⡀⠀⠀$(PINK)⠉⠙⠓⠻⠀⠛⠛⠒⠚⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀$(BLUE)⢀⣴⡾⠋⠀⠀⠀⠀⠀⠀"
-	@echo "⠀		⠀⠀⠀⠀⠀⠀⠀  ⠈⠙⠶⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⡶⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀"
+	@echo "⠀		⠀⠀⠀⠀⠀⠀⠀  ⠈⠙⠶⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⡶⠛⠉⠀⠀⠀$(GREEN)  CUB3D DONE$(BLUE)⠀⠀⠀"
 	@echo "⠀⠀		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠈⠙⠛⠲⠦⢤⣤⣤⣤⣤⣤⣤⡶⠶⠚⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
 	@echo ""⠀⠀⠀⠀⠀⠀
-
-
-
-
-#                      ⢦⡀
-# 			         ⢸⡇
-#   ⠈⣇		         ⣾⢣
-#    ⢻⡆		         ⡇⠈⡇
-#    ⢸⡿⣆		⠀⠀⠀⠀⡼⡄⠀⠀⠀⣷⠀⡇⠀⠀⠀⠀⠀
-#    ⡬⠃⠸⡆	      ⠀⠀⠀⠀⢠⡧⠀⠈⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-#   ⢸⠖⠀⠀⣿⠀	⠀⠀⠀⠀⠀⢠⣟⣇⠀⠀⠀⠀⠀
-#  ⣮⠅⠀⠀⢠⡏		⠀⠀⠀⠀⠀⡾⡏⠙⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀
-#  ⢸⡟⠀⠀⣠⠟⠀	⠀⠀⠀⠀⢸⠃⠃⠀⠈⢷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-#  ⠸⣇⠂⢰⡏		  ⠀⠀⠘⠀⠀⠀⠀⣸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-#   ⠙⢧⣘⣧⠀		   ⠀⠀⢠⣴⡀⢠⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-# 	⠉⠛⠆		     ⠀⠻⣯⠟⠀⠀⠀⠀
 
 bonus: make_libs ${NAME_BONUS}
 
@@ -237,7 +226,7 @@ $(NAME_BONUS): ${OBJS_BONUS}
 	@echo "	$(PINK)⠘⠹⠤$(BLUE)⠛$(CYAN)⠛⠲⢤⠐⠊⠈⠂⢤⢀⠠⠔⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(RED)⣀⠀⠀$(ORANGE)⠿⢻⣿⣻$(YELLOW)⡿⡇⠀⢨⠊⢵⡄⣁⠢⣍⠶⣄$(ORANGE)⢹⣟⣽⣿⠀⠀⠀$(RED)⣤⠀⠀$(END)"
 	@echo "	⠀⠀⠀⠀⠀⠀⠀$(CYAN)⠣⢀⡀⠔⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(RED)⠈⢀⣠⠀$(ORANGE)⢸⣿⠋⣿$(YELLOW)⢧⡀⠺⣥⣴⣖⣉⣿⢿⣄⡚$(ORANGE)⢸⣯⡿⣾⡷⣶⣶$(RED)⣿⠀⠀$(END)⠀"
 	@echo "				    $(RED)⠈⠁⠀⠀⠛⠷$(ORANGE)⠙⠿⠿⠿⢯⣿⡏$(YELLOW)⢻⣯⢻⣯⠉$(ORANGE)⢸⣷⠀⠈⠙⠛⠊⠁⠀⠀$(END)"
-	@echo "	$(GREEN)  CUB3D BONUS DONE$(END)	      ⠀   ⠀⠀⠀⠀⠀   ⠀⠀⠀⠀⠀$(RED)⠐⠛⠃$(ORANGE)⣼⣿$(YELLOW)⡿⣟⣗$(ORANGE)⠈⠿⣷⣤⣠⣤⣦$(RED)⣶⣄$(END)⠀"
+	@echo "	$(GREEN)  CUB3D BONUS DONE$(END)   	          ⠀   ⠀$(RED)⠐⠛⠃$(ORANGE)⣼⣿$(YELLOW)⡿⣟⣗$(ORANGE)⠈⠿⣷⣤⣠⣤⣦$(RED)⣶⣄$(END)⠀"
 	@echo "				    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(ORANGE)⠀⢻⡿⣽⣾$(YELLOW)⢿⣷⣦⣶⢾$(ORANGE)⣯⠗⠉⠀$(RED)⠙$(END)"
 	@echo "				    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(ORANGE)⠀⠈⠑⠉⠛⠾⠽⠋⠛⠊⠉⠀$(END)⠀⠀⠀"
 	@echo "				    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ $(RED)⠐⠆⢀⡀⠀⠀⠀$(END)"

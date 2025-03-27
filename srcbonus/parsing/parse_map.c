@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:45:21 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/18 13:52:54 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:15:49 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ int	check_borders(char **matrix, int i, t_map *map)
 		return (1);
 	else if (matrix[i][j] != '1' || matrix[i][end] != '1')
 	{
-		if (matrix[i][j] != '0' && matrix[i][end] != '0')
+		if (matrix[i][j] != '0' || matrix[i][end] != '0')
 			return (msg_error("Player must be inside map\n", NULL), 0);
+		else if ( matrix[i][j] == 'D' || matrix[i][j] == 'D')
+			return (msg_error("Door must be inside map\n", NULL), 0);
 		return (msg_error("Map must be close with walls\n", NULL), 0);
 	}
 	return (1);
@@ -77,7 +79,8 @@ int	min_chars(char **map, int i)
 		{
 			if (map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' \
 			&& map[i][j] != 'W' && map[i][j] != '1' && map[i][j] != '0' \
-			&& map[i][j] != '\n' && map[i][j] != ' ' && map[i][j] != '*')
+			&& map[i][j] != '\n' && map[i][j] != ' ' && map[i][j] != '*' \
+			&& map[i][j] != 'D')
 				return (0);
 			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E' \
 			|| map[i][j] == 'W')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialitations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/18 13:18:10 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/27 01:46:14 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	init_gdata_values(t_game *gdata)
 		clean_data(gdata);
 		return (0);
 	}
-	init_door_params (&gdata->door);
 	if (init_mlx(gdata, &gdata->mlx) == 0)
 	{
 		clean_data(gdata);

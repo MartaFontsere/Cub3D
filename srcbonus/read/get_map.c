@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:04:50 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/26 13:56:55 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:51:38 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ int	mix_matrix(char **src, t_map *map)
 		k = 0;
 		while (src[i][j] && src[i][j] != '\n')
 		{
-			if (src[i][j] == '1' || src[i][j] == '0' || src[i][j] == 'N'
-				|| src[i][j] == 'S' || src[i][j] == 'E' || src[i][j] == 'W')
+			if (src[i][j] == '1' || src[i][j] == '0' || src[i][j] == 'N'\
+			|| src[i][j] == 'S' || src[i][j] == 'E' || src[i][j] == 'W' \
+			|| src[i][j] == 'D')
 				map->void_matrix[i][k] = src[i][j];
 			k++;
 			j++;

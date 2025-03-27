@@ -1,2 +1,0 @@
-- Create 191x161 gold re-colors.
-- Create S/W/E/N versions.

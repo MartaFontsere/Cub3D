@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/14 12:47:13 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/27 13:52:00 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ void	render_game(void *param)
 		if (gdata->player.mov_right == 1 || gdata->player.mov_left == 1
 			|| gdata->player.mov_up == 1 || gdata->player.mov_down == 1)
 			move_player(gdata, gdata->vision, &target_x, &target_y);
-		calculate_fov(gdata, gdata->player.x, gdata->player.y);
+		update_doors(gdata);
+		print_minimap (gdata);
 		print_map(gdata, gdata->mlx, gdata->map);
+		do_dragon_animation (gdata);
 		gdata->player.x = target_x;
 		gdata->player.y = target_y;
 	}

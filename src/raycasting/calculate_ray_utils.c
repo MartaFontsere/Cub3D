@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_calculate_ray.c                              :+:      :+:    :+:   */
+/*   calculate_ray_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 22:24:02 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/26 22:25:43 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/27 04:04:12 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	controll_x_limit_case(t_ray *ray, int check_ray_x_in_map,
 	}
 }
 
-void	prepare_horizontal_collision_params(t_ray *ray, t_game *gdata, double y)
+void	prepare_horizontal_final_collision_params(t_ray *ray, t_game *gdata, double y)
 {
 	ray->cell_collision_x = ray->check_ray_x_in_map;
 	ray->cell_collision_y = ray->check_ray_y_in_map;
@@ -87,7 +87,7 @@ void	prepare_horizontal_collision_params(t_ray *ray, t_game *gdata, double y)
 			* gdata->minimap.px_in_cell_height) * ray->dir_y;
 }
 
-void	prepare_vertical_collision_params(t_ray *ray, t_game *gdata, double x)
+void	prepare_vertical_final_collision_params(t_ray *ray, t_game *gdata, double x)
 {
 	ray->cell_collision_x = ray->check_ray_x_in_map;
 	ray->cell_collision_y = ray->check_ray_y_in_map;

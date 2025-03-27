@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 22:22:08 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 01:33:29 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/03/27 04:02:06 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	find_ray_distance_and_collision_point(t_ray *ray, t_game *gdata,
 		double x, double y)
 {
 	if (ray->line_crossing == 0)
-		prepare_horizontal_collision_params (ray, gdata, y);
+		prepare_horizontal_final_collision_params (ray, gdata, y);
 	else
 	{
-		prepare_vertical_collision_params (ray, gdata, x);
+		prepare_vertical_final_collision_params (ray, gdata, x);
 	}
 	ray->perpendicular_distance = ray->diagonal_distance
 		* cos(ray->current_angle - gdata->vision.vision_angle);

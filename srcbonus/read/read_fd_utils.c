@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/21 13:38:45 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:17:33 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ void	map_control(char *line, t_map *map, t_path *path)
 	{
 		if (map->is_map == 1 && (line[i] != 'N' && line[i] != 'S' \
 		&& line[i] != 'W' && line[i] != 'E' && line[i] != '1' \
-		&& line[i] != '0' && line[i] != ' ' && line[i] != '\n'))
+		&& line[i] != '0' && line[i] != ' ' && line[i] != '\n' \
+		&& line[i] != 'D'))
 		{
 			path->err_flag = 1;
 			ft_write(2, &line[i], 1);

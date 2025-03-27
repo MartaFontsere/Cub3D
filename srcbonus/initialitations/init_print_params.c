@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_print_params.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:47:23 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/21 13:34:03 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:04:45 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,8 @@ void	init_textures_and_colors_path(t_texture *texture, t_path *path)
 	path->F.B = 0;
 	path->F.path = path;
 	path->F.assigned = 0;
+	texture->sky_img.data = NULL;
+	texture->floor_img.data = NULL;
+	texture->door_img.data = NULL;
+	texture->dragon_img[0].data = NULL;
 }
