@@ -1,0 +1,16 @@
+NO textures/map_walls/opcion2/Norte.xpm42
+SO textures/map_walls/opcion2/Sur.xpm42
+EA textures/map_walls/opcion2/Este.xpm42
+WE textures/map_walls/opcion2/Oeste.xpm42
+
+F 18,53,25
+C 153,204,255
+
+111111111111
+1        1111
+1111111 10001
+100000010011
+10S000000001
+111111111111
+11         1
+111111111111

@@ -116,3 +116,5 @@
 20/03 -	A priori ya tendria toda la estructura del path o RGB de F y C, me queda
 		limpiar la linea para que se lea correctamente. Y limpiar todo el codigo
 		y unificarlo lo que he cambiado del mandatory en su rama correspondiente.
+
+31/03	Merge de Bonus ya funciona. Falta agregar los cambios de Marta

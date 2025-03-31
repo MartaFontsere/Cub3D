@@ -1,0 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_map_minimap_params_bonus.c                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/25 17:06:18 by mfontser          #+#    #+#             */
+/*   Updated: 2025/03/29 15:04:02 by yanaranj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+# include "cub3D_bonus.h"
+
+void	init_map_params(t_game *gdata, t_map *map)
+{
+	(void)gdata;
+	map->matrix = NULL;
+	map->tmp_matrix = NULL;
+	map->void_matrix = NULL;
+	map->pos = '\0';
+	map->is_map = 0;
+	map->c_width = 0;
+	map->c_height = 0;
+	map->j = 0;
+	//map->px_width = MAP_PX_WIDTH;
+	//map->px_height = MAP_PX_HEIGHT;
+	//gdata->vision.FOV.rays = NULL;
+}
+
+/* void	init_minimap_params(t_game *gdata)
+{
+	gdata->minimap.px_width = MINIMAP_PX_WIDTH;
+	gdata->minimap.px_height = MINIMAP_PX_HEIGHT;
+	gdata->minimap.px_in_cell_width = MINIMAP_PX_CELL_WIDTH;
+	gdata->minimap.px_in_cell_height = MINIMAP_PX_CELL_HEIGHT;
+	gdata->minimap.center_x = gdata->minimap.px_width / 2;
+	gdata->minimap.center_y = gdata->minimap.px_height / 2;
+} */
