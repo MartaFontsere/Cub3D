@@ -32,7 +32,7 @@ int	main(int ac, char **av)
 	init_textures_and_colors_path(&gdata.texture, &gdata.texture.path);
 	if (!read_file(ac, av, &gdata, &gdata.map))
 		return (1);
-	if (!parse_map(&gdata, gdata.map.matrix, &gdata.map))
+	if (!parse_map(gdata.map.matrix, &gdata.map, &gdata))
 		return (1);
 	if (init_gdata_values(&gdata) == 0)
 		return (1);

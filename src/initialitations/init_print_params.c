@@ -18,10 +18,6 @@ void	init_textures_and_colors_path(t_texture *texture, t_path *path)
 	texture->south_wall_img.data = NULL;
 	texture->west_wall_img.data = NULL;
 	texture->east_wall_img.data = NULL;
-	path->NO = NULL;
-	path->SO = NULL;
-	path->EA = NULL;
-	path->WE = NULL;
 	path->p_count = 0;
 	path->c_count = 0;
 	path->err_flag = 0;

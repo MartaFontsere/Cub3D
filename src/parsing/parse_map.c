@@ -36,7 +36,7 @@ int	check_borders(char **matrix, int i, t_map *map)
 	return (1);
 }
 
-int	is_close(char **matrix, t_map *map)
+int	is_close(char **matrix, t_map *map, t_game *gdata)
 {
 	int	i;
 	int	j;
@@ -61,6 +61,7 @@ int	is_close(char **matrix, t_map *map)
 		}
 		i++;
 	}
+	(void) gdata->player; //BORRAR
 	return (1);
 }
 
@@ -91,7 +92,7 @@ int	min_chars(char **map, int i)
 	return (1);
 }
 
-int	parse_map(t_game	*gdata, char **matrix, t_map *map)
+int	parse_map(char **matrix, t_map *map, t_game	*gdata)
 {
 	if (!min_chars(matrix, 0))
 	{
@@ -99,7 +100,7 @@ int	parse_map(t_game	*gdata, char **matrix, t_map *map)
 		return (0);
 	}
 	map->is_map = 0;
-	if (!is_close(matrix, map))
+	if (!is_close(matrix, map, gdata))
 	{
 		clean_data(gdata);
 		return (0);
