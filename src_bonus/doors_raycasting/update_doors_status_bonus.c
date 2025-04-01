@@ -48,8 +48,8 @@ void update_doors(t_game *gdata)
             else if (gdata->map.matrix[door_y][door_x] == 'd') // Puerta abriéndose
             {
                 distance = get_distance_to_door(gdata, door_x, door_y);
-                if (distance <= DOOR_END_OPEN_DISTANCE) // Más cerca = puerta abierta
-                    gdata->map.matrix[door_y][door_x] = '0'; // ✅ Ahora sí se abre
+                if (distance > DOOR_START_OPEN_DISTANCE + 0.5)
+                    gdata->map.matrix[door_y][door_x] = 'D'; // ✅ Ahora sí se abre
             }
             door_x++;
         }

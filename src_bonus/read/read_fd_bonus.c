@@ -12,20 +12,21 @@
 
 #include "cub3D_bonus.h"
 
+
 int	create_matrix(char *line, t_map *map)
 {
 	if (map->j == 0)
 		map->tmp_matrix = malloc(sizeof(char *) * (map->c_height + 1));
 	else
 	{
-		map->tmp_matrix = realloc(map->tmp_matrix, sizeof(char *)
-				* (map->c_height + 1));
+		map->tmp_matrix = realloc(map->tmp_matrix, sizeof(char *) \
+		* (map->c_height + 1));
 	}
+	if (!map->tmp_matrix)
+		return (0);
 	if (map->c_height > 100)
 		return (msg_error("Max height is 100. If you follow this rule\n",
 				"Dracarys team will thank you 🔥"), 0);
-	if (!map->tmp_matrix)
-		return (0);
 	map->tmp_matrix[map->j] = cub_strdup(line, map->c_width);
 	map->j++;
 	map->tmp_matrix[map->j] = NULL;
@@ -36,16 +37,16 @@ void	assign_path(char *line, t_path *path, int i)
 {
 	if (line[i] == 'N' && line[i + 1] == 'O' && ft_isspace(line[i + 2])
 		&& !path->NO)
-		path->NO = cpy_path(line, path, (i + 2));
+		path->NO = cpy_path(line, path, (i + 2), 0);
 	else if (line[i] == 'S' && line[i + 1] == 'O' && ft_isspace(line[i + 2])
 		&& !path->SO)
-		path->SO = cpy_path(line, path, (i + 2));
+		path->SO = cpy_path(line, path, (i + 2), 0);
 	else if (line[i] == 'E' && line[i + 1] == 'A' && ft_isspace(line[i + 2])
 		&& !path->EA)
-		path->EA = cpy_path(line, path, (i + 2));
+		path->EA = cpy_path(line, path, (i + 2), 0);
 	else if (line[i] == 'W' && line[i + 1] == 'E' && ft_isspace(line[i + 2])
 		&& !path->WE)
-		path->WE = cpy_path(line, path, (i + 2));
+		path->WE = cpy_path(line, path, (i + 2), 0);
 	else
 	{
 		if ((line[i] == 'N' && line[i + 1] != 'O') || (line[i] == 'S' && line[i
@@ -77,7 +78,7 @@ int	check_line(char *line, t_path *path, t_map *map, int i)
 		|| line[i] == 'S' || line[i] == 'W' || line[i] == 'E'
 		|| (line[i] == '\0' && map->is_map))
 	{
-		map_control(line, map, path);
+		map_control(line, map, path, 0);
 		map->c_height++;
 	}
 	if (path->err_flag == 1)

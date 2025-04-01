@@ -306,10 +306,9 @@ int		check_player(int x, int y, t_map *map);
 
 /*INITIALITATIONS*/
 int		init_gdata_values(t_game *gdata);
-
-/*INIT_MAP_MINIMAP_PARAMS*/
 void 	init_map_params (t_game *gdata, t_map *map);
 void	init_minimap_params(t_game *gdata);
+void	init_textures_and_colors_path(t_texture *texture, t_path *path);
 
 /*INIT_PLAYER_AND_VISION_PARAMS*/
 void 	init_player_params (t_game *gdata, t_player *player);
@@ -317,9 +316,6 @@ void	init_player_orientation(t_map *map, t_vision *vision, t_player *player);
 void	define_vision_angle(t_vision *vision, char orientation);
 void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
 int 	init_vision_params (t_game *gdata, t_vision *vision);
-
-/*INIT_PRINT_PARAMS*/
-void	init_textures_and_colors_path(t_texture *texture, t_path *path);
 
 /*INIT_MLX_PARAMS*/
 int		init_mlx(t_game *gdata, t_mlx *mlx);

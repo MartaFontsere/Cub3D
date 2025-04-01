@@ -12,15 +12,15 @@
 
 #include "cub3D_bonus.h"
 
-int can_draw_pixel(t_game *gdata, t_vision vision)
+int can_draw_pixel(t_game *gdata, t_draw_va  draw_vision_angle)
 {
     int pixel_map_x;
     int pixel_map_y;
     char cell;
 
-    pixel_map_x = (int)((gdata->player.x + vision.draw_va.offset_x) / gdata->minimap.px_in_cell_width);
-   	pixel_map_y = (int)((gdata->player.y + vision.draw_va.offset_y) / gdata->minimap.px_in_cell_height);
-    if (vision.draw_va.pixel_x < 0 || vision.draw_va.pixel_x >= gdata->minimap.px_width || vision.draw_va.pixel_y < 0 || vision.draw_va.pixel_y >= gdata->minimap.px_height)
+    pixel_map_x = (int)((gdata->player.x + draw_vision_angle.offset_x) / gdata->minimap.px_in_cell_width);
+   	pixel_map_y = (int)((gdata->player.y + draw_vision_angle.offset_y) / gdata->minimap.px_in_cell_height);
+    if (draw_vision_angle.pixel_x < 0 || draw_vision_angle.pixel_x >= gdata->minimap.px_width || draw_vision_angle.pixel_y < 0 || draw_vision_angle.pixel_y >= gdata->minimap.px_height)
 
     if (pixel_map_x < 0 || pixel_map_x >= gdata->map.c_width ||
         pixel_map_y < 0 || pixel_map_y >= gdata->map.c_height)
@@ -37,18 +37,18 @@ void draw_thick_ray_segment(t_game *gdata, double current_x, double current_y, t
 {
 	double thickness;
 
-    vision.draw.origin_x = gdata->minimap.center_x + (current_x - gdata->player.x);
-    vision.draw.origin_y = gdata->minimap.center_y + (current_y - gdata->player.y);
+    vision.draw_vision_angle.origin_x = gdata->minimap.center_x + (current_x - gdata->player.x);
+    vision.draw_vision_angle.origin_y = gdata->minimap.center_y + (current_y - gdata->player.y);
     thickness = 0; 
     while (thickness <= 4)
     {
-        vision.draw_va.offset_x = (int)(thickness * cos(vision.vision_angle + M_PI_2));
-        vision.draw_va.offset_y = -(int)(thickness * sin(vision_vision_angle + M_PI_2));
-        vision.draw_va.pixel_x = (int)(vision.draw_va.origin_x + vision.draw_va.offset_x);
-        vision.draw_va.pixel_y = (int)(vision.draw_va.origin_y + vision.draw_va.offset_y);
+        vision.draw_vision_angle.offset_x = (int)(thickness * cos(vision.vision_angle + M_PI_2));
+        vision.draw_vision_angle.offset_y = -(int)(thickness * sin(vision.vision_angle + M_PI_2));
+        vision.draw_vision_angle.pixel_x = (int)(vision.draw_vision_angle.origin_x + vision.draw_vision_angle.offset_x);
+        vision.draw_vision_angle.pixel_y = (int)(vision.draw_vision_angle.origin_y + vision.draw_vision_angle.offset_y);
 
-        if (can_draw_pixel(gdata, vision_angle pixel_x, pixel_y, offset_x, offset_y))
-            mlx_put_pixel(gdata->mlx.mini_image, pixel_x, pixel_y, YELLOW1);
+        if (can_draw_pixel(gdata, vision.draw_vision_angle))
+            mlx_put_pixel(gdata->mlx.mini_image, vision.draw_vision_angle.pixel_x, vision.draw_vision_angle.pixel_y, YELLOW1);
 
         thickness += 0.1;
     }
@@ -86,8 +86,8 @@ void print_vision_angle(t_game *gdata, double player_x, double player_y, t_visio
 {
     double current_x = player_x;
     double current_y = player_y;
-    double dir_x = cos(vision_angle);
-    double dir_y = -sin(vision_angle);
+    double dir_x = cos(vision.vision_angle);
+    double dir_y = -sin(vision.vision_angle);
 
     while (1)
     {

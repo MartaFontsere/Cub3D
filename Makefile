@@ -29,7 +29,7 @@ ORANGE = \e[1;38;2;255;128;0m
 
 # MANDATORY Files by directory
 BASE_FILES = cub3D.c render.c 
-INIT_FILES = initialitations.c init_map_minimap_params.c init_player_and_vision_params.c init_print_params.c init_mlx_params.c
+INIT_FILES = initialitations.c init_player_and_vision_params.c  init_mlx_params.c
 RAYCAST_FILES = calculate_fov.c calculate_ray.c calculate_ray_utils.c 
 MOVE_FILES = press_or_release_key.c move_player.c rotate_player.c check_collisions.c
 PRINT_FILES = print_map.c print_walls.c print_utils.c textures.c
@@ -40,15 +40,15 @@ GNL_FILES = get_next_line.c get_next_line_utils.c
 
 # BONUS Files by directory
 B_BASE_FILES = cub3D_bonus.c render_bonus.c 
-B_INIT_FILES = initialitations_bonus.c init_map_minimap_params_bonus.c init_player_and_vision_params_bonus.c init_print_params_bonus.c init_mlx_params_bonus.c
+B_INIT_FILES = initialitations_bonus.c init_player_and_vision_params_bonus.c init_mlx_params_bonus.c
 B_WALLS_RAYCAST_FILES = calculate_fov_bonus.c calculate_ray_bonus.c calculate_ray_utils_bonus.c 
 B_DOORS_RAYCAST_FILES = check_ray_opened_door_bonus.c door_raycasting_bonus.c door_raycasting_utils_bonus.c update_doors_status_bonus.c
 B_MOVE_FILES = press_or_release_key_bonus.c move_player_bonus.c rotate_player_bonus.c check_collisions_bonus.c
 B_PRINT_MAP_FILES = print_map_bonus.c print_walls_bonus.c print_utils_bonus.c textures_bonus.c
-B_PRINT_MINI_FILES = check_valid_pixel_bonus.c draw_minimap_skeleton_bonus.c print_fov_bonus.c print_minimap_bonus.c print_player.c print_vision_angle_bonus.c
+B_PRINT_MINI_FILES = print_fov_bonus.c print_minimap_bonus.c print_minimap_utils_bonus.c print_player.c print_vision_angle_bonus.c
 B_DRAGON_FILES = do_dragon_animation_bonus.c print_dragon_bonus.c
-B_PARSE_FILES = parse_map_bonus.c parse_utils_bonus.c
-B_READ_FILES = read_fd_bonus.c read_fd_utils_bonus.c read_fd_utils2_bonus.c read_colors_bonus.c get_map_bonus.c
+B_PARSE_FILES = parse_door_bonus.c parse_map_bonus.c parse_utils_bonus.c
+B_READ_FILES = read_fd_bonus.c read_fd_utils_bonus.c read_fd_utils2_bonus.c read_colors_bonus.c read_colors_utils_bonus.c get_map_bonus.c
 B_ERROR_FILES = free_errors_bonus.c msg_errors_bonus.c
 B_GNL_FILES = get_next_line_bonus.c get_next_line_utils_bonus.c
 

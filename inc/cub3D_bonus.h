@@ -121,6 +121,8 @@ typedef struct s_color
 	int					B;
 	char				**split;
 	int					assigned;
+	int					is_path;//decimos que C || F tienen path en lugar del RGB
+	char				*color_path;//guardamos el path de la textura
 	struct s_path		*path;
 }						t_color;
 
@@ -256,23 +258,23 @@ typedef struct s_fov
 }			 	t_fov;
 
 
-typedef struct s_print_va
+typedef struct s_draw_va
 {
-	double draw_x;
-	double draw_y;
+	double origin_x;
+	double origin_y;
 	int offset_x;
 	int offset_y;
 	int pixel_x;
 	int pixel_y;
 
     
-} t_print_va;
+} t_draw_va;
 
 
 typedef struct s_vision 	
 {
 	double		vision_angle; // Orientacion Inicial en grados de la vision del personaje
-	t_print_va  draw;
+	t_draw_va  draw_vision_angle;
 	t_fov    	FOV;            // Datos del FOV y rayos
     double 		projection_factor; // Es como un factor de escala que convierte distancias del mundo 2D (minimapa) en una altura en la pantalla (3D), , asegurando que los objetos más lejanos sean más pequeños y los cercanos sean más grandes.
     double 		camera_height_scale; // Es una constante que se deriva de la altura de la cámara o jugador. Se trata de un valor utilizado para la proyección del mundo 3D sobre la pantalla 2D. Se utiliza como un factor de escala para ajustar las dimensiones en la proyección según la altura del jugador. 
@@ -382,18 +384,23 @@ int		read_file(int ac, char **av, t_game *gdata, t_map *map);
 
 /*READ_FD_UTILS*/
 int		check_name(char *map_path);
-char	*cpy_path(char *line, t_path *path, int pos);
+char	*cpy_path(char *line, t_path *path, int pos, int i);
 int		curr_char(int cur, char *line, t_path *path);
-int 	ft_max_size(char *line, int max);
-void	map_control(char *line, t_map *map, t_path *path);
+int		ft_max_size(char *line, int max);
+void	map_control(char *line, t_map *map, t_path *path, int i);
 
 /*READ_FD-UTILS2*/
-char	*clean_str(char *src, int end, t_path *path);
+char	*clean_str(char *src, int start, int end, t_path *path);
 
 /*READ_COLORS*/
+void	get_colors(char *line, t_path *path, int i, char c);
+void	get_color_path(char *line, t_color *color, int i);
+void	control_c_values(char *line, t_path *path, int init_val, char c);
+void	control_f_values(char *line, t_path *path, int init_val, char c);
+void	assign_color(char *line, t_path *path, int i);
+
+/*READ_COLORS_UTILS*/
 void	cpy_colors(char *rgb, t_color *color, int i);
-void	get_colors(char *line, t_path *path, int i, int init);
-void	assign_color(char *line, t_path *t_path, int i);
 
 /*GET_MAP*/
 char	*cub_strdup(char *s1, int len);
@@ -406,17 +413,22 @@ int		get_final_map(char **src, t_map *map);
 //					PARSE
 //------------------------------------------------
 
+/*PARSE_DOOR*/
+int		is_door(int i, int j, t_map *map, t_game *gdata);
+int		check_y_pos(int i, int j, t_map *map, t_game *gdata);
+int		check_x_pos(int i, int j, t_map *map, t_game *gdata);
+
 /*PARSE_MAP*/
-int		parse_map(t_game	*gdata, char **matrix, t_map *map);
-int		min_chars(char **map, int i);
-int		is_close(char **matrix, t_map *map);
 int		check_borders(char **matrix, int i, t_map *map);
+int		is_close(char **matrix, t_map *map, t_player player, t_game *gdata);
+int		min_chars(char **map, int i);
+int		parse_map(t_game *gdata, char **matrix, t_map *map);
 
 /*PARSE_UTILS*/
 void	check_n_line(char **src, t_map *map);
 int		check_esp(int x, int y, t_map *map);
-int		check_zero(int x, int y, t_map *map);
-int		check_player(int x, int y, t_map *map);
+int		check_zero(int x, int y, t_map *map, t_player player);
+int		check_player(int x, int y, t_map *map, t_player player);
 
 //------------------------------------------------
 //					INITIALITATIONS
@@ -424,10 +436,10 @@ int		check_player(int x, int y, t_map *map);
 
 /*INITIALITATIONS*/
 int		init_gdata_values(t_game *gdata);
-
-/*INIT_MAP_MINIMAP_PARAMS*/
 void 	init_map_params (t_game *gdata, t_map *map);
 void	init_minimap_params(t_game *gdata);
+void	init_textures_and_colors_path(t_texture *texture, t_path *path);
+
 
 /*INIT_PLAYER_AND_VISION_PARAMS*/
 void 	init_player_params (t_game *gdata, t_player *player);
@@ -436,8 +448,6 @@ void	define_vision_angle(t_vision *vision, char orientation);
 void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
 int 	init_vision_params (t_game *gdata, t_vision *vision);
 
-/*INIT_PRINT_PARAMS*/
-void	init_textures_and_colors_path(t_texture *texture, t_path *path);
 
 /*INIT_MLX_PARAMS*/
 int		init_mlx(t_game *gdata, t_mlx *mlx);

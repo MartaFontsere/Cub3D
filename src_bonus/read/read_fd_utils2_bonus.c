@@ -12,12 +12,13 @@
 
 #include "cub3D_bonus.h"
 
-char	*clean_str(char *src, int end, t_path *path)
+char	*clean_str(char *src, int start, int end, t_path *path)
 {
 	char	*str;
-
+	
 	path->p_count++;
-	str = ft_substr(src, 0, end);
+	str = ft_substr(src, start, end);
+	printf("CLEAN_STR: %s\n", str);
 	free(src);
 	return (str);
 }

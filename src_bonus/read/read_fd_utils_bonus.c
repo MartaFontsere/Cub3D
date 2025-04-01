@@ -25,10 +25,9 @@ int	check_name(char *map_path)
 	return (1);
 }
 
-char	*cpy_path(char *line, t_path *path, int pos)
+char	*cpy_path(char *line, t_path *path, int pos, int i)
 {
 	char	*tmp;
-	int		i;
 	int		end;
 
 	while (ft_isspace(line[pos]))
@@ -40,7 +39,6 @@ char	*cpy_path(char *line, t_path *path, int pos)
 	}
 	else
 		tmp = ft_strdup(ft_strchr(line, line[pos]));
-	i = 0;
 	while (tmp[i] && !ft_isspace(tmp[i]))
 		i++;
 	end = i;
@@ -52,7 +50,7 @@ char	*cpy_path(char *line, t_path *path, int pos)
 		free(tmp);
 		return ((path->err_flag = 1), NULL);
 	}
-	tmp = clean_str(tmp, end, path);
+	tmp = clean_str(tmp, 0, end, path);
 	return (tmp);
 }
 
@@ -95,11 +93,8 @@ int	ft_max_size(char *line, int max)
 	return (max);
 }
 
-void	map_control(char *line, t_map *map, t_path *path)
+void	map_control(char *line, t_map *map, t_path *path, int i)
 {
-	int	i;
-
-	i = 0;
 	map->is_map = 1;
 	map->c_width = ft_max_size(line, map->c_width);
 	if (!map->c_width || map->c_width > 120)
@@ -113,8 +108,8 @@ void	map_control(char *line, t_map *map, t_path *path)
 	{
 		if (map->is_map == 1 && (line[i] != 'N' && line[i] != 'S' \
 		&& line[i] != 'W' && line[i] != 'E' && line[i] != '1' \
-		&& line[i] != '0' && line[i] != ' ' && line[i] != '\n' \
-		&& line[i] != 'D'))
+		&& line[i] != '0' && line[i] != ' ' && line[i] != '\n') \
+		&& line[i] != 'D')
 		{
 			path->err_flag = 1;
 			ft_write(2, &line[i], 1);
