@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/04/01 12:47:57 by mfontser         ###   ########.fr        #
+#    Updated: 2025/04/01 14:05:26 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ B_WALLS_RAYCAST_FILES = calculate_fov_bonus.c calculate_ray_bonus.c calculate_ra
 B_DOORS_RAYCAST_FILES = check_ray_opened_door_bonus.c door_raycasting_bonus.c door_raycasting_utils_bonus.c update_doors_status_bonus.c
 B_MOVE_FILES = press_or_release_key_bonus.c move_player_bonus.c rotate_player_bonus.c check_collisions_bonus.c
 B_PRINT_MAP_FILES = print_map_bonus.c print_walls_bonus.c print_utils_bonus.c textures_bonus.c
-B_PRINT_MINI_FILES = print_fov_and_vision_angle_bonus.c print_minimap_skeleton_bonus.c
+B_PRINT_MINI_FILES = check_valid_pixel_bonus.c draw_minimap_skeleton_bonus.c print_fov_bonus.c print_minimap_bonus.c print_player.c print_vision_angle_bonus.c
 B_DRAGON_FILES = do_dragon_animation_bonus.c print_dragon_bonus.c
 B_PARSE_FILES = parse_map_bonus.c parse_utils_bonus.c
 B_READ_FILES = read_fd_bonus.c read_fd_utils_bonus.c read_fd_utils2_bonus.c read_colors_bonus.c get_map_bonus.c

@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:34 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:10:45 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,18 @@ typedef struct s_door
 }		t_door;
 
 
+typedef struct s_draw_ray
+{
+    double current_x;
+    double current_y;
+    double x_distance;
+    double y_distance;
+    double x_inc;
+    double y_inc;
+    double steps;
+} t_draw_ray;
+
+
 typedef struct s_ray 
 {
     double 		current_angle;
@@ -220,6 +232,9 @@ typedef struct s_ray
    	
    	double 		diagonal_distance;    // El largo del rayo. Distancia del origen del rayo a la pared en casillas (para 3D)
    	double 		perpendicular_distance;
+//Print
+   	t_draw_ray 	draw;
+
 //Door
    	int hit_door;              // Flag que indica si el rayo tocó una puerta cerrada
    	t_door 		door_ray;
@@ -241,15 +256,31 @@ typedef struct s_fov
 }			 	t_fov;
 
 
+typedef struct s_print_va
+{
+	double draw_x;
+	double draw_y;
+	int offset_x;
+	int offset_y;
+	int pixel_x;
+	int pixel_y;
+
+    
+} t_print_va;
+
 
 typedef struct s_vision 	
 {
 	double		vision_angle; // Orientacion Inicial en grados de la vision del personaje
+	t_print_va  draw;
 	t_fov    	FOV;            // Datos del FOV y rayos
     double 		projection_factor; // Es como un factor de escala que convierte distancias del mundo 2D (minimapa) en una altura en la pantalla (3D), , asegurando que los objetos más lejanos sean más pequeños y los cercanos sean más grandes.
     double 		camera_height_scale; // Es una constante que se deriva de la altura de la cámara o jugador. Se trata de un valor utilizado para la proyección del mundo 3D sobre la pantalla 2D. Se utiliza como un factor de escala para ajustar las dimensiones en la proyección según la altura del jugador. 
 
 } 				t_vision;
+
+
+
 
 
 typedef struct s_collision
@@ -331,7 +362,6 @@ typedef struct s_game
 }					t_game;
 
 
-void	print_dirs(char **matrix, int i, int j, int end);//DEL
 
 //-------------------------------------------------
 //					MAIN
@@ -498,8 +528,8 @@ int 	rgb_to_hex(int r, int g, int b);
 
 /*PRINT_FOV_AND_VISION_ANGLE*/
 void    calculate_and_print_fov_and_vision_angle(t_game *gdata);
-void 	print_FOV(t_game *gdata, t_vision vision, double x, double y, double vision_angle, int color) ;
-void 	print_vision_angle(t_game *gdata, double x, double y, double vision_angle, int color);
+void 	print_FOV(t_game *gdata, t_vision vision, double x, double y) ;
+void 	print_vision_angle(t_game *gdata, double x, double y, t_vision vision);
 
 /*PRINT_MINIMAP_SKELETON*/
 void	print_minimap(t_game *gdata);
