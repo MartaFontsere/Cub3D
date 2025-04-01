@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/27 16:46:29 by mfontser         ###   ########.fr        #
+#    Updated: 2025/04/01 03:57:48 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,7 +115,7 @@ FILES_BONUS = $(B_BASE_FILES) $(B_INIT_SRCS) $(B_WALLS_RAYCAST_SRCS) $(B_DOORS_R
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))
 
-SRCDIR_BONUS = srcbonus/
+SRCDIR_BONUS = src_bonus/
 SRCS_BONUS = $(addprefix $(SRCDIR_BONUS), $(FILES_BONUS))
 
 OBJDIR = obj/
@@ -127,9 +127,10 @@ OBJS_BONUS = $(patsubst $(SRCDIR_BONUS)%.c, $(OBJDIR_BONUS)%.o, $(SRCS_BONUS))
 INCLUDES = -I ./libs/Libft -I ./inc -I ./libs/get_next_line/
 
 NAME = cub3D
-NAME_BONUS = cub3Dbonus
 
 HEADER = inc/cub3D.h libs/get_next_line/get_next_line.h
+HEADER_BONUS = inc/cub3D_bonus.h libs/get_next_line/get_next_line.h
+
 CC = cc 
 RM = rm -rf 
 CFLAGS = -Wall -Wextra -Werror -Ofast #-g -fsanitize=address #
@@ -142,12 +143,12 @@ LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
 
 #Metodo implicito
 
-$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a 
+$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
 
-$(OBJDIR_BONUS)%.o: $(SRCDIR_BONUS)%.c $(HEADER) Makefile libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a
+$(OBJDIR_BONUS)%.o: $(SRCDIR_BONUS)%.c $(HEADER) Makefile
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
@@ -160,15 +161,16 @@ make_libs:
 	@make -C libs/Libft all --no-print-directory
 	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4 --no-print-directory
 
+ifndef BONUS
 ${NAME}: ${OBJS}
 	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)
 	@echo ""⠀⠀
 	@echo "                   ⠀⠀         ⠀⠀$(YELLOW)⢀⣶⠀⠀$(PINK)⢀⣄ ⠀⠀⣠⣶⣾⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
 	@echo " 	             ⠀⠀⠀⠀  $(PINK)⢀⣼⡛$(YELLOW)⣆⣰⣿⣿$(PINK)⣠⠞⣓⣿⣿⠶⠞⠛⣫⣿⣷⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
 	@echo " $(RED) ⠈⣇      $(CYAN)DRACARYS        $(PINK)⣸⣿⡥⣿⡏⣸⡿⠛⠉⠉⠉⠉⠉⠓⢲$(YELLOW)⣠⠼⢱$(PINK)⣿⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀ $(RED) ⣄⢻⡆                 $(BLUE)⢀⡴⠶⢿⡋⠀$(PINK)⠟⠛⠁$(BLUE)⣀⣀⣀⠀⠀⠀$(YELLOW)⠺⡷⠚⠉⢀⣾$(PINK)⣿⣶⣿⠗⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀ $(RED) ⡽⢸$(ORANGE)⡿$(RED)⣆⠀⠀     $(RED)⠀$(CYAN)TEAM  ⠀ $(NC)⢸⡿⣷⣄$(BLUE)⠙⠀⠀$(BLUE)⢠⠞⢛⣿⣭⣙⠛⣦⡀$(YELLOW)⠹⣄⣀⡼⣻$(PINK)⣿⣯⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "  $(RED)⠈⠀⡬$(ORANGE)⠃⠸$(RED)⡆  $(ORANGE)⡼⡄           $(NC)⢸⣧⡏⣿⠀⠀⠀$(NC)⢠⡞⠋⢹⡟⠟⢳$(BLUE)⠈⢧⠀$(BLUE)⠈⠙⠿⢻⠃$(PINK)⣷⠈⢻⣄⠀⠀⠀⠀⠀⠀⠀"
+	@echo "⠀ $(RED)⣄ ⢻⡆                 $(BLUE)⢀⡴⠶⢿⡋⠀$(PINK)⠟⠛⠁$(BLUE)⣀⣀⣀⠀⠀⠀$(YELLOW)⠺⡷⠚⠉⢀⣾$(PINK)⣿⣶⣿⠗⠀⠀⠀⠀⠀⠀⠀⠀"
+	@echo "⠀ $(RED)⡽ ⢸$(ORANGE)⡿$(RED)⣆⠀⠀     $(RED)⠀$(CYAN)TEAM  ⠀ $(NC)⢸⡿⣷⣄$(BLUE)⠙⠀⠀$(BLUE)⢠⠞⢛⣿⣭⣙⠛⣦⡀$(YELLOW)⠹⣄⣀⡼⣻$(PINK)⣿⣯⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+	@echo " $(RED)⠈⠀ ⡬$(ORANGE)⠃⠸$(RED)⡆  $(ORANGE)⡼⡄           $(NC)⢸⣧⡏⣿⠀⠀⠀$(NC)⢠⡞⠋⢹⡟⠟⢳$(BLUE)⠈⢧⠀$(BLUE)⠈⠙⠿⢻⠃$(PINK)⣷⠈⢻⣄⠀⠀⠀⠀⠀⠀⠀"
 	@echo "⠀$(RED)  ⢸$(ORANGE)⠖$(YELLOW)⣸⡆$(RED)⣿⠀ 	⠀⠀⠀  ⠀$(BLUE)⣀$(NC)⣘⡦⠿⠟$(BLUE)⠲⠶⢤$(NC)⣼⠀⢹⣿⠁⠀⢨⡇$(PINK)⠀⠀⠀⠀⠀$(BLUE)⠉⠀$(PINK)⢿⣷⡾⣿⠀⠀⠀⠀⠀⠀⠀"
 	@echo "⠀$(RED) ⣮$(ORANGE)⠅$(YELLOW)⡼⠋$(ORANGE)⢠$(RED)⡏    ⢠⡧	   ⠀$(BLUE)⠀⡾$(CYAN)⠹⠆$(BLUE)⠀⠀⠀⠀⠀⠀$(NC)⠈⠳⣼⣿⣷⣤⡾⠁$(PINK)⠀⠀⠀⠀⠀⠀⠀⣿⣏⠻⠟⠀⠀⠀⠀⠀⠀⠀"
 	@echo "⠀$(RED)⢸$(ORANGE)⡟$(YELLOW)⢀⡄$(ORANGE)⣠$(RED)⠟⠀   ⢠$(ORANGE)⣟$(RED)⣇       $(BLUE)⠘⣧⣀⡀⠀⠀$(CYAN)⠐⠓⠀$(BLUE)⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀$(PINK)⠀⠀⠀⠀⠀⣰⠃⠘⣧⠀⠀⠀⠀$(CYAN)⢠⣄⠀⠀⠀"
@@ -193,10 +195,9 @@ ${NAME}: ${OBJS}
 	@echo "⠀⠀		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠈⠙⠛⠲⠦⢤⣤⣤⣤⣤⣤⣤⡶⠶⠚⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
 	@echo ""⠀⠀⠀⠀⠀⠀
 
-bonus: make_libs ${NAME_BONUS}
-
-$(NAME_BONUS): ${OBJS_BONUS}
-	@$(CC) $(CFLAGS) ${OBJS_BONUS} $(LIBS) -o $(NAME_BONUS)
+else
+${NAME}: ${OBJS_BONUS} 
+	@$(CC) $(CFLAGS) ${OBJS_BONUS} ${LIBS} -o $(NAME)
 	@echo "	⠀⠀⠀⠀⠀⠀⠀"⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⣰⠂⠀$(BLUE)⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠀⠀⠀⠀⠀"⠀⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⡟⢆$(BLUE)⢠⢣⠀$(YELLOW)  ⣔⡀⠀⠀ ⠀$(BLUE)⠀⡘⡇⠀⠀⠀⠀⠀⠀"⠀⠀
@@ -232,17 +233,29 @@ $(NAME_BONUS): ${OBJS_BONUS}
 	@echo "				    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ $(RED)⠐⠆⢀⡀⠀⠀⠀$(END)"
 	@echo "				    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ $(RED)⠈⠛⠁⠀⠀⠀⠀$(END)⠀⠀"
 	@echo ""
+endif
+
+##SI LOS DOS PROGRAMAS SE LLAMAN IGUAL, AL COMPILAR UNO Y LUEGO EL OTRO, SE MEZCLAN. LOS DOS .H NO SE PUEDEN TENER, SOLO PILLA UNO
+
+
+bonus: 
+	@$(MAKE) BONUS=42
 
 clean:
 	@${RM} ${OBJDIR}
+	@${RM} ${OBJDIR_BONUS}
 	@make -C libs/Libft clean
+	@make -C $(MLXDIR)/build clean
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)$(NC)$(END)"
 
 fclean: #clean 
 	@${RM} ${OBJDIR}
+	@${RM} ${OBJDIR_BONUS}
 	@echo "$(RED)CUB3D OBJECTS DELETED$(END)"
+	@${RM} bonus
 	@${RM} ${NAME}
 	@make -C libs/Libft fclean --no-print-directory
+	@rm -rf $(MLXDIR)/build
 	@echo "$(RED)CUB3D EXEC DELETED$(END)$(END)"
 	@echo "$(ORANGE)"
 	@echo "	⠀⠀⠀⠀⠀⠀⢱⣆⠀⠀"
@@ -262,7 +275,7 @@ fclean: #clean
 re: fclean all
 	@echo "CUB3D RE DONE"
 
-re_bonus: fclean bonus
+bonus_re: fclean bonus
 	@echo "CUB3D_BONUS RE DONE"
 
 .PHONY: all clean fclean re⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
