@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialitations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/18 13:18:10 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/01 01:59:57 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,5 @@ int	init_gdata_values(t_game *gdata)
 	}
 	return (1);
 }
+
+

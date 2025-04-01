@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/26 23:46:06 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/01 02:09:25 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,4 @@ int	there_is_a_key_pressed(t_game *gdata)
 		return (1);
 	return (0);
 }
+

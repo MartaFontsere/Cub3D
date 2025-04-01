@@ -6,37 +6,27 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 22:22:08 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 01:33:29 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/01 02:43:39 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void init_ray_direction (t_ray *ray, t_game *gdata, int check_ray_x_in_map,  int check_ray_y_in_map)
+void    init_ray_direction(t_ray *ray, t_game *gdata, int check_ray_x_in_map,
+        int check_ray_y_in_map)
 {
-    //IDEA, PASARME GDATA Y VOLVER A INICIALIZAR LAS VARIABLES AQUI EN LOCAL
-    // Inicializar dirección del rayo
     ray->dir_x = cos(ray->current_angle);
     ray->dir_y = -sin(ray->current_angle);
-    //  printf ("ray->dir_x %f\n", ray->dir_x * (180 / M_PI));
-    // printf ("ray->dir_y %f\n", ray->dir_y * (180 / M_PI));
-
-    controll_x_limit_case (ray, check_ray_x_in_map, gdata->player.cell_player_x);
-    controll_y_limit_case (ray, check_ray_y_in_map, gdata->player.cell_player_y);
-    
+    controll_x_limit_case(ray, check_ray_x_in_map, gdata->player.cell_player_x);
+    controll_y_limit_case(ray, check_ray_y_in_map, gdata->player.cell_player_y);
 }
 
 
-void find_wall_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, double x, double y)
+void    prepare_horizontal_final_collision_params(t_ray *ray, t_game *gdata, double y)
 {
-    // Calcular distancia final y coordenadas de colisión
-
-    //CREO QUE ray->cell_collision_x NO LO USO
-    if (ray->line_crossing == 0) 
-    {
-        ray->cell_collision_x = ray->check_ray_x_in_map;  // Guarda el punto exacto donde choca el rayo (collision_x)
-        ray->cell_collision_y = ray->check_ray_y_in_map; // Guarda el punto exacto donde choca el rayo (collision_y)
-        if (gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'D' || gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'd')
+    ray->cell_collision_x = ray->check_ray_x_in_map;
+    ray->cell_collision_y = ray->check_ray_y_in_map;
+    if (gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'D' || gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'd')
         {
             if (ray->x_sign > 0)
                 ray->px_collision_x = compute_collision_coordinate(ray->check_ray_x_in_map, ray->x_sign, gdata->minimap.px_in_cell_width) + (gdata->minimap.px_in_cell_width / 2);
@@ -46,16 +36,15 @@ void find_wall_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, doubl
         else 
             ray->px_collision_x = compute_collision_coordinate(ray->check_ray_x_in_map, ray->x_sign, gdata->minimap.px_in_cell_width);
 
-        ray->diagonal_distance = ((ray->px_collision_x / gdata->minimap.px_in_cell_width) - gdata->player.cell_player_x) / ray->dir_x;
+    ray->diagonal_distance = ((ray->px_collision_x / gdata->minimap.px_in_cell_width) - gdata->player.cell_player_x) / ray->dir_x;
         ray->px_collision_y = y + (ray->diagonal_distance * gdata->minimap.px_in_cell_height) * ray->dir_y;  
+}
 
-    } 
-
-    else 
-    {
-        ray->cell_collision_x = ray->check_ray_x_in_map;  // Guarda el punto exacto donde choca el rayo (collision_x)
-        ray->cell_collision_y = ray->check_ray_y_in_map; // Guarda el punto exacto donde choca el rayo (collision_y)
-        if (gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'D' || gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'd')
+void    prepare_vertical_final_collision_params(t_ray *ray, t_game *gdata, double x)
+{
+    ray->cell_collision_x = ray->check_ray_x_in_map;
+    ray->cell_collision_y = ray->check_ray_y_in_map;
+    if (gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'D' || gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'd')
         {
             if (ray->y_sign > 0)
                 ray->px_collision_y = compute_collision_coordinate(ray->check_ray_y_in_map, ray->y_sign, gdata->minimap.px_in_cell_height) + (gdata->minimap.px_in_cell_height / 2);
@@ -65,16 +54,97 @@ void find_wall_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, doubl
         else
             ray->px_collision_y = compute_collision_coordinate(ray->check_ray_y_in_map, ray->y_sign, gdata->minimap.px_in_cell_height);
 
-        ray->diagonal_distance = ((ray->px_collision_y / gdata->minimap.px_in_cell_height) - gdata->player.cell_player_y) / ray->dir_y;
+    ray->diagonal_distance = ((ray->px_collision_y / gdata->minimap.px_in_cell_height) - gdata->player.cell_player_y) / ray->dir_y;
         ray->px_collision_x = x + (ray->diagonal_distance * gdata->minimap.px_in_cell_width) * ray->dir_x;
+}
 
-
-    }
+void    find_ray_distance_and_collision_point(t_ray *ray, t_game *gdata,
+        double x, double y)
+{
+    if (ray->line_crossing == 0)
+        prepare_horizontal_final_collision_params (ray, gdata, y);
+    else
+        prepare_vertical_final_collision_params (ray, gdata, x);
     ray->perpendicular_distance = ray->diagonal_distance * cos(ray->current_angle - gdata->vision.vision_angle);
      
-
-    // ray->line_crossing = line_crossing;
 }
+
+
+
+
+
+
+
+
+// void find_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, double x, double y)
+// {
+//     // Calcular distancia final y coordenadas de colisión
+
+//     //CREO QUE ray->cell_collision_x NO LO USO
+//     if (ray->line_crossing == 0) 
+//     {
+//         ray->cell_collision_x = ray->check_ray_x_in_map;  // Guarda el punto exacto donde choca el rayo (collision_x)
+//         ray->cell_collision_y = ray->check_ray_y_in_map; // Guarda el punto exacto donde choca el rayo (collision_y)
+//         if (gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'D' || gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'd')
+//         {
+//             if (ray->x_sign > 0)
+//                 ray->px_collision_x = compute_collision_coordinate(ray->check_ray_x_in_map, ray->x_sign, gdata->minimap.px_in_cell_width) + (gdata->minimap.px_in_cell_width / 2);
+//             else
+//                 ray->px_collision_x = compute_collision_coordinate(ray->check_ray_x_in_map, ray->x_sign, gdata->minimap.px_in_cell_width) - (gdata->minimap.px_in_cell_width / 2); 
+//         }
+//         else 
+//             ray->px_collision_x = compute_collision_coordinate(ray->check_ray_x_in_map, ray->x_sign, gdata->minimap.px_in_cell_width);
+
+//         ray->diagonal_distance = ((ray->px_collision_x / gdata->minimap.px_in_cell_width) - gdata->player.cell_player_x) / ray->dir_x;
+//         ray->px_collision_y = y + (ray->diagonal_distance * gdata->minimap.px_in_cell_height) * ray->dir_y;  
+
+//     } 
+
+//     else 
+//     {
+//         ray->cell_collision_x = ray->check_ray_x_in_map;  // Guarda el punto exacto donde choca el rayo (collision_x)
+//         ray->cell_collision_y = ray->check_ray_y_in_map; // Guarda el punto exacto donde choca el rayo (collision_y)
+//         if (gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'D' || gdata->map.matrix[ray->check_ray_y_in_map][ray->check_ray_x_in_map] == 'd')
+//         {
+//             if (ray->y_sign > 0)
+//                 ray->px_collision_y = compute_collision_coordinate(ray->check_ray_y_in_map, ray->y_sign, gdata->minimap.px_in_cell_height) + (gdata->minimap.px_in_cell_height / 2);
+//             else
+//                 ray->px_collision_y = compute_collision_coordinate(ray->check_ray_y_in_map, ray->y_sign, gdata->minimap.px_in_cell_height) - (gdata->minimap.px_in_cell_height / 2);
+//         }
+//         else
+//             ray->px_collision_y = compute_collision_coordinate(ray->check_ray_y_in_map, ray->y_sign, gdata->minimap.px_in_cell_height);
+
+//         ray->diagonal_distance = ((ray->px_collision_y / gdata->minimap.px_in_cell_height) - gdata->player.cell_player_y) / ray->dir_y;
+//         ray->px_collision_x = x + (ray->diagonal_distance * gdata->minimap.px_in_cell_width) * ray->dir_x;
+
+
+//     }
+//     ray->perpendicular_distance = ray->diagonal_distance * cos(ray->current_angle - gdata->vision.vision_angle);
+     
+
+//     // ray->line_crossing = line_crossing;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int should_block_ray(t_ray *ray, t_game *gdata, int map_x, int map_y)
 {
@@ -136,7 +206,9 @@ if (tex_x >= tex_width) tex_x = tex_width - 1;
 
 
 
-void traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map)
+
+
+int traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map)
 {
     int wall_hit = 0; // Es una flag que indica si el rayo ha chocado con una pared. El while se ejecutara hasta que hit == 1 (cuando encuentra una pared).
 
@@ -175,9 +247,7 @@ void traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, 
                 ray->first_dist_y += ray->other_dist_y;
                 *check_ray_y_in_map += ray->y_sign;
                 ray->line_crossing = 1;
-
             }
-
 
             if (line_crossing_tmp == 1 && ray->line_crossing == 1)
             {
@@ -276,22 +346,18 @@ void traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, 
 
     }
 
+    return (1);
 }
 
 
 
-void calculate_ray(t_game *gdata, t_ray *ray, double x, double y)
+void    calculate_ray(t_game *gdata, t_ray *ray, double x, double y)
 {
-   //IDEA, CONVERTIRLO EN UNA ESTRUCTURA Y ACCEDER A ELLA EN VEZ DE INICIALIZARLO EN CADA RAYO
-
-
-   ray->check_ray_x_in_map = (int)(x / gdata->minimap.px_in_cell_width); // Representa la celda en la cuadrícula donde está el rayo(índices de la matriz del mapa). Empieza en la casilla del player
-   ray->check_ray_y_in_map = (int)(y / gdata->minimap.px_in_cell_height);// Representa la celda en la cuadrícula donde está el rayo  (índices de la matriz del mapa). Empieza en la casilla del player
-    
-    init_ray_direction (ray, gdata, ray->check_ray_x_in_map, ray->check_ray_y_in_map);
-    traverse_ray_until_hit(ray, gdata, &ray->check_ray_x_in_map, &ray->check_ray_y_in_map);
-    find_wall_ray_distance_and_collision_point (ray, gdata, x, y);  
+    ray->check_ray_x_in_map = (int)(x / gdata->minimap.px_in_cell_width);
+    ray->check_ray_y_in_map = (int)(y / gdata->minimap.px_in_cell_height);
+    init_ray_direction(ray, gdata, ray->check_ray_x_in_map,
+        ray->check_ray_y_in_map);
+    traverse_ray_until_hit(ray, gdata, &ray->check_ray_x_in_map,
+        &ray->check_ray_y_in_map);
+    find_ray_distance_and_collision_point(ray, gdata, x, y);
 }
-
-
-//fabs es una función matemática que calcula el valor absoluto de un número de punto flotante (como double o float). Si el número es positivo, lo devuelve sin cambios. Si el número es negativo, lo convierte a positivo

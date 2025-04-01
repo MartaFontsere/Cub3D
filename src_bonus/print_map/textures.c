@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/18 16:05:52 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/01 02:13:55 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	load_image(t_game *gdata, t_image *image, char *path)
 {
 	if (check_file_can_be_open(path) == 0)
 	{
+		printf("\n%s^\n", path);
 		msg_error("There have been problems opening the textures\n", NULL);
 		return (0);
 	}
@@ -61,6 +62,7 @@ int	prepare_textures(t_game *gdata)
 		clean_data(gdata);
 		return (0);
 	}
+
 	//BONUS
 	if (!load_image(gdata, &gdata->texture.sky_img, SKY_TEXTURE))
 	{

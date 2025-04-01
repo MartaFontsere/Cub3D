@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:37:00 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/27 16:27:06 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/01 02:02:32 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,20 @@ int	check_esp(int i, int j, t_map *map)
 		}
 	}
 	return (1);
+}
+
+void	print_dirs(char **matrix, int i, int j, int end)
+{
+	printf("[%d]\n", i);
+	if (i != 0)
+		printf(BLUE"   [%c]\n"END, matrix[i - 1][j]);
+	if (j != 0)
+		printf(BLUE"[%c]"END, matrix[i][j - 1]);
+	printf(PURPLE"[%c]"END, matrix[i][j]);
+	if (j != '\0')
+		printf(BLUE"[%c]\n"END, matrix[i][j + 1]);
+	if (i != end)
+		printf(BLUE"   [%c]\n"END, matrix[i + 1][j]);
 }
 
 int	check_zero(int i, int j, t_map *map)

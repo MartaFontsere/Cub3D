@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/01 02:31:37 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/01 01:24:09 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,6 +323,8 @@ typedef struct s_game
 }					t_game;
 
 
+void	print_dirs(char **matrix, int i, int j, int end);//DEL
+
 //-------------------------------------------------
 //					MAIN
 //-------------------------------------------------
@@ -367,10 +369,15 @@ int		get_final_map(char **src, t_map *map);
 //------------------------------------------------
 
 /*PARSE_MAP*/
-int		parse_map(t_game	*gdata, char **matrix, t_map *map);
+int parse_map(char **matrix, t_map *map,t_game *gdata);
 int		min_chars(char **map, int i);
-int		is_close(char **matrix, t_map *map);
+int		is_close(char **matrix, t_map *map, t_game *gdata);
 int		check_borders(char **matrix, int i, t_map *map);
+
+/*PARSE_DOOR*/
+int	is_door(int i, int j, t_map *map, t_game *gdata);
+int	check_x_pos(int i, int j, t_map *map, t_game *gdata);
+int	check_y_pos(int i, int j, t_map *map, t_game *gdata);
 
 /*PARSE_UTILS*/
 void	check_n_line(char **src, t_map *map);
@@ -404,11 +411,57 @@ int		init_mlx(t_game *gdata, t_mlx *mlx);
 int		create_new_images(t_game *gdata, t_mlx *mlx);
 int		put_image_to_window(t_game *gdata, t_mlx *mlx);
 
+//------------------------------------------------
+//					WALLS_RAYCASTING
+//------------------------------------------------
+
+/*CALCULATE_FOV*/
+void	calculate_fov(t_game *gdata, double x, double y);
+
+/*CALCULATE_RAY*/
+void 	calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
+void 	find_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, double x, double y);
+void 	traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map);
+void 	init_ray_direction (t_ray *ray, t_game *gdata, int check_ray_x_in_map,  int check_ray_y_in_map);
+
+/*CALCULATE_RAY_UTILS*/
+// void 	prepare_vertical_final_collision_params (t_ray *ray, t_game *gdata, double x);
+// void 	prepare_horizontal_final_collision_params (t_ray *ray, t_game *gdata, double y);
+void 	prepare_vertical_collision_params (t_ray *ray, t_game *gdata, double x);
+void 	prepare_horizontal_collision_params (t_ray *ray, t_game *gdata, double y);
+void 	controll_x_limit_case (t_ray *ray, int check_ray_x_in_map, double cell_player_x);
+void 	controll_y_limit_case (t_ray *ray, int check_ray_y_in_map, double cell_player_y);
+double 	compute_collision_coordinate(int check_ray_coord, int ray_sign, double px_in_cell_size);
 
 
 
+void check_matrix_lines (t_ray *ray, int *check_ray_x_in_map, int *check_ray_y_in_map);
 
 
+//------------------------------------------------
+//					DOORS_RAYCASTING
+//------------------------------------------------
+
+/*CHECK_RAY_OPENED_DOOR*/
+int should_block_ray(t_ray *ray, t_game *gdata, int map_x, int map_y);
+int convert_hit_position_to_text_coord (t_game *gdata, double wall_x, double open_ratio);
+double take_hit_door_position (t_ray *ray, t_game *gdata);
+double prepare_opened_door_params (t_game *gdata, int map_x, int map_y);
+
+/*DOOR_RAYCASTING*/
+void door_raycast (t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map);
+void check_vertical_door(t_ray *ray, t_door door_ray, t_game *gdata, int *check_ray_x_in_map);
+void check_horizontal_door(t_ray *ray, t_door door_ray, t_game *gdata, int *check_ray_y_in_map);
+
+/*DOOR_RAYCASTING_UTILS*/
+void update_door_horizontal_coords (t_ray *ray, double first_dist_y_tmp, int check_ray_y_in_map_tmp, int line_crossing);
+void update_door_vertical_coords (t_ray *ray, double first_dist_x_tmp, int check_ray_x_in_map_tmp, int line_crossing);
+void horizontal_coords_convert (t_ray *ray, t_game *gdata);
+void vertical_coords_convert (t_ray *ray, t_game *gdata);
+
+/*UPDATE_DOORS_STATUS*/
+void update_doors(t_game *gdata);
+double get_distance_to_door(t_game *gdata, int door_x, int door_y);
 
 //------------------------------------------------
 //					PRINT_MAP
@@ -428,7 +481,8 @@ void	print_floor(t_game *gdata, t_mlx mlx, int *row, int *column);
 
 /*PRINT_WALLS*/
 void 	print_texture_walls (t_game *gdata, t_ray *ray, int *row, int *column);
-void 	print_wall_column(t_game *gdata, int *row, int *column, t_image *texture);
+// void 	print_wall_column(t_game *gdata, int *row, int *column, t_image *texture);
+void print_wall_column(t_game *gdata, int *row, int *column, t_image *texture, int tex_x, double tex_start_offset);
 void 	get_texture_row(t_game *gdata, t_image *texture,  double *tex_start_offset);
 void 	get_texture_column(t_image *texture, double *wall_x, int *tex_x);
 void 	get_wall_column (t_game *gdata, t_ray *ray, double *wall_x);
@@ -437,7 +491,6 @@ void 	get_wall_column (t_game *gdata, t_ray *ray, double *wall_x);
 int 	get_texture_pixel(t_image *texture, int tex_x, int tex_y);
 t_image *get_wall_texture(t_ray *ray, t_game *gdata);
 int 	rgb_to_hex(int r, int g, int b);
-
 
 //------------------------------------------------
 //					PRINT_MINIMAP
@@ -462,6 +515,32 @@ void do_dragon_animation(t_game *gdata);
 /*PRINT_DRAGON*/
 void	print_dragon(t_game *gdata);
 
+//------------------------------------------------
+//					MOVEMENTS
+//------------------------------------------------
+
+/*PRESS_OR_RELEASE_KEY*/
+int		there_is_a_key_pressed(t_game *gdata);
+void	press_key(mlx_key_data_t keydata, void *param);
+void	release_key(mlx_key_data_t keydata, t_game *gdata);
+
+/*MOVE_PLAYER*/
+void	move_player(t_game *gdata, t_vision vision, double *target_x, double *target_y);
+void	prepare_next_position(t_game *gdata, t_vision vision, double *move_x, double *move_y);
+
+/*CHECK_COLLISION*/
+// int		check_collision(t_game *gdata, double target_x, double target_y);
+int check_collision_x(t_game *gdata, double target_x);
+int check_collision_y(t_game *gdata, double target_y);
+
+/*ROTATE PLAYER*/
+void 	rotate_player(t_player *player, t_vision *vision);
+
+//------------------------------------------------
+//					RENDER
+//------------------------------------------------
+void	render_game(void *param);
+
 
 //-------------------------------------------------
 //				FREE/ERRORS
@@ -472,66 +551,5 @@ void	free_matrix(char **matrix);
 void	clean_path(t_path *path);
 void	clean_data(t_game *gdata);
 
-
-
-
-
-
-//MARTA
-void update_doors(t_game *gdata);
-double get_distance_to_door(t_game *gdata, int door_x, int door_y); 
-int	check_collision(t_game *gdata, double target_x, double target_y);
-
-
-//MAIN
-void	close_window(t_game	*gdata);
-
-
-
-
-
-
-
-//RENDER
-void render_game (void *param);
-
-//FOV
-void calculate_fov(t_game *gdata, double x, double y);
-void calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
-void controll_x_limit_case (t_ray *ray, int check_ray_x_in_map, double cell_player_x);
-void controll_y_limit_case (t_ray *ray, int check_ray_y_in_map, double cell_player_y);
-void init_ray_direction (t_ray *ray, t_game *gdata, int check_ray_x_in_map,  int check_ray_y_in_map);
-int traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map);
-void find_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, double x, double y);
-double compute_collision_coordinate(int check_ray_coord, int ray_sign, double px_in_cell_size);
-
-//MOVE
-void	move_player(t_game *gdata, t_vision vision, double *target_x, double *target_y);
-void rotate_player(t_player *player, t_vision *vision);
-
-
-
-//PRESS KEY
-int	there_is_a_key_pressed(t_game *gdata);
-void	press_key(mlx_key_data_t keydata, void *param);
-void	set_mov_params(t_game *gdata, int *move_direction);
-void	reset_mov_params(t_game *gdata);
-void	release_key(mlx_key_data_t keydata, t_game *gdata);
-
-//COLLISIONS
-//int	check_collision(t_game *gdata, double target_x, double target_y);
-int check_collision_x(t_game *gdata, double target_x);
-int check_collision_y(t_game *gdata, double target_y);
-
-
-
-typedef struct s_ray_hit 
-{
-	int line_crossing;
-	int check_ray_x_in_map;
-	int check_ray_y_in_map;
-	double first_dist_x;
-	double first_dist_y;
-}	t_ray_hit;
 
 #endif

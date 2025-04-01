@@ -6,10 +6,11 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:06:18 by mfontser          #+#    #+#             */
-/*   Updated: 2025/02/27 01:46:35 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/01 01:53:31 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+ 
+ 
 #include "cub3D.h"
 
 void	init_map_params(t_game *gdata, t_map *map)
@@ -35,3 +36,4 @@ void	init_minimap_params(t_game *gdata)
 	gdata->minimap.center_x = gdata->minimap.px_width / 2;
 	gdata->minimap.center_y = gdata->minimap.px_height / 2;
 }
+

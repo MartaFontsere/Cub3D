@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   free_errors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/21 13:33:19 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/01 01:52:25 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "cub3D.h"
 
 void	exit_error(char *msg, int status)
@@ -65,8 +64,39 @@ void	free_map_sprites(t_game *gdata, t_texture *texture)
 		mlx_delete_image(gdata->mlx.init, texture->east_wall_img.data);
 		mlx_delete_xpm42(texture->east_wall_img.xpm);
 	}
+	if (texture->sky_img.data)
+	{
+		mlx_delete_image(gdata->mlx.init, texture->sky_img.data);
+		mlx_delete_xpm42(texture->sky_img.xpm);
+	}
+	if (texture->floor_img.data)
+	{
+		mlx_delete_image(gdata->mlx.init, texture->floor_img.data);
+		mlx_delete_xpm42(texture->floor_img.xpm);
+	}
+	if (texture->door_img.data)
+	{
+		mlx_delete_image(gdata->mlx.init, texture->door_img.data);
+		mlx_delete_xpm42(texture->door_img.xpm);
+	}
 }
 
+void	free_dragon_sprites(t_game *gdata, t_texture *texture)
+{
+	int i;
+
+	i = 0;
+	if (texture->dragon_img[0].data)
+	{
+		while (i < 4)
+		{
+			mlx_delete_image(gdata->mlx.init, texture->dragon_img[i].data);
+			mlx_delete_xpm42(texture->dragon_img[i].xpm);
+			i++;
+			printf ("%d\n", i);
+		}
+	}
+}
 void	clean_data(t_game *gdata)
 {
 	clean_path(&gdata->texture.path);
@@ -76,4 +106,6 @@ void	clean_data(t_game *gdata)
 	if (/*gdata && */gdata->vision.FOV.rays) 
 		free(gdata->vision.FOV.rays);
 	free_map_sprites(gdata, &gdata->texture);
+	free_dragon_sprites(gdata, &gdata->texture);
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/21 13:22:39 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/01 01:58:20 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,19 @@ void	close_window(t_game *gdata)
 int	main(int ac, char **av)
 {
 	t_game	gdata;
+
 	init_map_params(&gdata, &gdata.map);
 	init_textures_and_colors_path(&gdata.texture, &gdata.texture.path);
 	if (!read_file(ac, av, &gdata, &gdata.map))
 		return (1);
-	if (!parse_map(gdata.map.matrix, &gdata.map, &gdata))
+	if (!parse_map(&gdata, gdata.map.matrix, &gdata.map))
 		return (1);
-printf ("**********\n");
 	if (init_gdata_values(&gdata) == 0)
 		return (1);
 	calculate_fov(&gdata, gdata.player.x, gdata.player.y);
 	if (prepare_textures(&gdata) == 0 || prepare_animation (&gdata) == 0)
 		return (1);//LIBERAR COSAS
+	update_doors(&gdata);
 	print_map(&gdata, gdata.mlx, gdata.map);
 	print_minimap(&gdata);
 	print_dragon (&gdata);

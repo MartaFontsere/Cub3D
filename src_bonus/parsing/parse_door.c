@@ -6,11 +6,13 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:56:10 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/27 16:06:31 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/01 02:02:09 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+
 
 int	check_y_pos(int i, int j, t_map *map, t_game *gdata)
 {
@@ -63,4 +65,3 @@ int	is_door(int i, int j, t_map *map, t_game *gdata)
 	}
 	return (1);
 }
-

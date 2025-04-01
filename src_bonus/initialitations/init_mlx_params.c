@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:09:51 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/14 00:59:59 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/01 01:59:30 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	put_image_to_window(t_game *gdata, t_mlx *mlx)
 	if (mlx_image_to_window(mlx->init, mlx->mini_image, 15, 15) == -1)
 	{
 		msg_error("It's not possible to put new image to window\n", NULL);
+		//free_raw_and_map(gdata); REVISAR 
 		close_window(gdata);
-		clean_data(gdata);
 		return (0);
 	}
 	return (1);
@@ -48,7 +48,7 @@ int	create_new_images(t_game *gdata, t_mlx *mlx)
 	{
 		msg_error("It's not possible to generate new mini_image\n", NULL);
 		close_window(gdata);
-		clean_data(gdata);
+		//free_raw_and_map(gdata); REVISAR 
 		return (0);
 	}
 	return (1);

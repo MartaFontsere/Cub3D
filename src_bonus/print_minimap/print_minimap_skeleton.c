@@ -6,9 +6,11 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/27 03:34:37 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/01 02:15:27 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "cub3D.h"
 
 #include "cub3D.h"
 
@@ -105,3 +107,4 @@ void	print_minimap(t_game *gdata)
 	calculate_and_print_fov_and_vision_angle (gdata); //meter dentro de printminimap, y luego en print player fov in motion llamar a print tablero o algo asi	
 	print_player (gdata, gdata->player, gdata->minimap.center_x, gdata->minimap.center_y);
 }
+

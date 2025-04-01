@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:04:50 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/02/26 13:56:55 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/01 02:03:11 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*cub_strdup(char *s1, int len)
 {
 	char	*str;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -34,7 +34,7 @@ char	*cub_strdup(char *s1, int len)
 char	**copy_map(char **map, int height)
 {
 	char	**map_tmp;
-	int	i;
+	int		i;
 
 	i = 0;
 	map_tmp = malloc(sizeof(char *) * (height + 1));
@@ -96,7 +96,7 @@ char	*fill_void(t_map *map)
 
 int	get_final_map(char **src, t_map *map)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	map->void_matrix = malloc(sizeof(char *) * (map->c_height + 1));

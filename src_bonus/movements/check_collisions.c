@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/12 23:07:47 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/01 02:08:28 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,14 @@ int check_collision_x(t_game *gdata, double target_x)
     {
         double contour_x = target_x + (gdata->player.radius) * cos(angle);
         double contour_y = gdata->player.y + (gdata->player.radius) * sin(angle);
-         mlx_put_pixel(gdata->mlx.image, contour_x, contour_y, YELLOW1);
         cell_x = (int)(contour_x / gdata->minimap.px_in_cell_width);
         cell_y = (int)(contour_y / gdata->minimap.px_in_cell_height);
         if (gdata->map.matrix[cell_y][cell_x] == '1')
-            return 0; // Hay colisión en X
+            return 0;
         angle += angle_step;
     }
 
-    return 1; // No hay colisión en X
-
+    return 1;
 }
 
 int check_collision_y(t_game *gdata, double target_y)
@@ -52,14 +50,13 @@ int check_collision_y(t_game *gdata, double target_y)
     {
         double contour_x = gdata->player.x + (gdata->player.radius) * cos(angle);
         double contour_y = target_y + (gdata->player.radius) * sin(angle);
-         //mlx_put_pixel(gdata->mlx.image, contour_x, contour_y, YELLOW1);
          cell_x = (int)(contour_x / gdata->minimap.px_in_cell_width);
          cell_y = (int)(contour_y / gdata->minimap.px_in_cell_height);
        if (gdata->map.matrix[cell_y][cell_x] == '1')
-            return 0; // Hay colisión en X
+            return 0;
         angle += angle_step;
     }
 
-    return 1; // No hay colisión en X
+    return 1;
 
 }

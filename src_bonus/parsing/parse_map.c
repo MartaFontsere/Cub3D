@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:45:21 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/18 13:52:54 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/01 02:02:21 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@ int	check_borders(char **matrix, int i, t_map *map)
 		return (1);
 	else if (matrix[i][j] != '1' || matrix[i][end] != '1')
 	{
-		if (matrix[i][j] != '0' || matrix[i][j] == 'D')
+		if (matrix[i][j] != '0' || matrix[i][end] != '0')
 			return (msg_error("Player must be inside map\n", NULL), 0);
+		else if ( matrix[i][j] == 'D' || matrix[i][j] == 'D')
+			return (msg_error("Door must be inside map\n", NULL), 0);
 		return (msg_error("Map must be close with walls\n", NULL), 0);
 	}
 	return (1);
 }
 
-int	is_close(char **matrix, t_map *map, t_game *gdata)
+int	is_close(char **matrix, t_map *map)
 {
 	int	i;
 	int	j;
@@ -55,7 +57,7 @@ int	is_close(char **matrix, t_map *map, t_game *gdata)
 				;
 			else if (!check_esp(i, j, map) || !check_zero(i, j, map))
 				return (0);
-			else if (!check_player(i, j, map) || !is_door(i, j, map, gdata))
+			else if (!check_player(i, j, map))
 				return (0);
 			j++;
 		}
@@ -92,13 +94,18 @@ int	min_chars(char **map, int i)
 	return (1);
 }
 
-int	parse_map(char **matrix, t_map *map, t_game *gdata)
+int	parse_map(t_game	*gdata, char **matrix, t_map *map)
 {
 	if (!min_chars(matrix, 0))
+	{
+		clean_data(gdata);
 		return (0);
+	}
 	map->is_map = 0;
-	if (!is_close(matrix, map, gdata))
+	if (!is_close(matrix, map))
+	{
+		clean_data(gdata);
 		return (0);
-	printf("✅\n");
+	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
+#    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/03/21 13:42:07 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/04/01 01:36:26 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -141,10 +141,10 @@ LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
 
 #Metodo implicito
 
-$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile  
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
+# $(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile  
+# 	@mkdir -p $(dir $@)
+# 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+# 	@echo "$(YELLOW)Compiling... $(END)$(patsubst $(DIR_BUILD)%,%,$@)"
 
 $(OBJDIR_BONUS)%.o: $(SRCDIR_BONUS)%.c $(HEADER) Makefile 
 	@mkdir -p $(dir $@)
@@ -159,38 +159,38 @@ make_libs:
 	@make -C libs/Libft all --no-print-directory
 	@cmake $(MLXDIR) -DDEBUG=1 -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4 --no-print-directory
 
-${NAME}: ${OBJS}
-	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)
-	@echo ""⠀⠀
-	@echo "                   ⠀⠀         ⠀⠀$(YELLOW)⢀⣶⠀⠀$(PINK)⢀⣄ ⠀⠀⣠⣶⣾⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo " 	             ⠀⠀⠀⠀  $(PINK)⢀⣼⡛$(YELLOW)⣆⣰⣿⣿$(PINK)⣠⠞⣓⣿⣿⠶⠞⠛⣫⣿⣷⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo " $(RED) ⠈⣇      $(CYAN)DRACARYS        $(PINK)⣸⣿⡥⣿⡏⣸⡿⠛⠉⠉⠉⠉⠉⠓⢲$(YELLOW)⣠⠼⢱$(PINK)⣿⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀ $(RED)⣄ ⢻⡆                 $(BLUE)⢀⡴⠶⢿⡋⠀$(PINK)⠟⠛⠁$(BLUE)⣀⣀⣀⠀⠀⠀$(YELLOW)⠺⡷⠚⠉⢀⣾$(PINK)⣿⣶⣿⠗⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀ $(RED)⡽ ⢸$(ORANGE)⡿$(RED)⣆⠀⠀     $(RED)⠀$(CYAN)TEAM  ⠀ $(NC)⢸⡿⣷⣄$(BLUE)⠙⠀⠀$(BLUE)⢠⠞⢛⣿⣭⣙⠛⣦⡀$(YELLOW)⠹⣄⣀⡼⣻$(PINK)⣿⣯⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo " $(RED)⠈⠀ ⡬$(ORANGE)⠃⠸$(RED)⡆  $(ORANGE)⡼⡄           $(NC)⢸⣧⡏⣿⠀⠀⠀$(NC)⢠⡞⠋⢹⡟⠟⢳$(BLUE)⠈⢧⠀$(BLUE)⠈⠙⠿⢻⠃$(PINK)⣷⠈⢻⣄⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀$(RED)  ⢸$(ORANGE)⠖$(YELLOW)⣸⡆$(RED)⣿⠀ 	⠀⠀⠀  ⠀$(BLUE)⣀$(NC)⣘⡦⠿⠟$(BLUE)⠲⠶⢤$(NC)⣼⠀⢹⣿⠁⠀⢨⡇$(PINK)⠀⠀⠀⠀⠀$(BLUE)⠉⠀$(PINK)⢿⣷⡾⣿⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀$(RED) ⣮$(ORANGE)⠅$(YELLOW)⡼⠋$(ORANGE)⢠$(RED)⡏    ⢠⡧	   ⠀$(BLUE)⠀⡾$(CYAN)⠹⠆$(BLUE)⠀⠀⠀⠀⠀⠀$(NC)⠈⠳⣼⣿⣷⣤⡾⠁$(PINK)⠀⠀⠀⠀⠀⠀⠀⣿⣏⠻⠟⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀$(RED)⢸$(ORANGE)⡟$(YELLOW)⢀⡄$(ORANGE)⣠$(RED)⠟⠀   ⢠$(ORANGE)⣟$(RED)⣇       $(BLUE)⠘⣧⣀⡀⠀⠀$(CYAN)⠐⠓⠀$(BLUE)⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀$(PINK)⠀⠀⠀⠀⠀⣰⠃⠘⣧⠀⠀⠀⠀$(CYAN)⢠⣄⠀⠀⠀"
-	@echo "⠀$(RED)⠸$(ORANGE)⣇$(YELLOW)⠛$(ORANGE)⢰$(RED)⡏⠀⠀   ⡾$(ORANGE)⡏⠙$(RED)⣦⡀      $(BLUE)⠈⢯⡉⠙⢦⣀⠀⠀⠀⠀⠀⢀⣰⠏⠀⠀⠀⠀⠀⠀⠀$(PINK)⣶⣯⣤⢄⡿⠀⠀$(CYAN)⢀⣀⣠⣾⣏⠳⣄⠀⠀⠀"
-	@echo "⠀$(RED) ⠙⢧$(ORANGE)⣘$(RED)⣧    ⢸$(ORANGE)⠃⠃$(YELLOW)⢠⡈$(RED)⢷    ⠀  $(BLUE)⠈⠹⢦⣀⣉⠒⠶⠶⠶⢶⣊⣡⣄⣀⣀⣀⣀⡤⠀⠀⠀$(PINK)⡿⠙⣯⣹$(CYAN)⠷⣚⣋⣉⣡⡴⠟⢦⠈⣷⠀⠀⠀"
-	@echo "⠀$(RED)   ⠉⠛⠆   ⠘⠀⠀$(YELLOW)⠙⡃$(RED)⣸         $(BLUE)⠀⠀⠉⠙⠛⠛⠛⠛⠉⠀⠀⢹⣯⠉⠁$(CYAN)⢠⣄⡀⠀$(PINK)⢤⣤⣬⣿$(CYAN)⣟⠉⠉⠁⢠⠀⠀⠀⢳⡸⡆⠀⠀"
-	@echo "⠀  $(RED)      ⠀⠀⢠$(ORANGE)⣴⡀$(RED)⢠⡏⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀  ⠀$(BLUE)⠀⠀⠀⢀⡾⠋⠀⠀⠀$(CYAN)⢺⡇⠙⢷$(PINK)⣽⣧⣠⣿⠿$(CYAN)⢿⡉⠻⣾⣤⢤⣄⠀⣧⡇⠀⠀"
-	@echo "     $(CYAN)IS     $(RED)⠻$(ORANGE)⣯$(RED)⠟⠀⠀   ⠀          $(BLUE)⠀⠀⢠⡟⢀⡼⠁⠀⠀$(CYAN)⠸⣇⢠⠘⢿$(PINK)⠙⢿⡏⠀$(BLUE)⠈⠹⣄⠀⠀$(CYAN)⠀⠈⢻⣿⠁⠀⠀"
-	@echo "⠀		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀$(BLUE)⠀⠀⢸⣷⠞⠀⠀⠀⠀⠀$(CYAN)⡇⢸⣿⢸⠀$(PINK)⠘⣏⠉⠳⢤$(BLUE)⣘⣆⠀⠀$(CYAN)⠀⠘⠁⠀⠀"
-	@echo "       $(CYAN) BACK⠀⠀⠀⠀    ⠀⠀⠀⠀⠀⠀⠀  ⠀$(BLUE)⠀⠀⠀⣸⠇⠀⠀⠀⠀⠀⠀$(CYAN)⣧⣾⣾⡟⠀⠀$(PINK)⠙⣶⣶⡦⠿⠛$(BLUE)⣧⠀⠀⠀⠀⠀"
-	@echo "⠀		⠀ $(YELLOW)⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(BLUE)⢀⣀⣤⣄⣤⡏⠀⠀⠀⠀⠀⠀$(CYAN)⢰⣿⠟⠁⠀⠀⠀$(PINK)⠀⠛⣧⣀⡀$(BLUE)⠀⠸⣆⠀⠀⠀"
-	@echo "⠀		 $(YELLOW)⣾⠛⢦⡀⠀⠀⠀⠀⠀$(BLUE)⣠⠞⠋⠉⠀⠈⣹⠃⠀⠀⠀⠀⠀$(CYAN)⢠⡿⠋⠀⠀⠀⠀⠀$(PINK)⠀⠀⢻⣌⣙⢦⠀$(BLUE)⠛⢷⡀⠀⠀"
-	@echo "⠀	        $(YELLOW)⣸⡇⠀⠀⠙⢦⠀⠀⠀$(BLUE)⣼⠇⠀⠀⠀⠀⠀⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(PINK)⠀⠀⠀⠈⣿⠋⠉⠁⠀$(BLUE)⠈⣷⠀⠀⠀"
-	@echo "⠀		$(YELLOW)⣿⠀$(PINK)⢰⠻⡄$(YELLOW)⠈⢧⠀$(BLUE)⢰⡇⠀⠀⠀⠀⠀⠐⢻⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(PINK)⠀⠀⠀⠀⠀⢠⣿⡄⠀$(BLUE)⠀⢠⠀⢸⡀⠀⠀"
-	@echo "⠀		$(YELLOW)⢿⣤$(PINK)⣾⠀$(BLUE)⠻⢿⡛⠉⣇⠀⠀⠀⠀⠀⠀⠘⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(PINK)⣼⡃⣹⡆⠀$(BLUE)⠀⠈⡇⢸⠇⠀⠀"
-	@echo "		⠀$(YELLOW)⠈⠉$(PINK)⠸⣆⢀$(BLUE)⣨⡻⣄⡸⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣰⠆⠀⠀⠀⠀⠀⠀$(PINK)⢰⡿⠛⠉⠀$(BLUE)⠀⣸⠁⡾⠀⠀⠀"
-	@echo "⠀		⠀⠀  ⢿⡄$(PINK)⠹⣿⣎$(BLUE)⡹⢿⣦⡀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡴⠋⠁⠀⠀$(PINK)⠠⣿⡉⠉⢓⡾⠁⠀$(BLUE)⠀⠀⢠⣿⠞⠀⠀⠀"
-	@echo "⠀		⠀⠀  ⠈⢷⡀$(PINK)⠈⠳⣷⣴⣤$(BLUE)⠉⠛⠛⠒⠲⠶⠚⠛⠋⠀⠀$(PINK)⢸⣿⠓⢤⡀⢸⣿⡴⠛⠀⠀$(BLUE)⠀⠀⢠⡾⠁⠀⠀⠀"
-	@echo "⠀		⠀⠀⠀  ⠀⠹⣦⠀$(PINK)⠈⠛⠮⡇⣠⡟⠓⣆⠀⢸⠏⠛⢶⠀⣾⣿⡤⠼⠃⠀$(BLUE)⠀⠀⠀⠀⠀⠀⣴⡟⠁⠀⠀⠀ "
-	@echo "⠀	⠀	⠀⠀⠀⠀   ⠈⠳⣤⡀⠀⠀$(PINK)⠉⠙⠓⠻⠀⠛⠛⠒⠚⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀$(BLUE)⢀⣴⡾⠋⠀⠀⠀⠀⠀⠀"
-	@echo "⠀		⠀⠀⠀⠀⠀⠀⠀  ⠈⠙⠶⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⡶⠛⠉⠀⠀⠀$(GREEN)  CUB3D DONE$(BLUE)⠀⠀⠀"
-	@echo "⠀⠀		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠈⠙⠛⠲⠦⢤⣤⣤⣤⣤⣤⣤⡶⠶⠚⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo ""⠀⠀⠀⠀⠀⠀
+# ${NAME}: ${OBJS}
+# 	@$(CC) $(CFLAGS) ${OBJS} $(LIBS) -o $(NAME)
+# 	@echo ""⠀⠀
+# 	@echo "                   ⠀⠀         ⠀⠀$(YELLOW)⢀⣶⠀⠀$(PINK)⢀⣄ ⠀⠀⣠⣶⣾⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+# 	@echo " 	             ⠀⠀⠀⠀  $(PINK)⢀⣼⡛$(YELLOW)⣆⣰⣿⣿$(PINK)⣠⠞⣓⣿⣿⠶⠞⠛⣫⣿⣷⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+# 	@echo " $(RED) ⠈⣇      $(CYAN)DRACARYS        $(PINK)⣸⣿⡥⣿⡏⣸⡿⠛⠉⠉⠉⠉⠉⠓⢲$(YELLOW)⣠⠼⢱$(PINK)⣿⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+# 	@echo "⠀ $(RED)⣄ ⢻⡆                 $(BLUE)⢀⡴⠶⢿⡋⠀$(PINK)⠟⠛⠁$(BLUE)⣀⣀⣀⠀⠀⠀$(YELLOW)⠺⡷⠚⠉⢀⣾$(PINK)⣿⣶⣿⠗⠀⠀⠀⠀⠀⠀⠀⠀"
+# 	@echo "⠀ $(RED)⡽ ⢸$(ORANGE)⡿$(RED)⣆⠀⠀     $(RED)⠀$(CYAN)TEAM  ⠀ $(NC)⢸⡿⣷⣄$(BLUE)⠙⠀⠀$(BLUE)⢠⠞⢛⣿⣭⣙⠛⣦⡀$(YELLOW)⠹⣄⣀⡼⣻$(PINK)⣿⣯⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+# 	@echo " $(RED)⠈⠀ ⡬$(ORANGE)⠃⠸$(RED)⡆  $(ORANGE)⡼⡄           $(NC)⢸⣧⡏⣿⠀⠀⠀$(NC)⢠⡞⠋⢹⡟⠟⢳$(BLUE)⠈⢧⠀$(BLUE)⠈⠙⠿⢻⠃$(PINK)⣷⠈⢻⣄⠀⠀⠀⠀⠀⠀⠀"
+# 	@echo "⠀$(RED)  ⢸$(ORANGE)⠖$(YELLOW)⣸⡆$(RED)⣿⠀ 	⠀⠀⠀  ⠀$(BLUE)⣀$(NC)⣘⡦⠿⠟$(BLUE)⠲⠶⢤$(NC)⣼⠀⢹⣿⠁⠀⢨⡇$(PINK)⠀⠀⠀⠀⠀$(BLUE)⠉⠀$(PINK)⢿⣷⡾⣿⠀⠀⠀⠀⠀⠀⠀"
+# 	@echo "⠀$(RED) ⣮$(ORANGE)⠅$(YELLOW)⡼⠋$(ORANGE)⢠$(RED)⡏    ⢠⡧	   ⠀$(BLUE)⠀⡾$(CYAN)⠹⠆$(BLUE)⠀⠀⠀⠀⠀⠀$(NC)⠈⠳⣼⣿⣷⣤⡾⠁$(PINK)⠀⠀⠀⠀⠀⠀⠀⣿⣏⠻⠟⠀⠀⠀⠀⠀⠀⠀"
+# 	@echo "⠀$(RED)⢸$(ORANGE)⡟$(YELLOW)⢀⡄$(ORANGE)⣠$(RED)⠟⠀   ⢠$(ORANGE)⣟$(RED)⣇       $(BLUE)⠘⣧⣀⡀⠀⠀$(CYAN)⠐⠓⠀$(BLUE)⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀$(PINK)⠀⠀⠀⠀⠀⣰⠃⠘⣧⠀⠀⠀⠀$(CYAN)⢠⣄⠀⠀⠀"
+# 	@echo "⠀$(RED)⠸$(ORANGE)⣇$(YELLOW)⠛$(ORANGE)⢰$(RED)⡏⠀⠀   ⡾$(ORANGE)⡏⠙$(RED)⣦⡀      $(BLUE)⠈⢯⡉⠙⢦⣀⠀⠀⠀⠀⠀⢀⣰⠏⠀⠀⠀⠀⠀⠀⠀$(PINK)⣶⣯⣤⢄⡿⠀⠀$(CYAN)⢀⣀⣠⣾⣏⠳⣄⠀⠀⠀"
+# 	@echo "⠀$(RED) ⠙⢧$(ORANGE)⣘$(RED)⣧    ⢸$(ORANGE)⠃⠃$(YELLOW)⢠⡈$(RED)⢷    ⠀  $(BLUE)⠈⠹⢦⣀⣉⠒⠶⠶⠶⢶⣊⣡⣄⣀⣀⣀⣀⡤⠀⠀⠀$(PINK)⡿⠙⣯⣹$(CYAN)⠷⣚⣋⣉⣡⡴⠟⢦⠈⣷⠀⠀⠀"
+# 	@echo "⠀$(RED)   ⠉⠛⠆   ⠘⠀⠀$(YELLOW)⠙⡃$(RED)⣸         $(BLUE)⠀⠀⠉⠙⠛⠛⠛⠛⠉⠀⠀⢹⣯⠉⠁$(CYAN)⢠⣄⡀⠀$(PINK)⢤⣤⣬⣿$(CYAN)⣟⠉⠉⠁⢠⠀⠀⠀⢳⡸⡆⠀⠀"
+# 	@echo "⠀  $(RED)      ⠀⠀⢠$(ORANGE)⣴⡀$(RED)⢠⡏⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀  ⠀$(BLUE)⠀⠀⠀⢀⡾⠋⠀⠀⠀$(CYAN)⢺⡇⠙⢷$(PINK)⣽⣧⣠⣿⠿$(CYAN)⢿⡉⠻⣾⣤⢤⣄⠀⣧⡇⠀⠀"
+# 	@echo "     $(CYAN)IS     $(RED)⠻$(ORANGE)⣯$(RED)⠟⠀⠀   ⠀          $(BLUE)⠀⠀⢠⡟⢀⡼⠁⠀⠀$(CYAN)⠸⣇⢠⠘⢿$(PINK)⠙⢿⡏⠀$(BLUE)⠈⠹⣄⠀⠀$(CYAN)⠀⠈⢻⣿⠁⠀⠀"
+# 	@echo "⠀		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀$(BLUE)⠀⠀⢸⣷⠞⠀⠀⠀⠀⠀$(CYAN)⡇⢸⣿⢸⠀$(PINK)⠘⣏⠉⠳⢤$(BLUE)⣘⣆⠀⠀$(CYAN)⠀⠘⠁⠀⠀"
+# 	@echo "       $(CYAN) BACK⠀⠀⠀⠀    ⠀⠀⠀⠀⠀⠀⠀  ⠀$(BLUE)⠀⠀⠀⣸⠇⠀⠀⠀⠀⠀⠀$(CYAN)⣧⣾⣾⡟⠀⠀$(PINK)⠙⣶⣶⡦⠿⠛$(BLUE)⣧⠀⠀⠀⠀⠀"
+# 	@echo "⠀		⠀ $(YELLOW)⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(BLUE)⢀⣀⣤⣄⣤⡏⠀⠀⠀⠀⠀⠀$(CYAN)⢰⣿⠟⠁⠀⠀⠀$(PINK)⠀⠛⣧⣀⡀$(BLUE)⠀⠸⣆⠀⠀⠀"
+# 	@echo "⠀		 $(YELLOW)⣾⠛⢦⡀⠀⠀⠀⠀⠀$(BLUE)⣠⠞⠋⠉⠀⠈⣹⠃⠀⠀⠀⠀⠀$(CYAN)⢠⡿⠋⠀⠀⠀⠀⠀$(PINK)⠀⠀⢻⣌⣙⢦⠀$(BLUE)⠛⢷⡀⠀⠀"
+# 	@echo "⠀	        $(YELLOW)⣸⡇⠀⠀⠙⢦⠀⠀⠀$(BLUE)⣼⠇⠀⠀⠀⠀⠀⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(PINK)⠀⠀⠀⠈⣿⠋⠉⠁⠀$(BLUE)⠈⣷⠀⠀⠀"
+# 	@echo "⠀		$(YELLOW)⣿⠀$(PINK)⢰⠻⡄$(YELLOW)⠈⢧⠀$(BLUE)⢰⡇⠀⠀⠀⠀⠀⠐⢻⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(PINK)⠀⠀⠀⠀⠀⢠⣿⡄⠀$(BLUE)⠀⢠⠀⢸⡀⠀⠀"
+# 	@echo "⠀		$(YELLOW)⢿⣤$(PINK)⣾⠀$(BLUE)⠻⢿⡛⠉⣇⠀⠀⠀⠀⠀⠀⠘⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀$(PINK)⣼⡃⣹⡆⠀$(BLUE)⠀⠈⡇⢸⠇⠀⠀"
+# 	@echo "		⠀$(YELLOW)⠈⠉$(PINK)⠸⣆⢀$(BLUE)⣨⡻⣄⡸⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣰⠆⠀⠀⠀⠀⠀⠀$(PINK)⢰⡿⠛⠉⠀$(BLUE)⠀⣸⠁⡾⠀⠀⠀"
+# 	@echo "⠀		⠀⠀  ⢿⡄$(PINK)⠹⣿⣎$(BLUE)⡹⢿⣦⡀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡴⠋⠁⠀⠀$(PINK)⠠⣿⡉⠉⢓⡾⠁⠀$(BLUE)⠀⠀⢠⣿⠞⠀⠀⠀"
+# 	@echo "⠀		⠀⠀  ⠈⢷⡀$(PINK)⠈⠳⣷⣴⣤$(BLUE)⠉⠛⠛⠒⠲⠶⠚⠛⠋⠀⠀$(PINK)⢸⣿⠓⢤⡀⢸⣿⡴⠛⠀⠀$(BLUE)⠀⠀⢠⡾⠁⠀⠀⠀"
+# 	@echo "⠀		⠀⠀⠀  ⠀⠹⣦⠀$(PINK)⠈⠛⠮⡇⣠⡟⠓⣆⠀⢸⠏⠛⢶⠀⣾⣿⡤⠼⠃⠀$(BLUE)⠀⠀⠀⠀⠀⠀⣴⡟⠁⠀⠀⠀ "
+# 	@echo "⠀	⠀	⠀⠀⠀⠀   ⠈⠳⣤⡀⠀⠀$(PINK)⠉⠙⠓⠻⠀⠛⠛⠒⠚⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀$(BLUE)⢀⣴⡾⠋⠀⠀⠀⠀⠀⠀"
+# 	@echo "⠀		⠀⠀⠀⠀⠀⠀⠀  ⠈⠙⠶⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⡶⠛⠉⠀⠀⠀$(GREEN)  CUB3D DONE$(BLUE)⠀⠀⠀"
+# 	@echo "⠀⠀		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠈⠙⠛⠲⠦⢤⣤⣤⣤⣤⣤⣤⡶⠶⠚⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+# 	@echo ""⠀⠀⠀⠀⠀⠀
 
 bonus: make_libs ${NAME_BONUS}
 
