@@ -1,0 +1,14 @@
+NO textures/map_walls/opcion2/Norte.xpm42
+SO textures/map_walls/opcion2/Sur.xpm42
+EA textures/map_walls/opcion2/Este.xpm42
+WE textures/map_walls/opcion2/Oeste.xpm42
+
+F path_floor.xpm42
+#F 20,20,120
+C 200,200,200
+
+1111111111
+111111111
+10000SD011
+100000101
+1111111111

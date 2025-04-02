@@ -1,0 +1,14 @@
+F 20,20,120
+C 20,0,52
+
+NO textures/map_walls/opcion2/Norte.xpm42
+SO textures/map_walls/opcion2/Sur.xpm42
+EA textures/map_walls/opcion2/Este.xpm42 HELLO WORDL
+WE textures/map_walls/opcion2/Oeste.xpm42
+
+
+11111
+1001N1
+11111
+11011
+11111
