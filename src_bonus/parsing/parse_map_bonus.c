@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_map.c                                        :+:      :+:    :+:   */
+/*   parse_map_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:45:21 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:47 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:37:49 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_borders(char **matrix, int i, t_map *map)
 	return (1);
 }
 
-int	is_close(char **matrix, t_map *map, t_player player, t_game *gdata)
+int	is_close(char **matrix, t_map *map)
 {
 	int	i;
 	int	j;
@@ -55,9 +55,9 @@ int	is_close(char **matrix, t_map *map, t_player player, t_game *gdata)
 		{
 			if (matrix[i][j] == '1')
 				;
-			else if (!check_esp(i, j, map) || !check_zero(i, j, map, player))
+			else if (!check_esp(i, j, map) || !check_zero(i, j, map))
 				return (0);
-			else if (!check_player(i, j, map, player) || !is_door(i, j, map, gdata))
+			else if (!check_player(i, j, map) || !is_door(i, j, map))
 				return (0);
 			j++;
 		}
@@ -102,7 +102,7 @@ int	parse_map(t_game *gdata, char **matrix, t_map *map)
 		return (0);
 	}
 	map->is_map = 0;
-	if (!is_close(matrix, map, gdata->player, gdata))
+	if (!is_close(matrix, map))
 	{
 		clean_data(gdata);
 		return (0);

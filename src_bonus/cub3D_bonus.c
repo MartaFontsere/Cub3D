@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/01 11:56:51 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:42:58 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	main(int ac, char **av)
 	print_minimap(&gdata);
 	print_dragon (&gdata);
 	mlx_key_hook(gdata.mlx.init, press_key, &gdata);
+	mlx_cursor_hook(gdata.mlx.init, cursor_handle, &gdata);
 	mlx_loop_hook(gdata.mlx.init, render_game, &gdata);
 	mlx_loop(gdata.mlx.init);
 	clean_data(&gdata);

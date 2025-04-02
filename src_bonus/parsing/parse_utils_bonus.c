@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   parse_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:37:00 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:46 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:38:33 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ int	check_esp(int i, int j, t_map *map)
 	return (1);
 }
 
-int	check_zero(int i, int j, t_map *map, t_player player)
+int	check_zero(int i, int j, t_map *map)
 {
 	if (map->matrix[i][j] == '0')
 	{
-		if ((map->matrix[i][j + 1] != player.orientation \
+		if ((map->matrix[i][j + 1] != map->pos \
 		&& map->matrix[i][j + 1] != '0' && map->matrix[i][j + 1] != '1' \
 		&& map->matrix[i][j + 1] != 'D')
-		|| (map->matrix[i + 1][j] != player.orientation \
+		|| (map->matrix[i + 1][j] != map->pos \
 		&& map->matrix[i + 1][j] != '0' && map->matrix[i + 1][j] != '1' \
 		&& map->matrix[i + 1][j] != 'D'))
 		{
@@ -76,10 +76,9 @@ int	check_zero(int i, int j, t_map *map, t_player player)
 	}
 	return (1);
 }
-
-int	check_player(int i, int j, t_map *map, t_player player)
+int	check_player(int i, int j, t_map *map)
 {
-	if (map->matrix[i][j] == player.orientation)
+	if (map->matrix[i][j] == map->pos)
 	{
 		if (i == 0 || i == map->c_height - 1 || j == 0 || j == map->c_width - 2)
 		{

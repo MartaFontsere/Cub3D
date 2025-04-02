@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_fd_utils.c                                    :+:      :+:    :+:   */
+/*   read_fd_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/01 11:58:37 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:40:35 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,9 @@ void	map_control(char *line, t_map *map, t_path *path, int i)
 			ft_write(2, &line[i], 1);
 			return (msg_error(": is an invalid char\n", NULL));
 		}
+		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' \
+		|| line[i] == 'E')
+			map->pos = line[i];
 		i++;
 	}
 }

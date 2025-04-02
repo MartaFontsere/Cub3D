@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialitations.c                                  :+:      :+:    :+:   */
+/*   initialitations_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:55 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:40:14 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	init_map_params(t_game *gdata, t_map *map)
 	map->j = 0;
 	map->c_width = 0;
 	map->c_height = 0;
+	map->pos = '\0';
 	map->px_width = MAP_PX_WIDTH;
 	map->px_height = MAP_PX_HEIGHT;
 	gdata->vision.FOV.rays = NULL;

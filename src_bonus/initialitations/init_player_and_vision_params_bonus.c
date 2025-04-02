@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_player_and_vision_params.c                    :+:      :+:    :+:   */
+/*   init_player_and_vision_params_bonus.c              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:47:23 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:57 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:45:36 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,9 @@ void	init_player_params(t_game *gdata, t_player *player)
 	player->rotate_left = 0;
 	player->height = gdata->minimap.px_height / 2;
 	player->radius = gdata->minimap.px_in_cell_width / 4;
+	player->cursor_on = 0;//AQUI CURSOR
+	player->last_xpos = 0;//AQUI CURSOR
+	player->new_xpos = 0;//AQUI CURSOR
 	init_player_position(gdata, &gdata->map, player);
 	init_player_orientation(&gdata->map, &gdata->vision, &gdata->player);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/01 15:10:45 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:44:47 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,23 +121,23 @@ typedef struct s_color
 	int					B;
 	char				**split;
 	int					assigned;
-	int					is_path;//decimos que C || F tienen path en lugar del RGB
-	char				*color_path;//guardamos el path de la textura
+	int					is_path;
+	char				*color_path;
 	struct s_path		*path;
 }						t_color;
 
 typedef struct s_path
 {
-    char		*NO;//Path textura cara norte
-	char		*SO;//Path textura cara sur
-	char		*WE;//Path textura cara oeste
-	char		*EA;//Path textura cara este
-	char		*tmp_str; //DEFINIR
-	int			p_count;  //DEFINIR
-	int			c_count; //DEFINIR
-	int			err_flag; //DEFINIR
-	t_color		C; //Estructura con el color en RGB
-	t_color		F; //Estructura con el color en RGB
+    char		*NO;
+	char		*SO;
+	char		*WE;
+	char		*EA;
+	char		*tmp_str;
+	int			p_count;
+	int			c_count;
+	int			err_flag;
+	t_color		C;
+	t_color		F;
 }				t_path;
 
 typedef struct s_texture 
@@ -312,7 +312,9 @@ typedef struct s_player
 	int  		rotate_right;
 	int 		rotate_left;
 	char 		orientation;
-
+	int			cursor_on;//AQUI CURSOR
+	double		new_xpos;//AQUI CURSOR
+	double		last_xpos;//AQUI CURSOR
 }				t_player;
 
 typedef struct s_minimap
@@ -331,21 +333,19 @@ typedef struct s_minimap
 
 typedef struct s_map
 {
-
-	char			**matrix; // Mapa en matriz
-	char			**tmp_matrix; //DEFINIR
-	char			**void_matrix; //DEFINIR
-	char			*fd_path; //DEFINIR
-	int				is_map; //DEFINIR
-	int				j; //DEFINIR
-	int				init; //DEFINIR
-	int				open; //DEFINIR
-
-	int				px_width; // Valor máximo X del mapa (en pixels)
-	int				px_height; // Valor máximo Y del mapa (en pixels)
-	int				c_width; // Valor máximo X del mapa (en casillas)
-	int				c_height; // Valor máximo Y del mapa (en casillas)
-	
+	char			**matrix;
+	char			**tmp_matrix;
+	char			**void_matrix;
+	char			*fd_path;
+	int				is_map;
+	int				j;
+	int				init;
+	int				open;
+	char			pos;
+	int				px_width;
+	int				px_height;
+	int				c_width;
+	int				c_height;
 }					t_map;
 
 
@@ -414,21 +414,21 @@ int		get_final_map(char **src, t_map *map);
 //------------------------------------------------
 
 /*PARSE_DOOR*/
-int		is_door(int i, int j, t_map *map, t_game *gdata);
-int		check_y_pos(int i, int j, t_map *map, t_game *gdata);
-int		check_x_pos(int i, int j, t_map *map, t_game *gdata);
+int	check_y_pos(int i, int j, t_map *map);
+int	check_x_pos(int i, int j, t_map *map);
+int	is_door(int i, int j, t_map *map);
 
 /*PARSE_MAP*/
 int		check_borders(char **matrix, int i, t_map *map);
-int		is_close(char **matrix, t_map *map, t_player player, t_game *gdata);
+int		is_close(char **matrix, t_map *map);
 int		min_chars(char **map, int i);
 int		parse_map(t_game *gdata, char **matrix, t_map *map);
 
 /*PARSE_UTILS*/
 void	check_n_line(char **src, t_map *map);
 int		check_esp(int x, int y, t_map *map);
-int		check_zero(int x, int y, t_map *map, t_player player);
-int		check_player(int x, int y, t_map *map, t_player player);
+int		check_zero(int i, int j, t_map *map);
+int		check_player(int i, int j, t_map *map);
 
 //------------------------------------------------
 //					INITIALITATIONS
@@ -568,6 +568,8 @@ void	print_dragon(t_game *gdata);
 //------------------------------------------------
 
 /*PRESS_OR_RELEASE_KEY*/
+void	cursor_rotation(double rotation_speed, t_game *gdata, int flag);
+void	cursor_handle(double xpos, double ypos, void *param);
 int		there_is_a_key_pressed(t_game *gdata);
 void	press_key(mlx_key_data_t keydata, void *param);
 void	release_key(mlx_key_data_t keydata, t_game *gdata);

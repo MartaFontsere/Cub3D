@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
+#    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/04/01 14:05:26 by mfontser         ###   ########.fr        #
+#    Updated: 2025/04/02 16:23:22 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,14 +104,14 @@ B_READ_SRCS = $(addprefix $(READ_DIR), $(B_READ_FILES))
 B_ERROR_SRCS = $(addprefix $(ERROR_DIR), $(B_ERROR_FILES))
 
 # Todos los files con su respectivo path
-FILES_BONUS = $(B_BASE_FILES) $(B_INIT_SRCS) $(B_WALLS_RAYCAST_SRCS) $(B_DOORS_RAYCAST_SRCS) $(B_MOVE_SRCS) $(B_PRINT_MAP_SRCS) \
+B_FILES = $(B_BASE_FILES) $(B_INIT_SRCS) $(B_WALLS_RAYCAST_SRCS) $(B_DOORS_RAYCAST_SRCS) $(B_MOVE_SRCS) $(B_PRINT_MAP_SRCS) \
 		$(B_PRINT_MINI_SRCS) $(B_DRAGON_SRCS) $(B_PARSE_SRCS) $(B_READ_SRCS) $(B_ERROR_SRCS) $(GNL_SRCS)	
 
-SRCDIR_BONUS = src_bonus/
-SRCS_BONUS = $(addprefix $(SRCDIR_BONUS), $(FILES_BONUS))
+B_SRCDIR = src_bonus/
+B_SRCS = $(addprefix $(B_SRCDIR), $(B_FILES))
 
-OBJDIR_BONUS = objbonus/
-OBJS_BONUS = $(patsubst $(SRCDIR_BONUS)%.c, $(OBJDIR_BONUS)%.o, $(SRCS_BONUS))
+B_OBJDIR= objbonus/
+B_OBJS = $(patsubst $(B_SRCDIR)%.c, $(B_OBJDIR)%.o, $(B_SRCS))
 
 
 INCLUDES = -I ./libs/Libft -I ./inc -I ./libs/get_next_line/
@@ -122,7 +122,8 @@ HEADER = inc/cub3D.h inc/cub3D_bonus.h libs/get_next_line/get_next_line.h
 
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -Ofast #-g -fsanitize=address #
+CFLAGS = -Wall -Wextra -Werror -Ofast 
+CFLAGS += #-g -fsanitize=address
 
 MLXDIR = libs/MLX42
 LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm
@@ -136,7 +137,7 @@ $(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER) Makefile
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(YELLOW)Compiling... $(patsubst $(DIR_BUILD)%,%,$@)"
 
-$(OBJDIR_BONUS)%.o: $(SRCDIR_BONUS)%.c $(HEADER) Makefile
+$(B_OBJDIR)%.o: $(B_SRCDIR)%.c $(HEADER) Makefile
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(YELLOW)Compiling... $(patsubst $(DIR_BUILD)%,%,$@)"
@@ -184,8 +185,8 @@ ${NAME}: ${OBJS}
 	@echo ""⠀⠀⠀⠀⠀⠀
 
 else
-${NAME}: ${OBJS_BONUS} 
-	@$(CC) $(CFLAGS) ${OBJS_BONUS} ${LIBS} -o $(NAME)
+${NAME}: ${B_OBJS}
+	@$(CC) $(CFLAGS) ${B_OBJS} ${LIBS} -o $(NAME)
 	@echo "	⠀⠀⠀⠀⠀⠀⠀"⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⣰⠂⠀$(BLUE)⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠀⠀⠀⠀⠀"⠀⠀⠀
 	@echo "	⠀⠀⠀⠀⠀⠀$(YELLOW)⡟⢆$(BLUE)⢠⢣⠀$(YELLOW)  ⣔⡀⠀⠀ ⠀$(BLUE)⠀⡘⡇⠀⠀⠀⠀⠀⠀"⠀⠀
@@ -227,17 +228,14 @@ bonus:
 	@$(MAKE) BONUS=42 --no-print-directory
 
 clean:
-	@${RM} ${OBJDIR}
-	@${RM} ${OBJDIR_BONUS}
-	@make -C libs/Libft clean
-	@make -C $(MLXDIR)/build clean
+	@${RM} ${OBJDIR} ${B_OBJDIR}
+	@make -C libs/Libft clean --no-print-directory
+	@make -C $(MLXDIR)/build clean --no-print-directory
 	@echo "$(RED)CUB3D OBJECTS DELETED$(NC)"
 
-fclean: #clean 
-	@${RM} ${OBJDIR}
-	@${RM} ${OBJDIR_BONUS}
+fclean:
+	@${RM} ${OBJDIR} ${B_OBJDIR}
 	@echo "$(RED)CUB3D OBJECTS DELETED"
-	@${RM} bonus
 	@${RM} ${NAME}
 	@make -C libs/Libft fclean --no-print-directory
 	@rm -rf $(MLXDIR)/build
@@ -248,7 +246,7 @@ fclean: #clean
 	@echo "	⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣧⠀⠀⠀"
 	@echo "	⠀⠀⠀⠀⡀⢠⣿$(YELLOW)⡟⣿$(ORANGE)⣿⣿⡇⠀"
 	@echo "	⠀⠀⠀⠀⣳⣼⣿$(YELLOW)⡏⢸$(ORANGE)⣿⣿⣿⢀⠀"
-	@echo "	⠀⠀⠀⣰⣿⣿$(YELLOW)⡿⠁⢸)$(ORANGE)⣿⣿⡟⣼⡆"
+	@echo "	⠀⠀⠀⣰⣿⣿$(YELLOW)⡿⠁⢸$(ORANGE)⣿⣿⡟⣼⡆"
 	@echo "	⢰⢀⣾⣿$(YELLOW)⣿⠟⠀⠀⣾⢿$(ORANGE)⣿⣿⣿⣿"
 	@echo "	⢸⣿⣿$(YELLOW)⣿⡏⠀⠀⠀⠃⠸⣿$(ORANGE)⣿⣿⡿"
 	@echo "	⢳⣿⣿$(YELLOW)⣿⠀⠀⠀⠀⠀⠀⢹⣿$(ORANGE)⡿⡁"
