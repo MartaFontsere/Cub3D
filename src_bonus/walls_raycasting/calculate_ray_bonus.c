@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calculate_ray.c                                    :+:      :+:    :+:   */
+/*   calculate_ray_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 22:22:08 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/01 11:58:33 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/03 02:36:42 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	init_ray_direction(t_ray *ray, t_game *gdata, int check_ray_x_in_map,
 	controll_x_limit_case(ray, check_ray_x_in_map, gdata->player.cell_player_x);
 	controll_y_limit_case(ray, check_ray_y_in_map, gdata->player.cell_player_y);
 }
-
-
 
 void	traverse_ray_until_hit(t_ray *ray, t_game *gdata,
 		int *check_ray_x_in_map, int *check_ray_y_in_map)

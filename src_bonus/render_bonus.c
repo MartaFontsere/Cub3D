@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   render_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/01 11:58:11 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/03 04:51:52 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	render_game(void *param)
 			move_player(gdata, gdata->vision, &target_x, &target_y);
 		update_doors(gdata);
 		print_minimap (gdata);
-		print_map(gdata, gdata->mlx, gdata->map);
+		print_map(gdata, gdata->map);
 		do_dragon_animation (gdata);
 		gdata->player.x = target_x;
 		gdata->player.y = target_y;

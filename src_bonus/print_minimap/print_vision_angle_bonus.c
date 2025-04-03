@@ -6,33 +6,34 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:13:24 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/01 15:22:50 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:02:14 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D_bonus.h"
 
-int can_draw_pixel(t_game *gdata, t_draw_va  draw_vision_angle)
+int can_draw_pixel(t_game *gdata, t_draw_va draw_vision_angle)
 {
-    int pixel_map_x;
-    int pixel_map_y;
-    char cell;
+    int pixel_map_x = (int)((gdata->player.x + draw_vision_angle.offset_x) / gdata->minimap.px_in_cell_width);
+    int pixel_map_y = (int)((gdata->player.y + draw_vision_angle.offset_y) / gdata->minimap.px_in_cell_height);
 
-    pixel_map_x = (int)((gdata->player.x + draw_vision_angle.offset_x) / gdata->minimap.px_in_cell_width);
-   	pixel_map_y = (int)((gdata->player.y + draw_vision_angle.offset_y) / gdata->minimap.px_in_cell_height);
-    if (draw_vision_angle.pixel_x < 0 || draw_vision_angle.pixel_x >= gdata->minimap.px_width || draw_vision_angle.pixel_y < 0 || draw_vision_angle.pixel_y >= gdata->minimap.px_height)
+    // Verificar que está dentro del minimapa
+    if (draw_vision_angle.pixel_x < 0 || draw_vision_angle.pixel_x >= gdata->minimap.px_width ||
+        draw_vision_angle.pixel_y < 0 || draw_vision_angle.pixel_y >= gdata->minimap.px_height)
+        return 0;
 
+    // Verificar que está dentro del mapa (ESTO ES LO QUE FALTABA PROTEGER)
     if (pixel_map_x < 0 || pixel_map_x >= gdata->map.c_width ||
         pixel_map_y < 0 || pixel_map_y >= gdata->map.c_height)
         return 0;
 
-    cell = gdata->map.matrix[pixel_map_y][pixel_map_x];
+    // Ya está seguro acceder a la celda
+    char cell = gdata->map.matrix[pixel_map_y][pixel_map_x];
     if (cell == '1' || cell == 'D' || cell == 'd')
         return 0;
 
     return 1;
 }
-
 void draw_thick_ray_segment(t_game *gdata, double current_x, double current_y, t_vision vision)
 {
 	double thickness;
@@ -56,8 +57,11 @@ void draw_thick_ray_segment(t_game *gdata, double current_x, double current_y, t
 
 int check_collision_in_y(t_game *gdata, double current_x, double next_y)
 {
-    int map_x = (int)(current_x / gdata->minimap.px_in_cell_width);
-    int map_y = (int)(next_y / gdata->minimap.px_in_cell_height);
+    int map_x;
+    int map_y;
+
+    map_x = (int)(current_x / gdata->minimap.px_in_cell_width);
+    map_y = (int)(next_y / gdata->minimap.px_in_cell_height);
 
     if (map_y < 0 || map_y >= gdata->map.c_height)
         return 1;
@@ -70,8 +74,11 @@ int check_collision_in_y(t_game *gdata, double current_x, double next_y)
 
 int check_collision_in_x(t_game *gdata, double next_x, double current_y)
 {
-    int map_x = (int)(next_x / gdata->minimap.px_in_cell_width);
-    int map_y = (int)(current_y / gdata->minimap.px_in_cell_height);
+    int map_x;
+    int map_y;
+
+    map_x = (int)(next_x / gdata->minimap.px_in_cell_width);
+    map_y = (int)(current_y / gdata->minimap.px_in_cell_height);
 
     if (map_x < 0 || map_x >= gdata->map.c_width || map_y < 0 || map_y >= gdata->map.c_height)
         return 1;

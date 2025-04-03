@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
+#    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/04/02 16:23:22 by yanaranj         ###   ########.fr        #
+#    Updated: 2025/04/02 21:24:37 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ ORANGE = \e[1;38;2;255;128;0m
 
 #------------------------------------------------VARIABLES---------------------------------------------------#
 
-# MANDATORY Files by directory
+#---MANDATORY---# 
+
+#Files
 BASE_FILES = cub3D.c render.c 
 INIT_FILES = initialitations.c init_player_and_vision_params.c  init_mlx_params.c
 RAYCAST_FILES = calculate_fov.c calculate_ray.c calculate_ray_utils.c 
@@ -38,21 +40,7 @@ READ_FILES = read_fd.c read_fd_utils.c read_fd_utils2.c read_colors.c get_map.c
 ERROR_FILES = free_errors.c msg_errors.c
 GNL_FILES = get_next_line.c get_next_line_utils.c
 
-# BONUS Files by directory
-B_BASE_FILES = cub3D_bonus.c render_bonus.c 
-B_INIT_FILES = initialitations_bonus.c init_player_and_vision_params_bonus.c init_mlx_params_bonus.c
-B_WALLS_RAYCAST_FILES = calculate_fov_bonus.c calculate_ray_bonus.c calculate_ray_utils_bonus.c 
-B_DOORS_RAYCAST_FILES = check_ray_opened_door_bonus.c door_raycasting_bonus.c door_raycasting_utils_bonus.c update_doors_status_bonus.c
-B_MOVE_FILES = press_or_release_key_bonus.c move_player_bonus.c rotate_player_bonus.c check_collisions_bonus.c
-B_PRINT_MAP_FILES = print_map_bonus.c print_walls_bonus.c print_utils_bonus.c textures_bonus.c
-B_PRINT_MINI_FILES = print_fov_bonus.c print_minimap_bonus.c print_minimap_utils_bonus.c print_player.c print_vision_angle_bonus.c
-B_DRAGON_FILES = do_dragon_animation_bonus.c print_dragon_bonus.c
-B_PARSE_FILES = parse_door_bonus.c parse_map_bonus.c parse_utils_bonus.c
-B_READ_FILES = read_fd_bonus.c read_fd_utils_bonus.c read_fd_utils2_bonus.c read_colors_bonus.c read_colors_utils_bonus.c get_map_bonus.c
-B_ERROR_FILES = free_errors_bonus.c msg_errors_bonus.c
-B_GNL_FILES = get_next_line_bonus.c get_next_line_utils_bonus.c
-
-# MANDATORY Directories
+#Directories
 INIT_DIR = initialitations/
 RAYCAST_DIR = raycasting/
 MOVE_DIR = movements/
@@ -62,14 +50,7 @@ READ_DIR = read/
 ERROR_DIR = error/
 GNL_DIR = ../libs/get_next_line/
 
-# BONUS Directories
-B_WALLS_RAYCAST_DIR = walls_raycasting/
-B_DOORS_RAYCAST_DIR = doors_raycasting/
-B_PRINT_MINI_DIR = print_minimap/
-B_DRAGON_DIR = dragon/
-
-#-------------------------------MANDATORY SRCS-------------------------------#
-
+#Sources
 INIT_SRCS = $(addprefix $(INIT_DIR), $(INIT_FILES))
 RAYCAST_SRCS = $(addprefix $(RAYCAST_DIR), $(RAYCAST_FILES))
 MOVE_SRCS = $(addprefix $(MOVE_DIR), $(MOVE_FILES))
@@ -79,7 +60,7 @@ READ_SRCS = $(addprefix $(READ_DIR), $(READ_FILES))
 ERROR_SRCS = $(addprefix $(ERROR_DIR), $(ERROR_FILES))
 GNL_SRCS = $(addprefix $(GNL_DIR), $(GNL_FILES))
 
-# Todos los files con su respectivo path
+
 FILES = $(BASE_FILES) $(INIT_SRCS) $(RAYCAST_SRCS) $(MOVE_SRCS) $(PRINT_SRCS) \
 		$(PARSE_SRCS) $(READ_SRCS) $(ERROR_SRCS) $(GNL_SRCS)	
 
@@ -90,11 +71,35 @@ OBJDIR = obj/
 OBJS = $(patsubst $(SRCDIR)%.c, $(OBJDIR)%.o, $(SRCS))
 
 
-#-------------------------------BONUS SRCS-------------------------------#
+#---BONUS---# 
 
+# Files 
+B_BASE_FILES = cub3D_bonus.c render_bonus.c 
+B_INIT_FILES = initialitations_bonus.c init_player_and_vision_params_bonus.c init_mlx_params_bonus.c init_map_minimap_bonus.c init_textures_colors_bonus.c
+B_WALLS_RAYCAST_FILES = calculate_fov_bonus.c calculate_ray_bonus.c calculate_ray_utils_bonus.c 
+B_DOORS_RAYCAST_FILES = check_ray_opened_door_bonus.c door_raycasting_bonus.c door_raycasting_utils_bonus.c update_doors_status_bonus.c
+B_FLOOR_RAYCAST_FILES = floor_raycasting_bonus.c
+B_MOVE_FILES = press_or_release_key_bonus.c move_player_bonus.c rotate_player_bonus.c check_collisions_bonus.c
+B_PRINT_MAP_FILES = print_map_bonus.c print_walls_bonus.c print_doors_bonus.c print_sky_bonus.c print_floor_bonus.c print_utils_bonus.c textures_bonus.c
+B_PRINT_MINI_FILES = print_fov_bonus.c print_minimap_bonus.c print_minimap_utils_bonus.c print_player_bonus.c print_vision_angle_bonus.c
+B_DRAGON_FILES = do_dragon_animation_bonus.c print_dragon_bonus.c
+B_PARSE_FILES = parse_door_bonus.c parse_map_bonus.c parse_utils_bonus.c
+B_READ_FILES = read_fd_bonus.c read_fd_utils_bonus.c read_fd_utils2_bonus.c read_colors_bonus.c read_colors_utils_bonus.c get_map_bonus.c
+B_ERROR_FILES = free_errors_bonus.c msg_errors_bonus.c
+B_GNL_FILES = get_next_line_bonus.c get_next_line_utils_bonus.c
+
+# Directories
+B_WALLS_RAYCAST_DIR = walls_raycasting/
+B_DOORS_RAYCAST_DIR = doors_raycasting/
+B_FLOOR_RAYCAST_DIR = floor_raycasting/
+B_PRINT_MINI_DIR = print_minimap/
+B_DRAGON_DIR = dragon/
+
+#Sources
 B_INIT_SRCS = $(addprefix $(INIT_DIR), $(B_INIT_FILES))
 B_WALLS_RAYCAST_SRCS = $(addprefix $(B_WALLS_RAYCAST_DIR), $(B_WALLS_RAYCAST_FILES))
 B_DOORS_RAYCAST_SRCS = $(addprefix $(B_DOORS_RAYCAST_DIR), $(B_DOORS_RAYCAST_FILES))
+B_FLOOR_RAYCAST_SRCS = $(addprefix $(B_FLOOR_RAYCAST_DIR), $(B_FLOOR_RAYCAST_FILES))
 B_MOVE_SRCS = $(addprefix $(MOVE_DIR), $(B_MOVE_FILES))
 B_PRINT_MAP_SRCS = $(addprefix $(PRINT_DIR), $(B_PRINT_MAP_FILES))
 B_PRINT_MINI_SRCS = $(addprefix $(B_PRINT_MINI_DIR), $(B_PRINT_MINI_FILES))
@@ -103,7 +108,7 @@ B_PARSE_SRCS = $(addprefix $(PARSE_DIR), $(B_PARSE_FILES))
 B_READ_SRCS = $(addprefix $(READ_DIR), $(B_READ_FILES))
 B_ERROR_SRCS = $(addprefix $(ERROR_DIR), $(B_ERROR_FILES))
 
-# Todos los files con su respectivo path
+
 B_FILES = $(B_BASE_FILES) $(B_INIT_SRCS) $(B_WALLS_RAYCAST_SRCS) $(B_DOORS_RAYCAST_SRCS) $(B_MOVE_SRCS) $(B_PRINT_MAP_SRCS) \
 		$(B_PRINT_MINI_SRCS) $(B_DRAGON_SRCS) $(B_PARSE_SRCS) $(B_READ_SRCS) $(B_ERROR_SRCS) $(GNL_SRCS)	
 
@@ -114,6 +119,7 @@ B_OBJDIR= objbonus/
 B_OBJS = $(patsubst $(B_SRCDIR)%.c, $(B_OBJDIR)%.o, $(B_SRCS))
 
 
+#---DEFINES---# 
 INCLUDES = -I ./libs/Libft -I ./inc -I ./libs/get_next_line/
 
 NAME = cub3D

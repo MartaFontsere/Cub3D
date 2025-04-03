@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/02 16:42:58 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/03 02:38:33 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int ac, char **av)
 	if (prepare_textures(&gdata) == 0 || prepare_animation (&gdata) == 0)
 		return (1);//LIBERAR COSAS
 	update_doors(&gdata);
-	print_map(&gdata, gdata.mlx, gdata.map);
+	print_map(&gdata, gdata.map);
 	print_minimap(&gdata);
 	print_dragon (&gdata);
 	mlx_key_hook(gdata.mlx.init, press_key, &gdata);

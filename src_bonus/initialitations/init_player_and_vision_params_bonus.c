@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player_and_vision_params_bonus.c              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:47:23 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/02 16:45:36 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/03 02:36:35 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ int	init_vision_params(t_game *gdata, t_vision *vision)
 		clean_data(gdata);
 		return (0);
 	}
+	vision->projection_factor = (gdata->map.px_height / 2) / tan(vision->FOV.fov_rad / 2); // Es como un factor de escala que convierte distancias del mundo 2D (minimapa) en una altura en la pantalla (3D), asegurando que los objetos más lejanos sean más pequeños y los cercanos sean más grandes.
+	vision->camera_height_scale = (gdata->player.height) * vision->projection_factor; // SI LA ALTURA DEL JUGADOR CAMBIARA, ESTO SE TENDRIA QUE IR RECALCULANDO
+	printf ("player.height %d\n", gdata->player.height);
 	return (1);
 }
 

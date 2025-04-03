@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_colors_utils_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:58:12 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/25 13:36:40 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/02 21:01:22 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

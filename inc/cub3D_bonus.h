@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/02 16:44:47 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/03 04:53:32 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 
 			//esto no borrar:
 			// #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
-			#define SKY_TEXTURE "textures/sky/Sky_32.xpm42"
+			#define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
 			#define FLOOR_TEXTURE "textures/floor/Floor_4.xpm42"
 			#define DOOR_TEXTURE "textures/door/Door2.xpm42"
 			#define DRAGON_1 "textures/flying_dragon/dragon1.xpm42"
@@ -436,10 +436,10 @@ int		check_player(int i, int j, t_map *map);
 
 /*INITIALITATIONS*/
 int		init_gdata_values(t_game *gdata);
+
+/*INIT_MAP_MINIMAP_PARAMS*/
 void 	init_map_params (t_game *gdata, t_map *map);
 void	init_minimap_params(t_game *gdata);
-void	init_textures_and_colors_path(t_texture *texture, t_path *path);
-
 
 /*INIT_PLAYER_AND_VISION_PARAMS*/
 void 	init_player_params (t_game *gdata, t_player *player);
@@ -448,11 +448,16 @@ void	define_vision_angle(t_vision *vision, char orientation);
 void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
 int 	init_vision_params (t_game *gdata, t_vision *vision);
 
-
 /*INIT_MLX_PARAMS*/
 int		init_mlx(t_game *gdata, t_mlx *mlx);
 int		create_new_images(t_game *gdata, t_mlx *mlx);
 int		put_image_to_window(t_game *gdata, t_mlx *mlx);
+
+/*INIT_TEXTURES_COLORS*/
+void 	init_textures_and_colors_path(t_texture *texture, t_path *path);
+void	init_textures(t_texture *texture, t_path *path);
+void	init_colors(t_path *path);
+
 
 //------------------------------------------------
 //					WALLS_RAYCASTING
@@ -477,6 +482,11 @@ double 	compute_collision_coordinate(int check_ray_coord, int ray_sign, double p
 
 
 void check_matrix_lines (t_ray *ray, int *check_ray_x_in_map, int *check_ray_y_in_map);
+
+
+//------------------------------------------------
+//					FLOOR_RAYCASTING
+//------------------------------------------------
 
 
 //------------------------------------------------
@@ -515,19 +525,24 @@ int		load_image(t_game *gdata, t_image *image, char *path);
 int		check_file_can_be_open(char *path);
 
 /*PRINT_MAP*/
-void 	print_map (t_game *gdata, t_mlx mlx, t_map map);
+void 	print_map (t_game *gdata, t_map map);
 void	prepare_print_params(t_game *gdata, t_ray *ray, t_map map);
-void	print_sky(t_game *gdata, t_mlx mlx, int *row, int *column);
-void	print_floor(t_game *gdata, t_mlx mlx, int *row, int *column);
+void	print_sky(t_game *gdata, t_ray *ray, int *row, int column);
+void	print_floor(t_game *gdata, t_ray *ray, int row, int column);
 
 /*PRINT_WALLS*/
 void 	print_texture_walls (t_game *gdata, t_ray *ray, int *row, int *column);
 void 	print_wall_column(t_game *gdata, int *row, int *column, t_image *texture);
 void 	get_texture_row(t_game *gdata, t_image *texture,  double *tex_start_offset);
 void 	get_texture_column(t_image *texture, double *wall_x, int *tex_x);
-void 	get_wall_column (t_game *gdata, t_ray *ray, double *wall_x);
+void 	get_column (t_game *gdata, t_ray *ray, double *wall_x);
 
-/*PRINT_UTILS*/
+/*PRINT_DOORS*/
+void print_door (t_game *gdata, t_ray *ray, int *row, int *column);
+void print_door_column(t_game *gdata, int *row, int *column, t_image *texture, int tex_x, double tex_start_offset, double door_distance);
+
+
+/*PRINT_MAP_UTILS*/
 int 	get_texture_pixel(t_image *texture, int tex_x, int tex_y);
 t_image *get_wall_texture(t_ray *ray, t_game *gdata);
 int 	rgb_to_hex(int r, int g, int b);
@@ -579,7 +594,8 @@ void	move_player(t_game *gdata, t_vision vision, double *target_x, double *targe
 void	prepare_next_position(t_game *gdata, t_vision vision, double *move_x, double *move_y);
 
 /*CHECK_COLLISION*/
-int		check_collision(t_game *gdata, double target_x, double target_y);
+int check_collision_x(t_game *gdata, double target_x);
+int check_collision_y(t_game *gdata, double target_y);
 
 /*ROTATE PLAYER*/
 void 	rotate_player(t_player *player, t_vision *vision);
