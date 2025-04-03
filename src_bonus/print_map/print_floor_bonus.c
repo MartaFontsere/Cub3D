@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 21:08:30 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/03 05:08:23 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:47:05 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void print_floor_texture(t_game *gdata, t_ray *ray, int row, int column)
     if (row <= gdata->print_map.draw_wall_end)
         row = gdata->print_map.draw_wall_end + 1;
 
-    double scale = 12.0;  // Ajustá esto al gusto visual
+    double scale = 12.0;
 
     while (row < gdata->map.px_height)
     {
@@ -50,14 +50,18 @@ void print_floor_texture(t_game *gdata, t_ray *ray, int row, int column)
         double tex_u = tex_unit_x - floor(tex_unit_x);
         double tex_v = tex_unit_y - floor(tex_unit_y);
 
-        if (tex_u < 0) tex_u += 1.0;
-        if (tex_v < 0) tex_v += 1.0;
+        if (tex_u < 0) 
+            tex_u += 1.0;
+        if (tex_v < 0) 
+            tex_v += 1.0;
 
         int tex_x = (int)(tex_u * tex_width);
         int tex_y = (int)(tex_v * tex_height);
 
-        if (tex_x >= tex_width) tex_x = tex_width - 1;
-        if (tex_y >= tex_height) tex_y = tex_height - 1;
+        if (tex_x >= tex_width) 
+            tex_x = tex_width - 1;
+        if (tex_y >= tex_height) 
+            tex_y = tex_height - 1;
 
         int color = get_texture_pixel(texture, tex_x, tex_y);
         mlx_put_pixel(gdata->mlx.image, column, row, color);

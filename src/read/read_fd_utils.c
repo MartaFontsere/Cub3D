@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/21 13:38:45 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:55:16 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@ int	check_name(char *map_path)
 	return (1);
 }
 
-char	*cpy_path(char *line, t_path *path, int pos)
+char	*cpy_path(char *line, t_path *path, int pos, int i)
 {
 	char	*tmp;
-	int		i;
 	int		end;
 
 	while (ft_isspace(line[pos]))
@@ -40,7 +39,6 @@ char	*cpy_path(char *line, t_path *path, int pos)
 	}
 	else
 		tmp = ft_strdup(ft_strchr(line, line[pos]));
-	i = 0;
 	while (tmp[i] && !ft_isspace(tmp[i]))
 		i++;
 	end = i;

@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/04/02 21:24:37 by mfontser         ###   ########.fr        #
+#    Updated: 2025/04/03 12:14:30 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,12 +124,12 @@ INCLUDES = -I ./libs/Libft -I ./inc -I ./libs/get_next_line/
 
 NAME = cub3D
 
-HEADER = inc/cub3D.h inc/cub3D_bonus.h libs/get_next_line/get_next_line.h
+HEADER = inc/cub3D.h inc/structs.h libs/get_next_line/get_next_line.h inc/cub3D_bonus.h inc/structs_bonus.h 
 
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -Ofast 
-CFLAGS += #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-Ofast 
+CFLAGS += -g -fsanitize=address
 
 MLXDIR = libs/MLX42
 LIBS = libs/Libft/libft.a $(MLXDIR)/build/libmlx42.a -ldl -lglfw -lm

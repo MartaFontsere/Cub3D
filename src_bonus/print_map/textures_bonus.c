@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   textures.c                                         :+:      :+:    :+:   */
+/*   textures_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/01 11:57:38 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:48:19 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ int	prepare_textures(t_game *gdata)
 	}
 
 	//BONUS
-	if (!load_image(gdata, &gdata->texture.sky_img, SKY_TEXTURE))
+	if (!load_image(gdata, &gdata->texture.sky_img, gdata->texture.path.C.color_path))
 	{
 		clean_data(gdata);
 		return (0);
 	}
-	if (!load_image(gdata, &gdata->texture.floor_img, FLOOR_TEXTURE))
+	if (!load_image(gdata, &gdata->texture.floor_img, gdata->texture.path.F.color_path))
 	{
 		clean_data(gdata);
 		return (0);
