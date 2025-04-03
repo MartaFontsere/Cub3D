@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 21:08:30 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/03 05:06:55 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/03 05:08:23 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void print_floor_texture(t_game *gdata, t_ray *ray, int row, int column)
     if (row <= gdata->print_map.draw_wall_end)
         row = gdata->print_map.draw_wall_end + 1;
 
-    double scale = 12.0;  
+    double scale = 12.0;  // Ajustá esto al gusto visual
 
     while (row < gdata->map.px_height)
     {
@@ -47,9 +47,8 @@ void print_floor_texture(t_game *gdata, t_ray *ray, int row, int column)
         double tex_unit_x = floor_world_x / (gdata->minimap.px_in_cell_width * scale);
         double tex_unit_y = floor_world_y / (gdata->minimap.px_in_cell_height * scale);
 
-        double tex_u = (floor_world_x / cell_width) - floor(floor_world_x / cell_width);
-        double tex_v = (floor_world_y / cell_height) - floor(floor_world_y / cell_height);
-
+        double tex_u = tex_unit_x - floor(tex_unit_x);
+        double tex_v = tex_unit_y - floor(tex_unit_y);
 
         if (tex_u < 0) tex_u += 1.0;
         if (tex_v < 0) tex_v += 1.0;

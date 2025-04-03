@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/03 04:53:32 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/03 05:08:46 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 			//esto no borrar:
 			// #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
 			#define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
-			#define FLOOR_TEXTURE "textures/floor/Floor_4.xpm42"
+			#define FLOOR_TEXTURE "textures/floor/Floor5.xpm42"
 			#define DOOR_TEXTURE "textures/door/Door2.xpm42"
 			#define DRAGON_1 "textures/flying_dragon/dragon1.xpm42"
 			#define DRAGON_2 "textures/flying_dragon/dragon2.xpm42"
