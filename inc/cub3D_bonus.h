@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 14:48:44 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:52:45 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,7 +363,18 @@ void	do_dragon_animation(t_game *gdata);
 
 /*DO_FIRE_ANIMATION*/
 void	do_fire_animation(t_game *gdata);
+void	end_fire_animation(t_game *gdata, int current_index,
+		int *fire_clock, int *last_index);
+void	update_fire_clock(int *fire_clock, double speed);
+int	get_fire_height_for_dragon_frame(int dragon_frame);
+int	get_fire_weight_for_dragon_frame(int dragon_frame);
 
+/*DO_FIRE_ANIMATION_UTILS*/
+void	update_fire_position(t_game *gdata);
+void	ensure_fire_frame_exists(t_game *gdata, t_image *fire,
+		int current_index);
+void	remove_last_fire_frame(t_game *gdata, t_image *fire, int current_index,
+		int *last_index);
 //------------------------------------------------
 //					MOVEMENTS
 //------------------------------------------------

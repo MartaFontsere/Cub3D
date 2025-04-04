@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_door_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:56:10 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/02 16:37:05 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:54:32 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	is_door(int i, int j, t_map *map)
 {
 	if (map->matrix[i][j] == 'D')
 	{
+		map->is_door = 1;
 		if (i == 0 || i == map->c_height - 1 || j == 0 || j == map->c_width - 2)
 			return (msg_error("Door never should be on borders", "\n"), 0);
 		if (map->matrix[i][j - 1] == '0' || map->matrix[i][j - 1] == map->pos)

@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:18:21 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 03:33:17 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:54:45 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_map_params(t_game *gdata, t_map *map)
 	map->tmp_matrix = NULL;
 	map->void_matrix = NULL;
 	map->is_map = 0;
+	map->is_door = 0;
 	map->j = 0;
 	map->c_width = 0;
 	map->c_height = 0;

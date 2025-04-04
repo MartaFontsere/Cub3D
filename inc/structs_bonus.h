@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:02:13 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 14:26:35 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:54:17 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,7 @@ typedef struct s_map
 	char			**void_matrix;
 	char			*fd_path;
 	int				is_map;
+	int				is_door;
 	int				j;
 	int				init;
 	int				open;

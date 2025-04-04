@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/04/04 14:49:17 by mfontser         ###   ########.fr        #
+#    Updated: 2025/04/04 14:53:03 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ B_FLOOR_RAYCAST_FILES = floor_raycasting_bonus.c
 B_MOVE_FILES = press_or_release_key_bonus.c move_player_bonus.c rotate_player_bonus.c cursor_rotation_bonus.c check_collisions_bonus.c
 B_PRINT_MAP_FILES = print_map_bonus.c print_walls_bonus.c print_doors_bonus.c print_sky_bonus.c print_sky_utils_bonus.c print_floor_bonus.c print_floor_utils_bonus.c print_utils_bonus.c prepare_textures_bonus.c prepare_animations_bonus.c
 B_PRINT_MINI_FILES = print_fov_bonus.c print_minimap_bonus.c print_minimap_utils_bonus.c print_player_bonus.c print_vision_angle_bonus.c
-B_DRAGON_FILES = do_dragon_animation_bonus.c do_fire_animation_bonus.c
+B_DRAGON_FILES = do_dragon_animation_bonus.c do_fire_animation_bonus.c do_fire_animation_utils_bonus.c
 B_PARSE_FILES = parse_door_bonus.c parse_map_bonus.c parse_utils_bonus.c
 B_READ_FILES = read_fd_bonus.c read_fd_utils_bonus.c read_fd_utils2_bonus.c read_colors_bonus.c read_colors_utils_bonus.c get_map_bonus.c
 B_ERROR_FILES =  manage_errors_bonus.c
