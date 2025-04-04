@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_colors_utils_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:58:12 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/04 03:17:08 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 12:50:57 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 	if (!split[0] || !split[1] || !split[2])
 	{
 		color->path->err_flag = 1;
-		return (free_matrix(split), msg_error("Invaid split\n", NULL));
+		return (free_matrix(split), msg_error("Invaid split\n", rgb));
 	}
 	while (split[++i])
 	{

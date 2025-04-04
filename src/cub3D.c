@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/21 13:22:39 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:20:26 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	close_window(t_game *gdata)
 		ft_write(1, "    See you soon 😈🔥\n", 26);
 	}
 	mlx_close_window(gdata->mlx.init);
+	exit(0);
 }
 
 int	main(int ac, char **av)
@@ -45,5 +46,5 @@ int	main(int ac, char **av)
 	mlx_loop(gdata.mlx.init);
 	clean_data(&gdata);
 	mlx_terminate(gdata.mlx.init);
-	return (0);
+	exit (0);
 }

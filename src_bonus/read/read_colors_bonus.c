@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_colors_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/04 03:49:58 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:05:33 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	get_colors(char *line, t_path *path, int i, char c)
 		path->err_flag = 1;
 		return (msg_error("This RGB is not valid: ", line));
 	}
-	path->tmp_str = ft_substr(line, start - 1, end);
+	path->tmp_str = ft_substr(line, start, end - 2);
 	if (c == 'C')
 		cpy_colors(path->tmp_str, &path->c, -1);
 	else if ( c == 'F')
@@ -122,9 +122,7 @@ void	assign_color(char *line, t_path *path, int i)
 	if (path->c_count == 2 && (!path->c.assigned || !path->f.assigned))
 	{
 		path->err_flag = 1;
-		if (!path->f.assigned)
-			return (msg_error("Floor colors are missing", "\n"));
-		else if (!path->c.assigned)
-			return (msg_error("Celing colors are missing", "\n"));
+		if (!path->f.assigned || !path->c.assigned)
+			return (msg_error("Some colors are missing", "\n"));
 	}
 }

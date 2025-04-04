@@ -3,25 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   read_colors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/04 03:06:55 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:03:50 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+char	**split_color(char *rgb, t_color *color)
+{
+	char	**result;
+	
+	if (color->assigned)
+	{
+		color->path->err_flag = 1;
+		return(msg_error("Color is already assigned\n", NULL), NULL);
+	}
+	result = ft_split(rgb, ',');
+	if ((!result[0] || !result[1] || !result[2]))
+	{
+		color->path->err_flag = 1;
+		free_matrix(result);
+		return (msg_error("Invaid split\n", rgb), NULL);
+	}
+	return (result);
+}
+
 void	cpy_colors(char *rgb, t_color *color, int i)
 {
 	char	**split;
-
-	split = ft_split(rgb, ',');
-	if (!split[0] || !split[1] || !split[2])
-	{
-		color->path->err_flag = 1;
-		return (free_matrix(split), msg_error("Invaid split\n", NULL));
-	}
+	
+	split = split_color(rgb, color);
+	if (!split)
+		return ;
 	while (split[++i])
 	{
 		if ((ft_atoi(split[i]) >= 0 && ft_atoi(split[i]) <= 255) && i == 0)
@@ -33,7 +49,7 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 		else
 		{
 			color->path->err_flag = 1;
-			return (msg_error("Invalid value: ", split[i]), free_matrix(split));
+			return (msg_error("Out of range: ", split[i]), free_matrix(split));
 		}
 	}
 	color->assigned = 1;
@@ -62,7 +78,7 @@ void	get_colors(char *line, t_path *path, int i, int init)
 		path->err_flag = 1;
 		return (msg_error("This RGB is not valid: ", line));
 	}
-	path->tmp_str = ft_substr(line, start, end);
+	path->tmp_str = ft_substr(line, start, end - 2);
 	if (line[init] == 'C')
 		cpy_colors(path->tmp_str, &path->c, -1);
 	else if (line[init] == 'F')
@@ -84,13 +100,12 @@ void	assign_color(char *line, t_path *path, int i)
 	}
 	while (ft_isspace(line[i]))
 		i++;
-	if (!ft_isdigit(line[i]))
+	if (ft_isalpha(line[i]))
 	{
 		path->err_flag = 1;
 		return (msg_error("A path for floor or celing is forbidden: ", line));
 	}
-	if (path->c_count < 2)
-		get_colors(line, path, i - 1, init);
+	get_colors(line, path, i - 1, init);
 	if (path->c_count == 2 && (!path->c.assigned || !path->f.assigned))
 	{
 		path->err_flag = 1;

@@ -1,5 +1,5 @@
 F 20,20,120
-C 20,0,52
+C 20,0,21
 
 NO textures/map_walls/Norte.xpm42
 SO textures/map_walls/Sur.xpm42
@@ -26,5 +26,3 @@ WE textures/map_walls/Oeste.xpm42
 1
 1
 
-
-C 20,0,52

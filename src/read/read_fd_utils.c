@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/03 11:55:16 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:18:06 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_name(char *map_path)
 	len = ft_strlen(map_path);
 	if (ft_strncmp(map_path + len - 4, ".cub", 4) != 0)
 	{
-		printf("Invalid name map\n");
+		msg_error("Invalid map name\n", NULL);
 		return (0);
 	}
 	return (1);
@@ -57,9 +57,7 @@ char	*cpy_path(char *line, t_path *path, int pos, int i)
 int	curr_char(int cur, char *line, t_path *path)
 {
 	int	counter;
-
-	if (cur == '#' || cur == '/')
-		return (1);
+	
 	counter = path->c_count + path->p_count;
 	if (cur != 'N' && cur != 'S' && cur != 'E' && cur != 'W' && cur != 'C' \
 	&& cur != 'F' && cur != '1' && cur != '0' && cur != '\0' && cur != '\n')
@@ -70,6 +68,8 @@ int	curr_char(int cur, char *line, t_path *path)
 	if ((cur == '1' || cur == '0') && counter != 6)
 	{
 		path->err_flag = 1;
+		printf("p_c: %i\n", path->p_count);
+		printf("c_c: %i\n", path->c_count);
 		msg_error("Paths and colors are not fully assigned yet\n", \
 		"Cannot initialize map\n");
 		return (0);
@@ -84,6 +84,8 @@ int	ft_max_size(char *line, int max)
 	size = 0;
 	while (line[size])
 	{
+		if (size > 200)
+			return (0);
 		if (line[size] == '\t')
 			return (msg_error("Tabs are an invalid char inside map", "\n"), 0);
 		size++;

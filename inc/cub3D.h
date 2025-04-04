@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 03:20:08 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 12:51:45 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	map_control(char *line, t_map *map, t_path *path);
 char	*clean_str(char *src, int end, t_path *path);
 
 /*READ_COLORS*/
+char	**split_color(char *rgb, t_color *color);
 void	cpy_colors(char *rgb, t_color *color, int i);
 void	get_colors(char *line, t_path *path, int i, int init);
 void	assign_color(char *line, t_path *t_path, int i);

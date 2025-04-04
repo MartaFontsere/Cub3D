@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/04 03:15:51 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:09:05 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void	assign_path(char *line, t_path *path, int i)
 		path->we = cpy_path(line, path, (i + 2), 0);
 	else
 	{
-		if ((line[i] == 'N' && line[i + 1] != 'O') || (line[i] == 'S' && line[i
-					+ 1] != 'O') || (line[i] == 'W' && line[i + 1] != 'E')
+		if (path->no || path->so || path->ea || path->we)
+			msg_error("There's a previus path assigned: ", line);
+		else if ((line[i] == 'N' && line[i + 1] != 'O') || (line[i] == 'S' \
+		&& line[i + 1] != 'O') || (line[i] == 'W' && line[i + 1] != 'E')
 			|| (line[i] == 'E' && line[i + 1] != 'A'))
 			msg_error("Invalid texture name: ", line);
-		else if (path->no || path->so || path->ea || path->we)
-			msg_error("There's a previus path assigned: ", line);
 		else
 			msg_error("Invalid line: ", line);
 		path->err_flag = 1;
@@ -68,10 +68,9 @@ int	check_line(char *line, t_path *path, t_map *map, int i)
 	if (!curr_char(line[i], line, path))
 		return (0);
 	if ((line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
-		&& path->err_flag == 0 && (path->c_count + path->p_count) != 6)
+		&& path->err_flag == 0)
 		assign_path(line, path, i);
-	else if ((line[i] == 'C' || line[i] == 'F') && path->err_flag == 0
-		&& map->is_map == 0)
+	else if ((line[i] == 'C' || line[i] == 'F') && path->err_flag == 0)
 		assign_color(line, path, i);
 	else if (line[i] == '1' || line[i] == '0' || line[i] == 'N'
 		|| line[i] == 'S' || line[i] == 'W' || line[i] == 'E'
@@ -100,7 +99,10 @@ int	fd_is_correct(t_game *gdata, t_map *map)
 		exit_error("Cannot open the file\n", 42);
 	line = get_next_line(fd);
 	if (!line)
-		return (0);
+	{
+		gdata->texture.path.err_flag = 1;
+		return (msg_error("Invalid type of file\n", NULL), 0);
+	}
 	while (line)
 	{
 		if (!check_line(line, &gdata->texture.path, map, 0))
@@ -121,6 +123,8 @@ int	read_file(int ac, char **av, t_game *gdata, t_map *map)
 	map->fd_path = av[1];
 	if (ac != 2 || !check_name(map->fd_path))
 	{
+		if (ac != 2)
+			msg_error("First you need to introduce an argument", "\n");
 		clean_data(gdata);
 		return (0);
 	}
