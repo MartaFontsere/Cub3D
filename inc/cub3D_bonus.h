@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 04:02:56 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:35:46 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,11 +249,14 @@ double	get_distance_to_door(t_game *gdata, int door_x, int door_y);
 //------------------------------------------------
 
 /*TEXTURES*/
-int		prepare_animation(t_game *gdata);
+int		prepare_textures(t_game *gdata);
 int		prepare_map_bonus_textures(t_game *gdata);
 int		prepare_wall_textures(t_game *gdata);
 int		load_image(t_game *gdata, t_image *image, char *path);
 int		check_file_can_be_open(char *path);
+
+/*ANIMATIONS*/
+int		prepare_animation(t_game *gdata);
 
 /*PRINT_MAP*/
 void	print_map(t_game *gdata, t_map map);

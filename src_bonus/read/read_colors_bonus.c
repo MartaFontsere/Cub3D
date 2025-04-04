@@ -14,9 +14,9 @@
 
 void	get_colors(char *line, t_path *path, int i, char c)
 {
-	int		start;
-	int		end;
-	int		comma;
+	int	start;
+	int	end;
+	int	comma;
 
 	comma = 0;
 	start = i + 1;
@@ -36,16 +36,16 @@ void	get_colors(char *line, t_path *path, int i, char c)
 	path->tmp_str = ft_substr(line, start, end - 2);
 	if (c == 'C')
 		cpy_colors(path->tmp_str, &path->c, -1);
-	else if ( c == 'F')
+	else if (c == 'F')
 		cpy_colors(path->tmp_str, &path->f, -1);
 	free(path->tmp_str);
 }
 
 void	get_color_path(char *line, t_color *color, int i)
-{	
-	int		end;
-	int		start;
-	
+{
+	int	end;
+	int	start;
+
 	start = i;
 	while (!ft_isspace(line[i]) && line[i])
 		i++;
@@ -58,7 +58,7 @@ void	get_color_path(char *line, t_color *color, int i)
 		return (msg_error(line, "The line must contain only one value\n"));
 	}
 	color->color_path = ft_substr(line, start, (end - start));
-	color->assigned	= 1;
+	color->assigned = 1;
 	color->is_path = 1;
 	color->path->c_count++;
 }
@@ -101,7 +101,7 @@ void	control_f_values(char *line, t_path *path, int init_val, char f)
 
 void	assign_color(char *line, t_path *path, int i)
 {
-	int init;
+	int	init;
 
 	init = i;
 	if ((line[i] == 'C' || line[i] == 'F') && ft_isspace(line[i + 1]))

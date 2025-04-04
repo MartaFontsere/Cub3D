@@ -15,11 +15,11 @@
 char	**split_color(char *rgb, t_color *color)
 {
 	char	**result;
-	
+
 	if (color->assigned)
 	{
 		color->path->err_flag = 1;
-		return(msg_error("Color is already assigned\n", NULL), NULL);
+		return (msg_error("Color is already assigned\n", NULL), NULL);
 	}
 	result = ft_split(rgb, ',');
 	if ((!result[0] || !result[1] || !result[2]))
@@ -34,7 +34,7 @@ char	**split_color(char *rgb, t_color *color)
 void	cpy_colors(char *rgb, t_color *color, int i)
 {
 	char	**split;
-	
+
 	split = split_color(rgb, color);
 	if (!split)
 		return ;
@@ -59,9 +59,9 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 
 void	get_colors(char *line, t_path *path, int i, int init)
 {
-	int		start;
-	int		end;
-	int		comma;
+	int	start;
+	int	end;
+	int	comma;
 
 	comma = 0;
 	start = i + 1;

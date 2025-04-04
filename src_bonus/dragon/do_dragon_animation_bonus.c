@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 04:21:47 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/03 19:13:44 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:40:32 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	do_dragon_animation(t_game *gdata)
 	static int	fly_clock = 0;
 	static int	current_index = 0;
 	static int	last_index = -1;
-	t_image	*dragon;
+	t_image		*dragon;
 
 	animation_speed = 1.5;
 	dragon = gdata->texture.dragon_img;

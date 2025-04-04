@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/04/04 03:11:12 by mfontser         ###   ########.fr        #
+#    Updated: 2025/04/04 13:34:04 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,7 @@ B_WALLS_RAYCAST_FILES = calculate_fov_bonus.c calculate_ray_bonus.c final_collis
 B_DOORS_RAYCAST_FILES = check_ray_opened_door_bonus.c door_raycasting_bonus.c door_raycasting_utils_bonus.c update_doors_status_bonus.c
 B_FLOOR_RAYCAST_FILES = floor_raycasting_bonus.c
 B_MOVE_FILES = press_or_release_key_bonus.c move_player_bonus.c rotate_player_bonus.c cursor_rotation_bonus.c check_collisions_bonus.c
-B_PRINT_MAP_FILES = print_map_bonus.c print_walls_bonus.c print_doors_bonus.c print_sky_bonus.c print_sky_utils_bonus.c print_floor_bonus.c print_floor_utils_bonus.c print_utils_bonus.c textures_bonus.c
+B_PRINT_MAP_FILES = print_map_bonus.c print_walls_bonus.c print_doors_bonus.c print_sky_bonus.c print_sky_utils_bonus.c print_floor_bonus.c print_floor_utils_bonus.c print_utils_bonus.c textures_bonus.c animations_bonus.c
 B_PRINT_MINI_FILES = print_fov_bonus.c print_minimap_bonus.c print_minimap_utils_bonus.c print_player_bonus.c print_vision_angle_bonus.c
 B_DRAGON_FILES = do_dragon_animation_bonus.c
 B_PARSE_FILES = parse_door_bonus.c parse_map_bonus.c parse_utils_bonus.c

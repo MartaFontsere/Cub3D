@@ -31,7 +31,7 @@ int	check_borders(char **matrix, int i, t_map *map)
 	{
 		if (matrix[i][j] != '0')
 			return (msg_error("Player must be inside map\n", NULL), 0);
-		else if ( matrix[i][j] == 'D')
+		else if (matrix[i][j] == 'D')
 			return (msg_error("Door must be inside map\n", NULL), 0);
 		return (msg_error("Map must be close with walls\n", NULL), 0);
 	}
@@ -77,13 +77,13 @@ int	min_chars(char **map, int i)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' \
-			&& map[i][j] != 'W' && map[i][j] != '1' && map[i][j] != '0' \
-			&& map[i][j] != '\n' && map[i][j] != ' ' && map[i][j] != '*' \
-			&& map[i][j] != 'D')
+			if (map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E'
+				&& map[i][j] != 'W' && map[i][j] != '1' && map[i][j] != '0'
+				&& map[i][j] != '\n' && map[i][j] != ' ' && map[i][j] != '*'
+				&& map[i][j] != 'D')
 				return (0);
-			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E' \
-			|| map[i][j] == 'W')
+			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E'
+				|| map[i][j] == 'W')
 				count++;
 			j++;
 		}

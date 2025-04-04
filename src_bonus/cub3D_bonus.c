@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 20:38:57 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 13:21:16 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:34:54 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ int	main(int ac, char **av)
 		|| init_gdata_values(&gdata) == 0)
 		return (1);
 	calculate_fov(&gdata, gdata.player.x, gdata.player.y);
-	if (prepare_wall_textures(&gdata) == 0
-		|| prepare_map_bonus_textures(&gdata) == 0
-		|| prepare_animation(&gdata) == 0)
+	if (prepare_textures(&gdata) == 0 || prepare_animation(&gdata) == 0)
 		return (1);
 	update_doors(&gdata);
 	print_map(&gdata, gdata.map);

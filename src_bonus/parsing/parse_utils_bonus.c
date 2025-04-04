@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:37:00 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/02 16:38:33 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:42:40 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	check_n_line(char **src, t_map *map)
 {
 	int	i;
 	int	j;
-	int		new_size;
+	int	new_size;
 
 	i = 0;
 	new_size = map->c_height - 1;
@@ -41,15 +41,15 @@ int	check_esp(int i, int j, t_map *map)
 	{
 		if (i == map->c_height - 1)
 		{
-			if ((map->matrix[i][j + 1] != '*' && map->matrix[i][j + 1] != '1') \
-			&& j != (map->c_width - 2))
+			if ((map->matrix[i][j + 1] != '*' && map->matrix[i][j + 1] != '1')
+				&& j != (map->c_width - 2))
 				return (1);
 		}
 		else
 		{
-			if (((map->matrix[i][j + 1] != '*' && map->matrix[i][j + 1] != '1') \
-			|| (map->matrix[i + 1][j] != '*' && map->matrix[i + 1][j] != '1')) \
-			&& (j != map->c_width - 2))
+			if (((map->matrix[i][j + 1] != '*' && map->matrix[i][j + 1] != '1')
+					|| (map->matrix[i + 1][j] != '*' && map->matrix[i
+						+ 1][j] != '1')) && (j != map->c_width - 2))
 			{
 				msg_error("' ' must be followed by '1' or ' '\n", NULL);
 				return (0);
@@ -63,12 +63,11 @@ int	check_zero(int i, int j, t_map *map)
 {
 	if (map->matrix[i][j] == '0')
 	{
-		if ((map->matrix[i][j + 1] != map->pos \
-		&& map->matrix[i][j + 1] != '0' && map->matrix[i][j + 1] != '1' \
-		&& map->matrix[i][j + 1] != 'D')
-		|| (map->matrix[i + 1][j] != map->pos \
-		&& map->matrix[i + 1][j] != '0' && map->matrix[i + 1][j] != '1' \
-		&& map->matrix[i + 1][j] != 'D'))
+		if ((map->matrix[i][j + 1] != map->pos && map->matrix[i][j + 1] != '0'
+				&& map->matrix[i][j + 1] != '1' && map->matrix[i][j + 1] != 'D')
+			|| (map->matrix[i + 1][j] != map->pos && map->matrix[i
+				+ 1][j] != '0' && map->matrix[i + 1][j] != '1' && map->matrix[i
+				+ 1][j] != 'D'))
 		{
 			msg_error("'0' must be followed by '1', '0', Door or Player", "\n");
 			return (0);
@@ -76,6 +75,7 @@ int	check_zero(int i, int j, t_map *map)
 	}
 	return (1);
 }
+
 int	check_player(int i, int j, t_map *map)
 {
 	if (map->matrix[i][j] == map->pos)
@@ -85,9 +85,10 @@ int	check_player(int i, int j, t_map *map)
 			msg_error("Player must be inside the map", "\n");
 			return (0);
 		}
-		if ((map->matrix[i][j + 1] != '1' && map->matrix[i][j + 1] != '0' \
-		&& map->matrix[i][j + 1] != 'D') || (map->matrix[i + 1][j] != '1' \
-		&& map->matrix[i + 1][j] != '0' && map->matrix[i + 1][j] != 'D'))
+		if ((map->matrix[i][j + 1] != '1' && map->matrix[i][j + 1] != '0'
+				&& map->matrix[i][j + 1] != 'D') || (map->matrix[i
+				+ 1][j] != '1' && map->matrix[i + 1][j] != '0' && map->matrix[i
+				+ 1][j] != 'D'))
 		{
 			msg_error("Player must be next to '1' or '0' or Door\n", NULL);
 			return (0);

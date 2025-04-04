@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 03:14:34 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:38:40 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,27 +86,14 @@ int	prepare_map_bonus_textures(t_game *gdata)
 	return (1);
 }
 
-int	prepare_animation(t_game *gdata)
+int	prepare_textures(t_game *gdata)
 {
-	if (!load_image(gdata, &gdata->texture.dragon_img[0], DRAGON_1))
-	{
-		clean_data(gdata);
+	if (!prepare_wall_textures(gdata))
 		return (0);
-	}
-	if (!load_image(gdata, &gdata->texture.dragon_img[1], DRAGON_2))
+	if (gdata->texture.path.f.is_path && gdata->texture.path.c.is_path)
 	{
-		clean_data(gdata);
-		return (0);
-	}
-	if (!load_image(gdata, &gdata->texture.dragon_img[2], DRAGON_3))
-	{
-		clean_data(gdata);
-		return (0);
-	}
-	if (!load_image(gdata, &gdata->texture.dragon_img[3], DRAGON_2))
-	{
-		clean_data(gdata);
-		return (0);
+		if (!prepare_map_bonus_textures(gdata))
+			return (0);
 	}
 	return (1);
 }
