@@ -1,13 +1,13 @@
-NO 		textures/map_walls/opcion2/Norte.xpm42			
-EA textures/map_walls/opcion2/Este.xpm42
+NO 		textures/map_walls/Norte.xpm42			
+EA textures/map_walls/Este.xpm42
 
 F   69,222,199
 
-SO textures/map_walls/opcion2/Sur.xpm42
+SO textures/map_walls/Sur.xpm42
 
 C 235,198,52
 
-WE 			textures/map_walls/opcion2/Oeste.xpm42
+WE 			textures/map_walls/Oeste.xpm42
 
 11111111111111111111111111111
 11000000000000000000000000011

@@ -1,7 +1,7 @@
-NO textures/map_walls/opcion2/Norte.xpm42
-SO textures/map_walls/opcion2/Sur.xpm42
-EA textures/map_walls/opcion2/Este.xpm42
-WE textures/map_walls/opcion2/Oeste.xpm42
+NO textures/map_walls/Norte.xpm42
+SO textures/map_walls/Sur.xpm42
+EA textures/map_walls/Este.xpm42
+WE textures/map_walls/Oeste.xpm42
 
 F 18,53,25
 C 153,204,255

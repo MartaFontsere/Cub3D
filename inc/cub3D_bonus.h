@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 03:20:27 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 04:02:56 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define BLUE1 0X9AC4FFFF
 
 // BONUS TEXTURES:
-# define DOOR_TEXTURE "textures/door/Door2.xpm42"
+# define DOOR_TEXTURE "textures/door/Door.xpm42"
 # define DRAGON_1 "textures/flying_dragon/dragon1.xpm42"
 # define DRAGON_2 "textures/flying_dragon/dragon2.xpm42"
 # define DRAGON_3 "textures/flying_dragon/dragon3.xpm42"
