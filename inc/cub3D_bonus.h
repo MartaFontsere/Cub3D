@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 13:35:46 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:48:44 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,14 @@
 # define DRAGON_3 "textures/flying_dragon/dragon3.xpm42"
 # define DRAGON_WIDTH 380
 # define DRAGON_HEIGHT 213
+# define FIRE_0 "textures/fire/fire0.xpm42"
+# define FIRE_1 "textures/fire/fire1.xpm42"
+# define FIRE_2 "textures/fire/fire2.xpm42"
+# define FIRE_3 "textures/fire/fire3.xpm42"
+# define FIRE_4 "textures/fire/fire4.xpm42"
+# define FIRE_5 "textures/fire/fire5.xpm42"
+# define FIRE_6 "textures/fire/fire6.xpm42"
+# define FIRE_7 "textures/fire/fire7.xpm42"
 
 /*PLAYER ORIENTATION*/
 # define NORTH M_PI_2
@@ -256,7 +264,10 @@ int		load_image(t_game *gdata, t_image *image, char *path);
 int		check_file_can_be_open(char *path);
 
 /*ANIMATIONS*/
-int		prepare_animation(t_game *gdata);
+int		prepare_fire_animation(t_game *gdata);
+int		fire_animation_1(t_game *gdata);
+int		fire_animation_2(t_game *gdata);
+int		prepare_dragon_animation(t_game *gdata);
 
 /*PRINT_MAP*/
 void	print_map(t_game *gdata, t_map map);
@@ -347,10 +358,11 @@ void	draw_checkerboard_pixel(t_game *gdata, int pixel_x, int pixel_y);
 //------------------------------------------------
 
 /*DO_DRAGON_ANIMATION*/
+void	print_dragon(t_game *gdata);
 void	do_dragon_animation(t_game *gdata);
 
-/*PRINT_DRAGON*/
-void	print_dragon(t_game *gdata);
+/*DO_FIRE_ANIMATION*/
+void	do_fire_animation(t_game *gdata);
 
 //------------------------------------------------
 //					MOVEMENTS

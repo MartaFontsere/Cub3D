@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:02:13 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 03:21:02 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:26:35 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_texture
 	t_image			floor_img;
 	t_image			door_img;
 	t_image			dragon_img[4];
+	t_image			fire_img[8];
 }					t_texture;
 
 typedef struct s_print_floor
@@ -214,6 +215,10 @@ typedef struct s_player
 	int				cursor_on;
 	double			new_xpos;
 	double			last_xpos;
+	int				dragon_frame;
+	int				fire;
+	int				fire_height;
+	int				fire_weight;
 }					t_player;
 
 typedef struct s_minimap

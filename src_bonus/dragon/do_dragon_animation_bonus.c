@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 04:21:47 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 13:40:32 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 12:27:11 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	do_dragon_animation(t_game *gdata)
 		dragon[current_index].data = mlx_texture_to_image(gdata->mlx.init,
 				&dragon[current_index].xpm->texture);
 	mlx_image_to_window(gdata->mlx.init, dragon[current_index].data, 430, 900);
+	gdata->player.dragon_frame = current_index;
 	last_index = current_index;
 }
 

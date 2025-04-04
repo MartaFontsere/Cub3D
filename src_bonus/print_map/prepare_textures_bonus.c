@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   textures_bonus.c                                   :+:      :+:    :+:   */
+/*   prepare_textures_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 13:38:40 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:31:59 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	check_file_can_be_open(char *path)
 
 int	load_image(t_game *gdata, t_image *image, char *path)
 {
+	printf ("path: %s\n", path);
 	if (check_file_can_be_open(path) == 0)
 	{
 		msg_error("There have been problems opening the textures\n", NULL);

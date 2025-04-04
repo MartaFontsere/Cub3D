@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 01:16:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/03 20:11:08 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:46:40 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	do_key_action(mlx_key_data_t keydata, t_game *gdata)
 		gdata->player.rotate_right = 1;
 	else if (keydata.key == MLX_KEY_LEFT)
 		gdata->player.rotate_left = 1;
+	else if (keydata.key == MLX_KEY_SPACE)
+			gdata->player.fire = 1;
 	else if (keydata.key == MLX_KEY_M && gdata->player.cursor_on == 0)
 		gdata->player.cursor_on = 1;
 	else if (keydata.key == MLX_KEY_M && gdata->player.cursor_on == 1)

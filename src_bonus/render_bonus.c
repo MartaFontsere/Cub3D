@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 21:35:09 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/03 04:51:52 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:47:05 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	render_game(void *param)
 	gdata = param;
 	target_x = gdata->player.x;
 	target_y = gdata->player.y;
+	if (gdata->player.fire == 1)
+		do_fire_animation(gdata);
 	if (there_is_a_key_pressed(gdata))
 	{
 		if (gdata->player.rotate_right == 1 || gdata->player.rotate_left == 1)
