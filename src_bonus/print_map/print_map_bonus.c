@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:55:35 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/02 23:35:38 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 03:34:05 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	print_map(t_game *gdata, t_map map)
 	t_ray	*ray;
 
 	column = 0;
-	while (column < gdata->vision.FOV.num_rays)
+	while (column < gdata->vision.fov.num_rays)
 	{
 		row = 0;
-		ray = &gdata->vision.FOV.rays[column];
+		ray = &gdata->vision.fov.rays[column];
 		prepare_print_params(gdata, ray, map);
 		print_sky(gdata, ray, &row, column);
 		print_texture_walls(gdata, ray, &row, &column);

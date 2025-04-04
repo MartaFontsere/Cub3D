@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:47:23 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/03 02:36:35 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 03:51:43 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 int	init_vision_params(t_game *gdata, t_vision *vision)
 {
-	vision->FOV.num_rays = gdata->map.px_width;
-	vision->FOV.fov_rad = 60 * (M_PI / 180);
-	vision->FOV.rays = malloc(sizeof(t_ray) * vision->FOV.num_rays);
-	if (!vision->FOV.rays)
+	vision->fov.num_rays = gdata->map.px_width;
+	vision->fov.fov_rad = 60 * (M_PI / 180);
+	vision->fov.rays = malloc(sizeof(t_ray) * vision->fov.num_rays);
+	if (!vision->fov.rays)
 	{
 		msg_error("Unable to allocate memory for FOV rays\n", NULL);
 		clean_data(gdata);
 		return (0);
 	}
-	vision->projection_factor = (gdata->map.px_height / 2) / tan(vision->FOV.fov_rad / 2); // Es como un factor de escala que convierte distancias del mundo 2D (minimapa) en una altura en la pantalla (3D), asegurando que los objetos más lejanos sean más pequeños y los cercanos sean más grandes.
-	vision->camera_height_scale = (gdata->player.height) * vision->projection_factor; // SI LA ALTURA DEL JUGADOR CAMBIARA, ESTO SE TENDRIA QUE IR RECALCULANDO
-	printf ("player.height %d\n", gdata->player.height);
+	vision->projection_factor = (gdata->map.px_height / 2)
+		/ tan(vision->fov.fov_rad / 2);
+	vision->camera_height_scale = (gdata->player.height)
+		* vision->projection_factor;
 	return (1);
 }
 
@@ -104,9 +105,9 @@ void	init_player_params(t_game *gdata, t_player *player)
 	player->rotate_left = 0;
 	player->height = gdata->minimap.px_height / 2;
 	player->radius = gdata->minimap.px_in_cell_width / 4;
-	player->cursor_on = 0;//AQUI CURSOR
-	player->last_xpos = 0;//AQUI CURSOR
-	player->new_xpos = 0;//AQUI CURSOR
+	player->cursor_on = 0;
+	player->last_xpos = 0;
+	player->new_xpos = 0;
 	init_player_position(gdata, &gdata->map, player);
 	init_player_orientation(&gdata->map, &gdata->vision, &gdata->player);
 }

@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:58:12 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/02 21:01:22 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 03:17:08 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 	while (split[++i])
 	{
 		if ((ft_atoi(split[i]) >= 0 && ft_atoi(split[i]) <= 255) && i == 0)
-			color->R = ft_atoi(split[i]);
+			color->r = ft_atoi(split[i]);
 		else if ((ft_atoi(split[i]) >= 0 && ft_atoi(split[i]) <= 255) && i == 1)
-			color->G = ft_atoi(split[i]);
+			color->g = ft_atoi(split[i]);
 		else if ((ft_atoi(split[i]) >= 0 && ft_atoi(split[i]) <= 255) && i == 2)
-			color->B = ft_atoi(split[i]);
+			color->b = ft_atoi(split[i]);
 		else
 		{
 			color->path->err_flag = 1;

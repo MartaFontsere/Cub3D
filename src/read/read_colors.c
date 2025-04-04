@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_colors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/21 13:35:02 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/04 03:06:55 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	cpy_colors(char *rgb, t_color *color, int i)
 	while (split[++i])
 	{
 		if ((ft_atoi(split[i]) >= 0 && ft_atoi(split[i]) <= 255) && i == 0)
-			color->R = ft_atoi(split[i]);
+			color->r = ft_atoi(split[i]);
 		else if ((ft_atoi(split[i]) >= 0 && ft_atoi(split[i]) <= 255) && i == 1)
-			color->G = ft_atoi(split[i]);
+			color->g = ft_atoi(split[i]);
 		else if ((ft_atoi(split[i]) >= 0 && ft_atoi(split[i]) <= 255) && i == 2)
-			color->B = ft_atoi(split[i]);
+			color->b = ft_atoi(split[i]);
 		else
 		{
 			color->path->err_flag = 1;
@@ -64,9 +64,9 @@ void	get_colors(char *line, t_path *path, int i, int init)
 	}
 	path->tmp_str = ft_substr(line, start, end);
 	if (line[init] == 'C')
-		cpy_colors(path->tmp_str, &path->C, -1);
+		cpy_colors(path->tmp_str, &path->c, -1);
 	else if (line[init] == 'F')
-		cpy_colors(path->tmp_str, &path->F, -1);
+		cpy_colors(path->tmp_str, &path->f, -1);
 	free(path->tmp_str);
 }
 
@@ -91,10 +91,10 @@ void	assign_color(char *line, t_path *path, int i)
 	}
 	if (path->c_count < 2)
 		get_colors(line, path, i - 1, init);
-	if (path->c_count == 2 && (!path->C.assigned || !path->F.assigned))
+	if (path->c_count == 2 && (!path->c.assigned || !path->f.assigned))
 	{
 		path->err_flag = 1;
-		if (!path->F.assigned || !path->C.assigned)
+		if (!path->f.assigned || !path->c.assigned)
 			return (msg_error("Some colors are missing", "\n"));
 	}
 }

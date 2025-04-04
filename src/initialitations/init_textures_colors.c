@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_textures_colors_bonus.c                       :+:      :+:    :+:   */
+/*   init_textures_colors.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/02 19:17:15 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 03:12:23 by mfontser         ###   ########.fr       */
+/*   Created: 2025/04/04 02:06:32 by mfontser          #+#    #+#             */
+/*   Updated: 2025/04/04 03:10:37 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D_bonus.h"
+#include "cub3D.h"
 
 void	init_textures(t_texture *texture, t_path *path)
 {
@@ -22,14 +22,6 @@ void	init_textures(t_texture *texture, t_path *path)
 	path->so = NULL;
 	path->ea = NULL;
 	path->we = NULL;
-	texture->sky_img.data = NULL;
-	texture->floor_img.data = NULL;
-	texture->door_img.data = NULL;
-	texture->dragon_img[0].data = NULL;
-	path->c.is_path = 0;
-	path->c.color_path = NULL;
-	path->f.is_path = 0;
-	path->f.color_path = NULL;
 }
 
 void	init_colors(t_path *path)

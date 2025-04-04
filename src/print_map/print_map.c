@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 17:55:35 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/14 01:16:27 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 03:31:10 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 void	print_floor(t_game *gdata, t_mlx mlx, int *row, int *column)
 {
-	gdata->texture.F_hex_color = rgb_to_hex(gdata->texture.path.F.R,
-			gdata->texture.path.F.G, gdata->texture.path.F.B);
+	gdata->texture.f_hex_color = rgb_to_hex(gdata->texture.path.f.r,
+			gdata->texture.path.f.g, gdata->texture.path.f.b);
 	while (*row < gdata->map.px_height)
 	{
-		mlx_put_pixel(mlx.image, *column, *row, gdata->texture.F_hex_color);
+		mlx_put_pixel(mlx.image, *column, *row, gdata->texture.f_hex_color);
 		(*row)++;
 	}
 }
 
 void	print_sky(t_game *gdata, t_mlx mlx, int *row, int *column)
 {
-	gdata->texture.C_hex_color = rgb_to_hex(gdata->texture.path.C.R,
-			gdata->texture.path.C.G, gdata->texture.path.C.B);
+	gdata->texture.c_hex_color = rgb_to_hex(gdata->texture.path.c.r,
+			gdata->texture.path.c.g, gdata->texture.path.c.b);
 	while (*row < gdata->print_map.draw_wall_start)
 	{
-		mlx_put_pixel(mlx.image, *column, *row, gdata->texture.C_hex_color);
+		mlx_put_pixel(mlx.image, *column, *row, gdata->texture.c_hex_color);
 		(*row)++;
 	}
 }
@@ -54,10 +54,10 @@ void	print_map(t_game *gdata, t_mlx mlx, t_map map)
 	t_ray	*ray;
 
 	column = 0;
-	while (column < gdata->vision.FOV.num_rays)
+	while (column < gdata->vision.fov.num_rays)
 	{
 		row = 0;
-		ray = &gdata->vision.FOV.rays[column];
+		ray = &gdata->vision.fov.rays[column];
 		prepare_print_params(gdata, ray, map);
 		print_sky(gdata, mlx, &row, &column);
 		print_texture_walls(gdata, ray, &row, &column);

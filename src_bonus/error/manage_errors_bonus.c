@@ -1,18 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   floor_raycasting_bonus.c                           :+:      :+:    :+:   */
+/*   manage_errors_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/02 18:20:16 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/02 21:45:41 by mfontser         ###   ########.fr       */
+/*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
+/*   Updated: 2025/04/03 19:19:10 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
+void	exit_error(char *msg, int status)
+{
+	while (*msg)
+		ft_write(2, msg++, 1);
+	exit(status);
+}
 
-
-
-    
+void	msg_error(char *msg, char *msg2)
+{
+	ft_write(2, RED, ft_strlen(RED));
+	while (*msg)
+		ft_write(2, msg++, 1);
+	ft_write(2, END, ft_strlen(END));
+	if (msg2)
+	{
+		ft_write(2, BLUE, ft_strlen(BLUE));
+		while (*msg2)
+			ft_write(2, msg2++, 1);
+		ft_write(2, END, ft_strlen(END));
+	}
+}

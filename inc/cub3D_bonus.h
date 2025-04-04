@@ -6,21 +6,20 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/03 12:03:54 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 03:20:27 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_BONUS_H
 # define CUB3D_BONUS_H
 
-# include "../libs/get_next_line/get_next_line.h"
-# include "../libs/MLX42/include/MLX42/MLX42.h"
 # include "../libs/Libft/libft.h"
-# include <stdio.h>
+# include "../libs/MLX42/include/MLX42/MLX42.h"
+# include "../libs/get_next_line/get_next_line.h"
+# include "structs_bonus.h"
 # include <fcntl.h>
 # include <math.h>
-# include "structs_bonus.h"
-
+# include <stdio.h>
 
 /*COLORS*/
 # define END "\x1b[0m"
@@ -36,7 +35,6 @@
 # define LIME_GREEN "\e[1;38;5;118m"
 # define ORANGE "\e[1;38;2;255;128;0m"
 
-
 /*MLXCOLORS*/
 # define BLACK 0x00000080
 # define DARK_GREY 0x3C3C3CFF
@@ -47,33 +45,19 @@
 # define SOFT_YELLOW 0xFEF4D3FF
 # define BLUE1 0X9AC4FFFF
 
-
-			/*TEXTURES*/ //LUEGO BORRAR PATHS, PARA MIENTRAS SIN PARSING
-			#define NORTH_TEXTURE "textures/map_walls/opcion2/Norte.xpm42"
-			#define SOUTH_TEXTURE "textures/map_walls/opcion2/Sur.xpm42"
-			#define WEST_TEXTURE "textures/map_walls/opcion2/Oeste.xpm42"
-			#define EAST_TEXTURE "textures/map_walls/opcion2/Este.xpm42"
-
-			//esto no borrar:
-			// #define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
-			#define SKY_TEXTURE "textures/sky/Sky_10.xpm42"
-			#define FLOOR_TEXTURE "textures/floor/Floor5.xpm42"
-			#define DOOR_TEXTURE "textures/door/Door2.xpm42"
-			#define DRAGON_1 "textures/flying_dragon/dragon1.xpm42"
-			#define DRAGON_2 "textures/flying_dragon/dragon2.xpm42"
-			#define DRAGON_3 "textures/flying_dragon/dragon3.xpm42"
-			#define DRAGON_WIDTH 380
-			#define DRAGON_HEIGHT 213
-
-
+// BONUS TEXTURES:
+# define DOOR_TEXTURE "textures/door/Door2.xpm42"
+# define DRAGON_1 "textures/flying_dragon/dragon1.xpm42"
+# define DRAGON_2 "textures/flying_dragon/dragon2.xpm42"
+# define DRAGON_3 "textures/flying_dragon/dragon3.xpm42"
+# define DRAGON_WIDTH 380
+# define DRAGON_HEIGHT 213
 
 /*PLAYER ORIENTATION*/
 # define NORTH M_PI_2
-# define SOUTH 3 * M_PI_2
+# define SOUTH 4.712389
 # define EAST 0
 # define WEST M_PI
-
-
 
 /*MOVE*/
 # define MOVE_RIGHT 0
@@ -82,38 +66,27 @@
 # define MOVE_DOWN 3
 
 /*PLAYER SPEED*/
-# define MOVE_SPEED 4 // cuantos pixeles se mueve cada vez que tocamos una tecla
-# define ROTATION_SPEED 0.06
+# define MOVE_SPEED 5
+# define ROTATION_SPEED 0.07
 
 /*MAP*/
-#define MAP_PX_WIDTH 2560
-#define MAP_PX_HEIGHT 1440
-
-
-
-// //BORRAR, ESTARA EN EL PARSING
-// #define CEELING_R 154
-// #define CEELING_G 196
-// #define CEELING_B 255
-// #define FLOOR_R 88
-// #define FLOOR_G 134
-// #define FLOOR_B 80
-
+# define MAP_PX_WIDTH 2560
+# define MAP_PX_HEIGHT 1440
 
 /*MINIMAP*/
-#define MINIMAP_PX_WIDTH 515
-#define MINIMAP_PX_HEIGHT 340
-#define MINIMAP_PX_CELL_WIDTH 24
-#define MINIMAP_PX_CELL_HEIGHT 24
+# define MINIMAP_PX_WIDTH 515
+# define MINIMAP_PX_HEIGHT 340
+# define MINIMAP_PX_CELL_WIDTH 24
+# define MINIMAP_PX_CELL_HEIGHT 24
 
-#define DOOR_START_OPEN_DISTANCE 2.2 // distancia en casillas
-#define DOOR_END_OPEN_DISTANCE 1.4
-
+/*DOORS*/
+# define DOOR_START_OPEN_DISTANCE 2.2
+# define DOOR_END_OPEN_DISTANCE 1.4
 
 //-------------------------------------------------
 //					MAIN
 //-------------------------------------------------
-void	close_window(t_game	*gdata);
+void	close_window(t_game *gdata);
 int		main(int ac, char **av);
 
 //-------------------------------------------------
@@ -159,9 +132,9 @@ int		get_final_map(char **src, t_map *map);
 //------------------------------------------------
 
 /*PARSE_DOOR*/
-int	check_y_pos(int i, int j, t_map *map);
-int	check_x_pos(int i, int j, t_map *map);
-int	is_door(int i, int j, t_map *map);
+int		check_y_pos(int i, int j, t_map *map);
+int		check_x_pos(int i, int j, t_map *map);
+int		is_door(int i, int j, t_map *map);
 
 /*PARSE_MAP*/
 int		check_borders(char **matrix, int i, t_map *map);
@@ -183,15 +156,15 @@ int		check_player(int i, int j, t_map *map);
 int		init_gdata_values(t_game *gdata);
 
 /*INIT_MAP_MINIMAP_PARAMS*/
-void 	init_map_params (t_game *gdata, t_map *map);
+void	init_map_params(t_game *gdata, t_map *map);
 void	init_minimap_params(t_game *gdata);
 
 /*INIT_PLAYER_AND_VISION_PARAMS*/
-void 	init_player_params (t_game *gdata, t_player *player);
+void	init_player_params(t_game *gdata, t_player *player);
 void	init_player_orientation(t_map *map, t_vision *vision, t_player *player);
 void	define_vision_angle(t_vision *vision, char orientation);
 void	init_player_position(t_game *gdata, t_map *map_info, t_player *player);
-int 	init_vision_params (t_game *gdata, t_vision *vision);
+int		init_vision_params(t_game *gdata, t_vision *vision);
 
 /*INIT_MLX_PARAMS*/
 int		init_mlx(t_game *gdata, t_mlx *mlx);
@@ -199,10 +172,9 @@ int		create_new_images(t_game *gdata, t_mlx *mlx);
 int		put_image_to_window(t_game *gdata, t_mlx *mlx);
 
 /*INIT_TEXTURES_COLORS*/
-void 	init_textures_and_colors_path(t_texture *texture, t_path *path);
+void	init_textures_and_colors_path(t_texture *texture, t_path *path);
 void	init_textures(t_texture *texture, t_path *path);
 void	init_colors(t_path *path);
-
 
 //------------------------------------------------
 //					WALLS_RAYCASTING
@@ -212,113 +184,167 @@ void	init_colors(t_path *path);
 void	calculate_fov(t_game *gdata, double x, double y);
 
 /*CALCULATE_RAY*/
-void 	calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
-void 	find_ray_distance_and_collision_point(t_ray *ray, t_game *gdata, double x, double y);
-void 	traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map);
-void 	init_ray_direction (t_ray *ray, t_game *gdata, int check_ray_x_in_map,  int check_ray_y_in_map);
+void	calculate_ray(t_game *gdata, t_ray *ray, double x, double y);
+void	find_ray_distance_and_collision_point(t_ray *ray, t_game *gdata,
+			double x, double y);
+void	traverse_ray_until_hit(t_ray *ray, t_game *gdata,
+			int *check_ray_x_in_map, int *check_ray_y_in_map);
+void	init_ray_direction(t_ray *ray, t_game *gdata, int check_ray_x_in_map,
+			int check_ray_y_in_map);
 
 /*CALCULATE_RAY_UTILS*/
-void 	prepare_vertical_final_collision_params (t_ray *ray, t_game *gdata, double x);
-void 	prepare_horizontal_final_collision_params (t_ray *ray, t_game *gdata, double y);
-void 	controll_x_limit_case (t_ray *ray, int check_ray_x_in_map, double cell_player_x);
-void 	controll_y_limit_case (t_ray *ray, int check_ray_y_in_map, double cell_player_y);
-double 	compute_collision_coordinate(int check_ray_coord, int ray_sign, double px_in_cell_size);
+void	controll_x_limit_case(t_ray *ray, int check_ray_x_in_map,
+			double cell_player_x);
+void	controll_y_limit_case(t_ray *ray, int check_ray_y_in_map,
+			double cell_player_y);
+double	compute_collision_coord(int check_ray_coord, int ray_sign,
+			double px_in_cell_size);
+void	check_matrix_lines(t_ray *ray, int *check_ray_x_in_map,
+			int *check_ray_y_in_map);
 
-
-
-void check_matrix_lines (t_ray *ray, int *check_ray_x_in_map, int *check_ray_y_in_map);
-
-
-//------------------------------------------------
-//					FLOOR_RAYCASTING
-//------------------------------------------------
-
+/*FINAL_COLLISION_COORDINATES*/
+void	prepare_vertical_final_collision_params(t_ray *ray, t_game *gdata,
+			double x);
+void	prepare_horizontal_final_collision_params(t_ray *ray, t_game *gdata,
+			double y);
 
 //------------------------------------------------
 //					DOORS_RAYCASTING
 //------------------------------------------------
 
 /*CHECK_RAY_OPENED_DOOR*/
-int should_block_ray(t_ray *ray, t_game *gdata, int map_x, int map_y);
-int convert_hit_position_to_text_coord (t_game *gdata, double wall_x, double open_ratio);
-double take_hit_door_position (t_ray *ray, t_game *gdata);
-double prepare_opened_door_params (t_game *gdata, int map_x, int map_y);
+int		should_block_ray(t_ray *ray, t_game *gdata, int map_x, int map_y);
+int		convert_hit_position_to_text_coord(t_game *gdata, double wall_x,
+			double open_ratio);
+double	take_hit_door_position(t_ray *ray, t_game *gdata);
+double	prepare_opened_door_params(t_game *gdata, int map_x, int map_y);
 
 /*DOOR_RAYCASTING*/
-void door_raycast (t_ray *ray, t_game *gdata, int *check_ray_x_in_map, int *check_ray_y_in_map);
-void check_vertical_door(t_ray *ray, t_door door_ray, t_game *gdata, int *check_ray_x_in_map);
-void check_horizontal_door(t_ray *ray, t_door door_ray, t_game *gdata, int *check_ray_y_in_map);
+void	door_raycast(t_ray *ray, t_game *gdata, int *check_ray_x_in_map,
+			int *check_ray_y_in_map);
+void	check_vertical_door(t_ray *ray, t_door door_ray, t_game *gdata,
+			int *check_ray_x_in_map);
+void	check_horizontal_door(t_ray *ray, t_door door_ray, t_game *gdata,
+			int *check_ray_y_in_map);
+void	handle_vertical_coords(t_ray *ray, t_game *gdata, t_door *door_ray,
+			int *check_ray_y_in_map);
+void	handle_horizontal_coords(t_ray *ray, t_game *gdata, t_door *door_ray,
+			int *check_ray_x_in_map);
 
 /*DOOR_RAYCASTING_UTILS*/
-void update_door_horizontal_coords (t_ray *ray, double first_dist_y_tmp, int check_ray_y_in_map_tmp, int line_crossing);
-void update_door_vertical_coords (t_ray *ray, double first_dist_x_tmp, int check_ray_x_in_map_tmp, int line_crossing);
-void horizontal_coords_convert (t_ray *ray, t_game *gdata);
-void vertical_coords_convert (t_ray *ray, t_game *gdata);
+void	update_door_horizontal_coords(t_ray *ray, double first_dist_y_tmp,
+			int check_ray_y_in_map_tmp, int line_crossing);
+void	update_door_vertical_coords(t_ray *ray, double first_dist_x_tmp,
+			int check_ray_x_in_map_tmp, int line_crossing);
+void	horizontal_coords_convert(t_ray *ray, t_game *gdata);
+void	vertical_coords_convert(t_ray *ray, t_game *gdata);
 
 /*UPDATE_DOORS_STATUS*/
-void update_doors(t_game *gdata);
-double get_distance_to_door(t_game *gdata, int door_x, int door_y);
+void	update_doors(t_game *gdata);
+void	update_single_door(t_game *gdata, int x, int y);
+double	get_distance_to_door(t_game *gdata, int door_x, int door_y);
 
 //------------------------------------------------
 //					PRINT_MAP
 //------------------------------------------------
 
 /*TEXTURES*/
-int		prepare_animation (t_game *gdata);
-int		prepare_textures (t_game *gdata);
+int		prepare_animation(t_game *gdata);
+int		prepare_map_bonus_textures(t_game *gdata);
+int		prepare_wall_textures(t_game *gdata);
 int		load_image(t_game *gdata, t_image *image, char *path);
 int		check_file_can_be_open(char *path);
 
 /*PRINT_MAP*/
-void 	print_map (t_game *gdata, t_map map);
+void	print_map(t_game *gdata, t_map map);
 void	prepare_print_params(t_game *gdata, t_ray *ray, t_map map);
-void	print_sky(t_game *gdata, t_ray *ray, int *row, int column);
-void	print_floor(t_game *gdata, t_ray *ray, int row, int column);
+
+/*PRINT_UTILS*/
+int		get_texture_pixel(t_image *texture, int tex_x, int tex_y);
+t_image	*get_wall_texture(t_ray *ray, t_game *gdata);
+int		rgb_to_hex(int r, int g, int b);
 
 /*PRINT_WALLS*/
-void 	print_texture_walls (t_game *gdata, t_ray *ray, int *row, int *column);
-void 	print_wall_column(t_game *gdata, int *row, int *column, t_image *texture);
-void 	get_texture_row(t_game *gdata, t_image *texture,  double *tex_start_offset);
-void 	get_texture_column(t_image *texture, double *wall_x, int *tex_x);
-void 	get_column (t_game *gdata, t_ray *ray, double *wall_x);
+void	print_texture_walls(t_game *gdata, t_ray *ray, int *row, int *column);
+void	print_wall_column(t_game *gdata, int *row, int *column,
+			t_image *texture);
+void	get_texture_row(t_game *gdata, t_image *texture,
+			double *tex_start_offset);
+void	get_texture_column(t_image *texture, double *wall_x, int *tex_x);
+void	get_column(t_game *gdata, t_ray *ray, double *wall_x);
 
 /*PRINT_DOORS*/
-void print_door (t_game *gdata, t_ray *ray, int *row, int *column);
-void print_door_column(t_game *gdata, int *row, int *column, t_image *texture, int tex_x, double tex_start_offset, double door_distance);
+void	print_door(t_game *gdata, t_ray *ray, int *row, int *column);
+void	print_door_column(t_game *gdata, int *row, int *column,
+			t_print_door *print_door);
+void	draw_door_texture_slice(t_game *gdata, t_image *texture, int *row,
+			int *column);
+void	compute_door_draw_limits(t_game *gdata, t_print_door *print_door);
 
+/*PRINT_SKY*/
+void	draw_sky_slice(t_game *gdata, int tex_x_start, int column, int *row);
+void	print_sky_texture(t_game *gdata, t_ray *ray, int *row, int column);
+void	print_sky_color(t_game *gdata, int *row, int column);
+void	print_sky(t_game *gdata, t_ray *ray, int *row, int column);
 
-/*PRINT_MAP_UTILS*/
-int 	get_texture_pixel(t_image *texture, int tex_x, int tex_y);
-t_image *get_wall_texture(t_ray *ray, t_game *gdata);
-int 	rgb_to_hex(int r, int g, int b);
+/*PRINT_SKY_UTILS*/
+double	compute_sky_offset_x(t_game *gdata, t_ray *ray);
+int		compute_tex_y(t_game *gdata, int row, int tex_height);
+
+/*PRINT_FLOOR*/
+void	draw_floor_pixel(t_game *gdata, t_ray *ray, int column, int row);
+void	print_floor_texture(t_game *gdata, t_ray *ray, int row, int column);
+void	print_floor_color(t_game *gdata, int row, int column);
+void	print_floor(t_game *gdata, t_ray *ray, int row, int column);
+
+/*PRINT_FLOOR_UTILS*/
+void	compute_floor_world_coords(t_game *gdata, t_print_floor *print_floor,
+			t_ray *ray, double distance);
+void	compute_texture_coords(t_print_floor *print_floor, t_image *texture);
 
 //------------------------------------------------
 //					PRINT_MINIMAP
 //------------------------------------------------
 
-/*PRINT_FOV_AND_VISION_ANGLE*/
-void    calculate_and_print_fov_and_vision_angle(t_game *gdata);
-void 	print_FOV(t_game *gdata, t_vision vision, double x, double y) ;
-void 	print_vision_angle(t_game *gdata, double x, double y, t_vision vision);
-
-/*PRINT_MINIMAP_SKELETON*/
+/*PRINT_MINIMAP*/
 void	print_minimap(t_game *gdata);
-void 	print_player(t_game *gdata, t_player player, int x, int y);
-
 void	browse_minimap_pixels(t_game *gdata);
 void	render_pixel(t_game *gdata, int pixel_x, int pixel_y);
-int	is_out_of_bounds(t_game *gdata, int pixel_x, int pixel_y);
-int	is_valid_matrix_cell(t_game *gdata, int  matrix_cell_x, int matrix_cell_y);
+void	calculate_and_print_fov_and_vision_angle(t_game *gdata);
+
+/*PRINT_FOV*/
+void	print_fov(t_game *gdata, t_vision vision, double origin_x,
+			double origin_y);
+void	draw_ray(t_game *gdata, t_ray *ray, double origin_x, double origin_y);
+void	draw_ray_pixel(t_game *gdata, t_ray *ray, int current_step);
+int		ray_is_out_of_map(t_game *gdata, t_ray *ray, double origin_x,
+			double origin_y);
+
+/*PRINTVISION_ANGLE*/
+void	print_vision_angle(t_game *gdata, double player_x, double player_y,
+			t_vision vision);
+int		check_collision_in_x(t_game *gdata, double next_x, double current_y);
+int		check_collision_in_y(t_game *gdata, double current_x, double next_y);
+void	draw_thick_ray_segment(t_game *gdata, double current_x,
+			double current_y, t_vision vision);
+int		can_draw_pixel(t_game *gdata, t_draw_va draw_vision_angle);
+
+/*PRINT_PLAYER*/
+void	print_player(t_game *gdata, t_player player, int x, int y);
+
+/*PRINT_MINIMAP_UTILS*/
+int		is_out_of_bounds(t_game *gdata, int pixel_x, int pixel_y);
+int		is_valid_matrix_cell(t_game *gdata, int matrix_cell_x,
+			int matrix_cell_y);
 void	draw_cell_pixel(t_game *gdata, char cell, int pixel_x, int pixel_y);
 void	draw_checkerboard_pixel(t_game *gdata, int pixel_x, int pixel_y);
-
 
 //------------------------------------------------
 //					DRAGON
 //------------------------------------------------
 
 /*DO_DRAGON_ANIMATION*/
-void do_dragon_animation(t_game *gdata);
+void	do_dragon_animation(t_game *gdata);
 
 /*PRINT_DRAGON*/
 void	print_dragon(t_game *gdata);
@@ -328,37 +354,51 @@ void	print_dragon(t_game *gdata);
 //------------------------------------------------
 
 /*PRESS_OR_RELEASE_KEY*/
-void	cursor_rotation(double rotation_speed, t_game *gdata, int flag);
-void	cursor_handle(double xpos, double ypos, void *param);
 int		there_is_a_key_pressed(t_game *gdata);
 void	press_key(mlx_key_data_t keydata, void *param);
+void	do_key_action(mlx_key_data_t keydata, t_game *gdata);
 void	release_key(mlx_key_data_t keydata, t_game *gdata);
 
+/*CURSOR_ROTATION*/
+void	cursor_rotation(double rotation_speed, t_game *gdata, int flag);
+void	cursor_handle(double xpos, double ypos, void *param);
+
 /*MOVE_PLAYER*/
-void	move_player(t_game *gdata, t_vision vision, double *target_x, double *target_y);
-void	prepare_next_position(t_game *gdata, t_vision vision, double *move_x, double *move_y);
+void	move_player(t_game *gdata, t_vision vision, double *target_x,
+			double *target_y);
+void	prepare_next_position(t_game *gdata, t_vision vision, double *move_x,
+			double *move_y);
 
 /*CHECK_COLLISION*/
-int check_collision_x(t_game *gdata, double target_x);
-int check_collision_y(t_game *gdata, double target_y);
+int		check_collision_x(t_game *gdata, t_player player, double target_x);
+int		check_collision_y(t_game *gdata, t_player player, double target_y);
 
 /*ROTATE PLAYER*/
-void 	rotate_player(t_player *player, t_vision *vision);
+void	rotate_player(t_player *player, t_vision *vision);
 
 //------------------------------------------------
 //					RENDER
 //------------------------------------------------
 void	render_game(void *param);
 
-
 //-------------------------------------------------
-//				FREE/ERRORS
+//					ERRORS
 //-------------------------------------------------
 void	exit_error(char *msg, int status);
 void	msg_error(char *msg, char *msg2);
+
+//-------------------------------------------------
+//					FREE
+//-------------------------------------------------
+
+/*FREE*/
 void	free_matrix(char **matrix);
 void	clean_path(t_path *path);
 void	clean_data(t_game *gdata);
 
+/*FREE_SPRITES*/
+void	free_walls_sprites(t_game *gdata, t_texture *texture);
+void	free_bonus_map_sprites(t_game *gdata, t_texture *texture);
+void	free_dragon_sprites(t_game *gdata, t_texture *texture);
 
 #endif

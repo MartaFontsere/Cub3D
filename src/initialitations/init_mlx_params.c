@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:09:51 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/14 00:59:59 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 03:32:45 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	create_new_images(t_game *gdata, t_mlx *mlx)
 {
 	mlx->image = mlx_new_image(mlx->init, mlx->window_width,
 			mlx->window_height);
-	printf("window: %d, %d\n", mlx->window_width, mlx->window_height);
 	if (!mlx->image)
 	{
 		msg_error("It's not possible to generate new image\n", NULL);

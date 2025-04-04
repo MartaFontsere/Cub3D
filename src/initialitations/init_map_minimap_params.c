@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map_minimap_bonus.c                           :+:      :+:    :+:   */
+/*   init_map_minimap_params.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/02 19:18:21 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 03:33:17 by mfontser         ###   ########.fr       */
+/*   Created: 2025/04/04 02:05:26 by mfontser          #+#    #+#             */
+/*   Updated: 2025/04/04 03:29:42 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D_bonus.h"
+#include "cub3D.h"
 
 void	init_map_params(t_game *gdata, t_map *map)
 {
@@ -21,7 +21,6 @@ void	init_map_params(t_game *gdata, t_map *map)
 	map->j = 0;
 	map->c_width = 0;
 	map->c_height = 0;
-	map->pos = '\0';
 	map->px_width = MAP_PX_WIDTH;
 	map->px_height = MAP_PX_HEIGHT;
 	gdata->vision.fov.rays = NULL;

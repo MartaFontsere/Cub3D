@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:47:23 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/27 04:00:31 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 03:30:24 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	init_vision_params(t_game *gdata, t_vision *vision)
 {
-	vision->FOV.num_rays = gdata->map.px_width;
-	vision->FOV.fov_rad = 60 * (M_PI / 180);
-	vision->FOV.rays = malloc(sizeof(t_ray) * vision->FOV.num_rays);
-	if (!vision->FOV.rays)
+	vision->fov.num_rays = gdata->map.px_width;
+	vision->fov.fov_rad = 60 * (M_PI / 180);
+	vision->fov.rays = malloc(sizeof(t_ray) * vision->fov.num_rays);
+	if (!vision->fov.rays)
 	{
 		msg_error("Unable to allocate memory for FOV rays\n", NULL);
 		clean_data(gdata);

@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/03 11:48:19 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/04 03:14:34 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	load_image(t_game *gdata, t_image *image, char *path)
 {
 	if (check_file_can_be_open(path) == 0)
 	{
-		printf("\n%s^\n", path);
 		msg_error("There have been problems opening the textures\n", NULL);
 		return (0);
 	}
@@ -36,40 +35,45 @@ int	load_image(t_game *gdata, t_image *image, char *path)
 	return (1);
 }
 
-int	prepare_textures(t_game *gdata)
+int	prepare_wall_textures(t_game *gdata)
 {
 	if (!load_image(gdata, &gdata->texture.north_wall_img,
-			gdata->texture.path.NO))
+			gdata->texture.path.no))
 	{
 		clean_data(gdata);
 		return (0);
 	}
 	if (!load_image(gdata, &gdata->texture.south_wall_img,
-			gdata->texture.path.SO))
+			gdata->texture.path.so))
 	{
 		clean_data(gdata);
 		return (0);
 	}
 	if (!load_image(gdata, &gdata->texture.east_wall_img,
-			gdata->texture.path.EA))
+			gdata->texture.path.ea))
 	{
 		clean_data(gdata);
 		return (0);
 	}
 	if (!load_image(gdata, &gdata->texture.west_wall_img,
-			gdata->texture.path.WE))
+			gdata->texture.path.we))
 	{
 		clean_data(gdata);
 		return (0);
 	}
+	return (1);
+}
 
-	//BONUS
-	if (!load_image(gdata, &gdata->texture.sky_img, gdata->texture.path.C.color_path))
+int	prepare_map_bonus_textures(t_game *gdata)
+{
+	if (!load_image(gdata, &gdata->texture.sky_img,
+			gdata->texture.path.c.color_path))
 	{
 		clean_data(gdata);
 		return (0);
 	}
-	if (!load_image(gdata, &gdata->texture.floor_img, gdata->texture.path.F.color_path))
+	if (!load_image(gdata, &gdata->texture.floor_img,
+			gdata->texture.path.f.color_path))
 	{
 		clean_data(gdata);
 		return (0);
@@ -82,9 +86,8 @@ int	prepare_textures(t_game *gdata)
 	return (1);
 }
 
-int	prepare_animation (t_game *gdata)
+int	prepare_animation(t_game *gdata)
 {
-		///return error; //MIRAR LA FUNCION DE FREE PERTINENTE y escribir error
 	if (!load_image(gdata, &gdata->texture.dragon_img[0], DRAGON_1))
 	{
 		clean_data(gdata);

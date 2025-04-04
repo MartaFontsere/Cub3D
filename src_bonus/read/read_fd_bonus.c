@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/29 14:50:23 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/04 03:15:51 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,24 @@ int	create_matrix(char *line, t_map *map)
 void	assign_path(char *line, t_path *path, int i)
 {
 	if (line[i] == 'N' && line[i + 1] == 'O' && ft_isspace(line[i + 2])
-		&& !path->NO)
-		path->NO = cpy_path(line, path, (i + 2), 0);
+		&& !path->no)
+		path->no = cpy_path(line, path, (i + 2), 0);
 	else if (line[i] == 'S' && line[i + 1] == 'O' && ft_isspace(line[i + 2])
-		&& !path->SO)
-		path->SO = cpy_path(line, path, (i + 2), 0);
+		&& !path->so)
+		path->so = cpy_path(line, path, (i + 2), 0);
 	else if (line[i] == 'E' && line[i + 1] == 'A' && ft_isspace(line[i + 2])
-		&& !path->EA)
-		path->EA = cpy_path(line, path, (i + 2), 0);
+		&& !path->ea)
+		path->ea = cpy_path(line, path, (i + 2), 0);
 	else if (line[i] == 'W' && line[i + 1] == 'E' && ft_isspace(line[i + 2])
-		&& !path->WE)
-		path->WE = cpy_path(line, path, (i + 2), 0);
+		&& !path->we)
+		path->we = cpy_path(line, path, (i + 2), 0);
 	else
 	{
 		if ((line[i] == 'N' && line[i + 1] != 'O') || (line[i] == 'S' && line[i
 					+ 1] != 'O') || (line[i] == 'W' && line[i + 1] != 'E')
 			|| (line[i] == 'E' && line[i + 1] != 'A'))
 			msg_error("Invalid texture name: ", line);
-		else if (path->NO || path->SO || path->EA || path->WE)
+		else if (path->no || path->so || path->ea || path->we)
 			msg_error("There's a previus path assigned: ", line);
 		else
 			msg_error("Invalid line: ", line);

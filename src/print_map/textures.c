@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/03/18 16:05:52 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/04 03:04:27 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,25 @@ int	load_image(t_game *gdata, t_image *image, char *path)
 int	prepare_textures(t_game *gdata)
 {
 	if (!load_image(gdata, &gdata->texture.north_wall_img,
-			gdata->texture.path.NO))
+			gdata->texture.path.no))
 	{
 		clean_data(gdata);
 		return (0);
 	}
 	if (!load_image(gdata, &gdata->texture.south_wall_img,
-			gdata->texture.path.SO))
+			gdata->texture.path.so))
 	{
 		clean_data(gdata);
 		return (0);
 	}
 	if (!load_image(gdata, &gdata->texture.east_wall_img,
-			gdata->texture.path.EA))
+			gdata->texture.path.ea))
 	{
 		clean_data(gdata);
 		return (0);
 	}
 	if (!load_image(gdata, &gdata->texture.west_wall_img,
-			gdata->texture.path.WE))
+			gdata->texture.path.we))
 	{
 		clean_data(gdata);
 		return (0);

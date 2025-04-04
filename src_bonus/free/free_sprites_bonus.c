@@ -1,49 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_errors.c                                      :+:      :+:    :+:   */
+/*   free_sprites_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/01 11:58:01 by mfontser         ###   ########.fr       */
+/*   Created: 2025/04/03 19:25:43 by mfontser          #+#    #+#             */
+/*   Updated: 2025/04/04 03:51:58 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D_bonus.h"
 
-void	exit_error(char *msg, int status)
-{
-	while (*msg)
-		ft_write(2, msg++, 1);
-	exit(status);
-}
-
-void	free_matrix(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	if (matrix == NULL)
-		return ;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
-	matrix = NULL;
-}
-
-void	clean_path(t_path *path)
-{
-	free(path->NO);
-	free(path->SO);
-	free(path->EA);
-	free(path->WE);
-}
-
-void	free_map_sprites(t_game *gdata, t_texture *texture)
+void	free_walls_sprites(t_game *gdata, t_texture *texture)
 {
 	if (texture->north_wall_img.data)
 	{
@@ -65,6 +34,10 @@ void	free_map_sprites(t_game *gdata, t_texture *texture)
 		mlx_delete_image(gdata->mlx.init, texture->east_wall_img.data);
 		mlx_delete_xpm42(texture->east_wall_img.xpm);
 	}
+}
+
+void	free_bonus_map_sprites(t_game *gdata, t_texture *texture)
+{
 	if (texture->sky_img.data)
 	{
 		mlx_delete_image(gdata->mlx.init, texture->sky_img.data);
@@ -84,7 +57,7 @@ void	free_map_sprites(t_game *gdata, t_texture *texture)
 
 void	free_dragon_sprites(t_game *gdata, t_texture *texture)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (texture->dragon_img[0].data)
@@ -94,18 +67,6 @@ void	free_dragon_sprites(t_game *gdata, t_texture *texture)
 			mlx_delete_image(gdata->mlx.init, texture->dragon_img[i].data);
 			mlx_delete_xpm42(texture->dragon_img[i].xpm);
 			i++;
-			printf ("%d\n", i);
 		}
 	}
-}
-void	clean_data(t_game *gdata)
-{
-	clean_path(&gdata->texture.path);
-	free_matrix(gdata->map.matrix);
-	free_matrix(gdata->map.tmp_matrix);
-	free_matrix(gdata->map.void_matrix);
-	if (/*gdata && */gdata->vision.FOV.rays) 
-		free(gdata->vision.FOV.rays);
-	free_map_sprites(gdata, &gdata->texture);
-	free_dragon_sprites(gdata, &gdata->texture);
 }
