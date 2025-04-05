@@ -19,7 +19,7 @@ void	close_window(t_game *gdata)
 		ft_write(1,
 			"\nYou've left The Game... but The Game will never leave you 👀\n",
 			64);
-		ft_write(1, "    See you soon 😈🔥\n", 26);
+		ft_write(1, "    See you soon 😈🔥\n\n", 27);
 	}
 	mlx_close_window(gdata->mlx.init);
 }
@@ -36,9 +36,9 @@ int	main(int ac, char **av)
 		|| init_gdata_values(&gdata) == 0)
 		return (1);
 	calculate_fov(&gdata, gdata.player.x, gdata.player.y);
-	if (prepare_textures(&gdata) == 0 || prepare_dragon_animation(&gdata) == 0 || prepare_fire_animation(&gdata) == 0)
+	if (prepare_textures(&gdata) == 0 || prepare_dragon_animation(&gdata) == 0
+		|| prepare_fire_animation(&gdata) == 0)
 		return (1);
-
 	update_doors(&gdata);
 	print_map(&gdata, gdata.map);
 	print_minimap(&gdata);

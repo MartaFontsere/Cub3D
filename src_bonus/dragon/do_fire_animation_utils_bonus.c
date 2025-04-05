@@ -17,7 +17,8 @@ void	remove_last_fire_frame(t_game *gdata, t_image *fire, int current_index,
 {
 	if (*last_index != -1 && *last_index != current_index)
 	{
-		mlx_delete_image(gdata->mlx.init, fire[*last_index].data);
+		if (fire[*last_index].data)
+			mlx_delete_image(gdata->mlx.init, fire[*last_index].data);
 		fire[*last_index].data = NULL;
 	}
 }

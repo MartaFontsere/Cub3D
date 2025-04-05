@@ -43,7 +43,7 @@ void	do_key_action(mlx_key_data_t keydata, t_game *gdata)
 	else if (keydata.key == MLX_KEY_LEFT)
 		gdata->player.rotate_left = 1;
 	else if (keydata.key == MLX_KEY_SPACE)
-			gdata->player.fire = 1;
+		gdata->player.fire = 1;
 	else if (keydata.key == MLX_KEY_M && gdata->player.cursor_on == 0)
 		gdata->player.cursor_on = 1;
 	else if (keydata.key == MLX_KEY_M && gdata->player.cursor_on == 1)

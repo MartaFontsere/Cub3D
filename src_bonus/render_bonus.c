@@ -23,7 +23,7 @@ void	render_game(void *param)
 	target_y = gdata->player.y;
 	if (gdata->player.fire == 1)
 		do_fire_animation(gdata);
-	if (there_is_a_key_pressed(gdata))
+	else if (there_is_a_key_pressed(gdata))
 	{
 		if (gdata->player.rotate_right == 1 || gdata->player.rotate_left == 1)
 			rotate_player(&gdata->player, &gdata->vision);

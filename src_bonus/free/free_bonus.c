@@ -47,4 +47,5 @@ void	clean_data(t_game *gdata)
 	free_walls_sprites(gdata, &gdata->texture);
 	free_bonus_map_sprites(gdata, &gdata->texture);
 	free_dragon_sprites(gdata, &gdata->texture);
+	free_fire_sprites(gdata, &gdata->texture);
 }

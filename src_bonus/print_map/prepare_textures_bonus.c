@@ -25,7 +25,6 @@ int	check_file_can_be_open(char *path)
 
 int	load_image(t_game *gdata, t_image *image, char *path)
 {
-	printf ("path: %s\n", path);
 	if (check_file_can_be_open(path) == 0)
 	{
 		msg_error("There have been problems opening the textures\n", NULL);
@@ -79,11 +78,6 @@ int	prepare_map_bonus_textures(t_game *gdata)
 		clean_data(gdata);
 		return (0);
 	}
-	if (!load_image(gdata, &gdata->texture.door_img, DOOR_TEXTURE))
-	{
-		clean_data(gdata);
-		return (0);
-	}
 	return (1);
 }
 
@@ -95,6 +89,14 @@ int	prepare_textures(t_game *gdata)
 	{
 		if (!prepare_map_bonus_textures(gdata))
 			return (0);
+	}
+	if (gdata->map.is_door)
+	{
+		if (!load_image(gdata, &gdata->texture.door_img, DOOR_TEXTURE))
+		{
+			clean_data(gdata);
+			return (0);
+		}
 	}
 	return (1);
 }

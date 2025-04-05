@@ -28,7 +28,8 @@ void	do_dragon_animation(t_game *gdata)
 	current_index = fly_clock / animation_speed;
 	if (last_index != -1 && last_index != current_index)
 	{
-		mlx_delete_image(gdata->mlx.init, dragon[last_index].data);
+		if (dragon[last_index].data)
+			mlx_delete_image(gdata->mlx.init, dragon[last_index].data);
 		dragon[last_index].data = NULL;
 	}
 	if (dragon[current_index].data == NULL)
