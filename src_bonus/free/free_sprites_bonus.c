@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:25:43 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/06 13:02:36 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:48:37 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ void	free_dragon_sprites(t_game *gdata, t_texture *texture)
 	i = 0;
 	while (i < 4)
 	{
+		mlx_delete_xpm42(texture->dragon_img[i].xpm);
 		if (texture->dragon_img[i].data)
 		{
 			mlx_delete_image(gdata->mlx.init, texture->dragon_img[i].data);
-			mlx_delete_xpm42(texture->dragon_img[i].xpm);
 			texture->dragon_img[i].data = NULL;
 		}
 		i++;
@@ -86,10 +86,10 @@ void	free_fire_sprites(t_game *gdata, t_texture *texture)
 	i = 0;
 	while (i < 8)
 	{
+		mlx_delete_xpm42(texture->fire_img[i].xpm);
 		if (texture->fire_img[i].data)
 		{
 			mlx_delete_image(gdata->mlx.init, texture->fire_img[i].data);
-			mlx_delete_xpm42(texture->fire_img[i].xpm);
 			texture->fire_img[i].data = NULL;
 		}
 		i++;
