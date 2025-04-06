@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_colors_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:08:22 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/04 13:05:33 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/06 19:12:21 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	get_color_path(char *line, t_color *color, int i)
 		color->path->err_flag = 1;
 		return (msg_error(line, "The line must contain only one value\n"));
 	}
-	color->color_path = ft_substr(line, start, (end - start));
 	color->assigned = 1;
 	color->is_path = 1;
-	color->path->c_count++;
+	color->color_path = clean_str(line, start, (end - start), color->path);
+	//color->path->c_count++;
 }
 
 void	control_c_values(char *line, t_path *path, int init_val, char c)
