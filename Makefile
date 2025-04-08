@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
+#    By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2025/04/06 18:49:03 by mfontser         ###   ########.fr        #
+#    Updated: 2025/04/08 11:57:40 by yanaranj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

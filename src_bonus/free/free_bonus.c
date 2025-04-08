@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/04 03:34:45 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:55:41 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ void	clean_path(t_path *path)
 	free(path->so);
 	free(path->ea);
 	free(path->we);
+	if (path->c.is_path)
+		free(path->c.color_path);
+	if (path->f.is_path)
+		free(path->f.color_path);
 }
 
 void	clean_data(t_game *gdata)
