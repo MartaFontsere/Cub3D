@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_sprites_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:25:43 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/06 18:48:37 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:27:27 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,14 @@ void	free_bonus_map_sprites(t_game *gdata, t_texture *texture)
 void	free_dragon_sprites(t_game *gdata, t_texture *texture)
 {
 	int	i;
-
 	i = 0;
 	while (i < 4)
 	{
-		mlx_delete_xpm42(texture->dragon_img[i].xpm);
+		if (texture->dragon_img[i].xpm)
+		{
+			mlx_delete_xpm42(texture->dragon_img[i].xpm);
+			texture->dragon_img[i].xpm = NULL;
+		}
 		if (texture->dragon_img[i].data)
 		{
 			mlx_delete_image(gdata->mlx.init, texture->dragon_img[i].data);
@@ -82,11 +85,14 @@ void	free_dragon_sprites(t_game *gdata, t_texture *texture)
 void	free_fire_sprites(t_game *gdata, t_texture *texture)
 {
 	int	i;
-
 	i = 0;
 	while (i < 8)
 	{
-		mlx_delete_xpm42(texture->fire_img[i].xpm);
+		if (texture->fire_img[i].xpm)
+		{
+			mlx_delete_xpm42(texture->fire_img[i].xpm);
+			texture->fire_img[i].xpm = NULL;
+		}
 		if (texture->fire_img[i].data)
 		{
 			mlx_delete_image(gdata->mlx.init, texture->fire_img[i].data);

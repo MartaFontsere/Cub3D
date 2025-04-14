@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 14:52:45 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:50:17 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,8 @@ int		create_new_images(t_game *gdata, t_mlx *mlx);
 int		put_image_to_window(t_game *gdata, t_mlx *mlx);
 
 /*INIT_TEXTURES_COLORS*/
+
+void	init_sprites (t_texture *texture);
 void	init_textures_and_colors_path(t_texture *texture, t_path *path);
 void	init_textures(t_texture *texture, t_path *path);
 void	init_colors(t_path *path);

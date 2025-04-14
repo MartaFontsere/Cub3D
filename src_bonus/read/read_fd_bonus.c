@@ -6,7 +6,7 @@
 /*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:37:53 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/04 13:09:05 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:20:27 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	fd_is_correct(t_game *gdata, t_map *map)
 		free(line);
 	close(fd);
 	if (map->is_map == 0)
-		return (msg_error("Map is missing", "\n"), 0);
+		return (msg_error("Map is missing\n", NULL), 0);
 	return (1);
 }
 

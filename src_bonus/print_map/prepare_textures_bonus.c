@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_textures_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/04 14:31:59 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:26:35 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,17 @@ int	load_image(t_game *gdata, t_image *image, char *path)
 		return (0);
 	}
 	image->xpm = mlx_load_xpm42(path);
+	if (!image->xpm)
+	{
+		msg_error("Failed to load xpm42 texture\n", NULL);
+		return (0);
+	}
 	image->data = mlx_texture_to_image(gdata->mlx.init, &image->xpm->texture);
+	if (!image->data)
+	{
+		msg_error("Failed to convert texture to image\n", NULL);
+		return (0);
+	}
 	return (1);
 }
 

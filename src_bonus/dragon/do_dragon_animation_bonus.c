@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_dragon_animation_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 04:21:47 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/06 18:43:59 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:13:23 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	do_dragon_animation(t_game *gdata)
 	static int	last_index = -1;
 	t_image		*dragon;
 
-	animation_speed = 1.5;
+	animation_speed = 1.8;
 	dragon = gdata->texture.dragon_img;
 	fly_clock++;
 	if (fly_clock >= animation_speed * 4)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_errors.c                                      :+:      :+:    :+:   */
+/*   msg_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
+/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:54:15 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/03/13 23:18:20 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:19:31 by yanaranj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ void	msg_error(char *msg, char *msg2)
 			ft_write(2, msg2++, 1);
 		ft_write (2, END, ft_strlen(END));
 	}
+	ft_write (2, "\n", 1);
 }
