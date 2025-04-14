@@ -21,8 +21,8 @@ void	init_ray_direction(t_ray *ray, t_game *gdata, int check_ray_x_map,
 	controll_y_limit_case(ray, check_ray_y_map, gdata->player.cell_player_y);
 }
 
-void	traverse_ray_until_hit(t_ray *ray, t_game *gdata,
-		int *check_ray_x_map, int *check_ray_y_map)
+void	traverse_ray_until_hit(t_ray *ray, t_game *gdata, int *check_ray_x_map,
+		int *check_ray_y_map)
 {
 	int	wall_hit;
 
@@ -30,18 +30,17 @@ void	traverse_ray_until_hit(t_ray *ray, t_game *gdata,
 	wall_hit = 0;
 	while (wall_hit == 0)
 	{
-		if (gdata->map.matrix[*check_ray_y_map][*check_ray_x_map] == 'D' \
-		|| (gdata->map.matrix[*check_ray_y_map][*check_ray_x_map] == 'd' \
-		&& should_block_ray(ray, gdata, *check_ray_x_map, \
-		*check_ray_y_map)))
+		if (gdata->map.matrix[*check_ray_y_map][*check_ray_x_map] == 'D'
+			|| (gdata->map.matrix[*check_ray_y_map][*check_ray_x_map] == 'd'
+				&& should_block_ray(ray, gdata, *check_ray_x_map,
+					*check_ray_y_map)))
 		{
 			door_raycast(ray, gdata, check_ray_x_map, check_ray_y_map);
 			break ;
 		}
 		check_matrix_lines(ray, check_ray_x_map, check_ray_y_map);
 		if (*check_ray_x_map < 0 || *check_ray_x_map >= gdata->map.c_width
-			|| *check_ray_y_map < 0
-			|| *check_ray_y_map >= gdata->map.c_height)
+			|| *check_ray_y_map < 0 || *check_ray_y_map >= gdata->map.c_height)
 			break ;
 		if (gdata->map.matrix[*check_ray_y_map][*check_ray_x_map] == '1')
 			wall_hit = 1;
@@ -63,8 +62,7 @@ void	calculate_ray(t_game *gdata, t_ray *ray, double x, double y)
 {
 	ray->check_ray_x_map = (int)(x / gdata->minimap.px_in_cell_width);
 	ray->check_ray_y_map = (int)(y / gdata->minimap.px_in_cell_height);
-	init_ray_direction(ray, gdata, ray->check_ray_x_map,
-		ray->check_ray_y_map);
+	init_ray_direction(ray, gdata, ray->check_ray_x_map, ray->check_ray_y_map);
 	traverse_ray_until_hit(ray, gdata, &ray->check_ray_x_map,
 		&ray->check_ray_y_map);
 	find_ray_distance_and_collision_point(ray, gdata, x, y);

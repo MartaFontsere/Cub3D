@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_sprites_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:25:43 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/14 13:27:27 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:41:25 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	free_bonus_map_sprites(t_game *gdata, t_texture *texture)
 void	free_dragon_sprites(t_game *gdata, t_texture *texture)
 {
 	int	i;
+
 	i = 0;
 	while (i < 4)
 	{
@@ -85,6 +86,7 @@ void	free_dragon_sprites(t_game *gdata, t_texture *texture)
 void	free_fire_sprites(t_game *gdata, t_texture *texture)
 {
 	int	i;
+
 	i = 0;
 	while (i < 8)
 	{

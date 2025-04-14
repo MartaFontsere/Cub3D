@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 05:04:06 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/03 20:43:02 by mfontser         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:14:32 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	print_texture_walls(t_game *gdata, t_ray *ray, int *row, int *column)
 	double	wall_x;
 	t_image	*texture;
 
-	if (gdata->map.matrix[ray->cell_collision_y][ray->cell_collision_x] == 'D' \
+	if (gdata->map.matrix[ray->cell_collision_y][ray->cell_collision_x] == 'D'
 	|| gdata->map.matrix[ray->cell_collision_y][ray->cell_collision_x] == 'd')
 		print_door(gdata, ray, row, column);
 	texture = get_wall_texture(ray, gdata);

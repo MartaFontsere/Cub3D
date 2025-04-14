@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   init_textures_colors_bonus.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:17:15 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/14 13:52:36 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:39:42 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D_bonus.h"
 
-void init_sprites(t_texture *texture)
+void	init_sprites(t_texture *texture)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < 4)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_textures_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 19:01:03 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/14 13:26:35 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:41:06 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

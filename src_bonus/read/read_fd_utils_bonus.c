@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:32:47 by yanaranj          #+#    #+#             */
-/*   Updated: 2025/04/04 13:18:22 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:39:03 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	curr_char(int cur, char *line, t_path *path)
 	if (cur == '#' || cur == '/')
 		return (1);
 	counter = path->c_count + path->p_count;
-	if (cur != 'N' && cur != 'S' && cur != 'E' && cur != 'W' && cur != 'C' \
-	&& cur != 'F' && cur != '1' && cur != '0' && cur != '\0' && cur != '\n')
+	if (cur != 'N' && cur != 'S' && cur != 'E' && cur != 'W' && cur != 'C'
+		&& cur != 'F' && cur != '1' && cur != '0' && cur != '\0' && cur != '\n')
 	{
 		path->err_flag = 1;
 		return (msg_error("We can't process this line: ", line), 0);
@@ -70,8 +70,8 @@ int	curr_char(int cur, char *line, t_path *path)
 	if ((cur == '1' || cur == '0') && counter != 6)
 	{
 		path->err_flag = 1;
-		msg_error("Paths and colors are not fully assigned yet\n", \
-		"Cannot initialize map\n");
+		msg_error("Paths and colors are not fully assigned yet\n",
+			"Cannot initialize map\n");
 		return (0);
 	}
 	return (1);
@@ -101,24 +101,24 @@ void	map_control(char *line, t_map *map, t_path *path, int i)
 	map->c_width = ft_max_size(line, map->c_width);
 	if (!map->c_width || map->c_width > 120)
 	{
-		msg_error("Max width is 120. If you follow this rule\n", \
-		"		DrackyTeam will thank you🔥\n");
+		msg_error("Max width is 120. If you follow this rule\n",
+			"		DrackyTeam will thank you🔥\n");
 		path->err_flag = 1;
 		return ;
 	}
 	while (line[i])
 	{
-		if (map->is_map == 1 && (line[i] != 'N' && line[i] != 'S' \
-		&& line[i] != 'W' && line[i] != 'E' && line[i] != '1' \
-		&& line[i] != '0' && line[i] != ' ' && line[i] != '\n') \
-		&& line[i] != 'D')
+		if (map->is_map == 1 && (line[i] != 'N' && line[i] != 'S'
+				&& line[i] != 'W' && line[i] != 'E' && line[i] != '1'
+				&& line[i] != '0' && line[i] != ' ' && line[i] != '\n')
+			&& line[i] != 'D')
 		{
 			path->err_flag = 1;
 			ft_write(2, &line[i], 1);
 			return (msg_error(": is an invalid char\n", NULL));
 		}
-		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' \
-		|| line[i] == 'E')
+		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W'
+			|| line[i] == 'E')
 			map->pos = line[i];
 		i++;
 	}

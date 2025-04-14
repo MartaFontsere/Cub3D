@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_textures_colors.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 02:06:32 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/14 13:44:49 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:41:51 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

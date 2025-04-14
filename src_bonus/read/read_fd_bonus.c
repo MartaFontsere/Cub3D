@@ -18,8 +18,8 @@ int	create_matrix(char *line, t_map *map)
 		map->tmp_matrix = malloc(sizeof(char *) * (map->c_height + 1));
 	else
 	{
-		map->tmp_matrix = realloc(map->tmp_matrix, sizeof(char *) \
-		* (map->c_height + 1));
+		map->tmp_matrix = realloc(map->tmp_matrix, sizeof(char *)
+				* (map->c_height + 1));
 	}
 	if (!map->tmp_matrix)
 		return (0);
@@ -50,8 +50,8 @@ void	assign_path(char *line, t_path *path, int i)
 	{
 		if (path->no || path->so || path->ea || path->we)
 			msg_error("There's a previus path assigned: ", line);
-		else if ((line[i] == 'N' && line[i + 1] != 'O') || (line[i] == 'S' \
-		&& line[i + 1] != 'O') || (line[i] == 'W' && line[i + 1] != 'E')
+		else if ((line[i] == 'N' && line[i + 1] != 'O') || (line[i] == 'S'
+				&& line[i + 1] != 'O') || (line[i] == 'W' && line[i + 1] != 'E')
 			|| (line[i] == 'E' && line[i + 1] != 'A'))
 			msg_error("Invalid texture name: ", line);
 		else

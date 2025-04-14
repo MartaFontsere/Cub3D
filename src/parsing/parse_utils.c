@@ -41,15 +41,15 @@ int	check_esp(int i, int j, t_map *map)
 	{
 		if (i == map->c_height - 1)
 		{
-			if ((map->matrix[i][j + 1] != '*' && map->matrix[i][j + 1] != '1') \
-			&& j != (map->c_width - 2))
+			if ((map->matrix[i][j + 1] != '*' && map->matrix[i][j + 1] != '1')
+				&& j != (map->c_width - 2))
 				return (1);
 		}
 		else
 		{
-			if (((map->matrix[i][j + 1] != '*' && map->matrix[i][j + 1] != '1') \
-			|| (map->matrix[i + 1][j] != '*' && map->matrix[i + 1][j] != '1')) \
-			&& (j != map->c_width - 2))
+			if (((map->matrix[i][j + 1] != '*' && map->matrix[i][j + 1] != '1')
+					|| (map->matrix[i + 1][j] != '*' && map->matrix[i
+						+ 1][j] != '1')) && (j != map->c_width - 2))
 			{
 				msg_error("' ' must be followed by '1' or ' '\n", NULL);
 				return (0);
@@ -63,12 +63,13 @@ int	check_zero(int i, int j, t_map *map)
 {
 	if (map->matrix[i][j] == '0')
 	{
-		if ((map->matrix[i][j + 1] != 'N' && map->matrix[i][j + 1] != 'S' \
-		&& map->matrix[i][j + 1] != 'W' && map->matrix[i][j + 1] != 'E' \
-		&& map->matrix[i][j + 1] != '0' && map->matrix[i][j + 1] != '1')
-		|| (map->matrix[i + 1][j] != 'N' && map->matrix[i + 1][j] != 'S' \
-		&& map->matrix[i + 1][j] != 'W' && map->matrix[i + 1][j] != 'E' \
-		&& map->matrix[i + 1][j] != '0' && map->matrix[i + 1][j] != '1'))
+		if ((map->matrix[i][j + 1] != 'N' && map->matrix[i][j + 1] != 'S'
+				&& map->matrix[i][j + 1] != 'W' && map->matrix[i][j + 1] != 'E'
+				&& map->matrix[i][j + 1] != '0' && map->matrix[i][j + 1] != '1')
+			|| (map->matrix[i + 1][j] != 'N' && map->matrix[i + 1][j] != 'S'
+				&& map->matrix[i + 1][j] != 'W' && map->matrix[i + 1][j] != 'E'
+				&& map->matrix[i + 1][j] != '0' && map->matrix[i
+				+ 1][j] != '1'))
 		{
 			msg_error("'0' must be followed by '1', '0' or player\n", NULL);
 			return (0);
@@ -79,16 +80,16 @@ int	check_zero(int i, int j, t_map *map)
 
 int	check_player(int i, int j, t_map *map)
 {
-	if (map->matrix[i][j] == 'N' || map->matrix[i][j] == 'S' \
-	|| map->matrix[i][j] == 'W' || map->matrix[i][j] == 'E')
+	if (map->matrix[i][j] == 'N' || map->matrix[i][j] == 'S'
+		|| map->matrix[i][j] == 'W' || map->matrix[i][j] == 'E')
 	{
 		if (i == 0 || i == map->c_height - 1 || j == 0 || j == map->c_width - 2)
 		{
 			msg_error("Player must be inside map\n", NULL);
 			return (0);
 		}
-		if ((map->matrix[i][j + 1] != '1' && map->matrix[i][j + 1] != '0') \
-		|| (map->matrix[i + 1][j] != '1' && map->matrix[i + 1][j] != '0'))
+		if ((map->matrix[i][j + 1] != '1' && map->matrix[i][j + 1] != '0')
+			|| (map->matrix[i + 1][j] != '1' && map->matrix[i + 1][j] != '0'))
 		{
 			msg_error("Player must be next to '1' or '0'\n", NULL);
 			return (0);

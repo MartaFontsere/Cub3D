@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_dragon_animation_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanaranj <yanaranj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 04:21:47 by mfontser          #+#    #+#             */
-/*   Updated: 2025/04/14 13:13:23 by yanaranj         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:41:39 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
